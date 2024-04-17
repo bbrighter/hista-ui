@@ -1,21 +1,49 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 
+interface TodoItem {
+  id: number
+  title: string
+  done: boolean
+}
+
+interface TodoItems {
+  items: TodoItem[]
+}
+
 function App() {
-  const [json, setJson] = useState<{ Resp: "" }>({ Resp: "" })
+  const [json, setJson] = useState<TodoItems>({ items: [] })
+  const [todo, setTodo] = useState("")
+
+  const url = 'https://staging-hista-api-dpc2.encr.app/test'
+  // const url = 'http://localhost:9400/hista-api-at42/requests/test'
+  useEffect(() => {
+    fetch(url).then(
+      resp => resp.json().then(
+        j => setJson(j))
+        .catch(() => setJson({ items: [] }))
+    )
+  }, [])
+
 
 
   const onClick = async () => {
-    const resp = await fetch('https://staging-hista-api-dpc2.encr.app/test')
-    const j = await resp.json()
-    setJson(j)
+    await fetch(url, {
+      method: 'POST', body: JSON.stringify({ title: todo })
+    })
   }
-
 
   return (
     <div>
-      <button onClick={onClick}>Ruf die API!</button>
-      <h2>{json["Resp"]}</h2>
+      <input onChange={(e) => setTodo(e.target.value)} value={todo} />
+      <button onClick={onClick}>Senden</button>
+      {json.items.length > 0 &&
+        <li>
+          {
+            json.items.map((j, i) => (<ul key={i}>{j.title}</ul>))
+          }
+        </li>
+      }
     </div>
   )
 }
