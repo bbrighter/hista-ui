@@ -13,6 +13,7 @@ function App() {
 
   const [todo, setTodo] = useState("")
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { get() }, [])
 
 
