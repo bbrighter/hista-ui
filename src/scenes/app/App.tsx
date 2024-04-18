@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 
 import useHista from '../../store/store'
+import { Button, Container, List, ListItem, TextField } from '@mui/material'
 
 
 
@@ -18,17 +19,15 @@ function App() {
   const onClick = async () => { await post(todo) }
 
   return (
-    <div>
-      <input onChange={(e) => setTodo(e.target.value)} value={todo} />
-      <button onClick={onClick}>Senden</button>
-      {todoItems.length > 0 &&
-        <li>
-          {
-            todoItems.map(j => (<ul key={j.id}>{j.title}</ul>))
-          }
-        </li>
-      }
-    </div>
+    <Container>
+      <TextField onChange={e => setTodo(e.target.value)} value={todo} label={"Enter Todo"} />
+      <Button onClick={onClick}>Senden</Button>
+      {todoItems.length > 0 && <List>
+        {
+          todoItems.map(j => (<ListItem key={j.id}>{j.title}</ListItem>))
+        }
+      </List>}
+    </Container>
   )
 }
 
