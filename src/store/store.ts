@@ -28,6 +28,7 @@ const useHista = create<Store>((set) => ({
         set((produce((draft: State) => {
             draft.todoItems = items
         })))
+        console.log(client)
     },
 
     post: async (title: string) => {
@@ -40,8 +41,8 @@ const useHista = create<Store>((set) => ({
         } catch {
             console.log('Error!')
         }
-
     },
+
 }))
 
 export default useHista
