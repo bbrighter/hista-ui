@@ -34,12 +34,28 @@ export default class Client {
 
 
     /**
+     * @deprecated This constructor is deprecated, and you should move to using BaseURL with an Options object
+     */
+    constructor(target: string, token?: string)
+
+    /**
      * Creates a Client for calling the public and authenticated APIs of your Encore application.
      *
      * @param target  The target which the client should be configured to use. See Local and Environment for options.
      * @param options Options for the client
      */
-    constructor(target: BaseURL, options?: ClientOptions) {
+    constructor(target: BaseURL, options?: ClientOptions)
+    constructor(target: string | BaseURL = "prod", options?: string | ClientOptions) {
+
+        // Convert the old constructor parameters to a BaseURL object and a ClientOptions object
+        if (!target.startsWith("http://") && !target.startsWith("https://")) {
+            target = Environment(target)
+        }
+
+        if (typeof options === "string") {
+            options = { auth: options }
+        }
+
         const base = new BaseClient(target, options ?? {})
         this.api1 = new api1.ServiceClient(base)
     }
@@ -58,9 +74,22 @@ export interface ClientOptions {
 
     /** Default RequestInit to be used for the client */
     requestInit?: Omit<RequestInit, "headers"> & { headers?: Record<string, string> }
+
+    /**
+     * Allows you to set the auth token to be used for each request
+     * either by passing in a static token string or by passing in a function
+     * which returns the auth token.
+     *
+     * These tokens will be sent as bearer tokens in the Authorization header.
+     */
+    auth?: string | AuthDataGenerator
 }
 
 export namespace api1 {
+    export interface AuthParams {
+        Password: string
+    }
+
     export interface PostParams {
         title: string
     }
@@ -75,11 +104,21 @@ export namespace api1 {
         items: TodoItem[]
     }
 
+    export interface Token {
+        Token: string
+    }
+
     export class ServiceClient {
         private baseClient: BaseClient
 
         constructor(baseClient: BaseClient) {
             this.baseClient = baseClient
+        }
+
+        public async Auth(params: AuthParams): Promise<Token> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("POST", `/auth`, JSON.stringify(params))
+            return await resp.json() as Token
         }
 
         public async Get(): Promise<TodoItems> {
@@ -99,7 +138,7 @@ export namespace api1 {
 function encodeQuery(parts: Record<string, string | string[]>): string {
     const pairs: string[] = []
     for (const key in parts) {
-        const val = (Array.isArray(parts[key]) ?  parts[key] : [parts[key]]) as string[]
+        const val = (Array.isArray(parts[key]) ? parts[key] : [parts[key]]) as string[]
         for (const v of val) {
             pairs.push(`${key}=${encodeURIComponent(v)}`)
         }
@@ -128,6 +167,11 @@ type CallParameters = Omit<RequestInit, "method" | "body" | "headers"> & {
     query?: Record<string, string | string[]>
 }
 
+// AuthDataGenerator is a function that returns a new instance of the authentication data required by this API
+export type AuthDataGenerator = () =>
+    | string
+    | Promise<string | undefined>
+    | undefined;
 
 // A fetcher is the prototype for the inbuilt Fetch function
 export type Fetcher = typeof fetch;
@@ -139,6 +183,7 @@ class BaseClient {
     readonly fetcher: Fetcher
     readonly headers: Record<string, string>
     readonly requestInit: Omit<RequestInit, "headers"> & { headers?: Record<string, string> }
+    readonly authGenerator?: AuthDataGenerator
 
     constructor(baseURL: string, options: ClientOptions) {
         this.baseURL = baseURL
@@ -160,6 +205,17 @@ class BaseClient {
         } else {
             this.fetcher = boundFetch
         }
+
+        // Setup an authentication data generator using the auth data token option
+        if (options.auth !== undefined) {
+            const auth = options.auth
+            if (typeof auth === "function") {
+                this.authGenerator = auth
+            } else {
+                this.authGenerator = () => auth
+            }
+        }
+
     }
 
     // callAPI is used by each generated API method to actually make the request
@@ -173,11 +229,27 @@ class BaseClient {
         }
 
         // Merge our headers with any predefined headers
-        init.headers = {...this.headers, ...init.headers, ...headers}
+        init.headers = { ...this.headers, ...init.headers, ...headers }
+
+        // If authorization data generator is present, call it and add the returned data to the request
+        let authData: string | undefined
+        if (this.authGenerator) {
+            const mayBePromise = this.authGenerator()
+            if (mayBePromise instanceof Promise) {
+                authData = await mayBePromise
+            } else {
+                authData = mayBePromise
+            }
+        }
+
+        // If we now have authentication data, add it to the request
+        if (authData) {
+            init.headers["Authorization"] = "Bearer " + authData
+        }
 
         // Make the actual request
         const queryString = query ? '?' + encodeQuery(query) : ''
-        const response = await this.fetcher(this.baseURL+path+queryString, init)
+        const response = await this.fetcher(this.baseURL + path + queryString, init)
 
         // handle any error responses
         if (!response.ok) {
@@ -221,10 +293,10 @@ interface APIErrorResponse {
 
 function isAPIErrorResponse(err: any): err is APIErrorResponse {
     return (
-        err !== undefined && err !== null && 
+        err !== undefined && err !== null &&
         isErrCode(err.code) &&
-        typeof(err.message) === "string" &&
-        (err.details === undefined || err.details === null || typeof(err.details) === "object")
+        typeof (err.message) === "string" &&
+        (err.details === undefined || err.details === null || typeof (err.details) === "object")
     )
 }
 
@@ -254,22 +326,22 @@ export class APIError extends Error {
     constructor(status: number, response: APIErrorResponse) {
         // extending errors causes issues after you construct them, unless you apply the following fixes
         super(response.message);
-        
+
         // set error name as constructor name, make it not enumerable to keep native Error behavior
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new.target#new.target_in_constructors
         Object.defineProperty(this, 'name', {
-            value:        'APIError',
-            enumerable:   false,
+            value: 'APIError',
+            enumerable: false,
             configurable: true,
         })
-        
+
         // fix the prototype chain
-        if ((Object as any).setPrototypeOf == undefined) { 
-            (this as any).__proto__ = APIError.prototype 
+        if ((Object as any).setPrototypeOf == undefined) {
+            (this as any).__proto__ = APIError.prototype
         } else {
             Object.setPrototypeOf(this, APIError.prototype);
         }
-        
+
         // capture a stack trace
         if ((Error as any).captureStackTrace !== undefined) {
             (Error as any).captureStackTrace(this, this.constructor);

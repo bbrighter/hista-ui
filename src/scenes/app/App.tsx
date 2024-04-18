@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import './App.css'
 
 import useHista from '../../store/store'
-import { Button, Container, List, ListItem, TextField } from '@mui/material'
+import { AppBar, Button, Container, List, ListItem, TextField, Toolbar } from '@mui/material'
+import { login } from '../../api/api'
 
 
 
@@ -12,23 +13,36 @@ function App() {
   const post = useHista(state => state.post)
 
   const [todo, setTodo] = useState("")
+  const [pw, setPw] = useState("")
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { get() }, [])
-
+  console.log(window.sessionStorage, window.sessionStorage.getItem("token"))
 
   const onClick = async () => { await post(todo) }
+  const onLogin = async () => {
+    await login(pw)
+  }
+
 
   return (
-    <Container>
-      <TextField onChange={e => setTodo(e.target.value)} value={todo} label={"Enter Todo"} />
-      <Button onClick={onClick}>Senden</Button>
-      {todoItems.length > 0 && <List>
-        {
-          todoItems.map(j => (<ListItem key={j.id}>{j.title}</ListItem>))
-        }
-      </List>}
-    </Container>
+    <>
+      <AppBar>
+        <Toolbar>
+          <TextField label="Enter Password" value={pw} onChange={e => setPw(e.target.value)} />
+          <Button onClick={() => onLogin()}>Login</Button>
+        </Toolbar>
+      </AppBar>
+      <Container sx={{ mt: '4rem' }}>
+        <TextField onChange={e => setTodo(e.target.value)} value={todo} label={"Enter Todo"} />
+        <Button onClick={onClick}>Senden</Button>
+        {todoItems.length > 0 && <List>
+          {
+            todoItems.map(j => (<ListItem key={j.id}>{j.title}</ListItem>))
+          }
+        </List>}
+      </Container>
+    </>
   )
 }
 
