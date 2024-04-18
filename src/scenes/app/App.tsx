@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
-import useHista from './store/store'
+import useHista from '../../store/store'
 
 
 
