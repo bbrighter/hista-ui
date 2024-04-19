@@ -28,7 +28,6 @@ const useHista = create<Store>((set) => ({
         set((produce((draft: State) => {
             draft.todoItems = items
         })))
-        console.log(client)
     },
 
     post: async (title: string) => {
@@ -39,7 +38,7 @@ const useHista = create<Store>((set) => ({
                 draft.todoItems.push({ title: title, id: 10000 })
             })))
         } catch {
-            console.log('Error!')
+            console.warn('Error!')
         }
     },
 

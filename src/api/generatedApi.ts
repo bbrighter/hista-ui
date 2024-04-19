@@ -87,6 +87,7 @@ export interface ClientOptions {
 
 export namespace api1 {
     export interface AuthParams {
+        User: string
         Password: string
     }
 
@@ -105,7 +106,8 @@ export namespace api1 {
     }
 
     export interface Token {
-        Token: string
+        User: string
+        Bearer: string
     }
 
     export class ServiceClient {
@@ -138,7 +140,7 @@ export namespace api1 {
 function encodeQuery(parts: Record<string, string | string[]>): string {
     const pairs: string[] = []
     for (const key in parts) {
-        const val = (Array.isArray(parts[key]) ? parts[key] : [parts[key]]) as string[]
+        const val = (Array.isArray(parts[key]) ?  parts[key] : [parts[key]]) as string[]
         for (const v of val) {
             pairs.push(`${key}=${encodeURIComponent(v)}`)
         }
@@ -169,9 +171,9 @@ type CallParameters = Omit<RequestInit, "method" | "body" | "headers"> & {
 
 // AuthDataGenerator is a function that returns a new instance of the authentication data required by this API
 export type AuthDataGenerator = () =>
-    | string
-    | Promise<string | undefined>
-    | undefined;
+  | string
+  | Promise<string | undefined>
+  | undefined;
 
 // A fetcher is the prototype for the inbuilt Fetch function
 export type Fetcher = typeof fetch;
@@ -229,7 +231,7 @@ class BaseClient {
         }
 
         // Merge our headers with any predefined headers
-        init.headers = { ...this.headers, ...init.headers, ...headers }
+        init.headers = {...this.headers, ...init.headers, ...headers}
 
         // If authorization data generator is present, call it and add the returned data to the request
         let authData: string | undefined
@@ -249,7 +251,7 @@ class BaseClient {
 
         // Make the actual request
         const queryString = query ? '?' + encodeQuery(query) : ''
-        const response = await this.fetcher(this.baseURL + path + queryString, init)
+        const response = await this.fetcher(this.baseURL+path+queryString, init)
 
         // handle any error responses
         if (!response.ok) {
@@ -293,10 +295,10 @@ interface APIErrorResponse {
 
 function isAPIErrorResponse(err: any): err is APIErrorResponse {
     return (
-        err !== undefined && err !== null &&
+        err !== undefined && err !== null && 
         isErrCode(err.code) &&
-        typeof (err.message) === "string" &&
-        (err.details === undefined || err.details === null || typeof (err.details) === "object")
+        typeof(err.message) === "string" &&
+        (err.details === undefined || err.details === null || typeof(err.details) === "object")
     )
 }
 
@@ -326,22 +328,22 @@ export class APIError extends Error {
     constructor(status: number, response: APIErrorResponse) {
         // extending errors causes issues after you construct them, unless you apply the following fixes
         super(response.message);
-
+        
         // set error name as constructor name, make it not enumerable to keep native Error behavior
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new.target#new.target_in_constructors
         Object.defineProperty(this, 'name', {
-            value: 'APIError',
-            enumerable: false,
+            value:        'APIError',
+            enumerable:   false,
             configurable: true,
         })
-
+        
         // fix the prototype chain
-        if ((Object as any).setPrototypeOf == undefined) {
-            (this as any).__proto__ = APIError.prototype
+        if ((Object as any).setPrototypeOf == undefined) { 
+            (this as any).__proto__ = APIError.prototype 
         } else {
             Object.setPrototypeOf(this, APIError.prototype);
         }
-
+        
         // capture a stack trace
         if ((Error as any).captureStackTrace !== undefined) {
             (Error as any).captureStackTrace(this, this.constructor);
