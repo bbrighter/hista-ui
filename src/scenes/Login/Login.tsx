@@ -7,15 +7,16 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
+    const [loginFailed, setLoginFailed] = useState(false)
     const navigate = useNavigate()
 
     const onClick = async () => {
         try {
             await login(password, name)
+            navigate('/')
         } catch {
-            alert("Something went wrong")
-        } finally {
-            navigate("/")
+            console.log("Catching...")
+            setLoginFailed(true)
         }
     }
 
@@ -35,7 +36,7 @@ export default function Login() {
                     onChange={(e) => setName(e.target.value)}
                 />
                 <TextField
-                    sx={{ pt: '10px', pb: '10px' }}
+                    sx={{ mt: '2rem', mb: '2rem' }}
                     label="Passwort"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -43,6 +44,7 @@ export default function Login() {
                 />
                 <div>
                     <Button
+                        color={loginFailed ? "error" : "primary"}
                         variant="contained"
                         onClick={onClick}
                     >Login
