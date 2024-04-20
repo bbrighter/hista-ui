@@ -16,6 +16,7 @@ export default function Login() {
         if (isAuthenticated) {
             navigate("/")
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated])
 
     const onClick = async () => {
