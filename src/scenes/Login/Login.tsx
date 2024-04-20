@@ -1,23 +1,27 @@
 import { Box, Button, Paper, TextField } from "@mui/material";
-import { useState } from "react";
-import { login } from "../../authentification/login";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useHista from "../../store/store";
 
 
 export default function Login() {
+    const isAuthenticated = useHista(state => state.isAuthenticated)
+    const login = useHista(state => state.login)
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
     const [loginFailed, setLoginFailed] = useState(false)
     const navigate = useNavigate()
 
-    const onClick = async () => {
-        try {
-            await login(password, name)
-            navigate('/')
-        } catch {
-            console.log("Catching...")
-            setLoginFailed(true)
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate("/")
         }
+    }, [isAuthenticated])
+
+    const onClick = async () => {
+        const ok = await login(password, name)
+        console.log(ok)
+        setLoginFailed(!ok)
     }
 
     return (
