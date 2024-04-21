@@ -1,26 +1,36 @@
 import { create } from "zustand"
-import { TodoItem, todoItems } from "./todoItems"
 import { client, is401Response } from "../api/api"
 import { produce } from "immer"
-import { api, internalAuth } from "../api/generatedApi"
+import { internalAuth, meals } from "../api/generatedApi"
+import { Meals, MetaMeal, respToMetaMeals } from "./meals"
+import { Meal, respToMeal } from "./meal"
 
 interface State {
     isAuthenticated: boolean
-    todoItems: TodoItem[]
+    meals: Meals
+    meal: Meal
 }
 
 interface Actions {
+    // Auth
     logout: () => void
     login: (password: string, userName: string) => Promise<boolean>
-    get: () => Promise<void>
-    post: (title: string) => Promise<void>
+
+    // Meals
+    getMeals: () => Promise<void>
+
+    // Meal
+    setDate: (dateString: string) => void
+    getMeal: (id: number) => Promise<void>
+    postMeal: () => Promise<number | void>
 }
 
 interface Store extends State, Actions { }
 
 const initialState: State = {
     isAuthenticated: window.sessionStorage.isAuthenticated || false,
-    todoItems: []
+    meals: [],
+    meal: { date: new Date(), foods: [] },
 }
 
 const useHista = create<Store>((set, get) => ({
@@ -48,13 +58,13 @@ const useHista = create<Store>((set, get) => ({
         return get().isAuthenticated
     },
 
-    get: async () => {
+    // Meals
+    getMeals: async () => {
         try {
-            const resp = await client.api.Get()
-            const items = todoItems(resp)
-            set((produce((draft: State) => {
-                draft.todoItems = items
-            })))
+            const resp = await client.meals.GetMeals()
+            set(produce((draft: State) => {
+                draft.meals = respToMetaMeals(resp)
+            }))
         } catch (error) {
             if (is401Response(error)) {
                 get().logout()
@@ -62,19 +72,47 @@ const useHista = create<Store>((set, get) => ({
         }
     },
 
-    post: async (title: string) => {
-        const params: api.PostParams = { title: title }
+    // Meal
+    setDate: (dateString: string) => {
+        const date = new Date(dateString)
+        set(produce((draft: State) => {
+            draft.meal.date = date
+        }))
+    },
+    getMeal: async (id: number) => {
         try {
-            await client.api.Post(params)
-            set((produce((draft: State) => {
-                draft.todoItems.push({ title: title, id: 10000 })
-            })))
+            const resp = await client.meals.GetMeal(id)
+            set(produce((draft: State) => {
+                draft.meal = respToMeal(resp)
+            }))
         } catch (error) {
             if (is401Response(error)) {
                 get().logout()
             }
         }
     },
+    postMeal: async (): Promise<number | void> => {
+        try {
+            const params: meals.MealParams = {
+                date: new Date().toISOString()
+            }
+            const resp = await client.meals.PostMeal(params)
+            const id = resp.id
+            set(produce((draft: State) => {
+                const newMeal: MetaMeal = {
+                    date: get().meal.date,
+                    id: id
+                }
+                draft.meals.push(newMeal)
+                draft.meal.id = id
+            }))
+            return id
+        } catch (error) {
+            if (is401Response(error)) {
+                get().logout()
+            }
+        }
+    }
 
 }))
 
