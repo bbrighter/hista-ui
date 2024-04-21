@@ -2,7 +2,7 @@ import { create } from "zustand"
 import { TodoItem, todoItems } from "./todoItems"
 import { client, is401Response } from "../api/api"
 import { produce } from "immer"
-import { api1 } from "../api/generatedApi"
+import { api, internalAuth } from "../api/generatedApi"
 
 interface State {
     isAuthenticated: boolean
@@ -28,13 +28,13 @@ const useHista = create<Store>((set, get) => ({
 
     logout() { set(produce((draft: State) => { draft.isAuthenticated = false })) },
     login: async (password, userName) => {
-        const params: api1.AuthParams = { Password: password, User: userName }
+        const params: internalAuth.AuthParams = { Password: password, UserId: userName }
         let isAuthenticated = false
         try {
-            const token = await client.api1.Auth(params)
+            const token = await client.api.Login(params)
             isAuthenticated = true
             window.sessionStorage.token = token.Bearer
-            window.sessionStorage.user = token.User
+            window.sessionStorage.user = token.UserId
         } catch (error) {
             if (is401Response(error)) {
                 isAuthenticated = false
@@ -50,7 +50,7 @@ const useHista = create<Store>((set, get) => ({
 
     get: async () => {
         try {
-            const resp = await client.api1.Get()
+            const resp = await client.api.Get()
             const items = todoItems(resp)
             set((produce((draft: State) => {
                 draft.todoItems = items
@@ -63,9 +63,9 @@ const useHista = create<Store>((set, get) => ({
     },
 
     post: async (title: string) => {
-        const params: api1.PostParams = { title: title }
+        const params: api.PostParams = { title: title }
         try {
-            await client.api1.Post(params)
+            await client.api.Post(params)
             set((produce((draft: State) => {
                 draft.todoItems.push({ title: title, id: 10000 })
             })))

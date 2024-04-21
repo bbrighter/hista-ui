@@ -30,7 +30,7 @@ export function PreviewEnv(pr: number | string): BaseURL {
  * Client is an API client for the hista-api-dpc2 Encore application. 
  */
 export default class Client {
-    public readonly api1: api1.ServiceClient
+    public readonly api: api.ServiceClient
 
 
     /**
@@ -57,7 +57,7 @@ export default class Client {
         }
 
         const base = new BaseClient(target, options ?? {})
-        this.api1 = new api1.ServiceClient(base)
+        this.api = new api.ServiceClient(base)
     }
 }
 
@@ -85,12 +85,7 @@ export interface ClientOptions {
     auth?: string | AuthDataGenerator
 }
 
-export namespace api1 {
-    export interface AuthParams {
-        User: string
-        Password: string
-    }
-
+export namespace api {
     export interface PostParams {
         title: string
     }
@@ -105,22 +100,11 @@ export namespace api1 {
         items: TodoItem[]
     }
 
-    export interface Token {
-        User: string
-        Bearer: string
-    }
-
     export class ServiceClient {
         private baseClient: BaseClient
 
         constructor(baseClient: BaseClient) {
             this.baseClient = baseClient
-        }
-
-        public async Auth(params: AuthParams): Promise<Token> {
-            // Now make the actual call to the API
-            const resp = await this.baseClient.callAPI("POST", `/auth`, JSON.stringify(params))
-            return await resp.json() as Token
         }
 
         public async Get(): Promise<TodoItems> {
@@ -129,10 +113,31 @@ export namespace api1 {
             return await resp.json() as TodoItems
         }
 
+        public async Login(params: internalAuth.AuthParams): Promise<internalAuth.Token> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("POST", `/auth`, JSON.stringify(params))
+            return await resp.json() as internalAuth.Token
+        }
+
         public async Post(params: PostParams): Promise<void> {
             await this.baseClient.callAPI("POST", `/test`, JSON.stringify(params))
         }
     }
+}
+
+export namespace internalAuth {
+    export interface AuthParams {
+        UserId: UserId
+        Password: string
+    }
+
+    export interface Token {
+        UserId: UserId
+        Bearer: string
+        Expires: string
+    }
+
+    export type UserId = string
 }
 
 
