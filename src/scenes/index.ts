@@ -1,9 +1,13 @@
 import Login from "./Login"
-import App from "./app"
+import Meal from "./Meal"
+import Meals from "./Meals"
+import Start from "./Start"
 
 const indices = [
-    App,
-    Login
+    Start,
+    Login,
+    Meals,
+    Meal
 ]
 
 export default indices

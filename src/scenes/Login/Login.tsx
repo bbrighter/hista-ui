@@ -21,7 +21,6 @@ export default function Login() {
 
     const onClick = async () => {
         const ok = await login(password, name)
-        console.log(ok)
         setLoginFailed(!ok)
     }
 

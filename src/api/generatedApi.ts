@@ -31,6 +31,7 @@ export function PreviewEnv(pr: number | string): BaseURL {
  */
 export default class Client {
     public readonly api: api.ServiceClient
+    public readonly meals: meals.ServiceClient
 
 
     /**
@@ -58,6 +59,7 @@ export default class Client {
 
         const base = new BaseClient(target, options ?? {})
         this.api = new api.ServiceClient(base)
+        this.meals = new meals.ServiceClient(base)
     }
 }
 
@@ -86,19 +88,6 @@ export interface ClientOptions {
 }
 
 export namespace api {
-    export interface PostParams {
-        title: string
-    }
-
-    export interface TodoItem {
-        id: number
-        title: string
-        done: boolean
-    }
-
-    export interface TodoItems {
-        items: TodoItem[]
-    }
 
     export class ServiceClient {
         private baseClient: BaseClient
@@ -107,20 +96,10 @@ export namespace api {
             this.baseClient = baseClient
         }
 
-        public async Get(): Promise<TodoItems> {
-            // Now make the actual call to the API
-            const resp = await this.baseClient.callAPI("GET", `/test`)
-            return await resp.json() as TodoItems
-        }
-
         public async Login(params: internalAuth.AuthParams): Promise<internalAuth.Token> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callAPI("POST", `/auth`, JSON.stringify(params))
             return await resp.json() as internalAuth.Token
-        }
-
-        public async Post(params: PostParams): Promise<void> {
-            await this.baseClient.callAPI("POST", `/test`, JSON.stringify(params))
         }
     }
 }
@@ -138,6 +117,113 @@ export namespace internalAuth {
     }
 
     export type UserId = string
+}
+
+export namespace meals {
+    export type FoodCondition = string
+
+    export interface FoodParams {
+        ingredientName: string
+        condition: FoodCondition
+    }
+
+    export interface FoodResponse {
+        id: number
+        ingredient: IngredientResponse
+        foodCondition: FoodCondition
+    }
+
+    export interface FoodsResponse {
+        foods: FoodResponse[]
+    }
+
+    export interface IDResponse {
+        id: number
+    }
+
+    export interface IngredientResponse {
+        id: number
+        name: string
+    }
+
+    export interface IngredientsResponse {
+        ingredients: IngredientResponse[]
+    }
+
+    export interface MealMetaResponse {
+        id: number
+        date: string
+    }
+
+    export interface MealParams {
+        date: string
+    }
+
+    export interface MealResponse {
+        id: number
+        date: string
+        foods: FoodResponse[]
+    }
+
+    export interface MealsResponse {
+        meals: MealMetaResponse[]
+    }
+
+    export class ServiceClient {
+        private baseClient: BaseClient
+
+        constructor(baseClient: BaseClient) {
+            this.baseClient = baseClient
+        }
+
+        public async DeleteFood(mealId: number, foodId: number): Promise<void> {
+            await this.baseClient.callAPI("DELETE", `/meal/${encodeURIComponent(mealId)}/foods/${encodeURIComponent(foodId)}`)
+        }
+
+        public async DeleteMeal(id: number): Promise<void> {
+            await this.baseClient.callAPI("DELETE", `/meals/${encodeURIComponent(id)}`)
+        }
+
+        public async GetFoods(mealId: number): Promise<FoodsResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("GET", `/meal/${encodeURIComponent(mealId)}/foods`)
+            return await resp.json() as FoodsResponse
+        }
+
+        public async GetIngredients(): Promise<IngredientsResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("GET", `/ingredient`)
+            return await resp.json() as IngredientsResponse
+        }
+
+        public async GetMeal(id: number): Promise<MealResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("GET", `/meals/${encodeURIComponent(id)}`)
+            return await resp.json() as MealResponse
+        }
+
+        public async GetMeals(): Promise<MealsResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("GET", `/meals`)
+            return await resp.json() as MealsResponse
+        }
+
+        public async PatchMealTime(id: number, params: MealParams): Promise<void> {
+            await this.baseClient.callAPI("PATCH", `/meals/${encodeURIComponent(id)}`, JSON.stringify(params))
+        }
+
+        public async PostFood(mealId: number, params: FoodParams): Promise<IDResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("POST", `/meal/${encodeURIComponent(mealId)}/foods`, JSON.stringify(params))
+            return await resp.json() as IDResponse
+        }
+
+        public async PostMeal(params: MealParams): Promise<IDResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("POST", `/meals`, JSON.stringify(params))
+            return await resp.json() as IDResponse
+        }
+    }
 }
 
 
