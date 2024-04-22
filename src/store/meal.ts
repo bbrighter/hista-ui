@@ -13,12 +13,13 @@ interface Food {
 }
 
 export const respToMeal = (resp: meals.MealResponse): Meal => {
-    const foods = resp.foods.map(f => {
-        return { id: f.id, ingredient: f.ingredient.name, condition: f.foodCondition }
-    })
-    return {
+    const foods = resp.foods.map(f => (
+        { id: f.id, ingredient: f.ingredient.name, condition: f.foodCondition })
+    )
+    const meal = {
         id: resp.id,
         date: new Date(resp.date),
         foods: foods
     }
+    return meal
 }
