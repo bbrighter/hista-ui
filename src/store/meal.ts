@@ -9,12 +9,18 @@ export interface Meal {
 interface Food {
     id: number
     ingredient: string
-    condition: string
+    condition: FoodCondition
 }
 
+export type FoodCondition = 'raw' | 'cooked'
+
 export const respToMeal = (resp: meals.MealResponse): Meal => {
-    const foods = resp.foods.map(f => (
-        { id: f.id, ingredient: f.ingredient.name, condition: f.foodCondition })
+    const foods = resp.foods.map(f => {
+        console.log(f.foodCondition)
+        const condition: FoodCondition = f.foodCondition == 'raw' ? 'raw' : 'cooked'
+        console.log(condition)
+        return { id: f.id, ingredient: f.ingredient.name, condition: condition }
+    }
     )
     const meal = {
         id: resp.id,

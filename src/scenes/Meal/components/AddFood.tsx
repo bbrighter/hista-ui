@@ -2,7 +2,7 @@ import { Autocomplete, AutocompleteChangeReason, TextField } from "@mui/material
 import useHista from "../../../store/store";
 import { useEffect } from "react";
 
-export default function NewIngredient() {
+export default function AddFood() {
     const getIngredients = useHista(state => state.getIngredients)
     const postFood = useHista(state => state.postFood)
     const ingredients = useHista(state => state.ingredients)
@@ -16,7 +16,6 @@ export default function NewIngredient() {
 
 
     const onChange = async (_: React.SyntheticEvent, v: (string | null), changeReason: AutocompleteChangeReason) => {
-        console.log('onchange')
         if (typeof (v) == 'string' && (changeReason == 'createOption' || changeReason == 'selectOption')) {
             await postFood(v)
         }
