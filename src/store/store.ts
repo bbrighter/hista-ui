@@ -169,7 +169,7 @@ const useHista = create<Store>((set, get) => ({
     // Foods
     postFood: async (ingredientName: string) => {
         const mealId = get().meal.id
-        const condition = "raw"
+        const condition = "cooked"
         if (!mealId) return
         try {
             const params: meals.FoodParams = {
