@@ -3,7 +3,7 @@ import { client, is401Response } from "../api/api"
 import { produce } from "immer"
 import { internalAuth, meals } from "../api/generatedApi"
 import { Meals, MetaMeal, respToMetaMeals } from "./meals"
-import { Meal, respToMeal } from "./meal"
+import { FoodCondition, Meal, respToMeal } from "./meal"
 import { Ingredients, respToIngredients } from "./ingredients"
 
 interface State {
@@ -30,8 +30,12 @@ interface Actions {
     // Ingredients
     getIngredients: () => Promise<void>
 
-    // Food
+    // Foods
     postFood: (ingredientName: string) => Promise<void>
+
+    // Food
+    deleteFood: (foodId: number) => Promise<void>
+    patchFoodCondition: (foodId: number, newCondition: FoodCondition) => Promise<void>
 }
 
 interface Store extends State, Actions { }
@@ -162,7 +166,7 @@ const useHista = create<Store>((set, get) => ({
         }
     },
 
-    // Food
+    // Foods
     postFood: async (ingredientName: string) => {
         const mealId = get().meal.id
         const condition = "raw"
@@ -182,14 +186,43 @@ const useHista = create<Store>((set, get) => ({
             }))
             await get().getIngredients()
         } catch (error) {
-            const params: meals.FoodParams = {
-                condition: "raw",
-                ingredientName: ingredientName
+            if (is401Response(error)) {
+                get().logout()
             }
-            client.meals.PostFood(mealId, params)
         }
 
-    }
+    },
+
+    // Food
+    deleteFood: async (foodId: number) => {
+        const mealId = get().meal.id || 0
+        try {
+            await client.meals.DeleteFood(mealId, foodId)
+            set(produce((draft: State) => {
+                draft.meal.foods = get().meal.foods.filter(f => f.id != foodId)
+            }))
+        } catch (error) {
+            if (is401Response(error)) {
+                get().logout()
+            }
+        }
+    },
+
+    patchFoodCondition: async (foodId: number, newCondition: FoodCondition) => {
+        const params: meals.FoodConditionParams = { Condition: newCondition }
+        const mealId = get().meal.id || 0
+        const foodIndex = get().meal.foods.findIndex(f => f.id == foodId)
+        try {
+            await client.meals.PatchFoodCondition(mealId, foodId, params)
+            set(produce((draft: State) => {
+                draft.meal.foods[foodIndex].condition = newCondition
+            }))
+        } catch (error) {
+            if (is401Response(error)) {
+                get().logout()
+            }
+        }
+    },
 
 }))
 

@@ -2,11 +2,12 @@ import { Container, FormControl, FormGroup, FormLabel } from "@mui/material";
 import useHista from "../../store/store";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import NewIngredient from "./components/Ingredient";
+import AddFood from "./components/AddFood";
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from "dayjs";
 import "dayjs/locale/de";
+import FoodList from "./components/FoodList";
 
 
 export default function Meal() {
@@ -35,14 +36,10 @@ export default function Meal() {
                     </LocalizationProvider>
                 </FormControl>
                 <FormControl>
-                    <NewIngredient />
+                    <AddFood />
                 </FormControl>
             </FormGroup>
-            <ul>
-                {meal.foods.map(i =>
-                    <li key={i.id}>{i.ingredient}</li>
-                )}
-            </ul>
+            <FoodList />
         </Container>
     )
 }

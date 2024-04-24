@@ -122,6 +122,10 @@ export namespace internalAuth {
 export namespace meals {
     export type FoodCondition = string
 
+    export interface FoodConditionParams {
+        Condition: string
+    }
+
     export interface FoodParams {
         ingredientName: string
         condition: FoodCondition
@@ -206,6 +210,15 @@ export namespace meals {
             // Now make the actual call to the API
             const resp = await this.baseClient.callAPI("GET", `/meals`)
             return await resp.json() as MealsResponse
+        }
+
+        public async PatchFoodCondition(mealId: number, foodId: number, params: FoodConditionParams): Promise<void> {
+            // Convert our params into the objects we need for the request
+            const query = makeRecord<string, string | string[]>({
+                condition: params.Condition,
+            })
+
+            await this.baseClient.callAPI("PATCH", `/meal/${encodeURIComponent(mealId)}/foods/${encodeURIComponent(foodId)}/condition`, undefined, {query})
         }
 
         public async PatchMealTime(id: number, params: MealParams): Promise<void> {
