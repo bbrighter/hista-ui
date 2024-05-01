@@ -1,4 +1,4 @@
-import { Autocomplete, AutocompleteChangeReason, AutocompleteInputChangeReason, TextField } from "@mui/material";
+import { Autocomplete, AutocompleteChangeReason, TextField } from "@mui/material";
 import useHista from "../../../store/store";
 import { useEffect, useState } from "react";
 
@@ -24,8 +24,7 @@ export default function AddFood() {
         }
     }
 
-    const onInputChange = (_: React.SyntheticEvent, v: string, reason: AutocompleteInputChangeReason) => {
-        console.log(v, reason)
+    const onInputChange = (_e: React.SyntheticEvent, v: string) => {
         setValue(v)
     }
 
