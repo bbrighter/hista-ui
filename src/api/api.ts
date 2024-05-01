@@ -2,7 +2,7 @@ import Client, { AuthDataGenerator, ClientOptions, Environment, Local, isAPIErro
 
 const baseUrl = import.meta.env.PROD ? Environment("staging") : Local
 
-const authGenerator: AuthDataGenerator = () => (window.sessionStorage.getItem("token") || "")
+const authGenerator: AuthDataGenerator = () => (window.localStorage.getItem("token") || "")
 const options: ClientOptions = { auth: authGenerator }
 
 

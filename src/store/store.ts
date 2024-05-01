@@ -41,7 +41,7 @@ interface Actions {
 interface Store extends State, Actions { }
 
 const initialState: State = {
-    isAuthenticated: window.sessionStorage.isAuthenticated || false,
+    isAuthenticated: window.localStorage.isAuthenticated || false,
     meals: [],
     meal: { date: new Date(), foods: [] },
     ingredients: [],
@@ -57,14 +57,14 @@ const useHista = create<Store>((set, get) => ({
         try {
             const token = await client.api.Login(params)
             isAuthenticated = true
-            window.sessionStorage.token = token.Bearer
-            window.sessionStorage.user = token.UserId
+            window.localStorage.token = token.Bearer
+            window.localStorage.user = token.UserId
         } catch (error) {
             if (is401Response(error)) {
                 isAuthenticated = false
             }
         } finally {
-            window.sessionStorage.isAuthenticated = isAuthenticated
+            window.localStorage.isAuthenticated = isAuthenticated
             set(produce((draft: State) => {
                 draft.isAuthenticated = isAuthenticated
             }))

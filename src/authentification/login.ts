@@ -6,9 +6,9 @@ export const login = async (pw: string, userName: string) => {
 
     const token = await client.api.Login(params)
     if (token.Bearer != "" && token.UserId != "") {
-        window.sessionStorage.token = token.Bearer
-        window.sessionStorage.user = token.UserId
-        window.sessionStorage.authorized = true
+        window.localStorage.token = token.Bearer
+        window.localStorage.user = token.UserId
+        window.localStorage.authorized = true
     }
 }
 
