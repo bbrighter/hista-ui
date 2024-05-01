@@ -1,4 +1,4 @@
-import { FormControlLabel, IconButton, List, ListItem, ListItemText, Radio, RadioGroup } from "@mui/material";
+import { IconButton, List, ListItem, ListItemText, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useHista from "../../../store/store";
 import { FoodCondition } from "../../../store/meal";
@@ -26,19 +26,26 @@ export default function FoodList() {
                         </IconButton>
                     }>
                     <ListItemText>
-                        {f.ingredient}
+                        <Typography noWrap >
+                            {f.ingredient}
+                        </Typography>
                     </ListItemText>
-                    <RadioGroup
-                        row
+                    <ToggleButtonGroup
+                        sx={{ paddingRight: '10px', paddingLeft: '10px' }}
+                        size="small"
+                        exclusive
                         value={f.condition}
                         onChange={(_, v) => {
                             const val = v as FoodCondition
                             onChange(f.id, val)
-                        }}
-                    >
-                        <FormControlLabel value={"raw"} control={<Radio />} label={"Roh"} />
-                        <FormControlLabel value={"cooked"} control={<Radio />} label={"Gekocht"} />
-                    </RadioGroup>
+                        }}>
+                        <ToggleButton value='raw'>
+                            Roh
+                        </ToggleButton>
+                        <ToggleButton value='cooked'>
+                            Gekocht
+                        </ToggleButton>
+                    </ToggleButtonGroup>
                 </ListItem>))}
         </List>
     )
