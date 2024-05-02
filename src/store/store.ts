@@ -178,7 +178,7 @@ const useHista = create<Store>((set, get) => ({
             }
             const resp = await client.meals.PostFood(mealId, params)
             set(produce((draft: State) => {
-                draft.meal.foods.push({
+                draft.meal.foods.unshift({
                     condition: condition,
                     id: resp.id,
                     ingredient: ingredientName,

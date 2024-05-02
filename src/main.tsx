@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import scenes from './scenes'
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles'
@@ -22,6 +22,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           {scenes.map(scene => {
             return <Route  {...routeToPrivateRoute(scene.name, { ...scene.routeProps })} />
           })}
+          <Route
+            path="*"
+            element={<Navigate to="/" replace />}
+          />
         </Routes>
       </ThemeProvider>
     </React.StrictMode>
