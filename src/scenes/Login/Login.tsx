@@ -1,15 +1,17 @@
-import { Box, Button, Paper, TextField } from "@mui/material";
+import { Box, Button, ButtonOwnProps, CircularProgress, Paper, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useHista from "../../store/store";
 
+
+type LoadingState = 'loading' | 'error' | 'initial'
 
 export default function Login() {
     const isAuthenticated = useHista(state => state.isAuthenticated)
     const login = useHista(state => state.login)
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
-    const [loginFailed, setLoginFailed] = useState(false)
+    const [loadingState, setLoadingState] = useState<LoadingState>('initial')
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -20,19 +22,40 @@ export default function Login() {
     }, [isAuthenticated])
 
     const onClick = async () => {
+        setLoadingState('loading')
         const ok = await login(password, name)
-        setLoginFailed(!ok)
+        ok ? setLoadingState('initial') : setLoadingState('error')
+    }
+
+    const buttonColor = () => {
+        const props: ButtonOwnProps = { color: "primary" }
+        switch (loadingState) {
+            case "loading":
+                props.color = "secondary"
+                break
+            case "error":
+                props.color = "error"
+                break
+            case "initial":
+                props.color = "primary"
+                break
+        }
+        return props.color
     }
 
     return (
         <Box component="form" sx={{
-            width: '400px',
-            left: 'calc(50vw - 200px)',
+            width: '350px',
+            left: 'calc(50vw - 175px)',
             top: '20px',
-            position: 'absolute'
+            position: 'absolute',
+
         }}>
             <Paper sx={{
-                padding: '10px'
+                padding: '10px',
+                textAlign: 'center',
+                paddingTop: '20px',
+                paddingBottom: '20px'
             }}>
                 <TextField
                     label="Name"
@@ -46,14 +69,21 @@ export default function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                     type='password'
                 />
-                <div>
+                <Box sx={{ position: 'relative', m: 1 }}>
                     <Button
-                        color={loginFailed ? "error" : "primary"}
+                        color={buttonColor()}
                         variant="contained"
                         onClick={onClick}
                     >Login
+                        {loadingState == 'loading' && (
+                            <CircularProgress
+                                size={24}
+                                color="primary"
+                                sx={{ position: 'absolute' }}
+                            />
+                        )}
                     </Button>
-                </div>
+                </Box>
             </Paper>
         </Box>)
 }
