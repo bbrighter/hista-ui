@@ -27,9 +27,9 @@ export default function AddFood() {
     }, [postFood, value])
 
 
-    const onChange = async (_e: React.SyntheticEvent, _v: (string | null), changeReason: AutocompleteChangeReason) => {
-        if (typeof (inputValue) == 'string' && (changeReason == 'createOption' || changeReason == 'selectOption')) {
-            setValue(inputValue)
+    const onChange = async (_e: React.SyntheticEvent, v: (string | null), changeReason: AutocompleteChangeReason) => {
+        if (typeof (v) == 'string' && (changeReason == 'createOption' || changeReason == 'selectOption')) {
+            setValue(v)
         }
     }
 
