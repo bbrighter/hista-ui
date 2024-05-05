@@ -32,6 +32,7 @@ export function PreviewEnv(pr: number | string): BaseURL {
 export default class Client {
     public readonly api: api.ServiceClient
     public readonly meals: meals.ServiceClient
+    public readonly symptoms: symptoms.ServiceClient
 
 
     /**
@@ -60,6 +61,7 @@ export default class Client {
         const base = new BaseClient(target, options ?? {})
         this.api = new api.ServiceClient(base)
         this.meals = new meals.ServiceClient(base)
+        this.symptoms = new symptoms.ServiceClient(base)
     }
 }
 
@@ -235,6 +237,95 @@ export namespace meals {
             // Now make the actual call to the API
             const resp = await this.baseClient.callAPI("POST", `/meals`, JSON.stringify(params))
             return await resp.json() as IDResponse
+        }
+    }
+}
+
+export namespace symptoms {
+    export interface ConditionEventMetaResponse {
+        id: number
+        date: string
+    }
+
+    export interface ConditionEventRequestParams {
+        date: string
+    }
+
+    export interface ConditionEventResponse {
+        id: number
+        date: string
+        conditions: ConditionResponse[]
+    }
+
+    export interface ConditionEventsResponse {
+        conditionEvents: ConditionEventMetaResponse[]
+    }
+
+    export interface ConditionResponse {
+        id: number
+        symptom: SymptomResponse
+        severity: ConditionSeverity
+    }
+
+    export type ConditionSeverity = number
+
+    export interface IDResponse {
+        id: number
+    }
+
+    export interface SymptomCategoriesResponse {
+        Categories: SymptomCategoryResponse[]
+    }
+
+    export interface SymptomCategoryResponse {
+        id: number
+        name: string
+        symptoms: SymptomResponse[]
+    }
+
+    export interface SymptomResponse {
+        id: number
+        name: string
+        categoryId: number
+    }
+
+    export class ServiceClient {
+        private baseClient: BaseClient
+
+        constructor(baseClient: BaseClient) {
+            this.baseClient = baseClient
+        }
+
+        public async CreateConditionEvent(params: ConditionEventRequestParams): Promise<IDResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("POST", `/condition-events`, JSON.stringify(params))
+            return await resp.json() as IDResponse
+        }
+
+        public async DeleteConditionEvent(eventId: number): Promise<void> {
+            await this.baseClient.callAPI("DELETE", `/condition-events/${encodeURIComponent(eventId)}`)
+        }
+
+        public async GetConditionEvent(eventId: number): Promise<ConditionEventResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("GET", `/condition-events/${encodeURIComponent(eventId)}`)
+            return await resp.json() as ConditionEventResponse
+        }
+
+        public async GetConditionEvents(): Promise<ConditionEventsResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("GET", `/condition-events`)
+            return await resp.json() as ConditionEventsResponse
+        }
+
+        public async GetSymptoms(): Promise<SymptomCategoriesResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("GET", `/symptoms`)
+            return await resp.json() as SymptomCategoriesResponse
+        }
+
+        public async PatchDate(eventId: number, params: ConditionEventRequestParams): Promise<void> {
+            await this.baseClient.callAPI("PATCH", `/condition-events/${encodeURIComponent(eventId)}`, JSON.stringify(params))
         }
     }
 }

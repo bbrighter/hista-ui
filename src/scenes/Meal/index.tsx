@@ -1,8 +1,9 @@
+import { MEAL_URL } from "../../api/urls"
 import Meal from "./Meal"
 
 const ind = {
     routeProps: {
-        path: '/meals/:id',
+        path: MEAL_URL + '/:id',
         element: <Meal />,
     },
     name: "Meal"

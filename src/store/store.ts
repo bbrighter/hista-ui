@@ -1,16 +1,20 @@
 import { create } from "zustand"
 import { client, is401Response } from "../api/api"
 import { produce } from "immer"
-import { internalAuth, meals } from "../api/generatedApi"
+import { internalAuth, meals, symptoms } from "../api/generatedApi"
 import { Meals, MetaMeal, respToMetaMeals } from "./meals"
 import { FoodCondition, Meal, respToMeal } from "./meal"
 import { Ingredients, respToIngredients } from "./ingredients"
+import { ConditionEvents, respToConditionEvents } from "./conditionEvents"
+import { ConditionEvent } from "./conditionEvent"
 
 interface State {
     isAuthenticated: boolean
     meals: Meals
     meal: Meal
     ingredients: Ingredients
+    conditionEvents: ConditionEvents
+    conditionEvent: ConditionEvent
 }
 
 interface Actions {
@@ -36,6 +40,15 @@ interface Actions {
     // Food
     deleteFood: (foodId: number) => Promise<void>
     patchFoodCondition: (foodId: number, newCondition: FoodCondition) => Promise<void>
+
+    // ConditionEvents
+    getConditionEvents: () => Promise<void>,
+    postConditionEvent: () => Promise<number | void>,
+
+    // ConditionEvent
+    getConditionEvent: (eventId: number) => Promise<void>,
+    deleteConditionEvent: (eventId: number) => Promise<void>
+
 }
 
 interface Store extends State, Actions { }
@@ -45,6 +58,8 @@ const initialState: State = {
     meals: [],
     meal: { date: new Date(), foods: [] },
     ingredients: [],
+    conditionEvents: [],
+    conditionEvent: { date: new Date(), conditions: [] },
 }
 
 const useHista = create<Store>((set, get) => ({
@@ -111,7 +126,7 @@ const useHista = create<Store>((set, get) => ({
         try {
             await client.meals.DeleteMeal(id)
             set(produce((draft: State) => {
-                draft.meals = get().meals.filter(m => m.id != id)
+                draft.meals = removeItemById(id, get().meals)
             }))
         } catch (error) {
             if (is401Response(error)) {
@@ -199,7 +214,7 @@ const useHista = create<Store>((set, get) => ({
         try {
             await client.meals.DeleteFood(mealId, foodId)
             set(produce((draft: State) => {
-                draft.meal.foods = get().meal.foods.filter(f => f.id != foodId)
+                draft.meal.foods = removeItemById(foodId, get().meal.foods)
             }))
         } catch (error) {
             if (is401Response(error)) {
@@ -224,6 +239,69 @@ const useHista = create<Store>((set, get) => ({
         }
     },
 
+    // ConditionEvents
+    getConditionEvents: async () => {
+        try {
+            const resp = await client.symptoms.GetConditionEvents()
+            const states = respToConditionEvents(resp)
+            set(produce((draft: State) => {
+                draft.conditionEvents = states
+            }))
+        } catch (error) {
+            if (is401Response(error)) {
+                get().logout()
+            }
+        }
+    },
+    postConditionEvent: async () => {
+        const date = new Date()
+        const params: symptoms.ConditionEventRequestParams = { date: date.toISOString() }
+        try {
+            const resp = await client.symptoms.CreateConditionEvent(params)
+            set(produce((draft: State) => {
+                draft.conditionEvents.unshift({ id: resp.id, date: date })
+            }))
+            return resp.id
+        } catch (error) {
+            if (is401Response(error)) {
+                get().logout()
+            }
+        }
+    },
+
+    // ConditionEvent
+    getConditionEvent: async (eventId: number) => {
+        try {
+            const resp = await client.symptoms.GetConditionEvent(eventId)
+            console.log(resp)
+
+        } catch (error) {
+            if (is401Response(error)) {
+                get().logout()
+            }
+        }
+    },
+    deleteConditionEvent: async (eventId: number) => {
+        try {
+            await client.symptoms.DeleteConditionEvent(eventId)
+            set(produce((draft: State) => {
+                draft.conditionEvents = removeItemById(eventId, get().conditionEvents)
+            }))
+        } catch (error) {
+            if (is401Response(error)) {
+                get().logout()
+            }
+        }
+    }
+
 }))
 
 export default useHista
+
+
+interface Items {
+    id: number
+}
+function removeItemById<T extends Items>(id: number, items: Array<T>): Array<T> {
+    return items.filter(it => it.id != id)
+}

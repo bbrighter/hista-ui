@@ -1,0 +1,31 @@
+import { symptoms } from "../api/generatedApi"
+
+export interface Symptom {
+    id: number
+    name: string
+    categoryId: number
+}
+
+interface SymptomCategory {
+    categoryId: number
+    categoryName: string
+    symptoms: Array<Symptom>
+}
+
+export type SymptomCategories = Array<SymptomCategory>
+
+export function respToSymptoms(resp: symptoms.SymptomCategoriesResponse): SymptomCategories {
+    return resp.Categories.map(c => (
+        {
+            categoryId: c.id,
+            categoryName: c.name,
+            symptoms: c.symptoms.map(s => ({
+                id: s.id,
+                name: s.name,
+                categoryId: s.categoryId
+            }))
+        }
+    )
+
+    )
+}
