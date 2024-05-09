@@ -6,7 +6,9 @@ import { Meals, MetaMeal, respToMetaMeals } from "./meals"
 import { FoodCondition, Meal, respToMeal } from "./meal"
 import { Ingredients, respToIngredients } from "./ingredients"
 import { ConditionEvents, respToConditionEvents } from "./conditionEvents"
-import { ConditionEvent } from "./conditionEvent"
+import { ConditionEvent, respToConditionEvent } from "./conditionEvent"
+import { SymptomCategories, respToSymptoms } from "./symptom"
+import { respToCondition } from "./condition"
 
 interface State {
     isAuthenticated: boolean
@@ -15,6 +17,7 @@ interface State {
     ingredients: Ingredients
     conditionEvents: ConditionEvents
     conditionEvent: ConditionEvent
+    symptoms: SymptomCategories
 }
 
 interface Actions {
@@ -28,7 +31,7 @@ interface Actions {
     deleteMeal: (id: number) => Promise<void>
 
     // Meal
-    setDate: (dateString: string) => Promise<void>
+    setMealDate: (dateString: string) => Promise<void>
     getMeal: (id: number) => Promise<void>
 
     // Ingredients
@@ -47,7 +50,16 @@ interface Actions {
 
     // ConditionEvent
     getConditionEvent: (eventId: number) => Promise<void>,
-    deleteConditionEvent: (eventId: number) => Promise<void>
+    deleteConditionEvent: (eventId: number) => Promise<void>,
+    setConditionEventDate: (date: Date) => Promise<void>,
+
+    // Symptoms
+    getSymptoms: () => Promise<void>,
+    postConditionByName: (symptomName: string, symptomCategoryId: number) => Promise<void>,
+    postConditionById: (symtpomId: number) => Promise<void>,
+    postSymptomCategory: (name: string) => Promise<number>,
+    patchCondition: (conditionId: number, severity: number) => Promise<void>,
+    deleteCondition: (conditionId: number) => Promise<void>,
 
 }
 
@@ -59,7 +71,8 @@ const initialState: State = {
     meal: { date: new Date(), foods: [] },
     ingredients: [],
     conditionEvents: [],
-    conditionEvent: { date: new Date(), conditions: [] },
+    conditionEvent: { id: 0, date: new Date(), conditions: [] },
+    symptoms: [],
 }
 
 const useHista = create<Store>((set, get) => ({
@@ -136,7 +149,7 @@ const useHista = create<Store>((set, get) => ({
     },
 
     // Meal
-    setDate: async (dateString: string) => {
+    setMealDate: async (dateString: string) => {
         const params: meals.MealParams = { date: dateString }
         const id = get().meal.id
         try {
@@ -273,7 +286,10 @@ const useHista = create<Store>((set, get) => ({
     getConditionEvent: async (eventId: number) => {
         try {
             const resp = await client.symptoms.GetConditionEvent(eventId)
-            console.log(resp)
+            const event = respToConditionEvent(resp)
+            set(produce((draft: State) => {
+                draft.conditionEvent = event
+            }))
 
         } catch (error) {
             if (is401Response(error)) {
@@ -286,6 +302,109 @@ const useHista = create<Store>((set, get) => ({
             await client.symptoms.DeleteConditionEvent(eventId)
             set(produce((draft: State) => {
                 draft.conditionEvents = removeItemById(eventId, get().conditionEvents)
+            }))
+        } catch (error) {
+            if (is401Response(error)) {
+                get().logout()
+            }
+        }
+    },
+    setConditionEventDate: async (date: Date) => {
+        try {
+            const params: symptoms.ConditionEventRequestParams = { date: date.toISOString() }
+            await client.symptoms.PatchDate(get().conditionEvent.id, params)
+            set(produce((draft: State) => {
+                draft.conditionEvent.date = date
+            }))
+        } catch (error) {
+            if (is401Response(error)) {
+                get().logout()
+            }
+        }
+    },
+
+    // Symtpoms
+    getSymptoms: async () => {
+        try {
+            const resp = await client.symptoms.GetSymptoms()
+            const symtpoms = respToSymptoms(resp)
+            set(produce((draft: State) => {
+                draft.symptoms = symtpoms
+            }))
+        } catch (error) {
+            if (is401Response(error)) {
+                get().logout()
+            }
+        }
+    },
+    postConditionByName: async (symptomName: string, symptomCategoryId: number) => {
+        try {
+            const params: symptoms.ConditionRequestParams = {
+                categoryId: symptomCategoryId,
+                symptomName: symptomName
+            }
+            const resp = await client.symptoms.PostCondition(get().conditionEvent.id, params)
+            const condition = respToCondition(resp.condition)
+            const symptoms = respToSymptoms(resp.symptoms)
+            set(produce((draft: State) => {
+                draft.conditionEvent.conditions.unshift(condition)
+                draft.symptoms = symptoms
+            }))
+        } catch (error) {
+            if (is401Response(error)) {
+                get().logout()
+            }
+        }
+    },
+    postConditionById: async (symptomId: number) => {
+        try {
+            const resp = await client.symptoms.PostConditionBySymptomID(get().conditionEvent.id, symptomId)
+            const condition = respToCondition(resp)
+            set(produce((draft: State) => {
+                draft.conditionEvent.conditions.unshift(condition)
+            }))
+        } catch (error) {
+            if (is401Response(error)) {
+                get().logout()
+            }
+        }
+    },
+    postSymptomCategory: async (name: string): Promise<number> => {
+        const params: symptoms.PostSymptomCategoryRequest = { name: name }
+        try {
+            const resp = await client.symptoms.PostSymptomCategory(params)
+            set(produce((draft: State) => {
+                draft.symptoms.unshift({ categoryId: resp.id, categoryName: name, symptoms: [] })
+            }))
+            return resp.id
+        } catch (error) {
+            if (is401Response(error)) {
+                get().logout()
+            }
+            return 0
+        }
+    },
+    patchCondition: async (conditionId: number, severity: number): Promise<void> => {
+        const params: symptoms.PatchSeverityRequestParams = {
+            severity: severity
+        }
+        try {
+            await client.symptoms.PatchCondition(conditionId, params)
+            const conditionIndex = get().conditionEvent.conditions.findIndex(c => c.id == conditionId)
+            set(produce((draft: State) => {
+                draft.conditionEvent.conditions[conditionIndex].severity = severity
+            }))
+        } catch (error) {
+            if (is401Response(error)) {
+                get().logout()
+            }
+        }
+    },
+    deleteCondition: async (conditionId: number): Promise<void> => {
+        try {
+            await client.symptoms.DeleteCondition(conditionId)
+            set(produce((draft: State) => {
+                draft.conditionEvent.conditions = removeItemById(conditionId, get().conditionEvent.conditions)
             }))
         } catch (error) {
             if (is401Response(error)) {

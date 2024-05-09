@@ -4,14 +4,25 @@ import { useParams } from "react-router-dom";
 
 import useHista from "../../store/store";
 import DateInput from "../components/DateIpnut";
+import dayjs from "dayjs";
+import AddCondition from "./components/AddConition";
+import ConditionList from "./components/ConditionList";
 
 export default function ConditionEvent() {
     const getConditionEvent = useHista(state => state.getConditionEvent)
+    const setConditionEventDate = useHista(state => state.setConditionEventDate)
     const conditionEvent = useHista(state => state.conditionEvent)
     const params = useParams<{ id: string }>()
 
     useEffect(() => { getConditionEvent(Number(params.id)) },
         [getConditionEvent, params.id])
+
+    const onChange = (v: dayjs.Dayjs | null) => {
+        if (v != null) {
+            setConditionEventDate(v.toDate())
+        }
+
+    }
 
     return (
         <Container sx={{ padding: '2rem' }}>
@@ -19,13 +30,13 @@ export default function ConditionEvent() {
                 <DateInput
                     date={conditionEvent.date}
                     title="Symptome"
-                    onChange={(v, c) => console.log(v, c)}
+                    onChange={onChange}
                 />
                 <FormControl>
-                    Add symptom
+                    <AddCondition />
                 </FormControl>
             </FormGroup>
-            {conditionEvent.conditions.map(c => (<>{c.id}</>))}
+            <ConditionList />
         </Container>
     )
 }

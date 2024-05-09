@@ -29,3 +29,11 @@ export function respToSymptoms(resp: symptoms.SymptomCategoriesResponse): Sympto
 
     )
 }
+
+export function respToSymptom(resp: symptoms.SymptomResponse): Symptom {
+    return {
+        id: resp.id,
+        categoryId: resp.categoryId,
+        name: resp.name
+    }
+}

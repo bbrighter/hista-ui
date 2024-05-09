@@ -2,7 +2,7 @@ import { symptoms } from "../api/generatedApi"
 import { Symptom } from "./symptom"
 
 export interface ConditionEvent {
-    id?: number
+    id: number
     date: Date
     conditions: Array<Condition>
 }

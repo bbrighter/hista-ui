@@ -261,6 +261,11 @@ export namespace symptoms {
         conditionEvents: ConditionEventMetaResponse[]
     }
 
+    export interface ConditionRequestParams {
+        symptomName: string
+        categoryId: number
+    }
+
     export interface ConditionResponse {
         id: number
         symptom: SymptomResponse
@@ -271,6 +276,19 @@ export namespace symptoms {
 
     export interface IDResponse {
         id: number
+    }
+
+    export interface PatchSeverityRequestParams {
+        severity: ConditionSeverity
+    }
+
+    export interface PostConditionResponse {
+        condition: ConditionResponse
+        symptoms: SymptomCategoriesResponse
+    }
+
+    export interface PostSymptomCategoryRequest {
+        name: string
     }
 
     export interface SymptomCategoriesResponse {
@@ -302,6 +320,10 @@ export namespace symptoms {
             return await resp.json() as IDResponse
         }
 
+        public async DeleteCondition(conditionID: number): Promise<void> {
+            await this.baseClient.callAPI("DELETE", `/conditions/${encodeURIComponent(conditionID)}`)
+        }
+
         public async DeleteConditionEvent(eventId: number): Promise<void> {
             await this.baseClient.callAPI("DELETE", `/condition-events/${encodeURIComponent(eventId)}`)
         }
@@ -324,8 +346,30 @@ export namespace symptoms {
             return await resp.json() as SymptomCategoriesResponse
         }
 
+        public async PatchCondition(conditionID: number, params: PatchSeverityRequestParams): Promise<void> {
+            await this.baseClient.callAPI("PATCH", `/conditions/${encodeURIComponent(conditionID)}`, JSON.stringify(params))
+        }
+
         public async PatchDate(eventId: number, params: ConditionEventRequestParams): Promise<void> {
             await this.baseClient.callAPI("PATCH", `/condition-events/${encodeURIComponent(eventId)}`, JSON.stringify(params))
+        }
+
+        public async PostCondition(eventId: number, params: ConditionRequestParams): Promise<PostConditionResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("POST", `/condition-events/${encodeURIComponent(eventId)}/conditions`, JSON.stringify(params))
+            return await resp.json() as PostConditionResponse
+        }
+
+        public async PostConditionBySymptomID(eventId: number, symptomId: number): Promise<ConditionResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("POST", `/condition-events/${encodeURIComponent(eventId)}/conditions/symptoms/${encodeURIComponent(symptomId)}`)
+            return await resp.json() as ConditionResponse
+        }
+
+        public async PostSymptomCategory(params: PostSymptomCategoryRequest): Promise<IDResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("POST", `/symptoms/categories`, JSON.stringify(params))
+            return await resp.json() as IDResponse
         }
     }
 }

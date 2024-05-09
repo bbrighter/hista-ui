@@ -9,7 +9,7 @@ import DateInput from "../components/DateIpnut";
 
 export default function Meal() {
     const getMeal = useHista(state => state.getMeal)
-    const setDate = useHista(state => state.setDate)
+    const setDate = useHista(state => state.setMealDate)
     const meal = useHista(state => state.meal)
     const params = useParams<{ id: string }>()
 
