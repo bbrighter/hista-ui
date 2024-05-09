@@ -320,8 +320,10 @@ export namespace symptoms {
             return await resp.json() as IDResponse
         }
 
-        public async DeleteCondition(conditionID: number): Promise<void> {
-            await this.baseClient.callAPI("DELETE", `/conditions/${encodeURIComponent(conditionID)}`)
+        public async DeleteCondition(conditionID: number): Promise<SymptomCategoriesResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("DELETE", `/conditions/${encodeURIComponent(conditionID)}`)
+            return await resp.json() as SymptomCategoriesResponse
         }
 
         public async DeleteConditionEvent(eventId: number): Promise<void> {

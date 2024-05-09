@@ -402,9 +402,10 @@ const useHista = create<Store>((set, get) => ({
     },
     deleteCondition: async (conditionId: number): Promise<void> => {
         try {
-            await client.symptoms.DeleteCondition(conditionId)
+            const resp = await client.symptoms.DeleteCondition(conditionId)
             set(produce((draft: State) => {
                 draft.conditionEvent.conditions = removeItemById(conditionId, get().conditionEvent.conditions)
+                draft.symptoms = respToSymptoms(resp)
             }))
         } catch (error) {
             if (is401Response(error)) {
