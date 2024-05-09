@@ -4,6 +4,7 @@ import { Button, Container } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import MealList from "./components/MealList"
 import { MEAL_URL } from "../../api/urls"
+import RestaurantIcon from '@mui/icons-material/Restaurant';
 
 export default function Meals() {
     const navigate = useNavigate()
@@ -23,7 +24,11 @@ export default function Meals() {
 
     return (
         <Container sx={{ padding: '2rem' }}>
-            <Button variant='outlined' onClick={onCreate}>Neue Mahlzeit</Button>
+            <Button
+                startIcon={<RestaurantIcon />}
+                variant='outlined'
+                onClick={onCreate}
+            >Neue Mahlzeit</Button>
             <MealList />
         </Container>
     )

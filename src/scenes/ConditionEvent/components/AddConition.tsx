@@ -20,12 +20,11 @@ const isNewOption = (opt: unknown): opt is NewOption => {
 
 export default function AddCondition() {
     const [open, setOpen] = useState(false)
-    const [symptomName, setSymptomName] = useState("")
+    const [value, setValue] = useState<Option | null>(null)
+    const [inputValue, setInputValue] = useState("")
     const getSymptoms = useHista(state => state.getSymptoms)
     const postConditionById = useHista(state => state.postConditionById)
     const symptoms = useHista(state => state.symptoms)
-
-    console.log(open)
 
     useEffect(() => {
         getSymptoms()
@@ -37,13 +36,14 @@ export default function AddCondition() {
         ))
     ))
 
-    const onChange = async (_e: React.SyntheticEvent, value: Option | null, reason: AutocompleteChangeReason) => {
-        if (value == null) return
-        if (isNewOption(value) && reason == "selectOption") {
+    const onChange = async (_e: React.SyntheticEvent, v: Option | null, reason: AutocompleteChangeReason) => {
+        if (v == null) return
+        if (isNewOption(v) && reason == "selectOption") {
             setOpen(true)
-            setSymptomName(value)
-        } else if (!isNewOption(value) && reason == 'selectOption') {
-            await postConditionById(value.symptomId)
+            setValue(v)
+        } else if (!isNewOption(v) && reason == 'selectOption') {
+            await postConditionById(v.symptomId)
+            setInputValue("")
         }
     }
 
@@ -60,16 +60,25 @@ export default function AddCondition() {
         return filtered
     }
 
+    const onCloseModal = () => {
+        setOpen(false)
+        setInputValue("")
+        setValue(null)
+    }
+
     return (
         <>
             <Autocomplete sx={{ paddingTop: '20px' }}
                 freeSolo
+                inputValue={inputValue}
+                onInputChange={(_e, v) => setInputValue(v)}
+                value={value}
+                onChange={onChange}
                 options={options}
                 getOptionLabel={s => typeof (s) == 'string' ? s : s.symptomName}
                 selectOnFocus
                 clearOnBlur
                 filterOptions={filterOptions}
-                onChange={onChange}
                 renderOption={(props, option) => {
                     const key = isNewOption(option) ? 0 : option.symptomId
                     const primary = isNewOption(option) ? option : option.symptomName
@@ -86,12 +95,9 @@ export default function AddCondition() {
             />
             <AddOrSelectCategory
                 open={open}
-                symptomName={symptomName}
-                onClose={() => setOpen(false)}
+                symptomName={isNewOption(value) ? value : value?.symptomName || ""}
+                onClose={onCloseModal}
             />
-
         </>
-
-
     )
 }

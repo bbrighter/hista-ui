@@ -3,7 +3,9 @@ import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import "dayjs/locale/de";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useDebounce from "../../hooks/useDebounce";
+import { useDidUpdateEffect } from "../../hooks/useDidUpdateEffect";
 
 export default function DateInput(props: {
     title: string
@@ -11,29 +13,16 @@ export default function DateInput(props: {
     onChange: ((value: dayjs.Dayjs | null) => void)
 }) {
     const date = dayjs(props.date)
-    const [isChanged, setIsChanged] = useState(false)
-    const [debounceInputValue, setDebounceInputValue] = useState(date)
     const [inputValue, setInputValue] = useState(date)
+    const debouncedInputValue = useDebounce(inputValue, 500)
 
-    useEffect(() => {
-        const delayInputTimeoutId = setTimeout(() => {
-            setDebounceInputValue(inputValue)
-        }, 500)
-        return () => clearTimeout(delayInputTimeoutId)
-    }, [inputValue, date])
-
-    useEffect(() => {
-        if (isChanged) {
-            props.onChange(debounceInputValue)
-            setIsChanged(false)
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [debounceInputValue])
+    useDidUpdateEffect(() => {
+        props.onChange(debouncedInputValue)
+    }, [debouncedInputValue])
 
     const handleInputChange = (value: dayjs.Dayjs | null) => {
         if (value != null) {
             setInputValue(value)
-            setIsChanged(true)
         }
     }
 

@@ -3,6 +3,7 @@ import { Button, Container } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import { CONDITON_EVENTS_URL } from "../../api/urls"
 import EventList from "./components/EventList"
+import SickIcon from '@mui/icons-material/Sick';
 
 export default function ConditionEvents() {
     const postConditionEvent = useHista(state => state.postConditionEvent)
@@ -17,7 +18,11 @@ export default function ConditionEvents() {
 
     return (
         <Container sx={{ paddingTop: '2rem' }}>
-            <Button onClick={onClick}>
+            <Button
+                startIcon={<SickIcon />}
+                onClick={onClick}
+                variant="outlined"
+            >
                 Neues Symtpom
             </Button>
             <EventList />
