@@ -1,4 +1,4 @@
-import { meals } from "../api/generatedApi"
+import { meals } from "../../api/generatedApi"
 
 export interface Meal {
     id?: number

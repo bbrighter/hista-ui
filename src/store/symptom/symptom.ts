@@ -1,4 +1,4 @@
-import { symptoms } from "../api/generatedApi"
+import { symptoms } from "../../api/generatedApi"
 
 export interface Symptom {
     id: number

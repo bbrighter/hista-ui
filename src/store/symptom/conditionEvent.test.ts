@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { symptoms } from "../api/generatedApi";
+import { symptoms } from "../../api/generatedApi";
 import { respToConditionEvent } from "./conditionEvent";
 
 test("respToConditionEvent", () => {

@@ -49,7 +49,8 @@ export default function AddOrSelectCategory(props: {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: 400,
+                minWidth: '350px',
+                width: '50%',
                 padding: '2rem',
                 borderRadius: '5px'
             }}>
