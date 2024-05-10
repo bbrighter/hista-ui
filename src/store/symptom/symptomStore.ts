@@ -1,5 +1,5 @@
 import { StateCreator } from "zustand"
-import { client, is401Response } from "../../api/api"
+import { client } from "../../api/api"
 import { produce } from "immer"
 import { symptoms } from "../../api/generatedApi"
 import { ConditionEvents, respToConditionEvents } from "./conditionEvents"
@@ -8,6 +8,7 @@ import { SymptomCategories, respToSymptoms } from "./symptom"
 import { respToCondition } from "./condition"
 import { AuthStore } from "../auth/authStore"
 import { MealStore } from "../meal/mealStore"
+import { ErrorStore } from "../error/errorStore"
 
 interface State {
     conditionEvents: ConditionEvents
@@ -47,9 +48,11 @@ const initialState: State = {
 }
 
 export const createSymptomSlice: StateCreator<
-    AuthStore & MealStore & SymptomStore, [], [], SymptomStore> = ((set, get) => ({
+    AuthStore & ErrorStore & MealStore & SymptomStore,
+    [],
+    [],
+    SymptomStore> = ((set, get) => ({
         ...initialState,
-
 
         // ConditionEvents
         getConditionEvents: async () => {
@@ -60,9 +63,7 @@ export const createSymptomSlice: StateCreator<
                     draft.conditionEvents = states
                 }))
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         },
         postConditionEvent: async () => {
@@ -75,9 +76,7 @@ export const createSymptomSlice: StateCreator<
                 }))
                 return resp.id
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         },
 
@@ -91,9 +90,7 @@ export const createSymptomSlice: StateCreator<
                 }))
 
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         },
         deleteConditionEvent: async (eventId: number) => {
@@ -103,9 +100,7 @@ export const createSymptomSlice: StateCreator<
                     draft.conditionEvents = removeItemById(eventId, get().conditionEvents)
                 }))
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         },
         setConditionEventDate: async (date: Date) => {
@@ -116,9 +111,7 @@ export const createSymptomSlice: StateCreator<
                     draft.conditionEvent.date = date
                 }))
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         },
 
@@ -131,9 +124,7 @@ export const createSymptomSlice: StateCreator<
                     draft.symptoms = symtpoms
                 }))
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         },
 
@@ -152,9 +143,7 @@ export const createSymptomSlice: StateCreator<
                     draft.symptoms = symptoms
                 }))
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         },
         postConditionById: async (symptomId: number) => {
@@ -165,9 +154,7 @@ export const createSymptomSlice: StateCreator<
                     draft.conditionEvent.conditions.unshift(condition)
                 }))
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         },
         postSymptomCategory: async (name: string): Promise<number> => {
@@ -179,9 +166,7 @@ export const createSymptomSlice: StateCreator<
                 }))
                 return resp.id
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
                 return 0
             }
         },
@@ -196,9 +181,7 @@ export const createSymptomSlice: StateCreator<
                     draft.conditionEvent.conditions[conditionIndex].severity = severity
                 }))
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         },
         deleteCondition: async (conditionId: number): Promise<void> => {
@@ -209,9 +192,7 @@ export const createSymptomSlice: StateCreator<
                     draft.symptoms = respToSymptoms(resp)
                 }))
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         }
 
