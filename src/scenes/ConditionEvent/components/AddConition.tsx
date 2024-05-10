@@ -38,7 +38,7 @@ export default function AddCondition() {
 
     const onChange = async (_e: React.SyntheticEvent, v: Option | null, reason: AutocompleteChangeReason) => {
         if (v == null) return
-        if (isNewOption(v) && reason == "selectOption") {
+        if (isNewOption(v) && (reason == "selectOption" || reason == "createOption")) {
             setOpen(true)
             setValue(v)
         } else if (!isNewOption(v) && reason == 'selectOption') {

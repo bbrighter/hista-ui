@@ -1,6 +1,6 @@
 import { test, expect } from 'vitest'
 import { respToMeal } from './meal'
-import { meals } from '../api/generatedApi'
+import { meals } from '../../api/generatedApi'
 
 test('Meal', () => {
     const resp: meals.MealResponse = {

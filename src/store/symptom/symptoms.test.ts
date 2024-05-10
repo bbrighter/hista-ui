@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { symptoms } from "../api/generatedApi";
+import { symptoms } from "../../api/generatedApi";
 import { respToSymptoms } from "./symptom";
 
 describe("symptom", () => {

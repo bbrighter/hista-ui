@@ -1,7 +1,7 @@
 import { IconButton, List, ListItem, ListItemText, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useHista from "../../../store/store";
-import { FoodCondition } from "../../../store/meal";
+import { FoodCondition } from "../../../store/meal/meal";
 
 export default function FoodList() {
     const food = useHista(state => state.meal.foods)

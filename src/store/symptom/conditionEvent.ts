@@ -1,4 +1,4 @@
-import { symptoms } from "../api/generatedApi"
+import { symptoms } from "../../api/generatedApi"
 import { Symptom } from "./symptom"
 
 export interface ConditionEvent {

@@ -1,4 +1,4 @@
-import { symptoms } from "../api/generatedApi"
+import { symptoms } from "../../api/generatedApi"
 import { Symptom, respToSymptom } from "./symptom"
 
 type Severity = 5 | 4 | 3 | 2 | 1

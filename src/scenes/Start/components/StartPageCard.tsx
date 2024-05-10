@@ -32,7 +32,7 @@ export default function StartPageCard(props: {
     return (
         <Grid item padding={5}>
             <StyledCard
-                sx={{ minWidth: '375px' }}
+                sx={{ minWidth: '300px' }}
                 variant="outlined"
                 onClick={() => navigate(navigateTo)}
             >
