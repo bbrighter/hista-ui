@@ -30,18 +30,24 @@ export const createErrorSlice: StateCreator<
 
         setError: (error: unknown) => {
             if (isAPIError(error)) {
-                console.error(error)
                 const status = error.status
                 switch (status) {
                     case 401:
                         get().logout()
                         break
                     case 500:
-                        set(produce((draft: State) =>
-                            draft.errorMessage = error.message))
+                        set(produce((draft: State) => {
+                            draft.errorMessage = error.message
+                        }))
                         alert("Etwas ist furchtbar schief gelaufen! " + get().errorMessage)
+
                         break
                     case 400:
+                        if (error.message == "invalid uuid") {
+                            console.warn("Invalid uuid")
+                            get().logout()
+                            break
+                        }
                         set(produce((draft: State) => {
                             draft.errorMessage = error.message
                         }))

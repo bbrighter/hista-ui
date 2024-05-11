@@ -1,9 +1,10 @@
 import { StateCreator } from "zustand"
-import { client, is401Response } from "../../api/api"
+import { login } from "../../api/api"
 import { produce } from "immer"
-import { internalAuth } from "../../api/generatedApi"
 import { SymptomStore } from "../symptom/symptomStore"
 import { MealStore } from "../meal/mealStore"
+import { ErrorStore } from "../error/errorStore"
+import { ErrCode } from "../../api/generatedApi"
 
 
 interface State {
@@ -22,28 +23,34 @@ const initialState: State = {
     isAuthenticated: window.localStorage.isAuthenticated || false,
 }
 
-export const createAuthSlice: StateCreator<AuthStore & MealStore & SymptomStore, [], [], AuthStore> = ((set, get) => ({
-    ...initialState,
+export const createAuthSlice: StateCreator<
+    AuthStore & ErrorStore & MealStore & SymptomStore,
+    [],
+    [],
+    AuthStore> = ((set, get) => ({
+        ...initialState,
 
-    logout() { set(produce((draft: State) => { draft.isAuthenticated = false })) },
-    login: async (password, userName) => {
-        const params: internalAuth.AuthParams = { Password: password, UserId: userName }
-        let isAuthenticated = false
-        try {
-            const token = await client.api.Login(params)
-            isAuthenticated = true
-            window.localStorage.token = token.Bearer
-            window.localStorage.user = token.UserId
-        } catch (error) {
-            if (is401Response(error)) {
+        logout() { set(produce((draft: State) => { draft.isAuthenticated = false })) },
+        login: async (password, userName) => {
+            let isAuthenticated = false
+
+            const resp = await login(userName, password)
+            if (resp.status == ErrCode.OK) {
+                isAuthenticated = true
+                window.localStorage.token = resp.token
+                window.localStorage.user = userName
+            } else {
                 isAuthenticated = false
+                if (resp.status == ErrCode.Internal) {
+                    alert("Login furchtbar schiefgegangen!")
+                }
             }
-        } finally {
+
             window.localStorage.isAuthenticated = isAuthenticated
             set(produce((draft: State) => {
                 draft.isAuthenticated = isAuthenticated
             }))
-        }
-        return get().isAuthenticated
-    },
-}))
+
+            return get().isAuthenticated
+        },
+    }))
