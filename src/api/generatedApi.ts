@@ -30,15 +30,10 @@ export function PreviewEnv(pr: number | string): BaseURL {
  * Client is an API client for the hista-api-dpc2 Encore application. 
  */
 export default class Client {
-    public readonly api: api.ServiceClient
+    public readonly internalAuth: internalAuth.ServiceClient
     public readonly meals: meals.ServiceClient
     public readonly symptoms: symptoms.ServiceClient
 
-
-    /**
-     * @deprecated This constructor is deprecated, and you should move to using BaseURL with an Options object
-     */
-    constructor(target: string, token?: string)
 
     /**
      * Creates a Client for calling the public and authenticated APIs of your Encore application.
@@ -46,20 +41,9 @@ export default class Client {
      * @param target  The target which the client should be configured to use. See Local and Environment for options.
      * @param options Options for the client
      */
-    constructor(target: BaseURL, options?: ClientOptions)
-    constructor(target: string | BaseURL = "prod", options?: string | ClientOptions) {
-
-        // Convert the old constructor parameters to a BaseURL object and a ClientOptions object
-        if (!target.startsWith("http://") && !target.startsWith("https://")) {
-            target = Environment(target)
-        }
-
-        if (typeof options === "string") {
-            options = { auth: options }
-        }
-
+    constructor(target: BaseURL, options?: ClientOptions) {
         const base = new BaseClient(target, options ?? {})
-        this.api = new api.ServiceClient(base)
+        this.internalAuth = new internalAuth.ServiceClient(base)
         this.meals = new meals.ServiceClient(base)
         this.symptoms = new symptoms.ServiceClient(base)
     }
@@ -80,16 +64,27 @@ export interface ClientOptions {
     requestInit?: Omit<RequestInit, "headers"> & { headers?: Record<string, string> }
 
     /**
-     * Allows you to set the auth token to be used for each request
-     * either by passing in a static token string or by passing in a function
-     * which returns the auth token.
-     *
-     * These tokens will be sent as bearer tokens in the Authorization header.
+     * Allows you to set the authentication data to be used for each
+     * request either by passing in a static object or by passing in
+     * a function which returns a new object for each request.
      */
-    auth?: string | AuthDataGenerator
+    auth?: internalAuth.AuthParams | AuthDataGenerator
 }
 
-export namespace api {
+export namespace internalAuth {
+    export interface AuthParams {
+        Authorization: string
+        UserName: string
+    }
+
+    export interface LoginParams {
+        userName: string
+        password: string
+    }
+
+    export interface LoginResponse {
+        token: string
+    }
 
     export class ServiceClient {
         private baseClient: BaseClient
@@ -98,27 +93,12 @@ export namespace api {
             this.baseClient = baseClient
         }
 
-        public async Login(params: internalAuth.AuthParams): Promise<internalAuth.Token> {
+        public async Login(params: LoginParams): Promise<LoginResponse> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callAPI("POST", `/auth`, JSON.stringify(params))
-            return await resp.json() as internalAuth.Token
+            const resp = await this.baseClient.callAPI("POST", `/login`, JSON.stringify(params))
+            return await resp.json() as LoginResponse
         }
     }
-}
-
-export namespace internalAuth {
-    export interface AuthParams {
-        UserId: UserId
-        Password: string
-    }
-
-    export interface Token {
-        UserId: UserId
-        Bearer: string
-        Expires: string
-    }
-
-    export type UserId = string
 }
 
 export namespace meals {
@@ -412,8 +392,8 @@ type CallParameters = Omit<RequestInit, "method" | "body" | "headers"> & {
 
 // AuthDataGenerator is a function that returns a new instance of the authentication data required by this API
 export type AuthDataGenerator = () =>
-  | string
-  | Promise<string | undefined>
+  | internalAuth.AuthParams
+  | Promise<internalAuth.AuthParams | undefined>
   | undefined;
 
 // A fetcher is the prototype for the inbuilt Fetch function
@@ -475,7 +455,7 @@ class BaseClient {
         init.headers = {...this.headers, ...init.headers, ...headers}
 
         // If authorization data generator is present, call it and add the returned data to the request
-        let authData: string | undefined
+        let authData: internalAuth.AuthParams | undefined
         if (this.authGenerator) {
             const mayBePromise = this.authGenerator()
             if (mayBePromise instanceof Promise) {
@@ -487,7 +467,8 @@ class BaseClient {
 
         // If we now have authentication data, add it to the request
         if (authData) {
-            init.headers["Authorization"] = "Bearer " + authData
+            init.headers["authorization"] = authData.Authorization
+            init.headers["username"] = authData.UserName
         }
 
         // Make the actual request
