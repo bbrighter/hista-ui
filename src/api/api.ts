@@ -1,6 +1,6 @@
 import Client, { AuthDataGenerator, ClientOptions, Environment, Local, internalAuth, isAPIError } from "./generatedApi";
 
-const baseUrl = import.meta.env.PROD ? Environment("staging") : Local
+const baseUrl = import.meta.env.PROD ? Environment("prod") : Local
 
 const authGenerator: AuthDataGenerator = () => {
     return (
