@@ -23,12 +23,3 @@ const respTypeToType = (resp: unknown): 'Food' | 'Symptom' => {
         throw ("Bad type:" + resp)
     }
 }
-
-export const formatDiary = async (entries: Array<RawDiary>) => {
-    return entries.map(e => ({
-        Datum: e.date,
-        Uhrzeit: e.hour,
-        Typ: e.type == 'Food' ? 'Essen' : 'Symptom',
-        Was: e.content,
-    }))
-}

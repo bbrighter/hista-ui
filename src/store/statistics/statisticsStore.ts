@@ -1,5 +1,5 @@
 import { StateCreator } from "zustand";
-import { RawDiary, formatDiary, respToRawDiary } from "./diary";
+import { RawDiary, respToRawDiary } from "./diary";
 import { AuthStore } from "../auth/authStore";
 import { ErrorStore } from "../error/errorStore";
 import { MealStore } from "../meal/mealStore";
