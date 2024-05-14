@@ -1,9 +1,9 @@
-import { MEAL_URL } from "../../api/urls"
+import { url } from "../../constants"
 import Meals from "./Meals"
 
 const ind = {
     routeProps: {
-        path: MEAL_URL,
+        path: url.MEAL,
         element: <Meals />,
     },
     name: "Meals"

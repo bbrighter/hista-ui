@@ -32,6 +32,7 @@ export function PreviewEnv(pr: number | string): BaseURL {
 export default class Client {
     public readonly internalAuth: internalAuth.ServiceClient
     public readonly meals: meals.ServiceClient
+    public readonly statistics: statistics.ServiceClient
     public readonly symptoms: symptoms.ServiceClient
 
 
@@ -45,6 +46,7 @@ export default class Client {
         const base = new BaseClient(target, options ?? {})
         this.internalAuth = new internalAuth.ServiceClient(base)
         this.meals = new meals.ServiceClient(base)
+        this.statistics = new statistics.ServiceClient(base)
         this.symptoms = new symptoms.ServiceClient(base)
     }
 }
@@ -217,6 +219,35 @@ export namespace meals {
             // Now make the actual call to the API
             const resp = await this.baseClient.callAPI("POST", `/meals`, JSON.stringify(params))
             return await resp.json() as IDResponse
+        }
+    }
+}
+
+export namespace statistics {
+    export type Category = string
+
+    export interface DiaryResp {
+        diaries: RawDiary[]
+    }
+
+    export interface RawDiary {
+        date: string
+        hour: number
+        type: Category
+        content: string
+    }
+
+    export class ServiceClient {
+        private baseClient: BaseClient
+
+        constructor(baseClient: BaseClient) {
+            this.baseClient = baseClient
+        }
+
+        public async GetDiary(): Promise<DiaryResp> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("GET", `/diary`)
+            return await resp.json() as DiaryResp
         }
     }
 }

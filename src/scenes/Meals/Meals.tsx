@@ -3,8 +3,8 @@ import useHista from "../../store/store"
 import { Button, Container } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 import MealList from "./components/MealList"
-import { MEAL_URL } from "../../api/urls"
 import RestaurantIcon from '@mui/icons-material/Restaurant';
+import { url } from "../../constants"
 
 export default function Meals() {
     const navigate = useNavigate()
@@ -17,7 +17,7 @@ export default function Meals() {
     const onCreate = async () => {
         const id = await postMeal()
         if (id) {
-            navigate(MEAL_URL + '/' + id)
+            navigate(url.MEAL + '/' + id)
         }
     }
 

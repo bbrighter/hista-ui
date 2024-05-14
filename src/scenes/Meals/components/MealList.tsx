@@ -6,7 +6,7 @@ import useHista from "../../../store/store";
 import { useEffect } from "react";
 // import { MetaMeal } from "../../../store/meals";
 import OverviewList from "../../components/OverviewList";
-import { MEAL_URL } from "../../../api/urls";
+import { url } from "../../../constants";
 
 export default function MealList() {
     const getMeals = useHista(state => state.getMeals)
@@ -15,7 +15,7 @@ export default function MealList() {
     const navigate = useNavigate()
 
     const onClick = (id: number) => {
-        navigate(MEAL_URL + "/" + id)
+        navigate(url.MEAL + "/" + id)
     }
 
     const onDelete = async (id: number) => {
