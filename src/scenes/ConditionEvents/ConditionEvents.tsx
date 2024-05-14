@@ -1,9 +1,9 @@
 import useHista from "../../store/store"
 import { Button, Container } from "@mui/material"
 import { useNavigate } from "react-router-dom"
-import { CONDITON_EVENTS_URL } from "../../api/urls"
 import EventList from "./components/EventList"
 import SickIcon from '@mui/icons-material/Sick';
+import { url } from "../../constants"
 
 export default function ConditionEvents() {
     const postConditionEvent = useHista(state => state.postConditionEvent)
@@ -12,7 +12,7 @@ export default function ConditionEvents() {
     const onClick = async () => {
         const id = await postConditionEvent()
         if (id) {
-            navigate(CONDITON_EVENTS_URL + "/" + String(id))
+            navigate(url.CONDITION_EVENTS + "/" + String(id))
         }
     }
 

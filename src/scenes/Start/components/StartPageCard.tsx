@@ -1,12 +1,13 @@
 import { Card, CardContent, CardHeader, Grid, Icon, Typography } from "@mui/material";
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import SickIcon from '@mui/icons-material/Sick';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
-import { CONDITON_EVENTS_URL, MEAL_URL } from "../../../api/urls";
+import { url } from "../../../constants";
 
 export default function StartPageCard(props: {
-    type: 'meals' | 'conditionEvents'
+    type: 'meals' | 'conditionEvents' | 'statistics'
 }) {
     const navigate = useNavigate()
 
@@ -19,13 +20,19 @@ export default function StartPageCard(props: {
             title = "Mahlzeiten"
             content = "Mahlzeiten hinzufügen, ansehen und bearbeiten"
             icon = <RestaurantIcon />
-            navigateTo = MEAL_URL
+            navigateTo = url.MEAL
             break
         case "conditionEvents":
             title = "Symptome"
             content = "Symptome aufzeichnen"
             icon = <SickIcon />
-            navigateTo = CONDITON_EVENTS_URL
+            navigateTo = url.CONDITION_EVENTS
+            break
+        case "statistics":
+            title = "Auswertungen"
+            content = "Ernährungstagebuch und mehr"
+            icon = <QueryStatsIcon />
+            navigateTo = url.STATISTICS
             break
     }
 

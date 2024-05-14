@@ -1,10 +1,10 @@
-import { CONDITON_EVENTS_URL } from "../../api/urls"
+import { url } from "../../constants"
 import ConditionEvent from "./ConditionEvent"
 
 
 const ind = {
     routeProps: {
-        path: CONDITON_EVENTS_URL + '/:id',
+        path: url.CONDITION_EVENTS + '/:id',
         element: <ConditionEvent />,
     },
     name: "ConditionEvent"

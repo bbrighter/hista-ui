@@ -1,5 +1,5 @@
 import { StateCreator } from "zustand"
-import { client, is401Response } from "../../api/api"
+import { client } from "../../api/api"
 import { produce } from "immer"
 import { meals } from "../../api/generatedApi"
 import { Meals, MetaMeal, respToMetaMeals } from "./meals"
@@ -59,9 +59,7 @@ export const createMealSlice: StateCreator<
                     draft.meals = respToMetaMeals(resp)
                 }))
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         },
         postMeal: async (): Promise<number | void> => {
@@ -81,9 +79,7 @@ export const createMealSlice: StateCreator<
                 }))
                 return id
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         },
         deleteMeal: async (id: number): Promise<void> => {
@@ -93,9 +89,7 @@ export const createMealSlice: StateCreator<
                     draft.meals = removeItemById(id, get().meals)
                 }))
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         },
 
@@ -111,9 +105,7 @@ export const createMealSlice: StateCreator<
                     draft.meal.date = date
                 }))
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
 
         },
@@ -124,9 +116,7 @@ export const createMealSlice: StateCreator<
                     draft.meal = respToMeal(resp)
                 }))
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         },
 
@@ -139,9 +129,7 @@ export const createMealSlice: StateCreator<
                     draft.ingredients = respToIngredients(resp)
                 }))
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         },
 
@@ -165,9 +153,7 @@ export const createMealSlice: StateCreator<
                 }))
                 await get().getIngredients()
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
 
         },
@@ -181,9 +167,7 @@ export const createMealSlice: StateCreator<
                     draft.meal.foods = removeItemById(foodId, get().meal.foods)
                 }))
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         },
 
@@ -197,9 +181,7 @@ export const createMealSlice: StateCreator<
                     draft.meal.foods[foodIndex].condition = newCondition
                 }))
             } catch (error) {
-                if (is401Response(error)) {
-                    get().logout()
-                }
+                get().setError(error)
             }
         },
     }))
