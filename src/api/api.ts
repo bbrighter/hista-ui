@@ -1,6 +1,16 @@
 import Client, { AuthDataGenerator, ClientOptions, Environment, Local, internalAuth, isAPIError } from "./generatedApi";
 
-const baseUrl = import.meta.env.PROD ? Environment("prod") : Local
+
+const getStageURL = (): string => {
+    const hostname = new URL(window.location.href).hostname
+    if (hostname.includes("hista-ui-git")) {
+        return Environment("staging")
+    } else {
+        return Environment("prod")
+    }
+}
+
+const baseUrl = import.meta.env.PROD ? getStageURL() : Local
 
 const authGenerator: AuthDataGenerator = () => {
     return (
