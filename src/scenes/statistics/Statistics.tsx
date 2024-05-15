@@ -2,7 +2,7 @@ import { Button, ButtonGroup, Container, Typography } from "@mui/material";
 import useHista from "../../store/store";
 import { LoadingButton } from "@mui/lab";
 import { useEffect, useState } from "react";
-import { utils, writeFile } from "xlsx";
+import { writeRawDiaryToExcel } from "./excel";
 
 
 export default function Statistics() {
@@ -14,14 +14,7 @@ export default function Statistics() {
     useEffect(() => {
         if (diaryEntries.length > 0) {
             setIsLoadingState('loading')
-            const worksheet = utils.json_to_sheet(diaryEntries)
-            utils.sheet_add_aoa(worksheet, [["Datum", "Uhrzeit", "Typ", "Was"]], { origin: "A1" })
-            const workbook = utils.book_new()
-            utils.book_append_sheet(workbook, worksheet, "Rohdaten")
-
-            const today = new Date()
-            const filename = "Ernährungstagebuch_" + today.toISOString().slice(0, 10).replace(/-/g, "")
-            writeFile(workbook, filename + '.xlsx')
+            writeRawDiaryToExcel(diaryEntries)
             setIsLoadingState('done')
         }
     }, [diaryEntries])
