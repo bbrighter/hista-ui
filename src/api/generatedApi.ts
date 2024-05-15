@@ -235,6 +235,7 @@ export namespace statistics {
         hour: number
         type: Category
         content: string
+        severity: string
     }
 
     export class ServiceClient {
