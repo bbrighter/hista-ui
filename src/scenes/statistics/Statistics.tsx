@@ -1,9 +1,8 @@
 import { Button, ButtonGroup, Container, Typography } from "@mui/material";
 import useHista from "../../store/store";
 import { LoadingButton } from "@mui/lab";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { utils, writeFile } from "xlsx";
-import { RawDiary } from "../../store/statistics/diary";
 
 
 export default function Statistics() {
@@ -12,31 +11,24 @@ export default function Statistics() {
 
     const [isLoadingState, setIsLoadingState] = useState<'idle' | 'loading' | 'done'>('idle')
 
-    const renameColumnHeaders = (entries: Array<RawDiary>) => {
-        return entries.map(e => ({
-            "Datum": e.date,
-            "Uhrzeit": e.hour,
-            "Typ": e.type == 'Food' ? "Essen" : "Symptom",
-            "Was": e.content,
-        }))
-    }
+    useEffect(() => {
+        if (diaryEntries.length > 0) {
+            setIsLoadingState('loading')
+            const worksheet = utils.json_to_sheet(diaryEntries)
+            utils.sheet_add_aoa(worksheet, [["Datum", "Uhrzeit", "Typ", "Was"]], { origin: "A1" })
+            const workbook = utils.book_new()
+            utils.book_append_sheet(workbook, worksheet, "Rohdaten")
+
+            const today = new Date()
+            const filename = "Ernährungstagebuch_" + today.toISOString().slice(0, 10).replace(/-/g, "")
+            writeFile(workbook, filename + '.xlsx')
+            setIsLoadingState('done')
+        }
+    }, [diaryEntries])
 
     const onClick = async () => {
-        setIsLoadingState('loading')
         await getDiaryEntries()
-        const germanEntries = renameColumnHeaders(diaryEntries)
-        const worksheet = utils.json_to_sheet(germanEntries)
-        const workbook = utils.book_new()
-        utils.book_append_sheet(workbook, worksheet, "Rohdaten")
-        writeFile(workbook, filename + '.xlsx')
-        setIsLoadingState('done')
     }
-
-    const today = new Date()
-    const filename = "Ernährungstagebuch_" + today.toISOString().slice(0, 10).replace(/-/g, "");
-
-
-
 
     return (
         <Container>

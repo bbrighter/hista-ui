@@ -3,9 +3,11 @@ import { statistics } from "../../api/generatedApi"
 export interface RawDiary {
     date: string
     hour: number
-    type: 'Food' | 'Symptom'
+    type: DiaryEntryType
     content: string
 }
+
+type DiaryEntryType = 'Essen' | 'Symptom'
 
 export const respToRawDiary = (resp: statistics.DiaryResp): Array<RawDiary> => {
     return resp.diaries.map(d => ({
@@ -16,9 +18,9 @@ export const respToRawDiary = (resp: statistics.DiaryResp): Array<RawDiary> => {
     }))
 }
 
-const respTypeToType = (resp: unknown): 'Food' | 'Symptom' => {
+const respTypeToType = (resp: unknown): DiaryEntryType => {
     if (typeof (resp) == 'string' && resp != null) {
-        return resp == 'Food' ? 'Food' : 'Symptom'
+        return resp == 'Food' ? 'Essen' : 'Symptom'
     } else {
         throw ("Bad type:" + resp)
     }
