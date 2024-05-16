@@ -224,18 +224,19 @@ export namespace meals {
 }
 
 export namespace statistics {
-    export type Category = string
-
     export interface DiaryResp {
         diaries: RawDiary[]
     }
 
+    export type DiaryType = string
+
     export interface RawDiary {
         date: string
         hour: number
-        type: Category
+        type: DiaryType
         content: string
         severity: string
+        category: string
     }
 
     export class ServiceClient {

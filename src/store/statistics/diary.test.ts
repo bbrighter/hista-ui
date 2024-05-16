@@ -10,7 +10,8 @@ describe("RawDiary", () => {
                 date: "2024-12-05T02:00:00+02:00",
                 hour: 12,
                 type: "Food",
-                severity: "raw"
+                severity: "raw",
+                category: "Category"
             }]
         }
         const diary = respToRawDiary(resp)
@@ -20,5 +21,6 @@ describe("RawDiary", () => {
         expect(diary[0].type).toBe("Essen")
         expect(diary[0].date).toBe("5.12.2024")
         expect(diary[0].severity).toBe("Roh")
+        expect(diary[0].category).toBe("Category")
     })
 })

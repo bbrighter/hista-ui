@@ -6,6 +6,7 @@ export interface RawDiary {
     type: DiaryEntryType
     content: string
     severity: string
+    category: string
 }
 
 type DiaryEntryType = 'Essen' | 'Symptom'
@@ -15,6 +16,7 @@ export const respToRawDiary = (resp: statistics.DiaryResp): Array<RawDiary> => {
         date: new Date(d.date).toLocaleDateString('de-DE'),
         hour: d.hour,
         content: d.content,
+        category: d.category,
         ...respToTypeAndSeverity(d)
     }))
 }
