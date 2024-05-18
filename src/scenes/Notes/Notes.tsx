@@ -1,4 +1,4 @@
-import { Box, Container, IconButton, Input } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import useHista from "../../store/store";
 import OverviewList from "../components/OverviewList";
 import { LoadingButton } from "@mui/lab";
@@ -6,8 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { url } from "../../constants";
 import { useEffect, useState } from "react";
 import NoteIcon from '@mui/icons-material/Note';
-import SearchIcon from '@mui/icons-material/Search';
-import ClearIcon from '@mui/icons-material/Clear';
+import NoteSearch from "./components/NoteSearch";
 
 export default function Notes() {
     const getNotes = useHista(state => state.getNotes)
@@ -18,13 +17,24 @@ export default function Notes() {
 
     const [loading, setLoading] = useState(false)
     const [searchValue, setSearchValue] = useState("")
-    const [filteredNotes, setFilteredNotes] = useState(notes)
+    const [filteredNotes, setFilteredNotes] = useState<Array<{ id: number, date: Date, secondary: string }>>([])
 
     useEffect(() => {
         const filterResults = notes.filter(note =>
             note.text.toLowerCase().includes(searchValue.toLowerCase())
         )
-        setFilteredNotes(filterResults)
+        const items = filterResults.map(r => {
+            const maxTextLength = 25
+            const shortText = r.text.length < maxTextLength
+                ? r.text
+                : r.text.substring(0, maxTextLength - 2) + "..."
+            return {
+                id: r.id,
+                date: r.date,
+                secondary: shortText
+            }
+        })
+        setFilteredNotes(items)
     }, [notes, searchValue])
 
 
@@ -56,15 +66,9 @@ export default function Notes() {
                 Neue Notiz
             </LoadingButton>
             <Box >
-                <Input
-                    sx={{ marginTop: '1rem', width: '100%' }}
-                    startAdornment={<SearchIcon />}
-                    endAdornment={<IconButton
-                        onClick={() => setSearchValue("")}>
-                        <ClearIcon />
-                    </IconButton>}
-                    type='search'
-                    value={searchValue}
+                <NoteSearch
+                    searchValue={searchValue}
+                    onClear={() => setSearchValue("")}
                     onChange={(e) => setSearchValue(e.target.value)}
                 />
             </Box>
