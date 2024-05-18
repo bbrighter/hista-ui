@@ -1,16 +1,21 @@
 import useHista from "../../store/store"
-import { Button, Container } from "@mui/material"
+import { Container } from "@mui/material"
+import { LoadingButton } from '@mui/lab';
 import { useNavigate } from "react-router-dom"
 import EventList from "./components/EventList"
 import SickIcon from '@mui/icons-material/Sick';
 import { url } from "../../constants"
+import { useState } from "react";
 
 export default function ConditionEvents() {
     const postConditionEvent = useHista(state => state.postConditionEvent)
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
 
     const onClick = async () => {
+        setLoading(true)
         const id = await postConditionEvent()
+        setLoading(false)
         if (id) {
             navigate(url.CONDITION_EVENTS + "/" + String(id))
         }
@@ -18,13 +23,14 @@ export default function ConditionEvents() {
 
     return (
         <Container sx={{ paddingTop: '2rem' }}>
-            <Button
+            <LoadingButton
                 startIcon={<SickIcon />}
                 onClick={onClick}
                 variant="outlined"
+                loading={loading}
             >
                 Neues Symtpom
-            </Button>
+            </LoadingButton>
             <EventList />
         </Container>
     )

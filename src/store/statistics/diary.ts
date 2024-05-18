@@ -1,4 +1,5 @@
 import { statistics } from "../../api/generatedApi"
+import { mealConstants } from "../../constants"
 
 export interface RawDiary {
     date: string
@@ -39,10 +40,10 @@ const respToTypeAndSeverity = (resp: statistics.RawDiary): { type: DiaryEntryTyp
     if (type == 'Essen') {
         switch (resp.severity) {
             case "raw":
-                severity = "Roh"
+                severity = mealConstants.RAW
                 break
             case "cooked":
-                severity = "Gekocht"
+                severity = mealConstants.COOKED
                 break
             default:
                 throw ("invalid severity: " + resp.severity)

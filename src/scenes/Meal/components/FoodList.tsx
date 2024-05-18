@@ -2,6 +2,7 @@ import { IconButton, List, ListItem, ListItemText, ToggleButton, ToggleButtonGro
 import DeleteIcon from '@mui/icons-material/Delete';
 import useHista from "../../../store/store";
 import { FoodCondition } from "../../../store/meal/meal";
+import { mealConstants } from "../../../constants";
 
 export default function FoodList() {
     const food = useHista(state => state.meal.foods)
@@ -40,10 +41,10 @@ export default function FoodList() {
                             onChange(f.id, val)
                         }}>
                         <ToggleButton value='raw'>
-                            Roh
+                            {mealConstants.RAW}
                         </ToggleButton>
                         <ToggleButton value='cooked'>
-                            Gekocht
+                            {mealConstants.COOKED}
                         </ToggleButton>
                     </ToggleButtonGroup>
                 </ListItem>))}
