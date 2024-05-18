@@ -6,7 +6,6 @@ export const writeRawDiaryToExcel = (diaryEntries: RawDiary[]) => {
     if (newColumnHeaders.length == 0) {
         return
     }
-    console.log(diaryEntries, newColumnHeaders)
     const worksheet = utils.json_to_sheet(diaryEntries)
     utils.sheet_add_aoa(worksheet, [newColumnHeaders], { origin: "A1" })
     const workbook = utils.book_new()

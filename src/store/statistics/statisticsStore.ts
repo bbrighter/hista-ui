@@ -30,10 +30,8 @@ export const createStatisticsSlice: StateCreator<
     ...initialState,
 
     getDiaryEntries: async (): Promise<void> => {
-        console.log('getting diary entries')
         try {
             const resp = await client.statistics.GetDiary()
-            console.log('resp', resp)
             set(produce((draft: State) => {
                 draft.diaryEntries = respToRawDiary(resp)
             }))

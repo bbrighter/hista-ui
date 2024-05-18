@@ -13,6 +13,7 @@ export default function Start() {
             <StartPageCard type='meals' />
             <StartPageCard type='conditionEvents' />
             <StartPageCard type='statistics' />
+            <StartPageCard type='notes' />
         </Grid>
     )
 }
