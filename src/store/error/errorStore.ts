@@ -54,6 +54,8 @@ export const createErrorSlice: StateCreator<
                         alert("Huch. Da habe ich mit gerechnet, aber es sollte nicht passieren: " + get().errorMessage)
                         break
                 }
+            } else {
+                alert("Unbekannter Fehler: " + error)
             }
         }
     }))
