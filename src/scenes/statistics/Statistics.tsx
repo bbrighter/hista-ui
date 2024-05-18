@@ -1,4 +1,5 @@
-import { Button, ButtonGroup, Container, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
+import DownloadIcon from '@mui/icons-material/Download';
 import useHista from "../../store/store";
 import { LoadingButton } from "@mui/lab";
 import { useEffect, useState } from "react";
@@ -25,21 +26,17 @@ export default function Statistics() {
     }
 
     return (
-        <Container>
-            <Typography>Ernährungstagebuch</Typography>
-            <ButtonGroup variant="outlined">
+        <Container sx={{ padding: '2rem' }}>
+            <Typography variant='caption'>Ernährungstagebuch</Typography>
+            <div>
                 <LoadingButton
+                    startIcon={<DownloadIcon />}
+                    variant="outlined"
                     loading={loading}
                     onClick={onClick}>
                     Rohdaten
                 </LoadingButton>
-                <Button disabled>
-                    Aggregiert nach Mahlzeit
-                </Button>
-                <Button disabled>
-                    Aggregiert nach Symptom
-                </Button>
-            </ButtonGroup>
+            </div>
         </Container>
     )
 }
