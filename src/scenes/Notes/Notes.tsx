@@ -1,4 +1,4 @@
-import { Box, Container, IconButton, Input } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import useHista from "../../store/store";
 import OverviewList from "../components/OverviewList";
 import { LoadingButton } from "@mui/lab";
@@ -6,8 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { url } from "../../constants";
 import { useEffect, useState } from "react";
 import NoteIcon from '@mui/icons-material/Note';
-import SearchIcon from '@mui/icons-material/Search';
-import ClearIcon from '@mui/icons-material/Clear';
+import NoteSearch from "./components/NoteSearch";
 
 export default function Notes() {
     const getNotes = useHista(state => state.getNotes)
@@ -67,19 +66,9 @@ export default function Notes() {
                 Neue Notiz
             </LoadingButton>
             <Box >
-                <Input
-                    sx={{ marginTop: '1rem', width: '100%' }}
-                    startAdornment={<SearchIcon />}
-                    endAdornment={
-                        searchValue != "" &&
-                        <IconButton sx={{ height: '2rem' }}
-                            onClick={() => setSearchValue("")}
-                        >
-                            <ClearIcon fontSize="small" />
-                        </IconButton>
-                    }
-                    type='search'
-                    value={searchValue}
+                <NoteSearch
+                    searchValue={searchValue}
+                    onClear={() => setSearchValue("")}
                     onChange={(e) => setSearchValue(e.target.value)}
                 />
             </Box>
