@@ -5,6 +5,8 @@ import Start from "./Start"
 import ConditionEvents from "./ConditionEvents"
 import ConditionEvent from "./ConditionEvent"
 import Statistics from "./statistics"
+import Notes from "./Notes"
+import Note from "./Note"
 
 const indices = [
     Start,
@@ -13,7 +15,9 @@ const indices = [
     Meal,
     ConditionEvents,
     ConditionEvent,
-    Statistics
+    Statistics,
+    Notes,
+    Note
 ]
 
 export default indices

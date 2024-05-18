@@ -3,6 +3,7 @@ export namespace url {
     export const MEAL = '/meals'
     export const CONDITION_EVENTS = '/condition-events'
     export const STATISTICS = '/statistics'
+    export const NOTES = '/notes'
 }
 
 export namespace mealConstants {
