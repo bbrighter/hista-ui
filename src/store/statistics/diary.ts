@@ -2,22 +2,22 @@ import { statistics } from "../../api/generatedApi"
 import { mealConstants } from "../../constants"
 
 export interface RawDiary {
-    date: string
-    hour: number
-    type: DiaryEntryType
-    content: string
-    severity: string
-    category: string
+    Datum: string
+    Stunde: number
+    Typ: DiaryEntryType
+    Was: string
+    Schwere: string
+    Kategorie: string
 }
 
 type DiaryEntryType = 'Essen' | 'Symptom'
 
 export const respToRawDiary = (resp: statistics.DiaryResp): Array<RawDiary> => {
     return resp.diaries.map(d => ({
-        date: new Date(d.date).toLocaleDateString('de-DE'),
-        hour: d.hour,
-        content: d.content,
-        category: d.category,
+        Datum: new Date(d.date).toLocaleDateString('de-DE'),
+        Stunde: d.hour,
+        Was: d.content,
+        Kategorie: d.category,
         ...respToTypeAndSeverity(d)
     }))
 }
@@ -34,7 +34,7 @@ const respTypeToType = (resp: string): DiaryEntryType => {
 
 }
 
-const respToTypeAndSeverity = (resp: statistics.RawDiary): { type: DiaryEntryType, severity: string } => {
+const respToTypeAndSeverity = (resp: statistics.RawDiary): { Typ: DiaryEntryType, Schwere: string } => {
     const type = respTypeToType(resp.type)
     let severity = ""
     if (type == 'Essen') {
@@ -51,5 +51,5 @@ const respToTypeAndSeverity = (resp: statistics.RawDiary): { type: DiaryEntryTyp
     } else {
         severity = resp.severity
     }
-    return { type: type, severity: severity }
+    return { Typ: type, Schwere: severity }
 }
