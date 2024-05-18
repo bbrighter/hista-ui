@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { IconButton, List, ListItem, ListItemText } from "@mui/material";
+import { CircularProgress, IconButton, List, ListItem, ListItemText } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
@@ -13,19 +13,32 @@ export default function OverviewList(props: {
     items: Array<ListItemInterface>
     onClick: (id: number) => void
     onDelete: (id: number) => Promise<void>
+    getData: () => Promise<void>
 }) {
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        setLoading(true)
+        props.getData().finally(
+            () => setLoading(false)
+        )
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
-        <List>
-            {props.items.map(i => (
-                <OverviewListItem
-                    key={i.id}
-                    date={i.date}
-                    onClick={() => props.onClick(i.id)}
-                    onDelete={() => props.onDelete(i.id)}
-                />
-            ))}
-        </List>
+        <>
+            {loading && <CircularProgress sx={{ position: 'absolute', left: '50%', top: '50%' }} />}
+            <List>
+                {props.items.map(i => (
+                    <OverviewListItem
+                        key={i.id}
+                        date={i.date}
+                        onClick={() => props.onClick(i.id)}
+                        onDelete={() => props.onDelete(i.id)}
+                    />
+                ))}
+            </List>
+        </>
     )
 }
 

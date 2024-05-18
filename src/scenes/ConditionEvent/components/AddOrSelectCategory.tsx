@@ -1,6 +1,6 @@
-import { Autocomplete, Box, ListItem, ListItemText, Modal, TextField, Typography } from "@mui/material";
+import { Alert, Autocomplete, Box, ListItem, ListItemText, Modal, TextField, Typography } from "@mui/material";
 import useHista from "../../../store/store";
-import React from "react";
+import React, { useState } from "react";
 
 interface InputOption {
     id: number
@@ -23,6 +23,7 @@ export default function AddOrSelectCategory(props: {
     const postSymptomCategory = useHista(state => state.postSymptomCategory)
     const postConditionByName = useHista(state => state.postConditionByName)
     const symptoms = useHista(state => state.symptoms)
+    const [isError, setIsError] = useState(false)
 
     const categories: Array<Option> = symptoms.map(s => ({
         id: s.categoryId,
@@ -33,7 +34,12 @@ export default function AddOrSelectCategory(props: {
     const onChange = async (_e: React.SyntheticEvent, value: Option | null) => {
         if (value == null) return
         const catId = isNewOption(value) ? await postSymptomCategory(value) : value.id
+        if (catId == 0) {
+            setIsError(true)
+            return
+        }
         await postConditionByName(props.symptomName, catId)
+        setIsError(false)
         props.onClose()
     }
 
@@ -70,6 +76,12 @@ export default function AddOrSelectCategory(props: {
                             </ListItem>)
                     }}
                 />
+                {isError && <Alert
+                    sx={{ marginTop: '5px' }}
+                    severity="error"
+                    variant="filled"
+                >Da ist was schief gegangen! Probier's nochmal.
+                </Alert>}
             </Box>
         </Modal>
     )
