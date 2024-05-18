@@ -7,10 +7,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 interface ListItemInterface {
     id: number
     date: Date
+    secondary?: string
 }
 
 export default function OverviewList(props: {
     items: Array<ListItemInterface>
+    secondary?: string
     onClick: (id: number) => void
     onDelete: (id: number) => Promise<void>
     getData: () => Promise<void>
@@ -25,6 +27,7 @@ export default function OverviewList(props: {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+
     return (
         <>
             {loading && <CircularProgress sx={{ position: 'absolute', left: '50%', top: '50%' }} />}
@@ -35,6 +38,7 @@ export default function OverviewList(props: {
                         date={i.date}
                         onClick={() => props.onClick(i.id)}
                         onDelete={() => props.onDelete(i.id)}
+                        secondary={i.secondary}
                     />
                 ))}
             </List>
@@ -44,6 +48,7 @@ export default function OverviewList(props: {
 
 function OverviewListItem(props: {
     date: Date
+    secondary?: string
     onClick: () => void
     onDelete: (e: React.MouseEvent) => Promise<void>
 }) {
@@ -61,9 +66,10 @@ function OverviewListItem(props: {
                 </IconButton>
             }
         >
-            <ListItemText>
-                {props.date.toLocaleString([], { dateStyle: "long", timeStyle: 'short' })}
-            </ListItemText>
+            <ListItemText
+                primary={props.date.toLocaleString([], { dateStyle: "long", timeStyle: 'short' })}
+                secondary={props.secondary}
+            />
         </StyledListItem>
     )
 

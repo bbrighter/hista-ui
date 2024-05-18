@@ -18,13 +18,24 @@ export default function Notes() {
 
     const [loading, setLoading] = useState(false)
     const [searchValue, setSearchValue] = useState("")
-    const [filteredNotes, setFilteredNotes] = useState(notes)
+    const [filteredNotes, setFilteredNotes] = useState<Array<{ id: number, date: Date, secondary: string }>>([])
 
     useEffect(() => {
         const filterResults = notes.filter(note =>
             note.text.toLowerCase().includes(searchValue.toLowerCase())
         )
-        setFilteredNotes(filterResults)
+        const items = filterResults.map(r => {
+            const maxTextLength = 25
+            const shortText = r.text.length < maxTextLength
+                ? r.text
+                : r.text.substring(0, maxTextLength - 2) + "..."
+            return {
+                id: r.id,
+                date: r.date,
+                secondary: shortText
+            }
+        })
+        setFilteredNotes(items)
     }, [notes, searchValue])
 
 
@@ -59,10 +70,14 @@ export default function Notes() {
                 <Input
                     sx={{ marginTop: '1rem', width: '100%' }}
                     startAdornment={<SearchIcon />}
-                    endAdornment={<IconButton
-                        onClick={() => setSearchValue("")}>
-                        <ClearIcon />
-                    </IconButton>}
+                    endAdornment={
+                        searchValue != "" &&
+                        <IconButton sx={{ height: '2rem' }}
+                            onClick={() => setSearchValue("")}
+                        >
+                            <ClearIcon fontSize="small" />
+                        </IconButton>
+                    }
                     type='search'
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
