@@ -4,6 +4,7 @@ import useHista from "../../store/store";
 import { LoadingButton } from "@mui/lab";
 import { useEffect, useState } from "react";
 import { writeRawDiaryToExcel } from "./excel";
+import Charts from "./Charts";
 
 
 export default function Statistics() {
@@ -37,6 +38,7 @@ export default function Statistics() {
                     Rohdaten
                 </LoadingButton>
             </div>
+            <Charts />
         </Container>
     )
 }

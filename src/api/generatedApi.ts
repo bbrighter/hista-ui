@@ -288,6 +288,29 @@ export namespace statistics {
         category: string
     }
 
+    export interface Statistic {
+        ingredientId: number
+        foodCondition: string
+        statistic: SymptomMeal[]
+    }
+
+    export interface StatisticParams {
+        symptomIds: number[]
+        fromDate: string
+        toDate: string
+    }
+
+    export interface Statistics {
+        statistics: Statistic[]
+    }
+
+    export interface SymptomMeal {
+        foodDate: string
+        symptomDate: string
+        symptomId: number
+        symptomSeverity: number
+    }
+
     export class ServiceClient {
         private baseClient: BaseClient
 
@@ -299,6 +322,19 @@ export namespace statistics {
             // Now make the actual call to the API
             const resp = await this.baseClient.callAPI("GET", `/diary`)
             return await resp.json() as DiaryResp
+        }
+
+        public async GetSymptomsBySymptomIDs(params: StatisticParams): Promise<Statistics> {
+            // Convert our params into the objects we need for the request
+            const query = makeRecord<string, string | string[]>({
+                "from_date":    String(params.fromDate),
+                "symptom_i_ds": params.symptomIds.map((v) => String(v)),
+                "to_date":      String(params.toDate),
+            })
+
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("GET", `/statistics`, undefined, {query})
+            return await resp.json() as Statistics
         }
     }
 }
