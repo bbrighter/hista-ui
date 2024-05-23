@@ -289,8 +289,8 @@ export namespace statistics {
     }
 
     export interface Statistic {
-        symptomId: number
-        symptomSeverity: number
+        ingredientId: number
+        foodCondition: string
         statistic: SymptomMeal[]
     }
 
@@ -307,8 +307,8 @@ export namespace statistics {
     export interface SymptomMeal {
         foodDate: string
         symptomDate: string
-        ingredientId: number
-        foodCondition: string
+        symptomId: number
+        symptomSeverity: number
     }
 
     export class ServiceClient {

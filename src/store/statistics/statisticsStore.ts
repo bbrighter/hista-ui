@@ -53,7 +53,7 @@ export const createStatisticsSlice: StateCreator<
         try {
             const resp = await client.statistics.GetSymptomsBySymptomIDs(params)
             set(produce((draft: State) => {
-                draft.statistics = respToStatistics(resp)
+                draft.statistics = respToStatistics(resp, get().ingredients)
             }))
         } catch (error) {
             get().setError(error)

@@ -1,10 +1,22 @@
 import { Grid, Paper, Typography } from "@mui/material"
 import useHista from "../../../store/store"
+import { useEffect } from "react"
 
 export default function SymptomEvaluation() {
     const statistics = useHista(state => state.statistics)
+    const getIngredients = useHista(state => state.getIngredients)
+    const ingredients = useHista(state => state.ingredients)
+
+    useEffect(() => {
+        if (ingredients.length == 0) {
+            getIngredients()
+        }
+    }, [getIngredients, ingredients.length])
+
     const countByTimeRange = statistics.map(stat => ({
-        symptomId: stat.symptomId,
+        ingredientId: stat.ingredientId,
+        ingredientName: stat.ingredientName,
+        foodCondition: stat.foodCondition,
         within1h: stat.statistics.filter(stat => (stat.foodDate.getTime() - stat.symptomDate.getTime() < 1000 * 60 * 60 * 1)).length,
         within24h: stat.statistics.filter(stat => (stat.foodDate.getTime() - stat.symptomDate.getTime() < 1000 * 60 * 60 * 24)).length,
         within72h: stat.statistics.filter(stat => (stat.foodDate.getTime() - stat.symptomDate.getTime() < 1000 * 60 * 60 * 72)).length,
@@ -20,10 +32,11 @@ export default function SymptomEvaluation() {
                 <KPIPanel label="< 72 h" header />
             </Grid>
             {countByTimeRange.map(range => (
-                <Grid container spacing={2}>
+                <Grid key={range.ingredientId} container spacing={2}>
                     <KPIPanel
-                        label={range.symptomId.toString()}
+                        label={range.ingredientName}
                         header
+                        subLine={range.foodCondition}
                     />
                     <KPIPanel value={range.within1h} />
                     <KPIPanel value={range.within24h} />
@@ -38,6 +51,7 @@ export default function SymptomEvaluation() {
 function KPIPanel(props: {
     value?: number
     label?: string
+    subLine?: string
     header?: boolean
 }) {
     const elevation = props.header ? 1 : 10
@@ -46,9 +60,10 @@ function KPIPanel(props: {
         <Grid item xs={3}>
             <Paper
                 elevation={elevation}
-                sx={{ p: 1, textAlign: 'center', minHeight: '50px', alignContent: 'center' }}>
+                sx={{ p: 1, textAlign: 'center', minHeight: '70px', alignContent: 'center' }}>
                 <Typography>{props.value}</Typography>
-                <Typography variant='h5'>{props.label}</Typography>
+                <Typography variant='h6'>{props.label}</Typography>
+                <Typography variant="caption">{props.subLine}</Typography>
             </Paper >
         </Grid >
     )
