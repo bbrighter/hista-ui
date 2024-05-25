@@ -1,45 +1,32 @@
 import { statistics } from "../../api/generatedApi"
+import { mealConstants } from "../../constants"
 import { Ingredients } from "../meal/ingredients"
 
 export interface Statistics {
     ingredientId: number
     ingredientName?: string
     foodCondition: string
-    statistics: Array<SymptomStatistic>
+    within1hour: number
+    within24hours: number
+    within72hours: number
 }
 
-interface SymptomStatistic {
-    symptomDate: Date
-    foodDate: Date
-    symptomId: number
-    symptomSeverity: number
-    ingredientName?: string
-    symptomName?: string
-    symptomCategoryId?: number
-    symptomCategoryName?: string
-}
 
 export const respToStatistics = (
-    resp: statistics.Statistics,
+    resp: statistics.StatisticsResponse,
     ingredients: Ingredients
 ): Array<Statistics> => {
-
-
-    return resp.statistics.map(r => {
-        const statistics = {
+    const statistics = resp.statistics.map(r => {
+        const statistics: Statistics = {
             ingredientId: r.ingredientId,
-            foodCondition: r.foodCondition == 'raw' ? 'Roh' : 'Gar',
+            foodCondition: r.foodCondition == 'raw' ? mealConstants.RAW : mealConstants.COOKED,
             ingredientName: ingredients.find(ing => ing.id == r.ingredientId)?.name,
-
-            statistics: r.statistic.map(stat => ({
-                symptomDate: new Date(stat.symptomDate),
-                foodDate: new Date(stat.foodDate),
-                symptomId: stat.symptomId,
-                symptomSeverity: stat.symptomSeverity
-            }))
+            within1hour: r.hours1,
+            within24hours: r.hours24,
+            within72hours: r.hours72,
         }
-
         return statistics
-
     })
+    statistics.sort((a, b) => (b.within72hours - a.within72hours))
+    return statistics
 }

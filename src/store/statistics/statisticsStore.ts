@@ -16,7 +16,8 @@ interface State {
 
 interface Actions {
     getDiaryEntries: () => Promise<void>,
-    getStatistics: (fromDate: Date, toDate: Date, symptomIds: Array<number>) => Promise<void>
+    getStatistics: (fromDate: Date, toDate: Date, symptomIds: Array<number>) => Promise<void>,
+    resetStatistics: () => void,
 }
 
 export interface StatisticsStore extends State, Actions { }
@@ -58,5 +59,10 @@ export const createStatisticsSlice: StateCreator<
         } catch (error) {
             get().setError(error)
         }
+    },
+    resetStatistics: () => {
+        set(produce((draft: State) => {
+            draft.statistics = []
+        }))
     }
 }))

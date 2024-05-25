@@ -8,6 +8,7 @@ import SymptomEvaluation from "./components/SymptomEvaluation"
 
 export default function Charts() {
     const getStatistics = useHista(state => state.getStatistics)
+    const resetStatistics = useHista(state => state.resetStatistics)
 
     const today = new Date()
     const [fromDate, setFromDate] = useState(new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7))
@@ -17,8 +18,10 @@ export default function Charts() {
     useEffect(() => {
         if (ids.length > 0) {
             getStatistics(fromDate, toDate, ids)
+        } else {
+            resetStatistics()
         }
-    }, [fromDate, getStatistics, ids, toDate])
+    }, [fromDate, getStatistics, ids, resetStatistics, toDate])
 
     const handleFromDateChange = (value: dayjs.Dayjs | null) => {
         if (value != null) setFromDate(new Date(value.toISOString()))

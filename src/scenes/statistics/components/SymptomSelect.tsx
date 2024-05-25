@@ -26,9 +26,7 @@ export default function SymptomSelect(props: {
     }, [])
 
     useEffect(() => {
-        if (values.length > 0) {
-            props.onChange(values.map(v => v.id))
-        }
+        props.onChange(values.map(v => v.id))
         // props should not be part of the dependencies, because it leads to a rerender loop
         // eslint-disable-next-line react-hooks/exhaustive-deps 
     }, [values])
