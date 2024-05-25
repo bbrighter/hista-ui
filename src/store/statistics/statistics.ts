@@ -16,9 +16,7 @@ export const respToStatistics = (
     resp: statistics.StatisticsResponse,
     ingredients: Ingredients
 ): Array<Statistics> => {
-
-
-    return resp.statistics.map(r => {
+    const statistics = resp.statistics.map(r => {
         const statistics: Statistics = {
             ingredientId: r.ingredientId,
             foodCondition: r.foodCondition == 'raw' ? mealConstants.RAW : mealConstants.COOKED,
@@ -27,8 +25,8 @@ export const respToStatistics = (
             within24hours: r.hours24,
             within72hours: r.hours72,
         }
-
         return statistics
-
     })
+    statistics.sort((a, b) => (b.within72hours - a.within72hours))
+    return statistics
 }
