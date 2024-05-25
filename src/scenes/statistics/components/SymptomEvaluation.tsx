@@ -13,16 +13,6 @@ export default function SymptomEvaluation() {
         }
     }, [getIngredients, ingredients.length])
 
-    const countByTimeRange = statistics.map(stat => ({
-        ingredientId: stat.ingredientId,
-        ingredientName: stat.ingredientName,
-        foodCondition: stat.foodCondition,
-        within1h: stat.statistics.filter(stat => (stat.foodDate.getTime() - stat.symptomDate.getTime() < 1000 * 60 * 60 * 1)).length,
-        within24h: stat.statistics.filter(stat => (stat.foodDate.getTime() - stat.symptomDate.getTime() < 1000 * 60 * 60 * 24)).length,
-        within72h: stat.statistics.filter(stat => (stat.foodDate.getTime() - stat.symptomDate.getTime() < 1000 * 60 * 60 * 72)).length,
-    }))
-
-
     return (
         <Grid container rowGap={2} sx={{ mt: 2 }}>
             <Grid container spacing={2}>
@@ -31,16 +21,16 @@ export default function SymptomEvaluation() {
                 <KPIPanel label="< 24 h" header />
                 <KPIPanel label="< 72 h" header />
             </Grid>
-            {countByTimeRange.map(range => (
+            {statistics.map(range => (
                 <Grid key={range.ingredientId} container spacing={2}>
                     <KPIPanel
                         label={range.ingredientName}
                         header
                         subLine={range.foodCondition}
                     />
-                    <KPIPanel value={range.within1h} />
-                    <KPIPanel value={range.within24h} />
-                    <KPIPanel value={range.within72h} />
+                    <KPIPanel value={range.within1hour} />
+                    <KPIPanel value={range.within24hours} />
+                    <KPIPanel value={range.within72hours} />
                 </Grid>
 
             ))}
