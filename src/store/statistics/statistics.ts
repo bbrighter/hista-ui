@@ -1,8 +1,9 @@
 import { statistics } from "../../api/generatedApi"
 import { mealConstants } from "../../constants"
 import { Ingredients } from "../meal/ingredients"
+import { SymptomCategories } from "../symptom/symptom"
 
-export interface Statistics {
+export interface FoodStatistics {
     ingredientId: number
     ingredientName?: string
     foodCondition: string
@@ -13,11 +14,11 @@ export interface Statistics {
 
 
 export const respToStatistics = (
-    resp: statistics.StatisticsResponse,
+    resp: statistics.FoodStatisticsResponse,
     ingredients: Ingredients
-): Array<Statistics> => {
+): Array<FoodStatistics> => {
     const statistics = resp.statistics.map(r => {
-        const statistics: Statistics = {
+        const statistics: FoodStatistics = {
             ingredientId: r.ingredientId,
             foodCondition: r.foodCondition == 'raw' ? mealConstants.RAW : mealConstants.COOKED,
             ingredientName: ingredients.find(ing => ing.id == r.ingredientId)?.name,
@@ -29,4 +30,41 @@ export const respToStatistics = (
     })
     statistics.sort((a, b) => (b.within72hours - a.within72hours))
     return statistics
+}
+
+export interface SymptomStatistics {
+    symptomId: number
+    symptomName?: string
+    severity: number
+    within1hour: number
+    within24hours: number
+    within72hours: number
+}
+
+export const respToSymptomStatistics = (
+    resp: statistics.SymptomStatisticsResponse,
+    symptoms: SymptomCategories
+): Array<SymptomStatistics> => {
+    const statistics = resp.statistics.map(r => {
+        const statistics: SymptomStatistics = {
+            symptomId: r.symptomId,
+            severity: r.severity,
+            symptomName: getSymptomNameById(symptoms, r.symptomId),
+            within1hour: r.hours1,
+            within24hours: r.hours24,
+            within72hours: r.hours72,
+        }
+        return statistics
+    })
+    statistics.sort((a, b) => (b.within72hours - a.within72hours))
+    return statistics
+}
+
+const getSymptomNameById = (cats: SymptomCategories, id: number): string | undefined => {
+    const symptoms = cats.find(cat => cat.symptoms.find(sym => sym.id == id))?.symptoms
+    if (symptoms) {
+        return symptoms.find(sym => sym.id == id)?.name
+    } else {
+        return undefined
+    }
 }

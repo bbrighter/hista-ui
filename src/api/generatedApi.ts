@@ -279,6 +279,10 @@ export namespace statistics {
 
     export type DiaryType = string
 
+    export interface FoodStatisticsResponse {
+        statistics: StatisticsByFood[]
+    }
+
     export interface RawDiary {
         date: string
         hour: number
@@ -288,7 +292,21 @@ export namespace statistics {
         category: string
     }
 
-    export interface StatisticByFood {
+    export interface StatisticBySymptom {
+        symptomId: number
+        severity: number
+        hours72: number
+        hours24: number
+        hours1: number
+    }
+
+    export interface StatisticParams {
+        ids: number[]
+        fromDate: string
+        toDate: string
+    }
+
+    export interface StatisticsByFood {
         ingredientId: number
         foodCondition: string
         hours72: number
@@ -296,14 +314,8 @@ export namespace statistics {
         hours1: number
     }
 
-    export interface StatisticParams {
-        symptomIds: number[]
-        fromDate: string
-        toDate: string
-    }
-
-    export interface StatisticsResponse {
-        statistics: StatisticByFood[]
+    export interface SymptomStatisticsResponse {
+        statistics: StatisticBySymptom[]
     }
 
     export class ServiceClient {
@@ -319,17 +331,30 @@ export namespace statistics {
             return await resp.json() as DiaryResp
         }
 
-        public async GetSymptomsBySymptomIDs(params: StatisticParams): Promise<StatisticsResponse> {
+        public async GetStatisticsByIngredientsIds(params: StatisticParams): Promise<SymptomStatisticsResponse> {
             // Convert our params into the objects we need for the request
             const query = makeRecord<string, string | string[]>({
-                "from_date":    String(params.fromDate),
-                "symptom_i_ds": params.symptomIds.map((v) => String(v)),
-                "to_date":      String(params.toDate),
+                "from_date": String(params.fromDate),
+                "i_ds":      params.ids.map((v) => String(v)),
+                "to_date":   String(params.toDate),
             })
 
             // Now make the actual call to the API
-            const resp = await this.baseClient.callAPI("GET", `/statistics`, undefined, {query})
-            return await resp.json() as StatisticsResponse
+            const resp = await this.baseClient.callAPI("GET", `/statistics/ingredients`, undefined, {query})
+            return await resp.json() as SymptomStatisticsResponse
+        }
+
+        public async GetStatisticsBySymptomIds(params: StatisticParams): Promise<FoodStatisticsResponse> {
+            // Convert our params into the objects we need for the request
+            const query = makeRecord<string, string | string[]>({
+                "from_date": String(params.fromDate),
+                "i_ds":      params.ids.map((v) => String(v)),
+                "to_date":   String(params.toDate),
+            })
+
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("GET", `/statistics/symptoms`, undefined, {query})
+            return await resp.json() as FoodStatisticsResponse
         }
     }
 }
