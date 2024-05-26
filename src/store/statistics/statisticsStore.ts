@@ -7,16 +7,18 @@ import { SymptomStore } from "../symptom/symptomStore";
 import { client } from "../../api/api";
 import { produce } from "immer";
 import { statistics } from "../../api/generatedApi";
-import { Statistics, respToStatistics } from "./statistics";
+import { FoodStatistics, SymptomStatistics, respToStatistics, respToSymptomStatistics } from "./statistics";
 
 interface State {
     diaryEntries: Array<RawDiary>
-    statistics: Array<Statistics>
+    foodStatistics: Array<FoodStatistics>
+    symptomStatistics: Array<SymptomStatistics>
 }
 
 interface Actions {
     getDiaryEntries: () => Promise<void>,
-    getStatistics: (fromDate: Date, toDate: Date, symptomIds: Array<number>) => Promise<void>,
+    getFoodStatistics: (fromDate: Date, toDate: Date, symptomIds: Array<number>) => Promise<void>,
+    getSymptomStatistics: (fromDate: Date, toDate: Date, ingredientIds: Array<number>) => Promise<void>,
     resetStatistics: () => void,
 }
 
@@ -24,7 +26,9 @@ export interface StatisticsStore extends State, Actions { }
 
 const initialState: State = {
     diaryEntries: [],
-    statistics: [],
+    foodStatistics: [],
+    symptomStatistics: [],
+
 }
 
 export const createStatisticsSlice: StateCreator<
@@ -45,16 +49,31 @@ export const createStatisticsSlice: StateCreator<
             get().setError(error)
         }
     },
-    getStatistics: async (fromDate: Date, toDate: Date, symptomIds: Array<number>): Promise<void> => {
+    getFoodStatistics: async (fromDate: Date, toDate: Date, symptomIds: Array<number>): Promise<void> => {
         const params: statistics.StatisticParams = {
             fromDate: fromDate.toISOString(),
             toDate: toDate.toISOString(),
-            symptomIds: symptomIds
+            ids: symptomIds
         }
         try {
-            const resp = await client.statistics.GetSymptomsBySymptomIDs(params)
+            const resp = await client.statistics.GetStatisticsBySymptomIds(params)
             set(produce((draft: State) => {
-                draft.statistics = respToStatistics(resp, get().ingredients)
+                draft.foodStatistics = respToStatistics(resp, get().ingredients)
+            }))
+        } catch (error) {
+            get().setError(error)
+        }
+    },
+    getSymptomStatistics: async (fromDate: Date, toDate: Date, ingredientIds: Array<number>): Promise<void> => {
+        const params: statistics.StatisticParams = {
+            fromDate: fromDate.toISOString(),
+            toDate: toDate.toISOString(),
+            ids: ingredientIds
+        }
+        try {
+            const resp = await client.statistics.GetStatisticsByIngredientsIds(params)
+            set(produce((draft: State) => {
+                draft.symptomStatistics = respToSymptomStatistics(resp, get().symptoms)
             }))
         } catch (error) {
             get().setError(error)
@@ -62,7 +81,8 @@ export const createStatisticsSlice: StateCreator<
     },
     resetStatistics: () => {
         set(produce((draft: State) => {
-            draft.statistics = []
+            draft.foodStatistics = []
+            draft.symptomStatistics = []
         }))
     }
 }))

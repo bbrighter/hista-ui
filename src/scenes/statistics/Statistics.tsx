@@ -1,44 +1,35 @@
-import { Container, Typography } from "@mui/material";
-import DownloadIcon from '@mui/icons-material/Download';
-import useHista from "../../store/store";
-import { LoadingButton } from "@mui/lab";
-import { useEffect, useState } from "react";
-import { writeRawDiaryToExcel } from "./excel";
+import { Container, Tab, Tabs } from "@mui/material";
 import Charts from "./Charts";
+import Diary from "./components/Diary";
+import { useState } from "react";
+import IngredientCharts from "./IngredientCharts";
 
 
 export default function Statistics() {
-    const diaryEntries = useHista(state => state.diaryEntries)
-    const getDiaryEntries = useHista(state => state.getDiaryEntries)
+    const [tab, setTab] = useState(0)
 
-    const [loading, setLoading] = useState(false)
 
-    useEffect(() => {
-        if (diaryEntries.length > 0) {
-            setLoading(true)
-            writeRawDiaryToExcel(diaryEntries)
-        }
-    }, [diaryEntries])
-
-    const onClick = async () => {
-        setLoading(true)
-        await getDiaryEntries()
-        setLoading(false)
+    const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
+        setTab(newValue)
     }
 
     return (
         <Container sx={{ padding: '2rem' }}>
-            <Typography variant='caption'>Ernährungstagebuch</Typography>
-            <div>
-                <LoadingButton
-                    startIcon={<DownloadIcon />}
-                    variant="outlined"
-                    loading={loading}
-                    onClick={onClick}>
-                    Rohdaten
-                </LoadingButton>
+            <Tabs onChange={handleTabChange} value={tab}>
+                <Tab label="Symptome" value={0} />
+                <Tab label="Essen" value={1} />
+                <Tab label="Export" value={2} />
+            </Tabs>
+            <div hidden={tab !== 0}>
+                <Charts />
             </div>
-            <Charts />
+            <div hidden={tab !== 1}>
+                <IngredientCharts />
+            </div>
+            <div hidden={tab !== 2}>
+                <Diary />
+            </div>
+
         </Container>
     )
 }

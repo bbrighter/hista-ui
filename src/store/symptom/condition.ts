@@ -21,3 +21,22 @@ const respToSeverity = (resp: unknown): Severity => {
     if (typeof (resp) == 'number' && [1, 2, 3, 4, 5].includes(resp)) { return resp as Severity }
     else { return 1 as Severity }
 }
+
+export const colorFromSeverity = (severity: number | Array<number>) => {
+    let sev = severity
+    if (Array.isArray(severity)) {
+        sev = Math.max(...severity)
+    }
+    switch (sev) {
+        case 1:
+            return "success"
+        case 2:
+            return "primary"
+        case 3:
+            return "secondary"
+        case 4:
+            return "warning"
+        case 5:
+            return "error"
+    }
+}

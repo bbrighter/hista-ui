@@ -1,4 +1,3 @@
-import { FormControl, FormLabel } from "@mui/material";
 import { DatePicker, DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -29,21 +28,19 @@ export default function DateInput(props: {
     const hideTime = props.hideTime != undefined && props.hideTime
 
     return (
-        <>
-            <FormLabel>{props.title}</FormLabel>
-            <FormControl sx={{ mt: '2rem' }}>
-                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
-                    {hideTime && <DatePicker
-                        value={date}
-                        onChange={handleInputChange}
-                    />}
-                    {!hideTime &&
-                        <DateTimePicker
-                            value={date}
-                            onChange={handleInputChange}
-                        />}
-                </LocalizationProvider>
-            </FormControl>
-        </>
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+            {hideTime && <DatePicker
+                sx={{ width: '99%' }}
+                label={props.title}
+                value={date}
+                onChange={handleInputChange}
+            />}
+            {!hideTime &&
+                <DateTimePicker
+                    label={props.title}
+                    value={date}
+                    onChange={handleInputChange}
+                />}
+        </LocalizationProvider>
     )
 }

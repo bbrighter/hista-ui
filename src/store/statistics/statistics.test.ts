@@ -4,7 +4,7 @@ import { respToStatistics } from "./statistics";
 import { Ingredients } from "../meal/ingredients";
 
 test('respToStatistics', () => {
-    const resp: statistics.StatisticsResponse = {
+    const resp: statistics.FoodStatisticsResponse = {
         statistics: [
             {
                 foodCondition: 'cooked',
