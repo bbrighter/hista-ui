@@ -26,7 +26,7 @@ export default function SymptomEvaluation() {
                 <KPIPanel label="< 72 h" header />
             </Grid>
             {statistics.map(range => (
-                <Grid key={range.ingredientId} container spacing={1}>
+                <Grid key={range.ingredientId + "_" + range.foodCondition} container spacing={1}>
                     <KPIPanel
                         label={range.ingredientName}
                         header
