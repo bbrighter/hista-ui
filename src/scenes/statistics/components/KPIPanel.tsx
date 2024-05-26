@@ -39,10 +39,10 @@ export default function KPIPanel(props: {
         <Grid item xs={3}>
             <Paper
                 elevation={elevation}
-                sx={{ p: 0, textAlign: 'center', minHeight: '70px', alignContent: 'center', backgroundColor: backgroundColor }}
+                sx={{ textAlign: 'center', minHeight: '55px', alignContent: 'center', backgroundColor: backgroundColor }}
             >
                 <Typography color={textcolor}>{props.value?.current}</Typography>
-                <Typography variant='h6'>{props.label}</Typography>
+                <Typography>{props.label}</Typography>
                 <Typography variant="caption">{props.subLine}</Typography>
             </Paper >
         </Grid >

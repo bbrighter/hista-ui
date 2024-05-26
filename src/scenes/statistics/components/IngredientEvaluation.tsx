@@ -37,15 +37,15 @@ export default function IngredientEvalulation(props: {
 
 
     return (
-        <Grid container rowGap={2} sx={{ mt: 2 }}>
-            <Grid container spacing={2}>
+        <Grid container rowGap={1} sx={{ mt: 2 }}>
+            <Grid container spacing={1}>
                 <KPIPanel header />
                 <KPIPanel label="< 1 h" header />
                 <KPIPanel label="< 24 h" header />
                 <KPIPanel label="< 72 h" header />
             </Grid>
             {groupedStats.map(range => (
-                <Grid key={range.symptomId} container spacing={2}>
+                <Grid key={range.symptomId} container spacing={1}>
                     <KPIPanel
                         label={range.symptomName}
                         header
