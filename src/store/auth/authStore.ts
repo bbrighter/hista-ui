@@ -43,6 +43,8 @@ export const createAuthSlice: StateCreator<
                 isAuthenticated = false
                 if (resp.status == ErrCode.Internal) {
                     alert("Login furchtbar schiefgegangen!")
+                } else {
+                    alert("Login fehlgeschlagen: " + resp.status + ": " + resp.details)
                 }
             }
 
