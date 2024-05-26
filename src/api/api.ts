@@ -45,8 +45,8 @@ export const login = async (userName: string, password: string): Promise<{ token
             return {
                 token: "", status: json.code, details: json.details
             }
+        } else {
+            return { token: "", status: json["code"], details: json["details"] }
         }
     }
-
-    return { token: "", status: "not ok" }
 }
