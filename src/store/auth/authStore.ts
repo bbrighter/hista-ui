@@ -30,7 +30,14 @@ export const createAuthSlice: StateCreator<
     AuthStore> = ((set, get) => ({
         ...initialState,
 
-        logout() { set(produce((draft: State) => { draft.isAuthenticated = false })) },
+        logout() {
+            set(produce((draft: State) => {
+                draft.isAuthenticated = false
+                window.localStorage.isAuthenticated = false
+                window.localStorage.token = ""
+                window.localStorage.user = ""
+            }))
+        },
         login: async (password, userName) => {
             let isAuthenticated = false
 
