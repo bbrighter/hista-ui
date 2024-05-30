@@ -1,35 +1,55 @@
 import { Container, Tab, Tabs } from "@mui/material";
-import SymptomCharts from "./SymptomCharts";
 import Diary from "./components/Diary";
 import { useState } from "react";
-import IngredientCharts from "./IngredientCharts";
+import Charts from "./Charts";
 
+type TabValue = 0 | 1 | 2
+interface TabType {
+    label: string
+    value: TabValue
+    child: JSX.Element
+}
 
 export default function Statistics() {
-    const [tab, setTab] = useState(0)
+    const [selectedTab, setSelectedTab] = useState<TabValue>(0)
 
-
-    const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
-        setTab(newValue)
+    const handleTabChange = (_: React.SyntheticEvent, newValue: TabValue) => {
+        setSelectedTab(newValue)
     }
+
+    const tabs: Array<TabType> = [
+        { label: "Symptom", value: 0, child: <Charts type='symptom' /> },
+        { label: "Essen", value: 1, child: <Charts type='ingredient' /> },
+        { label: "Export", value: 2, child: <Diary /> },
+    ]
 
     return (
         <Container sx={{ padding: '2rem' }}>
-            <Tabs onChange={handleTabChange} value={tab}>
-                <Tab label="Symptome" value={0} />
-                <Tab label="Essen" value={1} />
-                <Tab label="Export" value={2} />
+            <Tabs onChange={handleTabChange} value={selectedTab}>
+                {tabs.map(tab => (
+                    <Tab label={tab.label} value={tab.value} />
+                ))}
             </Tabs>
-            <div hidden={tab !== 0}>
-                <SymptomCharts />
-            </div>
-            <div hidden={tab !== 1}>
-                <IngredientCharts />
-            </div>
-            <div hidden={tab !== 2}>
-                <Diary />
-            </div>
-
+            {tabs.map(tab => (
+                <VisibleTab
+                    selectedTab={selectedTab}
+                    key={tab.value}
+                    value={tab.value}
+                >
+                    {tab.child}
+                </VisibleTab>
+            ))}
         </Container>
+    )
+}
+
+function VisibleTab(props: React.PropsWithChildren<{
+    selectedTab: number
+    value: number
+}>) {
+    return (
+        <div hidden={props.selectedTab !== props.value}>
+            {props.children}
+        </div>
     )
 }
