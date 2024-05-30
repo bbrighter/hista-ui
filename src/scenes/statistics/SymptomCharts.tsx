@@ -7,12 +7,12 @@ import { Grid } from "@mui/material"
 import StatisticsDateInput from "./components/StatisticsDateInput"
 
 
-export default function Charts() {
+export default function SymptomCharts() {
     const getStatistics = useHista(state => state.getFoodStatistics)
     const resetStatistics = useHista(state => state.resetStatistics)
 
     const today = new Date()
-    const [fromDate, setFromDate] = useState(new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7))
+    const [fromDate, setFromDate] = useState(new Date("2024-05-10"))
     const [toDate, setToDate] = useState(today)
     const [ids, setIds] = useState<Array<number>>([])
 

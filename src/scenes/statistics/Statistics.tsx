@@ -1,5 +1,5 @@
 import { Container, Tab, Tabs } from "@mui/material";
-import Charts from "./Charts";
+import SymptomCharts from "./SymptomCharts";
 import Diary from "./components/Diary";
 import { useState } from "react";
 import IngredientCharts from "./IngredientCharts";
@@ -21,7 +21,7 @@ export default function Statistics() {
                 <Tab label="Export" value={2} />
             </Tabs>
             <div hidden={tab !== 0}>
-                <Charts />
+                <SymptomCharts />
             </div>
             <div hidden={tab !== 1}>
                 <IngredientCharts />
