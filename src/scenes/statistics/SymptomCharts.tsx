@@ -37,7 +37,7 @@ export default function SymptomCharts() {
     }
 
     return (
-        <Grid container spacing={1} sx={{ mt: 2 }}>
+        <Grid container sx={{ mt: 2 }}>
             <StatisticsDateInput
                 fromDate={fromDate}
                 toDate={toDate}

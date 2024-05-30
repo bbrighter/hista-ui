@@ -7,13 +7,13 @@ export default function SeverityFilter(props: {
     onChange: ((event: Event, value: number | Array<number>, activeThumb: number) => void)
 }) {
     return (
-        <Grid container>
+        <Grid container >
             <Grid item xs={2}>
                 <Icon>
                     <FilterAltIcon />
                 </Icon>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={8}>
                 <Slider
                     max={5}
                     min={1}
@@ -21,6 +21,7 @@ export default function SeverityFilter(props: {
                     value={props.severity}
                     color={colorFromSeverity(props.severity)}
                     onChange={props.onChange}
+                    marks={true}
                 />
             </Grid>
         </Grid>
