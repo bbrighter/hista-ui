@@ -50,7 +50,7 @@ export default function IngredientSelect(props: {
             renderInput={(params) => (
                 <TextField
                     {...params}
-                    label="Symptome"
+                    label="Essen"
                 />
             )}
             value={values}
