@@ -12,8 +12,10 @@ import { ErrorStore } from "../error/errorStore"
 
 interface State {
     conditionEvents: ConditionEvents
+    conditionEventsAreLoaded: boolean
     conditionEvent: ConditionEvent
     symptoms: SymptomCategories
+    symptomsAreLoaded: boolean
 }
 
 interface Actions {
@@ -31,8 +33,7 @@ interface Actions {
 
     // Conditions
     postSymptomCategory: (name: string) => Promise<number>,
-    postConditionByName: (symptomName: string, symptomCategoryId: number) => Promise<void>,
-    postConditionById: (symtpomId: number) => Promise<void>,
+    postCondition: (symptomCategoryId: number, symptomId: number | undefined, symptomName: string | undefined) => Promise<void>,
 
     // Condition
     patchCondition: (conditionId: number, severity: number) => Promise<void>,
@@ -43,8 +44,10 @@ export interface SymptomStore extends State, Actions { }
 
 const initialState: State = {
     conditionEvents: [],
+    conditionEventsAreLoaded: false,
     conditionEvent: { id: 0, date: new Date(), conditions: [] },
     symptoms: [],
+    symptomsAreLoaded: false,
 }
 
 export const createSymptomSlice: StateCreator<
@@ -56,15 +59,19 @@ export const createSymptomSlice: StateCreator<
 
         // ConditionEvents
         getConditionEvents: async () => {
-            try {
-                const resp = await client.symptoms.GetConditionEvents()
-                const states = respToConditionEvents(resp)
-                set(produce((draft: State) => {
-                    draft.conditionEvents = states
-                }))
-            } catch (error) {
-                get().setError(error)
+            if (!get().conditionEventsAreLoaded || get().conditionEvents.length == 0) {
+                try {
+                    const resp = await client.symptoms.GetConditionEvents()
+                    const states = respToConditionEvents(resp)
+                    set(produce((draft: State) => {
+                        draft.conditionEvents = states
+                        draft.conditionEventsAreLoaded = true
+                    }))
+                } catch (error) {
+                    get().setError(error)
+                }
             }
+
         },
         postConditionEvent: async () => {
             const date = new Date()
@@ -117,22 +124,26 @@ export const createSymptomSlice: StateCreator<
 
         // Symtpoms
         getSymptoms: async () => {
-            try {
-                const resp = await client.symptoms.GetSymptoms()
-                const symtpoms = respToSymptoms(resp)
-                set(produce((draft: State) => {
-                    draft.symptoms = symtpoms
-                }))
-            } catch (error) {
-                get().setError(error)
+            if (!get().symptomsAreLoaded || get().symptoms.length == 0) {
+                try {
+                    const resp = await client.symptoms.GetSymptoms()
+                    const symtpoms = respToSymptoms(resp)
+                    set(produce((draft: State) => {
+                        draft.symptoms = symtpoms
+                        draft.symptomsAreLoaded = true
+                    }))
+                } catch (error) {
+                    get().setError(error)
+                }
             }
         },
 
         // Conditions
-        postConditionByName: async (symptomName: string, symptomCategoryId: number) => {
+        postCondition: async (symptomCategoryId: number, symptomId?: number, symptomName?: string) => {
             try {
                 const params: symptoms.ConditionRequestParams = {
                     categoryId: symptomCategoryId,
+                    symptomId: symptomId,
                     symptomName: symptomName
                 }
                 const resp = await client.symptoms.PostCondition(get().conditionEvent.id, params)
@@ -141,17 +152,6 @@ export const createSymptomSlice: StateCreator<
                 set(produce((draft: State) => {
                     draft.conditionEvent.conditions.unshift(condition)
                     draft.symptoms = symptoms
-                }))
-            } catch (error) {
-                get().setError(error)
-            }
-        },
-        postConditionById: async (symptomId: number) => {
-            try {
-                const resp = await client.symptoms.PostConditionBySymptomID(get().conditionEvent.id, symptomId)
-                const condition = respToCondition(resp)
-                set(produce((draft: State) => {
-                    draft.conditionEvent.conditions.unshift(condition)
                 }))
             } catch (error) {
                 get().setError(error)

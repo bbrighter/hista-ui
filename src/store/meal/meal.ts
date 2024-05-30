@@ -1,4 +1,5 @@
 import { meals } from "../../api/generatedApi"
+import { Food, respToFood } from "./food"
 
 export interface Meal {
     id?: number
@@ -6,20 +7,8 @@ export interface Meal {
     foods: Food[]
 }
 
-interface Food {
-    id: number
-    ingredient: string
-    condition: FoodCondition
-}
-
-export type FoodCondition = 'raw' | 'cooked'
-
 export const respToMeal = (resp: meals.MealResponse): Meal => {
-    const foods = resp.foods.map(f => {
-        const condition: FoodCondition = f.foodCondition == 'raw' ? 'raw' : 'cooked'
-        return { id: f.id, ingredient: f.ingredient.name, condition: condition }
-    }
-    )
+    const foods = resp.foods.map(f => respToFood(f))
     const meal = {
         id: resp.id,
         date: new Date(resp.date),

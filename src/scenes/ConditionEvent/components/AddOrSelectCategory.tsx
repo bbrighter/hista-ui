@@ -21,7 +21,7 @@ export default function AddOrSelectCategory(props: {
     onClose: () => void
 }) {
     const postSymptomCategory = useHista(state => state.postSymptomCategory)
-    const postConditionByName = useHista(state => state.postConditionByName)
+    const postConditionByName = useHista(state => state.postCondition)
     const symptoms = useHista(state => state.symptoms)
     const [isError, setIsError] = useState(false)
 
@@ -38,7 +38,7 @@ export default function AddOrSelectCategory(props: {
             setIsError(true)
             return
         }
-        await postConditionByName(props.symptomName, catId)
+        await postConditionByName(catId, undefined, props.symptomName)
         setIsError(false)
         props.onClose()
     }

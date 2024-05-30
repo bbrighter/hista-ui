@@ -3,16 +3,19 @@ import { client } from "../../api/api"
 import { produce } from "immer"
 import { meals } from "../../api/generatedApi"
 import { Meals, MetaMeal, respToMetaMeals } from "./meals"
-import { FoodCondition, Meal, respToMeal } from "./meal"
+import { Meal, respToMeal } from "./meal"
 import { Ingredients, respToIngredients } from "./ingredients"
 import { SymptomStore } from "../symptom/symptomStore"
 import { AuthStore } from "../auth/authStore"
 import { ErrorStore } from "../error/errorStore"
+import { FoodCondition, respToFood } from "./food"
 
 interface State {
     meals: Meals
+    mealsAreLoaded: boolean
     meal: Meal
     ingredients: Ingredients
+    ingredientsAreLoaded: boolean
 }
 
 interface Actions {
@@ -29,7 +32,7 @@ interface Actions {
     getIngredients: () => Promise<void>
 
     // Foods
-    postFood: (ingredientName: string) => Promise<void>
+    postFood: (ingredientName?: string, ingredientId?: number) => Promise<void>
 
     // Food
     deleteFood: (foodId: number) => Promise<void>
@@ -40,8 +43,10 @@ export interface MealStore extends State, Actions { }
 
 const initialState: State = {
     meals: [],
+    mealsAreLoaded: false,
     meal: { date: new Date(), foods: [] },
     ingredients: [],
+    ingredientsAreLoaded: false
 }
 
 export const createMealSlice: StateCreator<
@@ -53,14 +58,18 @@ export const createMealSlice: StateCreator<
 
         // Meals
         getMeals: async () => {
-            try {
-                const resp = await client.meals.GetMeals()
-                set(produce((draft: State) => {
-                    draft.meals = respToMetaMeals(resp)
-                }))
-            } catch (error) {
-                get().setError(error)
+            if (!get().mealsAreLoaded || get().meals.length == 0) {
+                try {
+                    const resp = await client.meals.GetMeals()
+                    set(produce((draft: State) => {
+                        draft.meals = respToMetaMeals(resp)
+                        draft.mealsAreLoaded = true
+                    }))
+                } catch (error) {
+                    get().setError(error)
+                }
             }
+
         },
         postMeal: async (): Promise<number | void> => {
             try {
@@ -123,33 +132,36 @@ export const createMealSlice: StateCreator<
 
         // Ingredients
         getIngredients: async () => {
-            try {
-                const resp = await client.meals.GetIngredients()
-                set(produce((draft: State) => {
-                    draft.ingredients = respToIngredients(resp)
-                }))
-            } catch (error) {
-                get().setError(error)
+            if (!get().ingredientsAreLoaded || get().ingredients.length == 0) {
+                try {
+                    const resp = await client.meals.GetIngredients()
+                    set(produce((draft: State) => {
+                        draft.ingredients = respToIngredients(resp)
+                        draft.ingredientsAreLoaded = true
+                    }))
+                } catch (error) {
+                    get().setError(error)
+                }
             }
         },
 
         // Foods
-        postFood: async (ingredientName: string) => {
+        postFood: async (ingredientName?: string, ingredientId?: number) => {
             const mealId = get().meal.id
             const condition = "cooked"
             if (!mealId) return
             try {
                 const params: meals.FoodParams = {
                     condition: condition,
-                    ingredientName: ingredientName
+                    ingredientName: ingredientName,
+                    ingredientId: ingredientId
                 }
                 const resp = await client.meals.PostFood(mealId, params)
+                const food = respToFood(resp.food)
+                const ingredients = respToIngredients(resp.ingredients)
                 set(produce((draft: State) => {
-                    draft.meal.foods.unshift({
-                        condition: condition,
-                        id: resp.id,
-                        ingredient: ingredientName,
-                    })
+                    draft.meal.foods.unshift(food)
+                    draft.ingredients = ingredients
                 }))
                 await get().getIngredients()
             } catch (error) {
