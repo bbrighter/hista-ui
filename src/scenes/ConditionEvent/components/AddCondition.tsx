@@ -23,7 +23,7 @@ export default function AddCondition() {
     const [value, setValue] = useState<Option | null>(null)
     const [inputValue, setInputValue] = useState("")
     const getSymptoms = useHista(state => state.getSymptoms)
-    const postConditionById = useHista(state => state.postConditionById)
+    const postConditionById = useHista(state => state.postCondition)
     const symptoms = useHista(state => state.symptoms)
 
     useEffect(() => {
@@ -42,7 +42,7 @@ export default function AddCondition() {
             setOpen(true)
             setValue(v)
         } else if (!isNewOption(v) && reason == 'selectOption') {
-            await postConditionById(v.symptomId)
+            await postConditionById(v.categoryId, v.symptomId, undefined)
             setInputValue("")
         }
     }

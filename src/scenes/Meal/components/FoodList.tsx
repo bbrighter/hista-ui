@@ -1,8 +1,8 @@
 import { IconButton, List, ListItem, ListItemText, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useHista from "../../../store/store";
-import { FoodCondition } from "../../../store/meal/meal";
 import { mealConstants } from "../../../constants";
+import { FoodCondition } from "../../../store/meal/food";
 
 export default function FoodList() {
     const food = useHista(state => state.meal.foods)
@@ -28,7 +28,7 @@ export default function FoodList() {
                     }>
                     <ListItemText>
                         <Typography noWrap >
-                            {f.ingredient}
+                            {f.ingredientName}
                         </Typography>
                     </ListItemText>
                     <ToggleButtonGroup

@@ -113,7 +113,8 @@ export namespace meals {
     }
 
     export interface FoodParams {
-        ingredientName: string
+        ingredientName?: string
+        ingredientId?: number
         condition: FoodCondition
     }
 
@@ -159,6 +160,11 @@ export namespace meals {
         meals: MealMetaResponse[]
     }
 
+    export interface PostFoodResponse {
+        food: FoodResponse
+        ingredients: IngredientsResponse
+    }
+
     export class ServiceClient {
         private baseClient: BaseClient
 
@@ -166,8 +172,10 @@ export namespace meals {
             this.baseClient = baseClient
         }
 
-        public async DeleteFood(mealId: number, foodId: number): Promise<void> {
-            await this.baseClient.callAPI("DELETE", `/meal/${encodeURIComponent(mealId)}/foods/${encodeURIComponent(foodId)}`)
+        public async DeleteFood(mealId: number, foodId: number): Promise<IngredientsResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("DELETE", `/meal/${encodeURIComponent(mealId)}/foods/${encodeURIComponent(foodId)}`)
+            return await resp.json() as IngredientsResponse
         }
 
         public async DeleteMeal(id: number): Promise<void> {
@@ -211,10 +219,10 @@ export namespace meals {
             await this.baseClient.callAPI("PATCH", `/meals/${encodeURIComponent(id)}`, JSON.stringify(params))
         }
 
-        public async PostFood(mealId: number, params: FoodParams): Promise<IDResponse> {
+        public async PostFood(mealId: number, params: FoodParams): Promise<PostFoodResponse> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callAPI("POST", `/meal/${encodeURIComponent(mealId)}/foods`, JSON.stringify(params))
-            return await resp.json() as IDResponse
+            return await resp.json() as PostFoodResponse
         }
 
         public async PostMeal(params: MealParams): Promise<IDResponse> {
@@ -380,7 +388,8 @@ export namespace symptoms {
     }
 
     export interface ConditionRequestParams {
-        symptomName: string
+        symptomName?: string
+        symptomId?: number
         categoryId: number
     }
 
@@ -478,12 +487,6 @@ export namespace symptoms {
             // Now make the actual call to the API
             const resp = await this.baseClient.callAPI("POST", `/condition-events/${encodeURIComponent(eventId)}/conditions`, JSON.stringify(params))
             return await resp.json() as PostConditionResponse
-        }
-
-        public async PostConditionBySymptomID(eventId: number, symptomId: number): Promise<ConditionResponse> {
-            // Now make the actual call to the API
-            const resp = await this.baseClient.callAPI("POST", `/condition-events/${encodeURIComponent(eventId)}/conditions/symptoms/${encodeURIComponent(symptomId)}`)
-            return await resp.json() as ConditionResponse
         }
 
         public async PostSymptomCategory(params: PostSymptomCategoryRequest): Promise<IDResponse> {
