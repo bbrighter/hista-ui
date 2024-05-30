@@ -172,8 +172,10 @@ export namespace meals {
             this.baseClient = baseClient
         }
 
-        public async DeleteFood(mealId: number, foodId: number): Promise<void> {
-            await this.baseClient.callAPI("DELETE", `/meal/${encodeURIComponent(mealId)}/foods/${encodeURIComponent(foodId)}`)
+        public async DeleteFood(mealId: number, foodId: number): Promise<IngredientsResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("DELETE", `/meal/${encodeURIComponent(mealId)}/foods/${encodeURIComponent(foodId)}`)
+            return await resp.json() as IngredientsResponse
         }
 
         public async DeleteMeal(id: number): Promise<void> {

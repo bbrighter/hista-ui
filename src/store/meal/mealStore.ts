@@ -163,7 +163,6 @@ export const createMealSlice: StateCreator<
                     draft.meal.foods.unshift(food)
                     draft.ingredients = ingredients
                 }))
-                await get().getIngredients()
             } catch (error) {
                 get().setError(error)
             }
@@ -174,9 +173,11 @@ export const createMealSlice: StateCreator<
         deleteFood: async (foodId: number) => {
             const mealId = get().meal.id || 0
             try {
-                await client.meals.DeleteFood(mealId, foodId)
+                const resp = await client.meals.DeleteFood(mealId, foodId)
+                const ingredients = respToIngredients(resp)
                 set(produce((draft: State) => {
                     draft.meal.foods = removeItemById(foodId, get().meal.foods)
+                    draft.ingredients = ingredients
                 }))
             } catch (error) {
                 get().setError(error)
