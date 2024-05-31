@@ -128,6 +128,8 @@ export namespace meals {
         foods: FoodResponse[]
     }
 
+    export type Freshness = number
+
     export interface IDResponse {
         id: number
     }
@@ -147,12 +149,18 @@ export namespace meals {
     }
 
     export interface MealParams {
-        date: string
+        date?: string
+        freshness?: Freshness
+        stressLevel?: number
+        isAlone?: boolean
     }
 
     export interface MealResponse {
         id: number
         date: string
+        freshness: Freshness
+        stressLevel: number
+        isAlone: boolean
         foods: FoodResponse[]
     }
 
@@ -215,7 +223,7 @@ export namespace meals {
             await this.baseClient.callAPI("PATCH", `/meal/${encodeURIComponent(mealId)}/foods/${encodeURIComponent(foodId)}/condition`, undefined, {query})
         }
 
-        public async PatchMealTime(id: number, params: MealParams): Promise<void> {
+        public async PatchMeal(id: number, params: MealParams): Promise<void> {
             await this.baseClient.callAPI("PATCH", `/meals/${encodeURIComponent(id)}`, JSON.stringify(params))
         }
 

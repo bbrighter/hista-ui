@@ -3,7 +3,7 @@ import { client } from "../../api/api"
 import { produce } from "immer"
 import { meals } from "../../api/generatedApi"
 import { Meals, MetaMeal, respToMetaMeals } from "./meals"
-import { Meal, respToMeal } from "./meal"
+import { Freshness, Meal, respToMeal, stringToFreshness } from "./meal"
 import { Ingredients, respToIngredients } from "./ingredients"
 import { SymptomStore } from "../symptom/symptomStore"
 import { AuthStore } from "../auth/authStore"
@@ -26,6 +26,7 @@ interface Actions {
 
     // Meal
     setMealDate: (dateString: string) => Promise<void>
+    updateMeal: (params: meals.MealParams) => Promise<void>
     getMeal: (id: number) => Promise<void>
 
     // Ingredients
@@ -44,7 +45,13 @@ export interface MealStore extends State, Actions { }
 const initialState: State = {
     meals: [],
     mealsAreLoaded: false,
-    meal: { date: new Date(), foods: [] },
+    meal: {
+        date: new Date(),
+        freshness: Freshness.fresh,
+        isAlone: true,
+        stressLevel: 0,
+        foods: []
+    },
     ingredients: [],
     ingredientsAreLoaded: false
 }
@@ -83,7 +90,7 @@ export const createMealSlice: StateCreator<
                         date: get().meal.date,
                         id: id
                     }
-                    draft.meals.push(newMeal)
+                    draft.meals.unshift(newMeal)
                     draft.meal.id = id
                 }))
                 return id
@@ -108,7 +115,7 @@ export const createMealSlice: StateCreator<
             const id = get().meal.id
             try {
                 if (!id) return
-                await client.meals.PatchMealTime(id, params)
+                await client.meals.PatchMeal(id, params)
                 const date = new Date(dateString)
                 set(produce((draft: State) => {
                     draft.meal.date = date
@@ -117,6 +124,30 @@ export const createMealSlice: StateCreator<
                 get().setError(error)
             }
 
+        },
+        updateMeal: async (params: meals.MealParams) => {
+            console.log(params)
+            const id = get().meal.id
+            if (!id) return
+            try {
+                await client.meals.PatchMeal(id, params)
+                set(produce((draft: State) => {
+                    if (params.date) {
+                        draft.meal.date = new Date(params.date)
+                    }
+                    if (params.freshness) {
+                        draft.meal.freshness = stringToFreshness(params.freshness)
+                    }
+                    if (params.isAlone != undefined) {
+                        draft.meal.isAlone = params.isAlone
+                    }
+                    if (params.stressLevel) {
+                        draft.meal.stressLevel = params.stressLevel
+                    }
+                }))
+            } catch (error) {
+                get().setError(error)
+            }
         },
         getMeal: async (id: number) => {
             try {
