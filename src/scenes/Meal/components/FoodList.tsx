@@ -11,7 +11,7 @@ export default function FoodList() {
     const patchFoodCondition = useHista(state => state.patchFoodCondition)
     const deleteFood = useHista(state => state.deleteFood)
 
-    const [isDeleteLoading, setIsDeleteLoading] = useState(false)
+    const [isDeleteLoading, setIsDeleteLoading] = useState<number | undefined>()
     const [isPatchLoading, setIsPatchLoading] = useState<{ id: number, cond: FoodCondition } | undefined>()
 
     const onChange = async (foodId: number, value: FoodCondition) => {
@@ -21,9 +21,9 @@ export default function FoodList() {
     }
 
     const onDelete = async (foodId: number) => {
-        setIsDeleteLoading(true)
+        setIsDeleteLoading(foodId)
         await deleteFood(foodId)
-        setIsDeleteLoading(false)
+        setIsDeleteLoading(undefined)
     }
 
     return (
@@ -33,7 +33,7 @@ export default function FoodList() {
                     secondaryAction={
                         <LoadingIconButton
                             onClick={() => onDelete(f.id)}
-                            isLoading={isDeleteLoading}
+                            isLoading={isDeleteLoading == f.id}
                             icon={<DeleteIcon />}
                         />
                     }>
