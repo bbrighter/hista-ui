@@ -50,7 +50,8 @@ const initialState: State = {
         freshness: Freshness.fresh,
         isAlone: true,
         stressLevel: 0,
-        foods: []
+        foods: [],
+        isLoading: true,
     },
     ingredients: [],
     ingredientsAreLoaded: false
@@ -126,7 +127,6 @@ export const createMealSlice: StateCreator<
 
         },
         updateMeal: async (params: meals.MealParams) => {
-            console.log(params)
             const id = get().meal.id
             if (!id) return
             try {
@@ -151,6 +151,9 @@ export const createMealSlice: StateCreator<
         },
         getMeal: async (id: number) => {
             try {
+                set(produce((draft: State) => {
+                    draft.meal.isLoading = true
+                }))
                 const resp = await client.meals.GetMeal(id)
                 set(produce((draft: State) => {
                     draft.meal = respToMeal(resp)

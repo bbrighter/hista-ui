@@ -1,6 +1,7 @@
-import { Autocomplete, ListItem, ListItemText, TextField } from "@mui/material";
+import { Autocomplete, CircularProgress, ListItem, ListItemText, TextField } from "@mui/material";
 import useHista from "../../../store/store";
 import { useEffect, useState } from "react";
+import React from "react";
 
 interface InputOption {
     id: number
@@ -23,6 +24,7 @@ export default function AddFood() {
 
     const [inputValue, setInputValue] = useState<string | undefined>("")
     const [value, setValue] = useState<Option | null>(null)
+    const [isLoading, setIsLoading] = useState(false)
 
 
     useEffect(() => {
@@ -38,10 +40,14 @@ export default function AddFood() {
             id = value?.id
         }
         if (value != null) {
+            setIsLoading(true)
             postFood(name, id).then(() => {
                 setValue(null)
                 setInputValue("")
-            })
+            }).finally(() => {
+                setIsLoading(false)
+            }
+            )
         }
 
 
@@ -73,7 +79,20 @@ export default function AddFood() {
                 </ListItem>)
             }}
             getOptionLabel={opt => isNewOption(opt) ? opt : opt.name}
-            renderInput={params => (<TextField {...params} label={"Zutaten"} />)}
+            renderInput={params => (
+                <TextField
+                    {...params}
+                    label={"Zutaten"}
+                    InputProps={{
+                        ...params.InputProps,
+                        endAdornment: (
+                            <React.Fragment>
+                                {isLoading ? <CircularProgress size={30} /> : null}
+                                {params.InputProps.endAdornment}
+                            </React.Fragment>
+                        )
+                    }}
+                />)}
         />
     )
 }

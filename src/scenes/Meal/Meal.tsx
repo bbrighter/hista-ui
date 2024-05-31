@@ -1,4 +1,4 @@
-import { Container, FormControl, FormGroup } from "@mui/material";
+import { Container, FormControl, FormGroup, Skeleton } from "@mui/material";
 import useHista from "../../store/store";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -9,6 +9,7 @@ import MealSettings from "./components/MealSettings";
 
 export default function Meal() {
     const getMeal = useHista(state => state.getMeal)
+    const isLoading = useHista(state => state.meal.isLoading)
     const params = useParams<{ id: string }>()
 
     useEffect(() => {
@@ -25,7 +26,7 @@ export default function Meal() {
                     <AddFood />
                 </FormControl>
             </FormGroup>
-            <FoodList />
+            {isLoading ? <Skeleton variant='rectangular' height={'3rem'} /> : <FoodList />}
         </Container>
     )
 }

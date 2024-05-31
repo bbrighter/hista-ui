@@ -1,4 +1,4 @@
-import { Grid, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Grid, Skeleton, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import useHista from "../../../store/store";
 import DateInput from "../../components/DateIpnut";
 import { Freshness } from "../../../store/meal/meal";
@@ -34,49 +34,57 @@ export default function MealSettings() {
             justifyContent='center'
         >
             <Grid item xs={12}>
-                <DateInput
-                    title="Mahlzeit"
-                    date={meal.date}
-                    onChange={(e) => setDate(e?.toISOString() || new Date().toISOString())}
-                />
+                {meal.isLoading ?
+                    <Skeleton height={'4rem'} variant='rectangular' /> :
+                    <DateInput
+                        title="Mahlzeit"
+                        date={meal.date}
+                        onChange={(e) => setDate(e?.toISOString() || new Date().toISOString())}
+                    />}
             </Grid>
             <Grid item xs={12}>
-                <DebouncedSlider
-                    key={meal.stressLevel}
-                    label="Stress"
-                    onChange={setStressLevel}
-                    max={4}
-                    min={0}
-                    colorMapping={colorFromStressLevel}
-                    initialValue={meal.stressLevel}
-                    iconMapping={iconFromStressLevel}
-                />
+                {meal.isLoading ?
+                    <Skeleton height={'3rem'} variant='rectangular' /> :
+                    <DebouncedSlider
+                        key={meal.stressLevel}
+                        label="Stress"
+                        onChange={setStressLevel}
+                        max={4}
+                        min={0}
+                        colorMapping={colorFromStressLevel}
+                        initialValue={meal.stressLevel}
+                        iconMapping={iconFromStressLevel}
+                    />}
             </Grid>
             <Grid item xs={8}>
-                <DebouncedSlider
-                    key={meal.freshness}
-                    label="Frische"
-                    onChange={setFreshness}
-                    max={2}
-                    min={0}
-                    colorMapping={colorFromFreshness}
-                    initialValue={meal.freshness}
-                    iconMapping={iconFromFreshness}
-                />
+                {meal.isLoading ? <Skeleton variant='rectangular' height={'3rem'} /> :
+                    <DebouncedSlider
+                        key={meal.freshness}
+                        label="Frische"
+                        onChange={setFreshness}
+                        max={2}
+                        min={0}
+                        colorMapping={colorFromFreshness}
+                        initialValue={meal.freshness}
+                        iconMapping={iconFromFreshness}
+                    />}
             </Grid>
             <Grid item xs={4} sx={{ textAlign: 'center' }} >
-                <ToggleButtonGroup
-                    exclusive
-                    value={meal.isAlone}
-                    onChange={handleToggleOptionChange}
-                >
-                    <ToggleButton value={true}>
-                        <PersonIcon />
-                    </ToggleButton>
-                    <ToggleButton value={false}>
-                        <PeopleIcon />
-                    </ToggleButton>
-                </ToggleButtonGroup>
+                {meal.isLoading ?
+                    <Skeleton variant='rectangular' height={'3rem'} /> :
+                    <ToggleButtonGroup
+                        exclusive
+                        value={meal.isAlone}
+                        onChange={handleToggleOptionChange}
+                    >
+                        <ToggleButton value={true}>
+                            <PersonIcon />
+                        </ToggleButton>
+                        <ToggleButton value={false}>
+                            <PeopleIcon />
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                }
             </Grid>
         </Grid>
 

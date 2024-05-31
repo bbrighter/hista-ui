@@ -8,6 +8,7 @@ export interface Meal {
     isAlone: boolean
     stressLevel: number
     foods: Food[]
+    isLoading: boolean
 }
 
 export enum Freshness {
@@ -36,7 +37,8 @@ export const respToMeal = (resp: meals.MealResponse): Meal => {
         freshness: stringToFreshness(resp.freshness),
         isAlone: resp.isAlone,
         stressLevel: resp.stressLevel,
-        foods: foods
+        foods: foods,
+        isLoading: false,
     }
     return meal
 }
