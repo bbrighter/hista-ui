@@ -1,20 +1,29 @@
-import { IconButton, List, ListItem, ListItemText, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { CircularProgress, List, ListItem, ListItemText, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import useHista from "../../../store/store";
 import { mealConstants } from "../../../constants";
 import { FoodCondition } from "../../../store/meal/food";
+import { useState } from "react";
+import LoadingIconButton from "../../components/LoadingIconButton";
 
 export default function FoodList() {
     const food = useHista(state => state.meal.foods)
     const patchFoodCondition = useHista(state => state.patchFoodCondition)
     const deleteFood = useHista(state => state.deleteFood)
 
+    const [isDeleteLoading, setIsDeleteLoading] = useState<number | undefined>()
+    const [isPatchLoading, setIsPatchLoading] = useState<{ id: number, cond: FoodCondition } | undefined>()
+
     const onChange = async (foodId: number, value: FoodCondition) => {
+        setIsPatchLoading({ id: foodId, cond: value })
         await patchFoodCondition(foodId, value)
+        setIsPatchLoading(undefined)
     }
 
     const onDelete = async (foodId: number) => {
+        setIsDeleteLoading(foodId)
         await deleteFood(foodId)
+        setIsDeleteLoading(undefined)
     }
 
     return (
@@ -22,9 +31,11 @@ export default function FoodList() {
             {food.map(f => (
                 <ListItem key={f.id}
                     secondaryAction={
-                        <IconButton onClick={() => onDelete(f.id)}>
-                            <DeleteIcon />
-                        </IconButton>
+                        <LoadingIconButton
+                            onClick={() => onDelete(f.id)}
+                            isLoading={isDeleteLoading == f.id}
+                            icon={<DeleteIcon />}
+                        />
                     }>
                     <ListItemText>
                         <Typography noWrap >
@@ -40,11 +51,11 @@ export default function FoodList() {
                             const val = v as FoodCondition
                             onChange(f.id, val)
                         }}>
-                        <ToggleButton value='raw'>
-                            {mealConstants.RAW}
+                        <ToggleButton value='raw' sx={{ width: '3rem' }}>
+                            {isPatchLoading?.id == f.id && isPatchLoading.cond == 'raw' ? <CircularProgress size={20} /> : mealConstants.RAW}
                         </ToggleButton>
-                        <ToggleButton value='cooked'>
-                            {mealConstants.COOKED}
+                        <ToggleButton value='cooked' sx={{ width: '3rem' }}>
+                            {isPatchLoading?.id == f.id && isPatchLoading.cond == 'cooked' ? <CircularProgress size={20} /> : mealConstants.COOKED}
                         </ToggleButton>
                     </ToggleButtonGroup>
                 </ListItem>))}
