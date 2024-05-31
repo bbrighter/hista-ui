@@ -37,6 +37,7 @@ export default function DateInput(props: {
             />}
             {!hideTime &&
                 <DateTimePicker
+                    sx={{ width: '99%' }}
                     label={props.title}
                     value={date}
                     onChange={handleInputChange}
