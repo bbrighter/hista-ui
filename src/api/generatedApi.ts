@@ -301,7 +301,6 @@ export namespace statistics {
 
     export interface RawDiary {
         date: string
-        hour: number
         type: DiaryType
         content: string
         severity: string
