@@ -3,19 +3,19 @@ import { mealConstants } from "../../constants"
 
 export interface RawDiary {
     Datum: string
-    Stunde: number
+    Stunde: string
     Typ: DiaryEntryType
     Was: string
     Schwere: string
     Kategorie: string
 }
 
-type DiaryEntryType = 'Essen' | 'Symptom'
+type DiaryEntryType = 'Essen' | 'Symptom' | 'Notiz' | 'Pollen'
 
 export const respToRawDiary = (resp: statistics.DiaryResp): Array<RawDiary> => {
     return resp.diaries.map(d => ({
         Datum: new Date(d.date).toLocaleDateString('de-DE'),
-        Stunde: d.hour,
+        Stunde: new Date(d.date).toLocaleTimeString('de-DE'),
         Was: d.content,
         Kategorie: d.category,
         ...respToTypeAndSeverity(d)
@@ -28,10 +28,13 @@ const respTypeToType = (resp: string): DiaryEntryType => {
             return "Essen"
         case "Symptom":
             return "Symptom"
+        case "Note":
+            return "Notiz"
+        case "Pollen":
+            return "Pollen"
         default:
             throw ("invalid type: " + resp)
     }
-
 }
 
 const respToTypeAndSeverity = (resp: statistics.RawDiary): { Typ: DiaryEntryType, Schwere: string } => {
