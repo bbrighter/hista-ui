@@ -4,6 +4,7 @@ export namespace url {
     export const CONDITION_EVENTS = '/condition-events'
     export const STATISTICS = '/statistics'
     export const NOTES = '/notes'
+    export const POLLENS = '/pollens'
 }
 
 export namespace mealConstants {

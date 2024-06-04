@@ -7,6 +7,7 @@ import ConditionEvent from "./ConditionEvent"
 import Statistics from "./statistics"
 import Notes from "./Notes"
 import Note from "./Note"
+import Pollens from "./Pollens"
 
 const indices = [
     Start,
@@ -17,7 +18,8 @@ const indices = [
     ConditionEvent,
     Statistics,
     Notes,
-    Note
+    Note,
+    Pollens
 ]
 
 export default indices

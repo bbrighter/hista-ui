@@ -5,6 +5,7 @@ export default function KPIPanel(props: {
     label?: string
     subLine?: string | number
     header?: boolean
+    xs?: number
 }) {
     const elevation = props.header ? 1 : 10
 
@@ -35,14 +36,16 @@ export default function KPIPanel(props: {
         }
     }
 
+    const xs = props.xs ? props.xs : 3
+
     return (
-        <Grid item xs={3}>
+        <Grid item xs={xs}>
             <Paper
                 elevation={elevation}
                 sx={{ textAlign: 'center', minHeight: '55px', alignContent: 'center', backgroundColor: backgroundColor }}
             >
                 <Typography color={textcolor}>{props.value?.current}</Typography>
-                <Typography>{props.label}</Typography>
+                <Typography noWrap>{props.label}</Typography>
                 <Typography variant="caption">{props.subLine}</Typography>
             </Paper >
         </Grid >

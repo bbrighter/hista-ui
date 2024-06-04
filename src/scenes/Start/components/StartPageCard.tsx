@@ -3,12 +3,13 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 import SickIcon from '@mui/icons-material/Sick';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import NoteIcon from '@mui/icons-material/Note';
+import ForestIcon from '@mui/icons-material/Forest';
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import { url } from "../../../constants";
 
 export default function StartPageCard(props: {
-    type: 'meals' | 'conditionEvents' | 'statistics' | 'notes'
+    type: 'meals' | 'conditionEvents' | 'statistics' | 'notes' | 'pollens'
 }) {
     const navigate = useNavigate()
 
@@ -40,6 +41,12 @@ export default function StartPageCard(props: {
             content = "Notizen anfertigen und durchsuchen"
             icon = <NoteIcon />
             navigateTo = url.NOTES
+            break
+        case "pollens":
+            title = "Pollen"
+            content = "Pollenflug bewundern"
+            icon = <ForestIcon />
+            navigateTo = url.POLLENS
     }
 
     return (
