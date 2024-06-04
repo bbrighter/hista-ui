@@ -33,6 +33,7 @@ export default class Client {
     public readonly internalAuth: internalAuth.ServiceClient
     public readonly meals: meals.ServiceClient
     public readonly notes: notes.ServiceClient
+    public readonly pollen: pollen.ServiceClient
     public readonly statistics: statistics.ServiceClient
     public readonly symptoms: symptoms.ServiceClient
 
@@ -48,6 +49,7 @@ export default class Client {
         this.internalAuth = new internalAuth.ServiceClient(base)
         this.meals = new meals.ServiceClient(base)
         this.notes = new notes.ServiceClient(base)
+        this.pollen = new pollen.ServiceClient(base)
         this.statistics = new statistics.ServiceClient(base)
         this.symptoms = new symptoms.ServiceClient(base)
     }
@@ -284,6 +286,41 @@ export namespace notes {
             // Now make the actual call to the API
             const resp = await this.baseClient.callAPI("POST", `/notes`)
             return await resp.json() as NoteResp
+        }
+    }
+}
+
+export namespace pollen {
+    export interface PollenEventResponse {
+        date: string
+        pollens: PollenResponse[]
+    }
+
+    export interface PollenEventsResponse {
+        pollens: PollenEventResponse[]
+    }
+
+    export type PollenIntensity = number
+
+    export interface PollenResponse {
+        type: PollenType
+        intensity: PollenIntensity
+        intensityString: string
+    }
+
+    export type PollenType = string
+
+    export class ServiceClient {
+        private baseClient: BaseClient
+
+        constructor(baseClient: BaseClient) {
+            this.baseClient = baseClient
+        }
+
+        public async GetPollens(): Promise<PollenEventsResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("GET", `/pollen`)
+            return await resp.json() as PollenEventsResponse
         }
     }
 }
