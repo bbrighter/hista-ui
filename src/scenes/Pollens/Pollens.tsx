@@ -1,49 +1,144 @@
-import { useEffect } from "react"
+/// <reference types="vite-plugin-svgr/client" />
+import { useEffect, useState } from "react"
 import useHista from "../../store/store"
-import { Container, Grid, Skeleton } from "@mui/material"
-import KPIPanel from "../statistics/components/KPIPanel"
+import { Container, Divider, List, ListItem, Paper, Skeleton, SvgIcon, Theme, Typography, useMediaQuery } from "@mui/material"
+import styled from "@emotion/styled"
+import { Pollens } from "../../store/pollen/pollen"
 
-export default function Pollens() {
+import AmbrosiaIcon from './ambrosia.svg?react'
+import BirkeIcon from './birke.svg?react'
+import BeifussIcon from './beifuss.svg?react'
+import ErleIcon from './erle.svg?react'
+import EscheIcon from './esche.svg?react'
+import GraeserIcon from './graeser.svg?react'
+import HaselIcon from './hasel.svg?react'
+import RoggenIcon from './roggen.svg?react'
+
+export default function Pollensview() {
     const getPollens = useHista(state => state.getPollens)
     const pollens = useHista(state => state.pollens)
     const pollensAreLoaded = useHista(state => state.pollensAreLoaded)
 
+    const [isLoading, setIsLoading] = useState(false)
+
     useEffect(() => {
         if (!pollensAreLoaded) {
-            getPollens()
+            setIsLoading(true)
+            getPollens().
+                finally(() => setIsLoading(false))
         }
     }, [getPollens, pollensAreLoaded])
 
     return (
         <Container sx={{ padding: 2 }}>
-            {!pollensAreLoaded && <Skeleton variant="rectangular" sx={{ width: '100%', height: '40px' }} />}
-            <Grid container padding={0} rowGap={1}>
-                {pollensAreLoaded && <Grid container item xs={12} gap={1}>
-                    <KPIPanel xs={2} header />
-                    <KPIPanel xs={1} header label="Ambrosia" />
-                    <KPIPanel xs={1} header label="Beifuss" />
-                    <KPIPanel xs={1} header label="Birke" />
-                    <KPIPanel xs={1} header label="Erle" />
-                    <KPIPanel xs={1} header label="Esche" />
-                    <KPIPanel xs={1} header label="Gräser" />
-                    <KPIPanel xs={1} header label="Hasel" />
-                    <KPIPanel xs={1} header label="Roggen" />
-                </Grid>}
-                {!pollensAreLoaded && [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(n => (<Skeleton key={n} variant="rectangular" sx={{ width: '100%', height: '40px' }} />))}
-                {pollensAreLoaded && pollens.map(p => (
-                    <Grid container item xs={12} gap={1} key={p.date.valueOf()}>
-                        <KPIPanel xs={2} header label={p.date.toLocaleDateString()} />
-                        <KPIPanel xs={1} value={{ current: p.ambrosia.intensity, max: 7 }} />
-                        <KPIPanel xs={1} value={{ current: p.beifuss.intensity, max: 7 }} />
-                        <KPIPanel xs={1} value={{ current: p.birke.intensity, max: 7 }} />
-                        <KPIPanel xs={1} value={{ current: p.erle.intensity, max: 7 }} />
-                        <KPIPanel xs={1} value={{ current: p.esche.intensity, max: 7 }} />
-                        <KPIPanel xs={1} value={{ current: p.graeser.intensity, max: 7 }} />
-                        <KPIPanel xs={1} value={{ current: p.hasel.intensity, max: 7 }} />
-                        <KPIPanel xs={1} value={{ current: p.roggen.intensity, max: 7 }} />
-                    </Grid>
-                ))}
-            </Grid>
-        </Container>
+            <PollenHeader />
+            <PollenGrid pollens={pollens} isLoading={isLoading} />
+        </Container >
+    )
+}
+
+const StyledDate = styled(Paper)`
+    width: max(20%, 100px);
+`
+
+function PollenGrid(props: {
+    pollens: Pollens,
+    isLoading: boolean
+}) {
+    type StyledPollenProps = {
+        intensity: number
+    }
+
+    const StyledPollen = styled.span<StyledPollenProps>`
+        background-color: ${props => intensityToColor(props.intensity)};
+        border-radius: 5px;
+        width: max(10%, 20px);      
+        height: 1.5rem;
+        margin-left: 2px;
+    `
+
+    const intensityToColor = (intensitiy: number): string => {
+        switch (intensitiy) {
+            case 1:
+                return 'darkgreen'
+            case 2:
+                return 'green'
+            case 3:
+                return 'greenyellow'
+            case 4:
+                return 'yellow'
+            case 5:
+                return 'orange'
+            case 6:
+                return 'red'
+            case 7:
+                return 'purple'
+            default:
+                return '#121212'
+        }
+    }
+
+    return (
+        <List>
+            {props.isLoading &&
+                [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(p => (
+                    <Skeleton
+                        key={p}
+                        variant="rectangular"
+                        width={'calc(max(20%, 100px) + 8 * max(10%, 20px))'}
+                        height={'1.5rem'}
+                        sx={{ marginTop: 2 }}
+                    />))
+            }
+            {!props.isLoading && props.pollens.map(pollen =>
+                <Typography>
+                    <ListItem >
+                        <StyledDate>{pollen.date.toLocaleDateString('de-DE')}</StyledDate>
+                        <StyledPollen intensity={pollen.ambrosia.intensity} />
+                        <StyledPollen intensity={pollen.beifuss.intensity} />
+                        <StyledPollen intensity={pollen.birke.intensity} />
+                        <StyledPollen intensity={pollen.erle.intensity} />
+                        <StyledPollen intensity={pollen.esche.intensity} />
+                        <StyledPollen intensity={pollen.graeser.intensity} />
+                        <StyledPollen intensity={pollen.hasel.intensity} />
+                        <StyledPollen intensity={pollen.roggen.intensity} />
+                    </ListItem>
+                </Typography>
+            )}
+        </List>
+    )
+}
+
+function PollenHeader() {
+    return (
+        <Typography>
+            <ListItem>
+                <StyledDate></StyledDate>
+                <StyledTitle longTitle="Ambrosia" shortTitle={AmbrosiaIcon} />
+                <StyledTitle longTitle="Beifuss" shortTitle={BeifussIcon} />
+                <StyledTitle longTitle="Birke" shortTitle={BirkeIcon} />
+                <StyledTitle longTitle="Erle" shortTitle={ErleIcon} />
+                <StyledTitle longTitle="Esche" shortTitle={EscheIcon} />
+                <StyledTitle longTitle="Gräser" shortTitle={GraeserIcon} />
+                <StyledTitle longTitle="Hasel" shortTitle={HaselIcon} />
+                <StyledTitle longTitle="Roggen" shortTitle={RoggenIcon} />
+            </ListItem>
+            <Divider />
+        </Typography >
+    )
+}
+
+function StyledTitle(props: {
+    longTitle: string
+    shortTitle: React.FunctionComponent<React.SVGProps<SVGSVGElement>>
+}) {
+    const isXs = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'))
+
+    return (
+        <Paper sx={{ width: 'max(10%, 20px)' }}>
+            {!isXs && <SvgIcon component={props.shortTitle} inheritViewBox color='action' />}
+            {isXs && <Typography noWrap>{props.longTitle} </Typography>}
+        </Paper>
+
     )
 }
