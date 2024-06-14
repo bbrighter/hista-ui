@@ -6,6 +6,7 @@ export default function KPIPanel(props: {
     subLine?: string | number
     header?: boolean
     xs?: number
+    showPercent?: boolean
 }) {
     const elevation = props.header ? 1 : 10
 
@@ -44,7 +45,11 @@ export default function KPIPanel(props: {
                 elevation={elevation}
                 sx={{ textAlign: 'center', minHeight: '55px', alignContent: 'center', backgroundColor: backgroundColor }}
             >
-                <Typography color={textcolor}>{props.value?.current}</Typography>
+                {props.showPercent && props.value?.current ?
+                    <Typography color={textcolor}>{Math.round(props.value.current * 100)}%</Typography>
+                    :
+                    <Typography color={textcolor}>{props.value?.current}</Typography>
+                }
                 <Typography noWrap>{props.label}</Typography>
                 <Typography variant="caption">{props.subLine}</Typography>
             </Paper >

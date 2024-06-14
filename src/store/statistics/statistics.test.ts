@@ -12,6 +12,7 @@ test('respToStatistics', () => {
                 hours1: 0,
                 hours24: 3,
                 hours72: 5,
+                count: 1,
             }
         ]
     }

@@ -39,6 +39,7 @@ export interface SymptomStatistics {
     within1hour: number
     within24hours: number
     within72hours: number
+    count: number
 }
 
 export const respToSymptomStatistics = (
@@ -53,6 +54,7 @@ export const respToSymptomStatistics = (
             within1hour: r.hours1,
             within24hours: r.hours24,
             within72hours: r.hours72,
+            count: r.count,
         }
         return statistics
     })

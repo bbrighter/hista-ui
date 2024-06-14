@@ -350,6 +350,7 @@ export namespace statistics {
         hours72: number
         hours24: number
         hours1: number
+        count: number
     }
 
     export interface StatisticParams {
@@ -364,6 +365,7 @@ export namespace statistics {
         hours72: number
         hours24: number
         hours1: number
+        count: number
     }
 
     export interface SymptomStatisticsResponse {
