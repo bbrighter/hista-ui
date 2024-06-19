@@ -94,7 +94,7 @@ function KPIRow(props: {
                     <KPIValueCell
                         key={i}
                         value={entry}
-                        max={props.maxValue}
+                        max={props.showPercent ? 100 : props.maxValue}
                         relative={props.showPercent} />
                 ))
             }
