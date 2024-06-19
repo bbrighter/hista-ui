@@ -1,7 +1,7 @@
-import { Grid } from "@mui/material"
+import { Box } from "@mui/material"
 import useHista from "../../../store/store"
 import { useEffect } from "react"
-import KPIPanel from "./KPIPanel"
+import KPIGrid, { KPIGridValues } from "./KPIPanel"
 
 export default function SymptomEvaluation() {
     const statistics = useHista(state => state.foodStatistics)
@@ -14,30 +14,21 @@ export default function SymptomEvaluation() {
         }
     }, [getIngredients, ingredients.length])
 
-
-    const maxValue = Math.max(...statistics.map(s => s.within72hours))
+    const values: KPIGridValues = statistics.map(s => (
+        {
+            entries: [s.within1hour, s.within24hours, s.within72hours],
+            label: s.ingredientName || "",
+            subline: s.foodCondition + ' - ' + s.count.toString(),
+            count: s.count,
+        }
+    ))
 
     return (
-        <Grid container rowGap={1} sx={{ mt: 2 }}>
-            <Grid container spacing={1}>
-                <KPIPanel header />
-                <KPIPanel label="< 1 h" header />
-                <KPIPanel label="< 24 h" header />
-                <KPIPanel label="< 72 h" header />
-            </Grid>
-            {statistics.map(range => (
-                <Grid key={range.ingredientId + "_" + range.foodCondition} container spacing={1}>
-                    <KPIPanel
-                        label={range.ingredientName}
-                        header
-                        subLine={range.foodCondition}
-                    />
-                    <KPIPanel value={{ current: range.within1hour, max: maxValue }} />
-                    <KPIPanel value={{ current: range.within24hours, max: maxValue }} />
-                    <KPIPanel value={{ current: range.within72hours, max: maxValue }} />
-                </Grid>
-
-            ))}
-        </Grid>
+        <Box sx={{ mt: 2, width: '100%' }}>
+            <KPIGrid
+                headers={["< 1h", "< 24h", "< 72h"]}
+                values={values}
+            />
+        </Box>
     )
 }

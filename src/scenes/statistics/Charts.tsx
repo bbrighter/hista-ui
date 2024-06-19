@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
-import useHista from "../../store/store"
 import dayjs from "dayjs"
-import { Grid, ToggleButton, ToggleButtonGroup } from "@mui/material"
+import Grid from "@mui/material/Grid"
+
+import useHista from "../../store/store"
 import SymptomSelect from "./components/SymptomSelect"
 import SymptomEvaluation from "./components/SymptomEvaluation"
 import StatisticsDateInput from "./components/StatisticsDateInput"
@@ -9,7 +10,6 @@ import IngredientEvalulation from "./components/IngredientEvaluation"
 import SeverityFilter from "./components/SeverityFilter"
 import IngredientSelect from "./components/IngredientSelect"
 
-type ToggleValue = 'relative' | 'absolute'
 
 export default function Charts(props: {
     type: 'ingredient' | 'symptom'
@@ -22,7 +22,6 @@ export default function Charts(props: {
     const [toDate, setToDate] = useState(today)
     const [ids, setIds] = useState<Array<number>>([])
     const [severity, setSeverity] = useState([1, 5])
-    const [showRelative, setShowRelative] = useState<ToggleValue>('relative')
 
     useEffect(() => {
         if (ids.length > 0) {
@@ -48,9 +47,6 @@ export default function Charts(props: {
         setSeverity(newValue as number[]);
     }
 
-    const handleToggleChange = (_: React.MouseEvent, value: ToggleValue) => {
-        setShowRelative(value)
-    }
 
     return (
         <Grid container sx={{ mt: 2 }}>
@@ -66,8 +62,6 @@ export default function Charts(props: {
                     onIdChange={hanldeIdChange}
                     onSliderChange={handleSliderChange}
                     severity={severity}
-                    showRelative={showRelative}
-                    onToggleChange={handleToggleChange}
                 />
             }
             {
@@ -84,8 +78,6 @@ function IngredientChart(props: {
     onIdChange: (ids: Array<number>) => void
     severity: Array<number>
     onSliderChange: (event: Event, value: number | number[], activeThumb: number) => void
-    showRelative: ToggleValue
-    onToggleChange: (event: React.MouseEvent, value: ToggleValue) => void
 }) {
     return (
         <>
@@ -97,17 +89,7 @@ function IngredientChart(props: {
                     severity={props.severity}
                     onChange={props.onSliderChange} />
             </Grid>
-            <Grid item xs={12}>
-                <ToggleButtonGroup
-                    value={props.showRelative}
-                    onChange={props.onToggleChange}
-                    exclusive
-                >
-                    <ToggleButton value={'relative'}>Relativ</ToggleButton>
-                    <ToggleButton value={'absolute'}>Absolut</ToggleButton>
-                </ToggleButtonGroup>
-            </Grid>
-            <IngredientEvalulation severityFilter={props.severity} relative={props.showRelative == 'relative'} />
+            <IngredientEvalulation severityFilter={props.severity} />
         </>
     )
 }

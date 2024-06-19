@@ -1,12 +1,11 @@
-import { Grid } from "@mui/material"
+import { Box } from "@mui/material"
 import useHista from "../../../store/store"
 import { useEffect } from "react"
-import KPIPanel from "./KPIPanel"
+import KPIGrid, { KPIGridValues } from "./KPIPanel"
 import { SymptomStatistics } from "../../../store/statistics/statistics"
 
 export default function IngredientEvalulation(props: {
     severityFilter: Array<number>
-    relative: boolean
 }) {
     const statistics = useHista(state => state.symptomStatistics)
     const getSymptoms = useHista(state => state.getSymptoms)
@@ -46,49 +45,24 @@ export default function IngredientEvalulation(props: {
         return Object.values(result)
     }
 
-    const groupedStatistics = groupedStats(filteredStatistics).map(v => ({
-        count: v.count,
-        within1hour: props.relative ? v.within1hour / v.count : v.within1hour,
-        within24hours: props.relative ? v.within24hours / v.count : v.within24hours,
-        within72hours: props.relative ? v.within72hours / v.count : v.within72hours,
-        symptomId: v.symptomId,
-        symptomName: v.symptomName,
-    }))
+    const groupedStatistics = groupedStats(filteredStatistics)
 
-    groupedStatistics.sort((a, b) =>
-        b.within72hours - a.within72hours == 0 ?
-            b.within24hours - a.within24hours == 0 ?
-                b.within1hour - a.within1hour :
-                b.within24hours - a.within24hours :
-            b.within72hours - a.within72hours)
-
-    const maxValue = props.relative ? 1 : Math.max(...groupedStatistics.map(s => s.within72hours))
+    const values: KPIGridValues = groupedStatistics.map(s => (
+        {
+            label: s.symptomName || "",
+            subline: s.count.toString(),
+            entries: [s.within1hour, s.within24hours, s.within72hours],
+            count: s.count,
+        }
+    ))
 
     return (
-        <Grid container rowGap={1} sx={{ mt: 2 }}>
-            <Grid container spacing={1}>
-                <KPIPanel header />
-                <KPIPanel label="< 1 h" header />
-                <KPIPanel label="< 24 h" header />
-                <KPIPanel label="< 72 h" header />
-            </Grid>
-            {groupedStatistics.map(range => {
-                const count = props.relative ? range.count : undefined
-                return (
-                    <Grid key={range.symptomId} container spacing={1}>
-                        <KPIPanel
-                            label={range.symptomName}
-                            subLine={count}
-                            header
-                        />
-                        <KPIPanel value={{ current: range.within1hour, max: maxValue }} showPercent={props.relative} />
-                        <KPIPanel value={{ current: range.within24hours, max: maxValue }} showPercent={props.relative} />
-                        <KPIPanel value={{ current: range.within72hours, max: maxValue }} showPercent={props.relative} />
-                    </Grid>
-
-                )
-            }
-            )}
-        </Grid>
+        <Box sx={{ mt: 2, width: '100%' }}>
+            <KPIGrid
+                headers={["< 1h", "< 24h", "< 72h"]}
+                values={values}
+            />
+        </Box>
     )
 }
+

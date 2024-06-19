@@ -7,7 +7,7 @@ export default function SeverityFilter(props: {
     onChange: ((event: Event, value: number | Array<number>, activeThumb: number) => void)
 }) {
     return (
-        <Grid container >
+        <Grid container sx={{ mt: 2 }} >
             <Grid item xs={2}>
                 <Icon>
                     <FilterAltIcon />
