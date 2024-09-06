@@ -1,4 +1,4 @@
-import { meals } from "../../api/generatedApi"
+import { entity } from "../../api/generatedApi"
 
 export interface Food {
     id: number
@@ -9,7 +9,7 @@ export interface Food {
 
 export type FoodCondition = 'raw' | 'cooked'
 
-export const respToFood = (resp: meals.FoodResponse): Food => {
+export const respToFood = (resp: entity.FoodResponse): Food => {
     const condition: FoodCondition = resp.foodCondition == 'raw' ? 'raw' : 'cooked'
     return {
         id: resp.id,

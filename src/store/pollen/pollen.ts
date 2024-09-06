@@ -1,6 +1,6 @@
-import { pollen } from "../../api/generatedApi"
+import { entity } from "../../api/generatedApi"
 
-export interface PollenResp extends pollen.PollenEventsResponse { }
+export interface PollenResp extends entity.PollenEventsResponse { }
 
 interface Pollen {
     date: Date
@@ -21,7 +21,7 @@ interface PollenIntensity {
 
 export type Pollens = Array<Pollen>
 
-export const respToPollens = (resp: pollen.PollenEventsResponse): Pollens => {
+export const respToPollens = (resp: entity.PollenEventsResponse): Pollens => {
     return resp.pollens.map(pol => ({
         date: new Date(pol.date),
         ambrosia: findIntensity(pol.pollens, 'Ambrosia'),
@@ -35,7 +35,7 @@ export const respToPollens = (resp: pollen.PollenEventsResponse): Pollens => {
     }))
 }
 
-const findIntensity = (resp: Array<pollen.PollenResponse>, type: string): PollenIntensity => {
+const findIntensity = (resp: Array<entity.PollenResponse>, type: string): PollenIntensity => {
     const relevant = resp.find(p => p.type == type)
     return { intensity: relevant?.intensity || 0, intensityString: relevant?.intensityString || "Keine" }
 }

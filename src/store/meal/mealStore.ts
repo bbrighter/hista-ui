@@ -1,7 +1,6 @@
 import { StateCreator } from "zustand"
 import { client } from "../../api/api"
 import { produce } from "immer"
-import { meals } from "../../api/generatedApi"
 import { Meals, MetaMeal, respToMetaMeals } from "./meals"
 import { Freshness, Meal, respToMeal, stringToFreshness } from "./meal"
 import { Ingredients, respToIngredients } from "./ingredients"
@@ -9,6 +8,7 @@ import { SymptomStore } from "../symptom/symptomStore"
 import { AuthStore } from "../auth/authStore"
 import { ErrorStore } from "../error/errorStore"
 import { FoodCondition, respToFood } from "./food"
+import { api, entity } from "../../api/generatedApi"
 
 interface State {
     meals: Meals
@@ -26,7 +26,7 @@ interface Actions {
 
     // Meal
     setMealDate: (dateString: string) => Promise<void>
-    updateMeal: (params: meals.MealParams) => Promise<void>
+    updateMeal: (params: entity.MealParams) => Promise<void>
     getMeal: (id: number) => Promise<void>
 
     // Ingredients
@@ -68,7 +68,7 @@ export const createMealSlice: StateCreator<
         getMeals: async () => {
             if (!get().mealsAreLoaded || get().meals.length == 0) {
                 try {
-                    const resp = await client.meals.GetMeals()
+                    const resp = await client.api.GetMeals()
                     set(produce((draft: State) => {
                         draft.meals = respToMetaMeals(resp)
                         draft.mealsAreLoaded = true
@@ -81,10 +81,10 @@ export const createMealSlice: StateCreator<
         },
         postMeal: async (): Promise<number | void> => {
             try {
-                const params: meals.MealParams = {
+                const params: entity.MealParams = {
                     date: new Date().toISOString()
                 }
-                const resp = await client.meals.PostMeal(params)
+                const resp = await client.api.PostMeal(params)
                 const id = resp.id
                 set(produce((draft: State) => {
                     const newMeal: MetaMeal = {
@@ -101,7 +101,7 @@ export const createMealSlice: StateCreator<
         },
         deleteMeal: async (id: number): Promise<void> => {
             try {
-                await client.meals.DeleteMeal(id)
+                await client.api.DeleteMeal(id)
                 set(produce((draft: State) => {
                     draft.meals = removeItemById(id, get().meals)
                 }))
@@ -112,11 +112,11 @@ export const createMealSlice: StateCreator<
 
         // Meal
         setMealDate: async (dateString: string) => {
-            const params: meals.MealParams = { date: dateString }
+            const params: entity.MealParams = { date: dateString }
             const id = get().meal.id
             try {
                 if (!id) return
-                await client.meals.PatchMeal(id, params)
+                await client.api.PatchMeal(id, params)
                 const date = new Date(dateString)
                 set(produce((draft: State) => {
                     draft.meal.date = date
@@ -126,11 +126,11 @@ export const createMealSlice: StateCreator<
             }
 
         },
-        updateMeal: async (params: meals.MealParams) => {
+        updateMeal: async (params: entity.MealParams) => {
             const id = get().meal.id
             if (!id) return
             try {
-                await client.meals.PatchMeal(id, params)
+                await client.api.PatchMeal(id, params)
                 set(produce((draft: State) => {
                     if (params.date) {
                         draft.meal.date = new Date(params.date)
@@ -154,7 +154,7 @@ export const createMealSlice: StateCreator<
                 set(produce((draft: State) => {
                     draft.meal.isLoading = true
                 }))
-                const resp = await client.meals.GetMeal(id)
+                const resp = await client.api.GetMeal(id)
                 set(produce((draft: State) => {
                     draft.meal = respToMeal(resp)
                 }))
@@ -168,7 +168,7 @@ export const createMealSlice: StateCreator<
         getIngredients: async () => {
             if (!get().ingredientsAreLoaded || get().ingredients.length == 0) {
                 try {
-                    const resp = await client.meals.GetIngredients()
+                    const resp = await client.api.GetIngredients()
                     set(produce((draft: State) => {
                         draft.ingredients = respToIngredients(resp)
                         draft.ingredientsAreLoaded = true
@@ -185,12 +185,12 @@ export const createMealSlice: StateCreator<
             const condition = "cooked"
             if (!mealId) return
             try {
-                const params: meals.FoodParams = {
+                const params: api.FoodParams = {
                     condition: condition,
                     ingredientName: ingredientName,
                     ingredientId: ingredientId
                 }
-                const resp = await client.meals.PostFood(mealId, params)
+                const resp = await client.api.PostFood(mealId, params)
                 const food = respToFood(resp.food)
                 const ingredients = respToIngredients(resp.ingredients)
                 set(produce((draft: State) => {
@@ -205,9 +205,8 @@ export const createMealSlice: StateCreator<
 
         // Food
         deleteFood: async (foodId: number) => {
-            const mealId = get().meal.id || 0
             try {
-                const resp = await client.meals.DeleteFood(mealId, foodId)
+                const resp = await client.api.DeleteFood(foodId)
                 const ingredients = respToIngredients(resp)
                 set(produce((draft: State) => {
                     draft.meal.foods = removeItemById(foodId, get().meal.foods)
@@ -219,11 +218,10 @@ export const createMealSlice: StateCreator<
         },
 
         patchFoodCondition: async (foodId: number, newCondition: FoodCondition) => {
-            const params: meals.FoodConditionParams = { Condition: newCondition }
-            const mealId = get().meal.id || 0
+            const params: api.FoodConditionParams = { Condition: newCondition }
             const foodIndex = get().meal.foods.findIndex(f => f.id == foodId)
             try {
-                await client.meals.PatchFoodCondition(mealId, foodId, params)
+                await client.api.PatchFoodCondition(foodId, params)
                 set(produce((draft: State) => {
                     draft.meal.foods[foodIndex].condition = newCondition
                 }))

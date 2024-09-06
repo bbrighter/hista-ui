@@ -1,4 +1,4 @@
-import { notes } from "../../api/generatedApi"
+import { entity } from "../../api/generatedApi"
 
 export interface Note {
     id: number
@@ -6,11 +6,11 @@ export interface Note {
     text: string
 }
 
-export const respToNotes = (resp: notes.NotesResp): Array<Note> => {
+export const respToNotes = (resp: entity.NotesResp): Array<Note> => {
     return resp.notes.map(note => respToNote(note))
 }
 
-export const respToNote = (resp: notes.NoteResp): Note => {
+export const respToNote = (resp: entity.NoteResp): Note => {
     return (
         {
             id: resp.id,

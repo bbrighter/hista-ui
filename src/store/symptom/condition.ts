@@ -1,4 +1,4 @@
-import { symptoms } from "../../api/generatedApi"
+import { entity } from "../../api/generatedApi"
 import { Symptom, respToSymptom } from "./symptom"
 
 type Severity = 5 | 4 | 3 | 2 | 1
@@ -9,7 +9,7 @@ export interface Condition {
     severity: Severity
 }
 
-export const respToCondition = (resp: symptoms.ConditionResponse): Condition => {
+export const respToCondition = (resp: entity.ConditionResponse): Condition => {
     return {
         id: resp.id,
         symptom: respToSymptom(resp.symptom),

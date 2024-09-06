@@ -1,4 +1,4 @@
-import { statistics } from "../../api/generatedApi"
+import { api, entity } from "../../api/generatedApi"
 import { mealConstants } from "../../constants"
 
 export interface RawDiary {
@@ -12,7 +12,7 @@ export interface RawDiary {
 
 type DiaryEntryType = 'Essen' | 'Symptom' | 'Notiz' | 'Pollen'
 
-export const respToRawDiary = (resp: statistics.DiaryResp): Array<RawDiary> => {
+export const respToRawDiary = (resp: api.DiaryResp): Array<RawDiary> => {
     return resp.diaries.map(d => ({
         Datum: new Date(d.date).toLocaleDateString('de-DE'),
         Stunde: new Date(d.date).toLocaleTimeString('de-DE'),
@@ -37,7 +37,7 @@ const respTypeToType = (resp: string): DiaryEntryType => {
     }
 }
 
-const respToTypeAndSeverity = (resp: statistics.RawDiary): { Typ: DiaryEntryType, Schwere: string } => {
+const respToTypeAndSeverity = (resp: entity.RawDiary): { Typ: DiaryEntryType, Schwere: string } => {
     const type = respTypeToType(resp.type)
     let severity = ""
     if (type == 'Essen') {

@@ -1,4 +1,4 @@
-import { symptoms } from "../../api/generatedApi"
+import { entity } from "../../api/generatedApi"
 
 
 export interface MetaConditionEvent {
@@ -8,7 +8,7 @@ export interface MetaConditionEvent {
 
 export type ConditionEvents = Array<MetaConditionEvent>
 
-export const respToConditionEvents = (resp: symptoms.ConditionEventsResponse): ConditionEvents => {
+export const respToConditionEvents = (resp: entity.ConditionEventsResponse): ConditionEvents => {
     return resp.conditionEvents.map(ev => (
         { id: ev.id, date: new Date(ev.date) }
     ))

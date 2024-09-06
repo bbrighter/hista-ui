@@ -1,9 +1,9 @@
 import { test, expect } from 'vitest'
 import { Freshness, respToMeal } from './meal'
-import { meals } from '../../api/generatedApi'
+import { entity } from '../../api/generatedApi'
 
 test('Meal', () => {
-    const resp: meals.MealResponse = {
+    const resp: entity.MealResponse = {
         id: 1,
         date: "2024-04-22T17:28:58.419+02:00",
         freshness: 0,

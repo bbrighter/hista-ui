@@ -1,4 +1,4 @@
-import { meals } from "../../api/generatedApi"
+import { entity } from "../../api/generatedApi"
 
 export interface MetaMeal {
     id: number
@@ -8,7 +8,7 @@ export interface MetaMeal {
 export type Meals = Array<MetaMeal>
 
 
-export const respToMetaMeals = (resp: meals.MealsResponse): Meals => {
+export const respToMetaMeals = (resp: entity.MealsResponse): Meals => {
     const meals = resp.meals.map(m => (
         { id: m.id, date: new Date(m.date) }
     ))
