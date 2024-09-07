@@ -79,7 +79,8 @@ export const createSymptomSlice: StateCreator<
             try {
                 const resp = await client.api.CreateConditionEvent(params)
                 set(produce((draft: State) => {
-                    draft.conditionEvents.unshift({ id: resp.id, date: date })
+                    const event: ConditionEvent = respToConditionEvent(resp)
+                    draft.conditionEvents.unshift(event)
                 }))
                 return resp.id
             } catch (error) {
@@ -102,9 +103,10 @@ export const createSymptomSlice: StateCreator<
         },
         deleteConditionEvent: async (eventId: number) => {
             try {
-                await client.api.DeleteConditionEvent(eventId)
+                const resp = await client.api.DeleteConditionEvent(eventId)
                 set(produce((draft: State) => {
                     draft.conditionEvents = removeItemById(eventId, get().conditionEvents)
+                    draft.symptoms = respToSymptoms(resp)
                 }))
             } catch (error) {
                 get().setError(error)
@@ -151,7 +153,10 @@ export const createSymptomSlice: StateCreator<
                 const symptoms = respToSymptoms(resp.symptoms)
                 set(produce((draft: State) => {
                     draft.conditionEvent.conditions.unshift(condition)
-                    draft.symptoms = symptoms
+                    if (symptoms.length > 0) {
+                        draft.symptoms = symptoms
+                    }
+
                 }))
             } catch (error) {
                 get().setError(error)

@@ -125,10 +125,10 @@ export namespace api {
             this.baseClient = baseClient
         }
 
-        public async CreateConditionEvent(params: ConditionEventRequestParams): Promise<entity.IDResponse> {
+        public async CreateConditionEvent(params: ConditionEventRequestParams): Promise<entity.ConditionEventResponse> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callAPI("POST", `/condition-events`, JSON.stringify(params))
-            return await resp.json() as entity.IDResponse
+            return await resp.json() as entity.ConditionEventResponse
         }
 
         public async DeleteCondition(conditionID: number): Promise<entity.SymptomCategoriesResponse> {
@@ -137,8 +137,10 @@ export namespace api {
             return await resp.json() as entity.SymptomCategoriesResponse
         }
 
-        public async DeleteConditionEvent(eventId: number): Promise<void> {
-            await this.baseClient.callAPI("DELETE", `/condition-events/${encodeURIComponent(eventId)}`)
+        public async DeleteConditionEvent(eventId: number): Promise<entity.SymptomCategoriesResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("DELETE", `/condition-events/${encodeURIComponent(eventId)}`)
+            return await resp.json() as entity.SymptomCategoriesResponse
         }
 
         public async DeleteFood(foodId: number): Promise<entity.IngredientsResponse> {
@@ -147,8 +149,10 @@ export namespace api {
             return await resp.json() as entity.IngredientsResponse
         }
 
-        public async DeleteMeal(id: number): Promise<void> {
-            await this.baseClient.callAPI("DELETE", `/meals/${encodeURIComponent(id)}`)
+        public async DeleteMeal(id: number): Promise<entity.IngredientsResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("DELETE", `/meals/${encodeURIComponent(id)}`)
+            return await resp.json() as entity.IngredientsResponse
         }
 
         public async DeleteNote(noteId: number): Promise<void> {
@@ -278,16 +282,16 @@ export namespace api {
             return await resp.json() as PostFoodResponse
         }
 
-        public async PostMeal(params: entity.MealParams): Promise<entity.IDResponse> {
+        public async PostMeal(params: entity.MealParams): Promise<entity.MealResponse> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callAPI("POST", `/meals`, JSON.stringify(params))
-            return await resp.json() as entity.IDResponse
+            return await resp.json() as entity.MealResponse
         }
 
-        public async PostNote(): Promise<entity.IDResponse> {
+        public async PostNote(): Promise<entity.NoteResp> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callAPI("POST", `/notes`)
-            return await resp.json() as entity.IDResponse
+            return await resp.json() as entity.NoteResp
         }
 
         public async PostSymptomCategory(params: PostSymptomCategoryRequest): Promise<entity.IDResponse> {

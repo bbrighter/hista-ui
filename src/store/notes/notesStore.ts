@@ -4,7 +4,7 @@ import { SymptomStore } from "../symptom/symptomStore"
 import { AuthStore } from "../auth/authStore"
 import { ErrorStore } from "../error/errorStore"
 import { MealStore } from "../meal/mealStore"
-import { Note, respToNotes } from "./notes"
+import { Note, respToNote, respToNotes } from "./notes"
 import { client } from "../../api/api"
 import { api } from "../../api/generatedApi"
 
@@ -49,9 +49,7 @@ export const createNotesSlice: StateCreator<
             try {
                 const resp = await client.api.PostNote()
                 set(produce((draft: State) => {
-                    draft.note.id = resp.id
-                    draft.note.date = new Date()
-                    draft.note.text = ""
+                    draft.note = respToNote(resp)
                 }))
                 return resp.id
             } catch (error) {
@@ -89,8 +87,8 @@ export const createNotesSlice: StateCreator<
             try {
                 await client.api.PatchNote(id, params)
                 set(produce((draft: State) => {
-                    draft.note.date = new Date(date || 0)
-                    draft.note.text = text || ""
+                    if (date) draft.note.date = new Date(date)
+                    if (text) draft.note.text = text
                 }))
             } catch (error) {
                 get().setError(error)

@@ -85,25 +85,24 @@ export const createMealSlice: StateCreator<
                     date: new Date().toISOString()
                 }
                 const resp = await client.api.PostMeal(params)
-                const id = resp.id
                 set(produce((draft: State) => {
                     const newMeal: MetaMeal = {
-                        date: get().meal.date,
-                        id: id
+                        date: new Date(resp.date),
+                        id: resp.id,
                     }
                     draft.meals.unshift(newMeal)
-                    draft.meal.id = id
                 }))
-                return id
+                return resp.id
             } catch (error) {
                 get().setError(error)
             }
         },
         deleteMeal: async (id: number): Promise<void> => {
             try {
-                await client.api.DeleteMeal(id)
+                const resp = await client.api.DeleteMeal(id)
                 set(produce((draft: State) => {
                     draft.meals = removeItemById(id, get().meals)
+                    draft.ingredients = respToIngredients(resp)
                 }))
             } catch (error) {
                 get().setError(error)
