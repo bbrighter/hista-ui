@@ -1,9 +1,9 @@
 import { expect, test } from "vitest";
-import { pollen } from "../../api/generatedApi";
+import { entity } from "../../api/generatedApi";
 import { respToPollens } from "./pollen";
 
 test("respToPollens", () => {
-    const resp: pollen.PollenEventsResponse = {
+    const resp: entity.PollenEventsResponse = {
         pollens: [{
             date: "2002-12-01 12:00:30",
             pollens: [{

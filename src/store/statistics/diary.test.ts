@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { statistics } from "../../api/generatedApi";
+import { api } from "../../api/generatedApi";
 import { respToRawDiary } from "./diary";
 
 describe("RawDiary", () => {
     it('respToRawDiary', () => {
-        const resp: statistics.DiaryResp = {
+        const resp: api.DiaryResp = {
             diaries: [{
                 content: "Content",
                 date: "2024-12-05T02:00:00+02:00",

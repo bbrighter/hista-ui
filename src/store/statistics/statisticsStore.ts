@@ -6,7 +6,7 @@ import { MealStore } from "../meal/mealStore";
 import { SymptomStore } from "../symptom/symptomStore";
 import { client } from "../../api/api";
 import { produce } from "immer";
-import { statistics } from "../../api/generatedApi";
+import { api } from "../../api/generatedApi";
 import { FoodStatistics, SymptomStatistics, respToStatistics, respToSymptomStatistics } from "./statistics";
 
 interface State {
@@ -41,7 +41,7 @@ export const createStatisticsSlice: StateCreator<
 
     getDiaryEntries: async (): Promise<void> => {
         try {
-            const resp = await client.statistics.GetDiary()
+            const resp = await client.api.GetDiary()
             set(produce((draft: State) => {
                 draft.diaryEntries = respToRawDiary(resp)
             }))
@@ -50,13 +50,13 @@ export const createStatisticsSlice: StateCreator<
         }
     },
     getFoodStatistics: async (fromDate: Date, toDate: Date, symptomIds: Array<number>): Promise<void> => {
-        const params: statistics.StatisticParams = {
+        const params: api.StatisticParams = {
             fromDate: fromDate.toISOString(),
             toDate: toDate.toISOString(),
             ids: symptomIds
         }
         try {
-            const resp = await client.statistics.GetStatisticsBySymptomIds(params)
+            const resp = await client.api.GetStatisticsBySymptomIds(params)
             set(produce((draft: State) => {
                 draft.foodStatistics = respToStatistics(resp, get().ingredients)
             }))
@@ -65,13 +65,13 @@ export const createStatisticsSlice: StateCreator<
         }
     },
     getSymptomStatistics: async (fromDate: Date, toDate: Date, ingredientIds: Array<number>): Promise<void> => {
-        const params: statistics.StatisticParams = {
+        const params: api.StatisticParams = {
             fromDate: fromDate.toISOString(),
             toDate: toDate.toISOString(),
             ids: ingredientIds
         }
         try {
-            const resp = await client.statistics.GetStatisticsByIngredientsIds(params)
+            const resp = await client.api.GetStatisticsByIngredientsIds(params)
             set(produce((draft: State) => {
                 draft.symptomStatistics = respToSymptomStatistics(resp, get().symptoms)
             }))

@@ -1,4 +1,4 @@
-import { statistics } from "../../api/generatedApi"
+import { entity } from "../../api/generatedApi"
 import { mealConstants } from "../../constants"
 import { Ingredients } from "../meal/ingredients"
 import { SymptomCategories } from "../symptom/symptom"
@@ -15,7 +15,7 @@ export interface FoodStatistics {
 
 
 export const respToStatistics = (
-    resp: statistics.FoodStatisticsResponse,
+    resp: entity.FoodStatisticsResponse,
     ingredients: Ingredients
 ): Array<FoodStatistics> => {
     const statistics = resp.statistics.map(r => {
@@ -45,7 +45,7 @@ export interface SymptomStatistics {
 }
 
 export const respToSymptomStatistics = (
-    resp: statistics.SymptomStatisticsResponse,
+    resp: entity.SymptomStatisticsResponse,
     symptoms: SymptomCategories
 ): Array<SymptomStatistics> => {
     const statistics = resp.statistics.map(r => {

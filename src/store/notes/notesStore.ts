@@ -6,7 +6,7 @@ import { ErrorStore } from "../error/errorStore"
 import { MealStore } from "../meal/mealStore"
 import { Note, respToNote, respToNotes } from "./notes"
 import { client } from "../../api/api"
-import { notes } from "../../api/generatedApi"
+import { api } from "../../api/generatedApi"
 
 interface State {
     notes: Array<Note>
@@ -37,7 +37,7 @@ export const createNotesSlice: StateCreator<
 
         getNotes: async () => {
             try {
-                const resp = await client.notes.GetNotes()
+                const resp = await client.api.GetNotes()
                 set(produce((draft: State) => {
                     draft.notes = respToNotes(resp)
                 }))
@@ -47,12 +47,11 @@ export const createNotesSlice: StateCreator<
         },
         postNote: async () => {
             try {
-                const resp = await client.notes.PostNote()
-                const note = respToNote(resp)
+                const resp = await client.api.PostNote()
                 set(produce((draft: State) => {
-                    draft.note = note
+                    draft.note = respToNote(resp)
                 }))
-                return note.id
+                return resp.id
             } catch (error) {
                 get().setError(error)
             }
@@ -72,7 +71,7 @@ export const createNotesSlice: StateCreator<
         },
         deleteNote: async (id: number) => {
             try {
-                await client.notes.DeleteNote(id)
+                await client.api.DeleteNote(id)
                 set(produce((draft: State) => {
                     draft.notes = get().notes.filter(v => v.id != id)
                 }))
@@ -81,14 +80,15 @@ export const createNotesSlice: StateCreator<
             }
         },
         patchNote: async (id: number, date?: string, text?: string) => {
-            const params: notes.NoteParams = {
+            const params: api.NoteParams = {
                 date: date,
                 text: text,
             }
             try {
-                const resp = await client.notes.PatchNote(id, params)
+                await client.api.PatchNote(id, params)
                 set(produce((draft: State) => {
-                    draft.note = respToNote(resp)
+                    if (date) draft.note.date = new Date(date)
+                    if (text) draft.note.text = text
                 }))
             } catch (error) {
                 get().setError(error)

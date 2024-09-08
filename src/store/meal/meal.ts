@@ -1,4 +1,4 @@
-import { meals } from "../../api/generatedApi"
+import { entity } from "../../api/generatedApi"
 import { Food, respToFood } from "./food"
 
 export interface Meal {
@@ -29,7 +29,7 @@ export const stringToFreshness = (str: number): Freshness => {
     }
 }
 
-export const respToMeal = (resp: meals.MealResponse): Meal => {
+export const respToMeal = (resp: entity.MealResponse): Meal => {
     const foods = resp.foods.map(f => respToFood(f))
     const meal: Meal = {
         id: resp.id,
@@ -42,3 +42,4 @@ export const respToMeal = (resp: meals.MealResponse): Meal => {
     }
     return meal
 }
+

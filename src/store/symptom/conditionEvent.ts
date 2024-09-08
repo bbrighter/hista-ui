@@ -1,4 +1,4 @@
-import { symptoms } from "../../api/generatedApi"
+import { entity } from "../../api/generatedApi"
 import { Symptom } from "./symptom"
 
 export interface ConditionEvent {
@@ -7,7 +7,7 @@ export interface ConditionEvent {
     conditions: Array<Condition>
 }
 
-export function respToConditionEvent(resp: symptoms.ConditionEventResponse): ConditionEvent {
+export function respToConditionEvent(resp: entity.ConditionEventResponse): ConditionEvent {
     return {
         id: resp.id,
         date: new Date(resp.date),
