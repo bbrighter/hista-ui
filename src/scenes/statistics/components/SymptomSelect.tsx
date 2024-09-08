@@ -22,13 +22,10 @@ export default function SymptomSelect(props: {
         if (symptoms.length == 0) {
             getSymptoms()
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
         props.onChange(values.map(v => v.id))
-        // props should not be part of the dependencies, because it leads to a rerender loop
-        // eslint-disable-next-line react-hooks/exhaustive-deps 
     }, [values])
 
     const options: Options = symptoms.flatMap(c => c.symptoms.map(s => ({

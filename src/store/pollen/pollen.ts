@@ -1,5 +1,6 @@
 import { entity } from "../../api/generatedApi"
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PollenResp extends entity.PollenEventsResponse { }
 
 interface Pollen {

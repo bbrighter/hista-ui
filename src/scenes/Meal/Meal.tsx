@@ -14,7 +14,6 @@ export default function Meal() {
 
     useEffect(() => {
         getMeal(Number(params.id))
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
