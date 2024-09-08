@@ -20,13 +20,10 @@ export default function IngredientSelect(props: {
         if (ingredients.length == 0) {
             getIngredients()
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
         props.onChange(values.map(v => v.id))
-        // props should not be part of the dependencies, because it leads to a rerender loop
-        // eslint-disable-next-line react-hooks/exhaustive-deps 
     }, [values])
 
     const options: Options = ingredients.map(ing => ({

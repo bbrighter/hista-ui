@@ -18,13 +18,12 @@ export default function Login() {
         if (isAuthenticated) {
             navigate("/")
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated])
 
     const onClick = async () => {
         setLoadingState('loading')
         const ok = await login(password, name)
-        ok ? setLoadingState('initial') : setLoadingState('error')
+        if (ok) { setLoadingState('initial') } else { setLoadingState('error') }
     }
 
     const buttonColor = () => {
