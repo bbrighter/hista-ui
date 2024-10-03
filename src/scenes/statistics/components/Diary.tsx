@@ -1,9 +1,9 @@
 
 import DownloadIcon from '@mui/icons-material/Download';
-import { LoadingButton } from '@mui/lab';
 import { useEffect, useState } from 'react';
 import useHista from '../../../store/store';
 import { writeRawDiaryToExcel } from '../excel';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 export default function Diary() {
     const diaryEntries = useHista(state => state.diaryEntries)

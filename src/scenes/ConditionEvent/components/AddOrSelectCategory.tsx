@@ -1,6 +1,13 @@
-import { Alert, Autocomplete, Box, ListItem, ListItemText, Modal, TextField, Typography } from '@mui/material';
+import Modal from '@mui/material/Modal';
 import useHista from '../../../store/store';
 import React, { useState } from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Alert from '@mui/material/Alert';
 
 interface InputOption {
     id: number

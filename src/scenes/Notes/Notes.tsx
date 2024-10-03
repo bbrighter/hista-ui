@@ -1,4 +1,3 @@
-import { Box, Container } from '@mui/material';
 import useHista from '../../store/store';
 import OverviewList from '../components/OverviewList';
 import { LoadingButton } from '@mui/lab';
@@ -7,6 +6,8 @@ import { url } from '../../constants';
 import { useEffect, useState } from 'react';
 import NoteIcon from '@mui/icons-material/Note';
 import NoteSearch from './components/NoteSearch';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 
 export default function Notes() {
     const getNotes = useHista(state => state.getNotes)
@@ -65,7 +66,7 @@ export default function Notes() {
             >
                 Neue Notiz
             </LoadingButton>
-            <Box >
+            <Box>
                 <NoteSearch
                     searchValue={searchValue}
                     onClear={() => setSearchValue('')}

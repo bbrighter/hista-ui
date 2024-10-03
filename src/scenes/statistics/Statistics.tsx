@@ -1,7 +1,9 @@
-import { Container, Tab, Tabs } from '@mui/material';
 import Diary from './components/Diary';
 import { useState } from 'react';
 import Charts from './Charts';
+import Container from '@mui/material/Container';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 type TabValue = 0 | 1 | 2
 interface TabType {

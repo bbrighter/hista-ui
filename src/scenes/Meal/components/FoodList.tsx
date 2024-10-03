@@ -1,10 +1,16 @@
-import { CircularProgress, List, ListItem, ListItemText, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import useHista from '../../../store/store';
 import { mealConstants } from '../../../constants';
 import { FoodCondition } from '../../../store/meal/food';
 import { useState } from 'react';
 import LoadingIconButton from '../../components/LoadingIconButton';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import ToggleButton from '@mui/material/ToggleButton';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function FoodList() {
     const food = useHista(state => state.meal.foods)

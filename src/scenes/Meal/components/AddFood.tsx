@@ -1,7 +1,11 @@
-import { Autocomplete, CircularProgress, ListItem, ListItemText, TextField } from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
 import useHista from '../../../store/store';
 import { useEffect, useState } from 'react';
 import React from 'react';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import TextField from '@mui/material/TextField';
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface InputOption {
     id: number
@@ -74,9 +78,10 @@ export default function AddFood() {
             renderOption={(props, option) => {
                 const key = isNewOption(option) ? 0 : option.id
                 const label = isNewOption(option) ? option : option.name
-                return (<ListItem {...props} key={key}>
-                    <ListItemText primary={label} />
-                </ListItem>)
+                return (
+                    <ListItem {...props} key={key}>
+                        <ListItemText primary={label} />
+                    </ListItem>)
             }}
             getOptionLabel={opt => isNewOption(opt) ? opt : opt.name}
             renderInput={params => (

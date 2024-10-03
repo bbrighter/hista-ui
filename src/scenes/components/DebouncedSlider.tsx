@@ -1,7 +1,10 @@
-import { Box, Slider, Stack, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
 import useDebounce from '../../hooks/useDebounce';
 import { useDidUpdateEffect } from '../../hooks/useDidUpdateEffect';
 import { useEffect, useState } from 'react';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+import Slider from '@mui/material/Slider';
 
 export default function DebouncedSlider(props: {
     initialValue: number

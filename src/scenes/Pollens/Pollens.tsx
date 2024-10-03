@@ -1,7 +1,6 @@
 /// <reference types="vite-plugin-svgr/client" />
 import { useEffect, useState } from 'react'
 import useHista from '../../store/store'
-import { Container, Divider, List, ListItem, Paper, Skeleton, SvgIcon, Theme, Typography, useMediaQuery } from '@mui/material'
 import styled from '@emotion/styled'
 import { Pollens } from '../../store/pollen/pollen'
 
@@ -13,6 +12,17 @@ import EscheIcon from './esche.svg?react'
 import GraeserIcon from './graeser.svg?react'
 import HaselIcon from './hasel.svg?react'
 import RoggenIcon from './roggen.svg?react'
+import Container from '@mui/material/Container'
+import Paper from '@mui/material/Paper'
+import List from '@mui/material/List'
+import Skeleton from '@mui/material/Skeleton'
+import Typography from '@mui/material/Typography'
+import ListItem from '@mui/material/ListItem'
+import Divider from '@mui/material/Divider'
+import useMediaQuery from '@mui/material/useMediaQuery';
+import SvgIcon from '@mui/material/SvgIcon';
+import { Theme } from '@mui/material/styles'
+
 
 export default function Pollensview() {
     const getPollens = useHista(state => state.getPollens)
@@ -59,22 +69,22 @@ function PollenGrid(props: {
 
     const intensityToColor = (intensitiy: number): string => {
         switch (intensitiy) {
-        case 1:
-            return 'darkgreen'
-        case 2:
-            return 'green'
-        case 3:
-            return 'greenyellow'
-        case 4:
-            return 'yellow'
-        case 5:
-            return 'orange'
-        case 6:
-            return 'red'
-        case 7:
-            return 'purple'
-        default:
-            return '#121212'
+            case 1:
+                return 'darkgreen'
+            case 2:
+                return 'green'
+            case 3:
+                return 'greenyellow'
+            case 4:
+                return 'yellow'
+            case 5:
+                return 'orange'
+            case 6:
+                return 'red'
+            case 7:
+                return 'purple'
+            default:
+                return '#121212'
         }
     }
 
