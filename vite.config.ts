@@ -10,4 +10,9 @@ export default defineConfig({
         svgr(),
         visualizer(),
     ],
+    build: {
+        rollupOptions: {
+            treeshake: true,
+        },
+    },
 })
