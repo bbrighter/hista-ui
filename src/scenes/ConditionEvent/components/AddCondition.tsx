@@ -1,7 +1,7 @@
-import { Autocomplete, AutocompleteChangeReason, FilterOptionsState, ListItem, ListItemText, TextField } from "@mui/material";
-import useHista from "../../../store/store";
-import { useEffect, useState } from "react";
-import AddOrSelectCategory from "./AddOrSelectCategory";
+import { Autocomplete, AutocompleteChangeReason, FilterOptionsState, ListItem, ListItemText, TextField } from '@mui/material';
+import useHista from '../../../store/store';
+import { useEffect, useState } from 'react';
+import AddOrSelectCategory from './AddOrSelectCategory';
 
 interface SymptomOption {
     categoryId: number
@@ -21,7 +21,7 @@ const isNewOption = (opt: unknown): opt is NewOption => {
 export default function AddCondition() {
     const [open, setOpen] = useState(false)
     const [value, setValue] = useState<Option | null>(null)
-    const [inputValue, setInputValue] = useState("")
+    const [inputValue, setInputValue] = useState('')
     const getSymptoms = useHista(state => state.getSymptoms)
     const postConditionById = useHista(state => state.postCondition)
     const symptoms = useHista(state => state.symptoms)
@@ -38,12 +38,12 @@ export default function AddCondition() {
 
     const onChange = async (_e: React.SyntheticEvent, v: Option | null, reason: AutocompleteChangeReason) => {
         if (v == null) return
-        if (isNewOption(v) && (reason == "selectOption" || reason == "createOption")) {
+        if (isNewOption(v) && (reason == 'selectOption' || reason == 'createOption')) {
             setOpen(true)
             setValue(v)
         } else if (!isNewOption(v) && reason == 'selectOption') {
             await postConditionById(v.categoryId, v.symptomId, undefined)
-            setInputValue("")
+            setInputValue('')
         }
     }
 
@@ -62,7 +62,7 @@ export default function AddCondition() {
 
     const onCloseModal = () => {
         setOpen(false)
-        setInputValue("")
+        setInputValue('')
         setValue(null)
     }
 
@@ -82,7 +82,7 @@ export default function AddCondition() {
                 renderOption={(props, option) => {
                     const key = isNewOption(option) ? 0 : option.symptomId
                     const primary = isNewOption(option) ? option : option.symptomName
-                    const secondary = isNewOption(option) ? "hinzufügen" : option.categoryName
+                    const secondary = isNewOption(option) ? 'hinzufügen' : option.categoryName
                     return (<ListItem {...props} key={key}>
                         <ListItemText
                             primary={primary}
@@ -91,11 +91,11 @@ export default function AddCondition() {
                     </ListItem>
                     )
                 }}
-                renderInput={params => (<TextField {...params} label={"Symptom"} />)}
+                renderInput={params => (<TextField {...params} label={'Symptom'} />)}
             />
             <AddOrSelectCategory
                 open={open}
-                symptomName={isNewOption(value) ? value : value?.symptomName || ""}
+                symptomName={isNewOption(value) ? value : value?.symptomName || ''}
                 onClose={onCloseModal}
             />
         </>

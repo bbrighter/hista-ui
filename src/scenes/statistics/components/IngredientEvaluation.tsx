@@ -1,8 +1,8 @@
-import { Box } from "@mui/material"
-import useHista from "../../../store/store"
-import { useEffect } from "react"
-import KPIGrid, { KPIGridValues } from "./KPIPanel"
-import { SymptomStatistics } from "../../../store/statistics/statistics"
+import { Box } from '@mui/material'
+import useHista from '../../../store/store'
+import { useEffect } from 'react'
+import KPIGrid, { KPIGridValues } from './KPIPanel'
+import { SymptomStatistics } from '../../../store/statistics/statistics'
 
 export default function IngredientEvalulation(props: {
     severityFilter: Array<number>
@@ -33,7 +33,7 @@ export default function IngredientEvalulation(props: {
                     count: 0,
                     within1hour: 0,
                     within24hours: 0,
-                    within72hours: 0
+                    within72hours: 0,
                 }
             }
             result[symptomId].within1hour += within1hour
@@ -49,7 +49,7 @@ export default function IngredientEvalulation(props: {
 
     const values: KPIGridValues = groupedStatistics.map(s => (
         {
-            label: s.symptomName || "",
+            label: s.symptomName || '',
             subline: s.count.toString(),
             entries: [s.within1hour, s.within24hours, s.within72hours],
             count: s.count,
@@ -59,7 +59,7 @@ export default function IngredientEvalulation(props: {
     return (
         <Box sx={{ mt: 2, width: '100%' }}>
             <KPIGrid
-                headers={["< 1h", "< 24h", "< 72h"]}
+                headers={['< 1h', '< 24h', '< 72h']}
                 values={values}
             />
         </Box>

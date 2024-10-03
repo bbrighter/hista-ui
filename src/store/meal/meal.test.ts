@@ -5,7 +5,7 @@ import { entity } from '../../api/generatedApi'
 test('Meal', () => {
     const resp: entity.MealResponse = {
         id: 1,
-        date: "2024-04-22T17:28:58.419+02:00",
+        date: '2024-04-22T17:28:58.419+02:00',
         freshness: 0,
         isAlone: true,
         stressLevel: 2,

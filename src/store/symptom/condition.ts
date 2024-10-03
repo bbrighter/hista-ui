@@ -1,5 +1,5 @@
-import { entity } from "../../api/generatedApi"
-import { Symptom, respToSymptom } from "./symptom"
+import { entity } from '../../api/generatedApi'
+import { Symptom, respToSymptom } from './symptom'
 
 type Severity = 5 | 4 | 3 | 2 | 1
 
@@ -13,7 +13,7 @@ export const respToCondition = (resp: entity.ConditionResponse): Condition => {
     return {
         id: resp.id,
         symptom: respToSymptom(resp.symptom),
-        severity: respToSeverity(resp.severity)
+        severity: respToSeverity(resp.severity),
     }
 }
 
@@ -28,15 +28,15 @@ export const colorFromSeverity = (severity: number | Array<number>) => {
         sev = Math.max(...severity)
     }
     switch (sev) {
-        case 1:
-            return "success"
-        case 2:
-            return "primary"
-        case 3:
-            return "secondary"
-        case 4:
-            return "warning"
-        case 5:
-            return "error"
+    case 1:
+        return 'success'
+    case 2:
+        return 'primary'
+    case 3:
+        return 'secondary'
+    case 4:
+        return 'warning'
+    case 5:
+        return 'error'
     }
 }

@@ -1,8 +1,8 @@
-import { CircularProgress, Grid, Skeleton, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import useHista from "../../../store/store";
-import DateInput from "../../components/DateIpnut";
-import { Freshness } from "../../../store/meal/meal";
-import DebouncedSlider from "../../components/DebouncedSlider";
+import { CircularProgress, Grid, Skeleton, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import useHista from '../../../store/store';
+import DateInput from '../../components/DateIpnut';
+import { Freshness } from '../../../store/meal/meal';
+import DebouncedSlider from '../../components/DebouncedSlider';
 import MoodBadIcon from '@mui/icons-material/MoodBad';
 import MoodIcon from '@mui/icons-material/Mood';
 import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
@@ -11,7 +11,7 @@ import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied
 import PeopleIcon from '@mui/icons-material/People';
 import PersonIcon from '@mui/icons-material/Person';
 import LunchDiningIcon from '@mui/icons-material/LunchDining';
-import { useState } from "react";
+import { useState } from 'react';
 
 export default function MealSettings() {
     const patchMeal = useHista(state => state.updateMeal)
@@ -105,53 +105,53 @@ export default function MealSettings() {
 
 const colorFromStressLevel = (stressLevel: number) => {
     switch (stressLevel) {
-        case 0:
-            return "success"
-        case 1:
-            return "primary"
-        case 2:
-            return "secondary"
-        case 3:
-            return "warning"
-        default:
-            return "error"
+    case 0:
+        return 'success'
+    case 1:
+        return 'primary'
+    case 2:
+        return 'secondary'
+    case 3:
+        return 'warning'
+    default:
+        return 'error'
     }
 }
 
 const iconFromStressLevel = (stressLevel: number): JSX.Element => {
     switch (stressLevel) {
-        case 0:
-            return <MoodIcon fontSize="large" color='success' />
-        case 1:
-            return <SentimentSatisfiedIcon fontSize="large" color='primary' />
-        case 2:
-            return <SentimentNeutralIcon fontSize="large" color='secondary' />
-        case 3:
-            return <SentimentDissatisfiedIcon fontSize="large" color='warning' />
-        default:
-            return <MoodBadIcon fontSize="large" color='error' />
+    case 0:
+        return <MoodIcon fontSize="large" color='success' />
+    case 1:
+        return <SentimentSatisfiedIcon fontSize="large" color='primary' />
+    case 2:
+        return <SentimentNeutralIcon fontSize="large" color='secondary' />
+    case 3:
+        return <SentimentDissatisfiedIcon fontSize="large" color='warning' />
+    default:
+        return <MoodBadIcon fontSize="large" color='error' />
     }
 }
 
 const colorFromFreshness = (freshness: Freshness) => {
     switch (freshness) {
-        case Freshness.fresh:
-            return "success"
-        case Freshness.sameDay:
-            return "primary"
-        case Freshness.old:
-            return "error"
+    case Freshness.fresh:
+        return 'success'
+    case Freshness.sameDay:
+        return 'primary'
+    case Freshness.old:
+        return 'error'
     }
 }
 
 const iconFromFreshness = (freshness: Freshness) => {
     switch (freshness) {
-        case Freshness.fresh:
-            return <LunchDiningIcon color='success' />
-        case Freshness.sameDay:
-            return <LunchDiningIcon color='primary' />
-        case Freshness.old:
-            return <LunchDiningIcon color='error' />
+    case Freshness.fresh:
+        return <LunchDiningIcon color='success' />
+    case Freshness.sameDay:
+        return <LunchDiningIcon color='primary' />
+    case Freshness.old:
+        return <LunchDiningIcon color='error' />
     }
 }
 

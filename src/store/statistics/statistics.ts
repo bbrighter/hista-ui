@@ -1,7 +1,7 @@
-import { entity } from "../../api/generatedApi"
-import { mealConstants } from "../../constants"
-import { Ingredients } from "../meal/ingredients"
-import { SymptomCategories } from "../symptom/symptom"
+import { entity } from '../../api/generatedApi'
+import { mealConstants } from '../../constants'
+import { Ingredients } from '../meal/ingredients'
+import { SymptomCategories } from '../symptom/symptom'
 
 export interface FoodStatistics {
     ingredientId: number
@@ -16,7 +16,7 @@ export interface FoodStatistics {
 
 export const respToStatistics = (
     resp: entity.FoodStatisticsResponse,
-    ingredients: Ingredients
+    ingredients: Ingredients,
 ): Array<FoodStatistics> => {
     const statistics = resp.statistics.map(r => {
         const statistics: FoodStatistics = {
@@ -46,7 +46,7 @@ export interface SymptomStatistics {
 
 export const respToSymptomStatistics = (
     resp: entity.SymptomStatisticsResponse,
-    symptoms: SymptomCategories
+    symptoms: SymptomCategories,
 ): Array<SymptomStatistics> => {
     const statistics = resp.statistics.map(r => {
         const statistics: SymptomStatistics = {

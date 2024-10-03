@@ -1,9 +1,9 @@
 /// <reference types="vite-plugin-svgr/client" />
-import { useEffect, useState } from "react"
-import useHista from "../../store/store"
-import { Container, Divider, List, ListItem, Paper, Skeleton, SvgIcon, Theme, Typography, useMediaQuery } from "@mui/material"
-import styled from "@emotion/styled"
-import { Pollens } from "../../store/pollen/pollen"
+import { useEffect, useState } from 'react'
+import useHista from '../../store/store'
+import { Container, Divider, List, ListItem, Paper, Skeleton, SvgIcon, Theme, Typography, useMediaQuery } from '@mui/material'
+import styled from '@emotion/styled'
+import { Pollens } from '../../store/pollen/pollen'
 
 import AmbrosiaIcon from './ambrosia.svg?react'
 import BirkeIcon from './birke.svg?react'
@@ -59,22 +59,22 @@ function PollenGrid(props: {
 
     const intensityToColor = (intensitiy: number): string => {
         switch (intensitiy) {
-            case 1:
-                return 'darkgreen'
-            case 2:
-                return 'green'
-            case 3:
-                return 'greenyellow'
-            case 4:
-                return 'yellow'
-            case 5:
-                return 'orange'
-            case 6:
-                return 'red'
-            case 7:
-                return 'purple'
-            default:
-                return '#121212'
+        case 1:
+            return 'darkgreen'
+        case 2:
+            return 'green'
+        case 3:
+            return 'greenyellow'
+        case 4:
+            return 'yellow'
+        case 5:
+            return 'orange'
+        case 6:
+            return 'red'
+        case 7:
+            return 'purple'
+        default:
+            return '#121212'
         }
     }
 
@@ -90,8 +90,8 @@ function PollenGrid(props: {
                         sx={{ marginTop: 2 }}
                     />))
             }
-            {!props.isLoading && props.pollens.map(pollen =>
-                <Typography>
+            {!props.isLoading && props.pollens.map((pollen, i) =>
+                <Typography key={i}>
                     <ListItem >
                         <StyledDate>{pollen.date.toLocaleDateString('de-DE')}</StyledDate>
                         <StyledPollen intensity={pollen.ambrosia.intensity} />
@@ -103,7 +103,7 @@ function PollenGrid(props: {
                         <StyledPollen intensity={pollen.hasel.intensity} />
                         <StyledPollen intensity={pollen.roggen.intensity} />
                     </ListItem>
-                </Typography>
+                </Typography>,
             )}
         </List>
     )

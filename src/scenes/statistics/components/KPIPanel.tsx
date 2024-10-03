@@ -1,5 +1,10 @@
-import { Grid, Paper, SxProps, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material"
-import { useState } from "react"
+import Grid from '@mui/material/Grid'
+import Paper from '@mui/material/Paper'
+import { SxProps } from '@mui/material/styles'
+import ToggleButton from '@mui/material/ToggleButton'
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
+import Typography from '@mui/material/Typography'
+import { useState } from 'react'
 
 export type KPIGridValues = Array<{
     label: string
@@ -22,7 +27,7 @@ export default function KPIGrid(props: {
             count: v.count,
             label: v.label,
             subline: v.subline,
-            entries: v.entries.map(e => Math.round(e / v.count * 100))
+            entries: v.entries.map(e => Math.round(e / v.count * 100)),
         }))
     }
 
@@ -37,8 +42,6 @@ export default function KPIGrid(props: {
         return cmp
     })
 
-    console.log(values)
-
     return (
         <Grid container>
             <GridSettings
@@ -46,7 +49,7 @@ export default function KPIGrid(props: {
                 showRelative={isRelative}
             />
             <Grid container spacing={1}>
-                <KPIHeaderRow headers={["", ...props.headers]} />
+                <KPIHeaderRow headers={['', ...props.headers]} />
                 {values.map(v => {
                     return (<KPIRow
                         entries={v.entries}
@@ -105,7 +108,7 @@ function KPIRow(props: {
 const CellStyle: SxProps = {
     textAlign: 'center',
     minHeight: '55px',
-    alignContent: 'center'
+    alignContent: 'center',
 }
 
 function KPIHeaderCell(props: {

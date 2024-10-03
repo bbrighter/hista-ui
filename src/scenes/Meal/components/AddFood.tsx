@@ -1,7 +1,7 @@
-import { Autocomplete, CircularProgress, ListItem, ListItemText, TextField } from "@mui/material";
-import useHista from "../../../store/store";
-import { useEffect, useState } from "react";
-import React from "react";
+import { Autocomplete, CircularProgress, ListItem, ListItemText, TextField } from '@mui/material';
+import useHista from '../../../store/store';
+import { useEffect, useState } from 'react';
+import React from 'react';
 
 interface InputOption {
     id: number
@@ -22,7 +22,7 @@ export default function AddFood() {
     const ingredients = useHista(state => state.ingredients)
     const options: Array<Option> = ingredients.map(ing => ({ name: ing.name, id: ing.id }))
 
-    const [inputValue, setInputValue] = useState<string | undefined>("")
+    const [inputValue, setInputValue] = useState<string | undefined>('')
     const [value, setValue] = useState<Option | null>(null)
     const [isLoading, setIsLoading] = useState(false)
 
@@ -43,10 +43,10 @@ export default function AddFood() {
             setIsLoading(true)
             postFood(name, id).then(() => {
                 setValue(null)
-                setInputValue("")
+                setInputValue('')
             }).finally(() => {
                 setIsLoading(false)
-            }
+            },
             )
         }
 
@@ -82,7 +82,7 @@ export default function AddFood() {
             renderInput={params => (
                 <TextField
                     {...params}
-                    label={"Zutaten"}
+                    label={'Zutaten'}
                     InputProps={{
                         ...params.InputProps,
                         endAdornment: (
@@ -90,7 +90,7 @@ export default function AddFood() {
                                 {isLoading ? <CircularProgress size={30} /> : null}
                                 {params.InputProps.endAdornment}
                             </React.Fragment>
-                        )
+                        ),
                     }}
                 />)}
         />

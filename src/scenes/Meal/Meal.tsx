@@ -1,10 +1,10 @@
-import { Container, FormControl, FormGroup, Skeleton } from "@mui/material";
-import useHista from "../../store/store";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import AddFood from "./components/AddFood";
-import FoodList from "./components/FoodList";
-import MealSettings from "./components/MealSettings";
+import { Container, FormControl, FormGroup, Skeleton } from '@mui/material';
+import useHista from '../../store/store';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import AddFood from './components/AddFood';
+import FoodList from './components/FoodList';
+import MealSettings from './components/MealSettings';
 
 
 export default function Meal() {

@@ -1,11 +1,11 @@
-import useHista from "../../store/store"
-import { Container } from "@mui/material"
+import useHista from '../../store/store'
+import { Container } from '@mui/material'
 import { LoadingButton } from '@mui/lab';
-import { useNavigate } from "react-router-dom"
-import EventList from "./components/EventList"
+import { useNavigate } from 'react-router-dom'
+import EventList from './components/EventList'
 import SickIcon from '@mui/icons-material/Sick';
-import { url } from "../../constants"
-import { useState } from "react";
+import { url } from '../../constants'
+import { useState } from 'react';
 
 export default function ConditionEvents() {
     const postConditionEvent = useHista(state => state.postConditionEvent)
@@ -17,7 +17,7 @@ export default function ConditionEvents() {
         const id = await postConditionEvent()
         setLoading(false)
         if (id) {
-            navigate(url.CONDITION_EVENTS + "/" + String(id))
+            navigate(url.CONDITION_EVENTS + '/' + String(id))
         }
     }
 

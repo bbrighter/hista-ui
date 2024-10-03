@@ -1,5 +1,5 @@
-import { api, entity } from "../../api/generatedApi"
-import { mealConstants } from "../../constants"
+import { api, entity } from '../../api/generatedApi'
+import { mealConstants } from '../../constants'
 
 export interface RawDiary {
     Datum: string
@@ -18,38 +18,38 @@ export const respToRawDiary = (resp: api.DiaryResp): Array<RawDiary> => {
         Stunde: new Date(d.date).toLocaleTimeString('de-DE'),
         Was: d.content,
         Kategorie: d.category,
-        ...respToTypeAndSeverity(d)
+        ...respToTypeAndSeverity(d),
     }))
 }
 
 const respTypeToType = (resp: string): DiaryEntryType => {
     switch (resp) {
-        case "Food":
-            return "Essen"
-        case "Symptom":
-            return "Symptom"
-        case "Note":
-            return "Notiz"
-        case "Pollen":
-            return "Pollen"
-        default:
-            throw ("invalid type: " + resp)
+    case 'Food':
+        return 'Essen'
+    case 'Symptom':
+        return 'Symptom'
+    case 'Note':
+        return 'Notiz'
+    case 'Pollen':
+        return 'Pollen'
+    default:
+        throw ('invalid type: ' + resp)
     }
 }
 
 const respToTypeAndSeverity = (resp: entity.RawDiary): { Typ: DiaryEntryType, Schwere: string } => {
     const type = respTypeToType(resp.type)
-    let severity = ""
+    let severity = ''
     if (type == 'Essen') {
         switch (resp.severity) {
-            case "raw":
-                severity = mealConstants.RAW
-                break
-            case "cooked":
-                severity = mealConstants.COOKED
-                break
-            default:
-                throw ("invalid severity: " + resp.severity)
+        case 'raw':
+            severity = mealConstants.RAW
+            break
+        case 'cooked':
+            severity = mealConstants.COOKED
+            break
+        default:
+            throw ('invalid severity: ' + resp.severity)
         }
     } else {
         severity = resp.severity

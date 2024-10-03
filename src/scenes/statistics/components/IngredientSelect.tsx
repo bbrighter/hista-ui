@@ -1,6 +1,6 @@
-import { Autocomplete, Checkbox, ListItem, ListItemText, TextField } from "@mui/material";
-import { SyntheticEvent, useEffect, useState } from "react";
-import useHista from "../../../store/store";
+import { Autocomplete, Checkbox, ListItem, ListItemText, TextField } from '@mui/material';
+import { SyntheticEvent, useEffect, useState } from 'react';
+import useHista from '../../../store/store';
 
 interface Option {
     id: number
@@ -28,7 +28,7 @@ export default function IngredientSelect(props: {
 
     const options: Options = ingredients.map(ing => ({
         id: ing.id,
-        name: ing.name
+        name: ing.name,
     }))
 
     const handleChange = (_: SyntheticEvent, value: Options) => {

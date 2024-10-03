@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import styled from "@emotion/styled";
-import { CircularProgress, IconButton, List, ListItem, ListItemText } from "@mui/material";
+import React, { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
+import { CircularProgress, IconButton, List, ListItem, ListItemText } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
@@ -22,7 +22,7 @@ export default function OverviewList(props: {
     useEffect(() => {
         setLoading(true)
         props.getData().finally(
-            () => setLoading(false)
+            () => setLoading(false),
         )
     }, [])
 
@@ -66,7 +66,7 @@ function OverviewListItem(props: {
             }
         >
             <ListItemText
-                primary={props.date.toLocaleString([], { dateStyle: "long", timeStyle: 'short' })}
+                primary={props.date.toLocaleString([], { dateStyle: 'long', timeStyle: 'short' })}
                 secondary={props.secondary}
             />
         </StyledListItem>

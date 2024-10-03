@@ -1,7 +1,7 @@
-import { IconButton, List, ListItem, ListItemText } from "@mui/material";
-import useHista from "../../../store/store";
+import { IconButton, List, ListItem, ListItemText } from '@mui/material';
+import useHista from '../../../store/store';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Severity from "./Severity";
+import Severity from './Severity';
 
 export default function ConditionList() {
     const deleteCondition = useHista(state => state.deleteCondition)
@@ -9,7 +9,7 @@ export default function ConditionList() {
     const categories = useHista(state => state.symptoms)
 
     const conditionsAndCategories = conditions.map(con => {
-        const name = categories.find(cat => cat.categoryId == con.symptom.categoryId)?.categoryName || ""
+        const name = categories.find(cat => cat.categoryId == con.symptom.categoryId)?.categoryName || ''
         return { ...con, categoryName: name }
     })
     conditionsAndCategories.sort((a, b) => b.id - a.id)

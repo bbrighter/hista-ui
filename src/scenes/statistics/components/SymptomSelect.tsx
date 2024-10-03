@@ -1,6 +1,6 @@
-import { Autocomplete, Checkbox, ListItem, ListItemText, TextField } from "@mui/material";
-import { SyntheticEvent, useEffect, useState } from "react";
-import useHista from "../../../store/store";
+import { Autocomplete, Checkbox, ListItem, ListItemText, TextField } from '@mui/material';
+import { SyntheticEvent, useEffect, useState } from 'react';
+import useHista from '../../../store/store';
 
 interface Option {
     id: number
@@ -32,7 +32,7 @@ export default function SymptomSelect(props: {
         id: s.id,
         name: s.name,
         categoryId: s.categoryId,
-        categoryName: c.categoryName
+        categoryName: c.categoryName,
     })))
 
     const handleChange = (_: SyntheticEvent, value: Options) => {

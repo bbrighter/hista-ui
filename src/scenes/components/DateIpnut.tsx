@@ -1,10 +1,10 @@
-import { DatePicker, DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import dayjs from "dayjs";
+import { DatePicker, DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import "dayjs/locale/de";
-import { useState } from "react";
-import useDebounce from "../../hooks/useDebounce";
-import { useDidUpdateEffect } from "../../hooks/useDidUpdateEffect";
+import 'dayjs/locale/de';
+import { useState } from 'react';
+import useDebounce from '../../hooks/useDebounce';
+import { useDidUpdateEffect } from '../../hooks/useDidUpdateEffect';
 
 export default function DateInput(props: {
     title: string

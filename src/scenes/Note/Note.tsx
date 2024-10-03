@@ -1,11 +1,11 @@
-import { Container, FormGroup, TextField } from "@mui/material";
-import useHista from "../../store/store";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import DateInput from "../components/DateIpnut";
-import dayjs from "dayjs";
-import useDebounce from "../../hooks/useDebounce";
-import { useDidUpdateEffect } from "../../hooks/useDidUpdateEffect";
+import { Container, FormGroup, TextField } from '@mui/material';
+import useHista from '../../store/store';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import DateInput from '../components/DateIpnut';
+import dayjs from 'dayjs';
+import useDebounce from '../../hooks/useDebounce';
+import { useDidUpdateEffect } from '../../hooks/useDidUpdateEffect';
 
 export default function Note() {
     const getNote = useHista(state => state.getNote)
@@ -26,7 +26,7 @@ export default function Note() {
 
     useDidUpdateEffect(() => {
         patchNote(note.id, undefined, debouncedInputValue).then(
-            () => setIsUpToDate(true)
+            () => setIsUpToDate(true),
         )
     }, [debouncedInputValue])
 

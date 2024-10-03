@@ -1,9 +1,9 @@
-import { StateCreator } from "zustand"
-import { produce } from "immer"
-import { AuthStore } from "../auth/authStore"
-import { MealStore } from "../meal/mealStore"
-import { SymptomStore } from "../symptom/symptomStore"
-import { isAPIError } from "../../api/generatedApi"
+import { StateCreator } from 'zustand'
+import { produce } from 'immer'
+import { AuthStore } from '../auth/authStore'
+import { MealStore } from '../meal/mealStore'
+import { SymptomStore } from '../symptom/symptomStore'
+import { isAPIError } from '../../api/generatedApi'
 
 interface State {
     errorMessage: string
@@ -17,8 +17,8 @@ interface Actions {
 export interface ErrorStore extends State, Actions { }
 
 const initialState: State = {
-    errorMessage: "no error",
-    status: 0
+    errorMessage: 'no error',
+    status: 0,
 }
 
 export const createErrorSlice: StateCreator<
@@ -39,23 +39,22 @@ export const createErrorSlice: StateCreator<
                         set(produce((draft: State) => {
                             draft.errorMessage = error.message
                         }))
-                        alert("Etwas ist furchtbar schief gelaufen! " + get().errorMessage)
+                        alert('Etwas ist furchtbar schief gelaufen! ' + get().errorMessage)
 
                         break
                     case 400:
-                        if (error.message == "invalid uuid") {
-                            console.warn("Invalid uuid")
+                        if (error.message == 'invalid uuid') {
                             get().logout()
                             break
                         }
                         set(produce((draft: State) => {
                             draft.errorMessage = error.message
                         }))
-                        alert("Huch. Da habe ich mit gerechnet, aber es sollte nicht passieren: " + get().errorMessage)
+                        alert('Huch. Da habe ich mit gerechnet, aber es sollte nicht passieren: ' + get().errorMessage)
                         break
                 }
             } else {
-                alert("Unbekannter Fehler: " + error)
+                alert('Unbekannter Fehler: ' + error)
             }
-        }
+        },
     }))

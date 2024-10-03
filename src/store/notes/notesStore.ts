@@ -1,12 +1,12 @@
-import { StateCreator } from "zustand"
-import { produce } from "immer"
-import { SymptomStore } from "../symptom/symptomStore"
-import { AuthStore } from "../auth/authStore"
-import { ErrorStore } from "../error/errorStore"
-import { MealStore } from "../meal/mealStore"
-import { Note, respToNote, respToNotes } from "./notes"
-import { client } from "../../api/api"
-import { api } from "../../api/generatedApi"
+import { StateCreator } from 'zustand'
+import { produce } from 'immer'
+import { SymptomStore } from '../symptom/symptomStore'
+import { AuthStore } from '../auth/authStore'
+import { ErrorStore } from '../error/errorStore'
+import { MealStore } from '../meal/mealStore'
+import { Note, respToNote, respToNotes } from './notes'
+import { client } from '../../api/api'
+import { api } from '../../api/generatedApi'
 
 interface State {
     notes: Array<Note>
@@ -25,7 +25,7 @@ export interface NotesStore extends State, Actions { }
 
 const initialState: State = {
     notes: [],
-    note: { id: 0, date: new Date(), text: "" },
+    note: { id: 0, date: new Date(), text: '' },
 }
 
 export const createNotesSlice: StateCreator<
@@ -61,7 +61,7 @@ export const createNotesSlice: StateCreator<
                 if (get().notes.length == 0) {
                     await get().getNotes()
                 }
-                const note = get().notes.find(v => v.id == id) || { date: new Date(), id: id, text: "" }
+                const note = get().notes.find(v => v.id == id) || { date: new Date(), id: id, text: '' }
                 set(produce((draft: State) => {
                     draft.note = note
                 }))
@@ -93,6 +93,6 @@ export const createNotesSlice: StateCreator<
             } catch (error) {
                 get().setError(error)
             }
-        }
+        },
     }))
 

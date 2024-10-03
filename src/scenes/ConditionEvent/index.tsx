@@ -1,5 +1,5 @@
-import { url } from "../../constants"
-import ConditionEvent from "./ConditionEvent"
+import { url } from '../../constants'
+import ConditionEvent from './ConditionEvent'
 
 
 const ind = {
@@ -7,7 +7,7 @@ const ind = {
         path: url.CONDITION_EVENTS + '/:id',
         element: <ConditionEvent />,
     },
-    name: "ConditionEvent"
+    name: 'ConditionEvent',
 }
 
 export default ind

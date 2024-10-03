@@ -8,26 +8,27 @@ import { routeToPrivateRoute } from './authentification/ensureLogin';
 
 
 const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
+    palette: {
+        mode: 'dark',
+    },
 });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <BrowserRouter>
-    <React.StrictMode>
-      <ThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        <Routes>
-          {scenes.map(scene => {
-            return <Route  {...routeToPrivateRoute(scene.name, { ...scene.routeProps })} />
-          })}
-          <Route
-            path="*"
-            element={<Navigate to="/" replace />}
-          />
-        </Routes>
-      </ThemeProvider>
-    </React.StrictMode>
-  </BrowserRouter>
+    <BrowserRouter>
+        <React.StrictMode>
+            <ThemeProvider theme={darkTheme}>
+                <CssBaseline />
+                <Routes>
+                    {scenes.map(scene => {
+                        // eslint-disable-next-line react/jsx-key
+                        return <Route {...routeToPrivateRoute(scene.name, { ...scene.routeProps })} />
+                    })}
+                    <Route
+                        path="*"
+                        element={<Navigate to="/" replace />}
+                    />
+                </Routes>
+            </ThemeProvider>
+        </React.StrictMode>
+    </BrowserRouter>,
 )

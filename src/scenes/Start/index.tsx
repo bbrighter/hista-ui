@@ -1,11 +1,11 @@
-import Start from "./Start"
+import Start from './Start'
 
 const ind = {
     routeProps: {
         path: '',
-        element: <Start />
+        element: <Start />,
     },
-    name: "Start"
+    name: 'Start',
 }
 
 export default ind

@@ -1,12 +1,12 @@
-import { Container, FormControl, FormGroup } from "@mui/material";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Container, FormControl, FormGroup } from '@mui/material';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
-import useHista from "../../store/store";
-import DateInput from "../components/DateIpnut";
-import dayjs from "dayjs";
-import AddCondition from "./components/AddCondition";
-import ConditionList from "./components/ConditionList";
+import useHista from '../../store/store';
+import DateInput from '../components/DateIpnut';
+import dayjs from 'dayjs';
+import AddCondition from './components/AddCondition';
+import ConditionList from './components/ConditionList';
 
 export default function ConditionEvent() {
     const getConditionEvent = useHista(state => state.getConditionEvent)

@@ -1,4 +1,4 @@
-import { entity } from "../../api/generatedApi"
+import { entity } from '../../api/generatedApi'
 
 export interface MetaMeal {
     id: number

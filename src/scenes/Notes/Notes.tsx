@@ -1,12 +1,12 @@
-import { Box, Container } from "@mui/material";
-import useHista from "../../store/store";
-import OverviewList from "../components/OverviewList";
-import { LoadingButton } from "@mui/lab";
-import { useNavigate } from "react-router-dom";
-import { url } from "../../constants";
-import { useEffect, useState } from "react";
+import { Box, Container } from '@mui/material';
+import useHista from '../../store/store';
+import OverviewList from '../components/OverviewList';
+import { LoadingButton } from '@mui/lab';
+import { useNavigate } from 'react-router-dom';
+import { url } from '../../constants';
+import { useEffect, useState } from 'react';
 import NoteIcon from '@mui/icons-material/Note';
-import NoteSearch from "./components/NoteSearch";
+import NoteSearch from './components/NoteSearch';
 
 export default function Notes() {
     const getNotes = useHista(state => state.getNotes)
@@ -16,22 +16,22 @@ export default function Notes() {
     const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
-    const [searchValue, setSearchValue] = useState("")
+    const [searchValue, setSearchValue] = useState('')
     const [filteredNotes, setFilteredNotes] = useState<Array<{ id: number, date: Date, secondary: string }>>([])
 
     useEffect(() => {
         const filterResults = notes.filter(note =>
-            note.text.toLowerCase().includes(searchValue.toLowerCase())
+            note.text.toLowerCase().includes(searchValue.toLowerCase()),
         )
         const items = filterResults.map(r => {
             const maxTextLength = 25
             const shortText = r.text.length < maxTextLength
                 ? r.text
-                : r.text.substring(0, maxTextLength - 2) + "..."
+                : r.text.substring(0, maxTextLength - 2) + '...'
             return {
                 id: r.id,
                 date: r.date,
-                secondary: shortText
+                secondary: shortText,
             }
         })
         setFilteredNotes(items)
@@ -39,7 +39,7 @@ export default function Notes() {
 
 
     const onClick = (id: number) => {
-        navigate(url.NOTES + "/" + id)
+        navigate(url.NOTES + '/' + id)
     }
 
     const onDelete = async (id: number) => {
@@ -68,7 +68,7 @@ export default function Notes() {
             <Box >
                 <NoteSearch
                     searchValue={searchValue}
-                    onClear={() => setSearchValue("")}
+                    onClear={() => setSearchValue('')}
                     onChange={(e) => setSearchValue(e.target.value)}
                 />
             </Box>

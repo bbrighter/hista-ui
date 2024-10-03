@@ -1,10 +1,10 @@
-import { StateCreator } from "zustand"
-import { login } from "../../api/api"
-import { produce } from "immer"
-import { SymptomStore } from "../symptom/symptomStore"
-import { MealStore } from "../meal/mealStore"
-import { ErrorStore } from "../error/errorStore"
-import { ErrCode } from "../../api/generatedApi"
+import { StateCreator } from 'zustand'
+import { login } from '../../api/api'
+import { produce } from 'immer'
+import { SymptomStore } from '../symptom/symptomStore'
+import { MealStore } from '../meal/mealStore'
+import { ErrorStore } from '../error/errorStore'
+import { ErrCode } from '../../api/generatedApi'
 
 
 interface State {
@@ -34,8 +34,8 @@ export const createAuthSlice: StateCreator<
             set(produce((draft: State) => {
                 draft.isAuthenticated = false
                 window.localStorage.isAuthenticated = false
-                window.localStorage.token = ""
-                window.localStorage.user = ""
+                window.localStorage.token = ''
+                window.localStorage.user = ''
             }))
         },
         login: async (password, userName) => {
@@ -49,9 +49,9 @@ export const createAuthSlice: StateCreator<
             } else {
                 isAuthenticated = false
                 if (resp.status == ErrCode.Internal) {
-                    alert("Login furchtbar schiefgegangen!")
+                    alert('Login furchtbar schiefgegangen!')
                 } else {
-                    alert("Login fehlgeschlagen: " + resp.status + ": " + resp.details)
+                    alert('Login fehlgeschlagen: ' + resp.status + ': ' + resp.details)
                 }
             }
 

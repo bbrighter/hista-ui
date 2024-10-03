@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom"
-import useHista from "../../../store/store";
-import OverviewList from "../../components/OverviewList";
-import { url } from "../../../constants";
+import { useNavigate } from 'react-router-dom'
+import useHista from '../../../store/store';
+import OverviewList from '../../components/OverviewList';
+import { url } from '../../../constants';
 
 export default function MealList() {
     const getMeals = useHista(state => state.getMeals)
@@ -11,7 +11,7 @@ export default function MealList() {
 
 
     const onClick = (id: number) => {
-        navigate(url.MEAL + "/" + id)
+        navigate(url.MEAL + '/' + id)
     }
 
     const onDelete = async (id: number) => {

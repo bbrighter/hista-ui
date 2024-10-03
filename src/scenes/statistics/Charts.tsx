@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react"
-import dayjs from "dayjs"
-import Grid from "@mui/material/Grid"
+import { useEffect, useState } from 'react'
+import dayjs from 'dayjs'
+import Grid from '@mui/material/Grid'
 
-import useHista from "../../store/store"
-import SymptomSelect from "./components/SymptomSelect"
-import SymptomEvaluation from "./components/SymptomEvaluation"
-import StatisticsDateInput from "./components/StatisticsDateInput"
-import IngredientEvalulation from "./components/IngredientEvaluation"
-import SeverityFilter from "./components/SeverityFilter"
-import IngredientSelect from "./components/IngredientSelect"
+import useHista from '../../store/store'
+import SymptomSelect from './components/SymptomSelect'
+import SymptomEvaluation from './components/SymptomEvaluation'
+import StatisticsDateInput from './components/StatisticsDateInput'
+import IngredientEvalulation from './components/IngredientEvaluation'
+import SeverityFilter from './components/SeverityFilter'
+import IngredientSelect from './components/IngredientSelect'
 
 
 export default function Charts(props: {
@@ -18,7 +18,7 @@ export default function Charts(props: {
     const resetStatistics = useHista(state => state.resetStatistics)
 
     const today = new Date()
-    const [fromDate, setFromDate] = useState(new Date("2024-05-10"))
+    const [fromDate, setFromDate] = useState(new Date('2024-05-10'))
     const [toDate, setToDate] = useState(today)
     const [ids, setIds] = useState<Array<number>>([])
     const [severity, setSeverity] = useState([1, 5])

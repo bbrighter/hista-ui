@@ -1,14 +1,14 @@
-import { StateCreator } from "zustand"
-import { client } from "../../api/api"
-import { produce } from "immer"
-import { api } from "../../api/generatedApi"
-import { ConditionEvents, respToConditionEvents } from "./conditionEvents"
-import { ConditionEvent, respToConditionEvent } from "./conditionEvent"
-import { SymptomCategories, respToSymptoms } from "./symptom"
-import { respToCondition } from "./condition"
-import { AuthStore } from "../auth/authStore"
-import { MealStore } from "../meal/mealStore"
-import { ErrorStore } from "../error/errorStore"
+import { StateCreator } from 'zustand'
+import { client } from '../../api/api'
+import { produce } from 'immer'
+import { api } from '../../api/generatedApi'
+import { ConditionEvents, respToConditionEvents } from './conditionEvents'
+import { ConditionEvent, respToConditionEvent } from './conditionEvent'
+import { SymptomCategories, respToSymptoms } from './symptom'
+import { respToCondition } from './condition'
+import { AuthStore } from '../auth/authStore'
+import { MealStore } from '../meal/mealStore'
+import { ErrorStore } from '../error/errorStore'
 
 interface State {
     conditionEvents: ConditionEvents
@@ -146,7 +146,7 @@ export const createSymptomSlice: StateCreator<
                 const params: api.ConditionRequestParams = {
                     categoryId: symptomCategoryId,
                     symptomId: symptomId,
-                    symptomName: symptomName
+                    symptomName: symptomName,
                 }
                 const resp = await client.api.PostCondition(get().conditionEvent.id, params)
                 const condition = respToCondition(resp.condition)
@@ -177,7 +177,7 @@ export const createSymptomSlice: StateCreator<
         },
         patchCondition: async (conditionId: number, severity: number): Promise<void> => {
             const params: api.PatchSeverityRequestParams = {
-                severity: severity
+                severity: severity,
             }
             try {
                 await client.api.PatchCondition(conditionId, params)
@@ -199,7 +199,7 @@ export const createSymptomSlice: StateCreator<
             } catch (error) {
                 get().setError(error)
             }
-        }
+        },
 
     }))
 

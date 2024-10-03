@@ -1,6 +1,6 @@
-import dayjs from "dayjs"
-import { Grid } from "@mui/material"
-import DateInput from "../../components/DateIpnut"
+import dayjs from 'dayjs'
+import { Grid } from '@mui/material'
+import DateInput from '../../components/DateIpnut'
 
 
 export default function StatisticsDateInput(props: {
