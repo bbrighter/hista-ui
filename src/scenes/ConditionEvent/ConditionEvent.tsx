@@ -1,12 +1,14 @@
-import { Container, FormControl, FormGroup } from "@mui/material";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
-import useHista from "../../store/store";
-import DateInput from "../components/DateIpnut";
-import dayjs from "dayjs";
-import AddCondition from "./components/AddCondition";
-import ConditionList from "./components/ConditionList";
+import useHista from '../../store/store';
+import DateInput from '../components/DateIpnut';
+import dayjs from 'dayjs';
+import AddCondition from './components/AddCondition';
+import ConditionList from './components/ConditionList';
+import Container from '@mui/material/Container';
+import FormGroup from '@mui/material/FormGroup';
+import FormControl from '@mui/material/FormControl';
 
 export default function ConditionEvent() {
     const getConditionEvent = useHista(state => state.getConditionEvent)
@@ -21,7 +23,6 @@ export default function ConditionEvent() {
         if (v != null) {
             setConditionEventDate(v.toDate())
         }
-
     }
 
     return (

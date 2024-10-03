@@ -1,7 +1,9 @@
-import { Container, Tab, Tabs } from "@mui/material";
-import Diary from "./components/Diary";
-import { useState } from "react";
-import Charts from "./Charts";
+import Diary from './components/Diary';
+import { useState } from 'react';
+import Charts from './Charts';
+import Container from '@mui/material/Container';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 type TabValue = 0 | 1 | 2
 interface TabType {
@@ -18,16 +20,16 @@ export default function Statistics() {
     }
 
     const tabs: Array<TabType> = [
-        { label: "Symptom", value: 0, child: <Charts type='symptom' /> },
-        { label: "Essen", value: 1, child: <Charts type='ingredient' /> },
-        { label: "Export", value: 2, child: <Diary /> },
+        { label: 'Symptom', value: 0, child: <Charts type='symptom' /> },
+        { label: 'Essen', value: 1, child: <Charts type='ingredient' /> },
+        { label: 'Export', value: 2, child: <Diary /> },
     ]
 
     return (
         <Container sx={{ padding: '2rem' }}>
             <Tabs onChange={handleTabChange} value={selectedTab}>
                 {tabs.map(tab => (
-                    <Tab label={tab.label} value={tab.value} />
+                    <Tab key={tab.value} label={tab.label} value={tab.value} />
                 ))}
             </Tabs>
             {tabs.map(tab => (

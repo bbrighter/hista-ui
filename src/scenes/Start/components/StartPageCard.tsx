@@ -1,50 +1,55 @@
-import { Card, CardContent, CardHeader, Grid, Icon, Typography } from "@mui/material";
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import SickIcon from '@mui/icons-material/Sick';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import NoteIcon from '@mui/icons-material/Note';
 import ForestIcon from '@mui/icons-material/Forest';
-import styled from "@emotion/styled";
-import { useNavigate } from "react-router-dom";
-import { url } from "../../../constants";
+import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
+import { url } from '../../../constants';
+import Grid from '@mui/material/Grid';
+import CardHeader from '@mui/material/CardHeader';
+import Icon from '@mui/material/Icon';
+import Typography from '@mui/material/Typography';
+import CardContent from '@mui/material/CardContent';
+import Card from '@mui/material/Card';
 
 export default function StartPageCard(props: {
     type: 'meals' | 'conditionEvents' | 'statistics' | 'notes' | 'pollens'
 }) {
     const navigate = useNavigate()
 
-    let title = ""
-    let content = ""
+    let title = ''
+    let content = ''
     let icon
-    let navigateTo = ""
+    let navigateTo = ''
     switch (props.type) {
-        case "meals":
-            title = "Mahlzeiten"
-            content = "Mahlzeiten hinzufügen, ansehen und bearbeiten"
+        case 'meals':
+            title = 'Mahlzeiten'
+            content = 'Mahlzeiten hinzufügen, ansehen und bearbeiten'
             icon = <RestaurantIcon />
             navigateTo = url.MEAL
             break
-        case "conditionEvents":
-            title = "Symptome"
-            content = "Symptome aufzeichnen"
+        case 'conditionEvents':
+            title = 'Symptome'
+            content = 'Symptome aufzeichnen'
             icon = <SickIcon />
             navigateTo = url.CONDITION_EVENTS
             break
-        case "statistics":
-            title = "Auswertungen"
-            content = "Ernährungstagebuch und mehr"
+        case 'statistics':
+            title = 'Auswertungen'
+            content = 'Ernährungstagebuch und mehr'
             icon = <QueryStatsIcon />
             navigateTo = url.STATISTICS
             break
-        case "notes":
-            title = "Notizen"
-            content = "Notizen anfertigen und durchsuchen"
+        case 'notes':
+            title = 'Notizen'
+            content = 'Notizen anfertigen und durchsuchen'
             icon = <NoteIcon />
             navigateTo = url.NOTES
             break
-        case "pollens":
-            title = "Pollen"
-            content = "Pollenflug bewundern"
+        case 'pollens':
+            title = 'Pollen'
+            content = 'Pollenflug bewundern'
             icon = <ForestIcon />
             navigateTo = url.POLLENS
     }

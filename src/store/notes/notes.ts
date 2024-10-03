@@ -1,4 +1,4 @@
-import { entity } from "../../api/generatedApi"
+import { entity } from '../../api/generatedApi'
 
 export interface Note {
     id: number
@@ -15,6 +15,6 @@ export const respToNote = (resp: entity.NoteResp): Note => {
         {
             id: resp.id,
             date: new Date(resp.date),
-            text: resp.text
+            text: resp.text,
         })
 }

@@ -1,6 +1,10 @@
-import { Autocomplete, Checkbox, ListItem, ListItemText, TextField } from "@mui/material";
-import { SyntheticEvent, useEffect, useState } from "react";
-import useHista from "../../../store/store";
+import { SyntheticEvent, useEffect, useState } from 'react';
+import useHista from '../../../store/store';
+import Autocomplete from '@mui/material/Autocomplete';
+import TextField from '@mui/material/TextField';
+import ListItem from '@mui/material/ListItem';
+import Checkbox from '@mui/material/Checkbox';
+import ListItemText from '@mui/material/ListItemText';
 
 interface Option {
     id: number
@@ -28,7 +32,7 @@ export default function IngredientSelect(props: {
 
     const options: Options = ingredients.map(ing => ({
         id: ing.id,
-        name: ing.name
+        name: ing.name,
     }))
 
     const handleChange = (_: SyntheticEvent, value: Options) => {

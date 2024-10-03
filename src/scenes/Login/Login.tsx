@@ -1,7 +1,11 @@
-import { Box, Button, ButtonOwnProps, CircularProgress, Paper, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import useHista from "../../store/store";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import useHista from '../../store/store';
+import Button, { ButtonOwnProps } from '@mui/material/Button';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 type LoadingState = 'loading' | 'error' | 'initial'
@@ -9,14 +13,14 @@ type LoadingState = 'loading' | 'error' | 'initial'
 export default function Login() {
     const isAuthenticated = useHista(state => state.isAuthenticated)
     const login = useHista(state => state.login)
-    const [name, setName] = useState("")
-    const [password, setPassword] = useState("")
+    const [name, setName] = useState('')
+    const [password, setPassword] = useState('')
     const [loadingState, setLoadingState] = useState<LoadingState>('initial')
     const navigate = useNavigate()
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate("/")
+            navigate('/')
         }
     }, [isAuthenticated])
 
@@ -27,16 +31,16 @@ export default function Login() {
     }
 
     const buttonColor = () => {
-        const props: ButtonOwnProps = { color: "primary" }
+        const props: ButtonOwnProps = { color: 'primary' }
         switch (loadingState) {
-            case "loading":
-                props.color = "secondary"
+            case 'loading':
+                props.color = 'secondary'
                 break
-            case "error":
-                props.color = "error"
+            case 'error':
+                props.color = 'error'
                 break
-            case "initial":
-                props.color = "primary"
+            case 'initial':
+                props.color = 'primary'
                 break
         }
         return props.color
@@ -54,7 +58,7 @@ export default function Login() {
                 padding: '10px',
                 textAlign: 'center',
                 paddingTop: '20px',
-                paddingBottom: '20px'
+                paddingBottom: '20px',
             }}>
                 <TextField
                     label="Name"

@@ -1,14 +1,14 @@
-import { StateCreator } from "zustand"
-import { client } from "../../api/api"
-import { produce } from "immer"
-import { Meals, MetaMeal, respToMetaMeals } from "./meals"
-import { Freshness, Meal, respToMeal, stringToFreshness } from "./meal"
-import { Ingredients, respToIngredients } from "./ingredients"
-import { SymptomStore } from "../symptom/symptomStore"
-import { AuthStore } from "../auth/authStore"
-import { ErrorStore } from "../error/errorStore"
-import { FoodCondition, respToFood } from "./food"
-import { api, entity } from "../../api/generatedApi"
+import { StateCreator } from 'zustand'
+import { client } from '../../api/api'
+import { produce } from 'immer'
+import { Meals, MetaMeal, respToMetaMeals } from './meals'
+import { Freshness, Meal, respToMeal, stringToFreshness } from './meal'
+import { Ingredients, respToIngredients } from './ingredients'
+import { SymptomStore } from '../symptom/symptomStore'
+import { AuthStore } from '../auth/authStore'
+import { ErrorStore } from '../error/errorStore'
+import { FoodCondition, respToFood } from './food'
+import { api, entity } from '../../api/generatedApi'
 
 interface State {
     meals: Meals
@@ -54,7 +54,7 @@ const initialState: State = {
         isLoading: true,
     },
     ingredients: [],
-    ingredientsAreLoaded: false
+    ingredientsAreLoaded: false,
 }
 
 export const createMealSlice: StateCreator<
@@ -82,7 +82,7 @@ export const createMealSlice: StateCreator<
         postMeal: async (): Promise<number | void> => {
             try {
                 const params: entity.MealParams = {
-                    date: new Date().toISOString()
+                    date: new Date().toISOString(),
                 }
                 const resp = await client.api.PostMeal(params)
                 set(produce((draft: State) => {
@@ -181,13 +181,13 @@ export const createMealSlice: StateCreator<
         // Foods
         postFood: async (ingredientName?: string, ingredientId?: number) => {
             const mealId = get().meal.id
-            const condition = "cooked"
+            const condition = 'cooked'
             if (!mealId) return
             try {
                 const params: api.FoodParams = {
                     condition: condition,
                     ingredientName: ingredientName,
-                    ingredientId: ingredientId
+                    ingredientId: ingredientId,
                 }
                 const resp = await client.api.PostFood(mealId, params)
                 const food = respToFood(resp.food)

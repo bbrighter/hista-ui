@@ -1,12 +1,12 @@
-import { describe, expect, it } from "vitest";
-import { entity } from "../../api/generatedApi";
-import { respToSymptoms } from "./symptom";
+import { describe, expect, it } from 'vitest';
+import { entity } from '../../api/generatedApi';
+import { respToSymptoms } from './symptom';
 
-describe("symptom", () => {
+describe('symptom', () => {
     const resp: entity.SymptomCategoriesResponse = {
         Categories: [
-            { id: 1, name: "Cat", symptoms: [] }
-        ]
+            { id: 1, name: 'Cat', symptoms: [] },
+        ],
     }
     it('test', () => {
         const cats = respToSymptoms(resp)

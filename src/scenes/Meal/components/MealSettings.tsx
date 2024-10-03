@@ -1,8 +1,7 @@
-import { CircularProgress, Grid, Skeleton, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import useHista from "../../../store/store";
-import DateInput from "../../components/DateIpnut";
-import { Freshness } from "../../../store/meal/meal";
-import DebouncedSlider from "../../components/DebouncedSlider";
+import useHista from '../../../store/store';
+import DateInput from '../../components/DateIpnut';
+import { Freshness } from '../../../store/meal/meal';
+import DebouncedSlider from '../../components/DebouncedSlider';
 import MoodBadIcon from '@mui/icons-material/MoodBad';
 import MoodIcon from '@mui/icons-material/Mood';
 import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
@@ -11,7 +10,12 @@ import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied
 import PeopleIcon from '@mui/icons-material/People';
 import PersonIcon from '@mui/icons-material/Person';
 import LunchDiningIcon from '@mui/icons-material/LunchDining';
-import { useState } from "react";
+import { useState } from 'react';
+import Grid from '@mui/material/Grid';
+import Skeleton from '@mui/material/Skeleton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import ToggleButton from '@mui/material/ToggleButton';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function MealSettings() {
     const patchMeal = useHista(state => state.updateMeal)
@@ -106,15 +110,15 @@ export default function MealSettings() {
 const colorFromStressLevel = (stressLevel: number) => {
     switch (stressLevel) {
         case 0:
-            return "success"
+            return 'success'
         case 1:
-            return "primary"
+            return 'primary'
         case 2:
-            return "secondary"
+            return 'secondary'
         case 3:
-            return "warning"
+            return 'warning'
         default:
-            return "error"
+            return 'error'
     }
 }
 
@@ -136,11 +140,11 @@ const iconFromStressLevel = (stressLevel: number): JSX.Element => {
 const colorFromFreshness = (freshness: Freshness) => {
     switch (freshness) {
         case Freshness.fresh:
-            return "success"
+            return 'success'
         case Freshness.sameDay:
-            return "primary"
+            return 'primary'
         case Freshness.old:
-            return "error"
+            return 'error'
     }
 }
 

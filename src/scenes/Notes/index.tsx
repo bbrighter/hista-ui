@@ -1,5 +1,5 @@
-import { url } from "../../constants"
-import Notes from "./Notes"
+import { url } from '../../constants'
+import Notes from './Notes'
 
 
 const ind = {
@@ -7,7 +7,7 @@ const ind = {
         path: url.NOTES,
         element: <Notes />,
     },
-    name: "Notes"
+    name: 'Notes',
 }
 
 export default ind

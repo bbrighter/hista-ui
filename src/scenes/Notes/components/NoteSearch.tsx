@@ -1,6 +1,7 @@
-import { IconButton, Input } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
+import Input from '@mui/material/Input';
+import IconButton from '@mui/material/IconButton';
 
 export default function NoteSearch(props: {
     searchValue: string
@@ -8,7 +9,7 @@ export default function NoteSearch(props: {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }) {
 
-    const isClearable = props.searchValue != ""
+    const isClearable = props.searchValue != ''
 
     return (
         <Input

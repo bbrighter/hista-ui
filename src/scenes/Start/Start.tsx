@@ -1,5 +1,6 @@
-import { Grid } from "@mui/material";
-import StartPageCard from "./components/StartPageCard";
+
+import Grid from '@mui/material/Grid';
+import StartPageCard from './components/StartPageCard';
 
 export default function Start() {
 

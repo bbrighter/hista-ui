@@ -1,4 +1,4 @@
-import { entity } from "../../api/generatedApi"
+import { entity } from '../../api/generatedApi'
 
 export interface Symptom {
     id: number
@@ -22,10 +22,10 @@ export function respToSymptoms(resp: entity.SymptomCategoriesResponse): SymptomC
             symptoms: c.symptoms.map(s => ({
                 id: s.id,
                 name: s.name,
-                categoryId: s.categoryId
-            }))
+                categoryId: s.categoryId,
+            })),
         }
-    )
+    ),
 
     )
 }
@@ -34,6 +34,6 @@ export function respToSymptom(resp: entity.SymptomResponse): Symptom {
     return {
         id: resp.id,
         categoryId: resp.categoryId,
-        name: resp.name
+        name: resp.name,
     }
 }

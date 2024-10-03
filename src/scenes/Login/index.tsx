@@ -1,11 +1,11 @@
-import Login from "./Login"
+import Login from './Login'
 
 const ind = {
     routeProps: {
         path: '/login',
         element: <Login />,
     },
-    name: "Login"
+    name: 'Login',
 }
 
 export default ind

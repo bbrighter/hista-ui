@@ -1,12 +1,12 @@
-import CircularProgress from "@mui/material/CircularProgress"
-import IconButton from "@mui/material/IconButton"
+import CircularProgress from '@mui/material/CircularProgress'
+import IconButton from '@mui/material/IconButton'
 
 
 export default function LoadingIconButton(props: {
     isLoading: boolean
     onClick: () => void
     icon: JSX.Element
-}
+},
 ) {
     return (
         <IconButton onClick={props.onClick}>

@@ -1,4 +1,4 @@
-import { entity } from "../../api/generatedApi"
+import { entity } from '../../api/generatedApi'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface PollenResp extends entity.PollenEventsResponse { }
@@ -38,5 +38,5 @@ export const respToPollens = (resp: entity.PollenEventsResponse): Pollens => {
 
 const findIntensity = (resp: Array<entity.PollenResponse>, type: string): PollenIntensity => {
     const relevant = resp.find(p => p.type == type)
-    return { intensity: relevant?.intensity || 0, intensityString: relevant?.intensityString || "Keine" }
+    return { intensity: relevant?.intensity || 0, intensityString: relevant?.intensityString || 'Keine' }
 }

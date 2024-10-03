@@ -1,7 +1,10 @@
-import { Box, Slider, Stack, Typography } from "@mui/material";
-import useDebounce from "../../hooks/useDebounce";
-import { useDidUpdateEffect } from "../../hooks/useDidUpdateEffect";
-import { useEffect, useState } from "react";
+import Box from '@mui/material/Box';
+import useDebounce from '../../hooks/useDebounce';
+import { useDidUpdateEffect } from '../../hooks/useDidUpdateEffect';
+import { useEffect, useState } from 'react';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+import Slider from '@mui/material/Slider';
 
 export default function DebouncedSlider(props: {
     initialValue: number
@@ -9,7 +12,7 @@ export default function DebouncedSlider(props: {
     label: string
     min?: number
     max?: number
-    colorMapping?: (value: number) => "primary" | "secondary" | "error" | "info" | "success" | "warning"
+    colorMapping?: (value: number) => 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
     icon?: JSX.Element
     iconMapping?: (value: number) => JSX.Element
 }) {

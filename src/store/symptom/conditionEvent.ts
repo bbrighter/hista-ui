@@ -1,5 +1,5 @@
-import { entity } from "../../api/generatedApi"
-import { Symptom } from "./symptom"
+import { entity } from '../../api/generatedApi'
+import { Symptom } from './symptom'
 
 export interface ConditionEvent {
     id: number
@@ -18,10 +18,10 @@ export function respToConditionEvent(resp: entity.ConditionEventResponse): Condi
                 symptom: {
                     id: c.symptom.id,
                     name: c.symptom.name,
-                    categoryId: c.symptom.categoryId
+                    categoryId: c.symptom.categoryId,
                 },
             }
-        ))
+        )),
     }
 }
 

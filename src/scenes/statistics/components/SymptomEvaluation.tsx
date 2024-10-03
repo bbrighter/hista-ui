@@ -1,7 +1,7 @@
-import { Box } from "@mui/material"
-import useHista from "../../../store/store"
-import { useEffect } from "react"
-import KPIGrid, { KPIGridValues } from "./KPIPanel"
+import useHista from '../../../store/store'
+import { useEffect } from 'react'
+import KPIGrid, { KPIGridValues } from './KPIPanel'
+import Box from '@mui/material/Box'
 
 export default function SymptomEvaluation() {
     const statistics = useHista(state => state.foodStatistics)
@@ -17,7 +17,7 @@ export default function SymptomEvaluation() {
     const values: KPIGridValues = statistics.map(s => (
         {
             entries: [s.within1hour, s.within24hours, s.within72hours],
-            label: s.ingredientName || "",
+            label: s.ingredientName || '',
             subline: s.foodCondition + ' - ' + s.count.toString(),
             count: s.count,
         }
@@ -26,7 +26,7 @@ export default function SymptomEvaluation() {
     return (
         <Box sx={{ mt: 2, width: '100%' }}>
             <KPIGrid
-                headers={["< 1h", "< 24h", "< 72h"]}
+                headers={['< 1h', '< 24h', '< 72h']}
                 values={values}
             />
         </Box>

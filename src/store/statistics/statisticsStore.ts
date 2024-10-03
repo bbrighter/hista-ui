@@ -1,13 +1,13 @@
-import { StateCreator } from "zustand";
-import { RawDiary, respToRawDiary } from "./diary";
-import { AuthStore } from "../auth/authStore";
-import { ErrorStore } from "../error/errorStore";
-import { MealStore } from "../meal/mealStore";
-import { SymptomStore } from "../symptom/symptomStore";
-import { client } from "../../api/api";
-import { produce } from "immer";
-import { api } from "../../api/generatedApi";
-import { FoodStatistics, SymptomStatistics, respToStatistics, respToSymptomStatistics } from "./statistics";
+import { StateCreator } from 'zustand';
+import { RawDiary, respToRawDiary } from './diary';
+import { AuthStore } from '../auth/authStore';
+import { ErrorStore } from '../error/errorStore';
+import { MealStore } from '../meal/mealStore';
+import { SymptomStore } from '../symptom/symptomStore';
+import { client } from '../../api/api';
+import { produce } from 'immer';
+import { api } from '../../api/generatedApi';
+import { FoodStatistics, SymptomStatistics, respToStatistics, respToSymptomStatistics } from './statistics';
 
 interface State {
     diaryEntries: Array<RawDiary>
@@ -53,7 +53,7 @@ export const createStatisticsSlice: StateCreator<
         const params: api.StatisticParams = {
             fromDate: fromDate.toISOString(),
             toDate: toDate.toISOString(),
-            ids: symptomIds
+            ids: symptomIds,
         }
         try {
             const resp = await client.api.GetStatisticsBySymptomIds(params)
@@ -68,7 +68,7 @@ export const createStatisticsSlice: StateCreator<
         const params: api.StatisticParams = {
             fromDate: fromDate.toISOString(),
             toDate: toDate.toISOString(),
-            ids: ingredientIds
+            ids: ingredientIds,
         }
         try {
             const resp = await client.api.GetStatisticsByIngredientsIds(params)
@@ -84,5 +84,5 @@ export const createStatisticsSlice: StateCreator<
             draft.foodStatistics = []
             draft.symptomStatistics = []
         }))
-    }
+    },
 }))
