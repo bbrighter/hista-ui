@@ -16,6 +16,7 @@ export default function Start() {
             <StartPageCard type='statistics' />
             <StartPageCard type='notes' />
             <StartPageCard type='pollens' />
+            <StartPageCard type='status' />
         </Grid>
     )
 }

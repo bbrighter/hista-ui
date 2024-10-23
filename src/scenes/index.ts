@@ -8,6 +8,7 @@ import Statistics from './statistics'
 import Notes from './Notes'
 import Note from './Note'
 import Pollens from './Pollens'
+import Status from './statuses'
 
 const indices = [
     Start,
@@ -20,6 +21,7 @@ const indices = [
     Notes,
     Note,
     Pollens,
+    Status,
 ]
 
 export default indices
