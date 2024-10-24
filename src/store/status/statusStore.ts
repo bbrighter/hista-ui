@@ -3,6 +3,7 @@ import { AuthStore } from '../auth/authStore'
 import { ErrorStore } from '../error/errorStore'
 import { addNewStatus, deleteStatus, listStatuses, putStatus, PutStatusParams, Statuses } from './status'
 import { produce } from 'immer'
+import { Dayjs } from 'dayjs'
 
 
 interface State {
@@ -11,7 +12,7 @@ interface State {
 
 interface Actions {
     getStatuses: () => Promise<void>
-    addStatus: () => Promise<void>
+    addStatus: (date: Dayjs) => Promise<void>
     updateStatus: (p: PutStatusParams) => Promise<void>
     deleteStatus: (id: number) => Promise<void>
 }
@@ -38,11 +39,12 @@ export const createStatusSlice: StateCreator<
                 get().setError(error)
             }
         },
-        addStatus: async () => {
+        addStatus: async (date: Dayjs) => {
             try {
-                const status = await addNewStatus()
+                const status = await addNewStatus(date)
                 set(produce((draft: State) => {
                     draft.statuses.unshift(status)
+                    draft.statuses.sort((a, b) => b.date.diff(a.date))
                 }))
             } catch (error) {
                 get().setError(error)
@@ -71,23 +73,4 @@ export const createStatusSlice: StateCreator<
                 get().setError(error)
             }
         },
-        // createStatus: async (date: Dayjs, timeOfDay: 'morning' | 'evening', fitness: number, sleep?: number) => {
-        //     try {
-        //         const newStatus = await createStatus(date, timeOfDay, fitness, sleep)
-        //         const sameDateIndex = get().statuses.findIndex(v => v.date.isSame(date, 'day'))
-        //         set(produce((draft: State) => {
-        //             if (sameDateIndex > -1) {
-        //                 const s: Status = { date: date }
-        //                 if (isMorningStatus(newStatus)) {
-        //                     s.morning = newStatus
-        //                 } else {
-        //                     s.evening = newStatus
-        //                 }
-        //                 draft.statuses.unshift(s)
-        //             }
-        //         }))
-        //     } catch (error) {
-        //         get().setError(error)
-        //     }
-        // },
     }))

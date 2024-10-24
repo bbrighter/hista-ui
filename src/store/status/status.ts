@@ -63,8 +63,8 @@ const respToEvening = (resp: entity.EveningStatus | undefined): EveningStatus | 
 }
 
 
-export const addNewStatus = async (): Promise<Status> => {
-    const resp = await client.api.PostStatus({ date: new Date().toISOString() })
+export const addNewStatus = async (date: Dayjs): Promise<Status> => {
+    const resp = await client.api.PostStatus({ date: date.toISOString() })
     return respToStatus(resp)
 }
 
