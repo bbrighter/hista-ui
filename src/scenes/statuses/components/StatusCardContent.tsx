@@ -83,10 +83,10 @@ export default function StatusCardContent(props: {
     }
 
     return (
-        <Card variant='outlined' >
+        <Card variant='elevation' >
             <Grid2 container>
                 <Grid2 size={6}>
-                    <CardHeader avatar={<LightModeIcon fontSize='large' />} />
+                    <CardHeader avatar={<LightModeIcon />} sx={{ padding: '8px' }} />
                     <CardContent>
                         <HotelIcon sx={{ margin: '4px' }} color={colorMapping(props.status?.morning?.sleep)} />
                         <FitnessCenterIcon sx={{ margin: '4px' }} color={colorMapping(props.status?.morning?.fitness)} />
@@ -119,7 +119,7 @@ export default function StatusCardContent(props: {
                     </CardContent>
                 </Grid2>
                 <Grid2 size={6}>
-                    <CardHeader avatar={<DarkMode fontSize='large' />} />
+                    <CardHeader avatar={<DarkMode />} sx={{ padding: '8px' }} />
                     <CardContent>
                         <FitnessCenterIcon sx={{ margin: '4px' }} color={colorMapping(props.status?.evening?.fitness)} />
                         <Collapse in={props.expanded} onClick={handleCardActionsClick}>
