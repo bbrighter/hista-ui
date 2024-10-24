@@ -107,7 +107,7 @@ export default function StatusCardContent(props: {
                         }
                         <Collapse in={props.expanded} onClick={handleCardActionsClick}>
                             <CardActions>
-                                <Grid2 container>
+                                <Grid2 size={12}>
                                     <Grid2 size={12}>
                                         <DebouncedSlider
                                             min={0}
@@ -142,19 +142,21 @@ export default function StatusCardContent(props: {
                         }
                         <Collapse in={props.expanded} onClick={handleCardActionsClick}>
                             <CardActions>
-                                <DebouncedSlider
-                                    min={0}
-                                    max={4}
-                                    initialValue={props.status?.evening?.fitness}
-                                    onChange={handleEveningFitnessChange}
-                                    label={'Fitness'}
-                                    colorMapping={colorMapping}
-                                />
+                                <Grid2 size={12}>
+                                    <DebouncedSlider
+                                        min={0}
+                                        max={4}
+                                        initialValue={props.status?.evening?.fitness}
+                                        onChange={handleEveningFitnessChange}
+                                        label={'Fitness'}
+                                        colorMapping={colorMapping}
+                                    />
+                                </Grid2>
                             </CardActions>
                         </Collapse>
                     </CardContent>
                 </Grid2>
             </Grid2>
-        </Card>
+        </Card >
     )
 }
