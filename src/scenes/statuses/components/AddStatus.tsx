@@ -7,7 +7,7 @@ import { useState } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
-export default function AddStatus() {
+export default function AddStatus(props: { disabled: boolean }) {
     const addStatus = useHista(state => state.addStatus)
     const statuses = useHista(state => state.statuses)
 
@@ -50,11 +50,14 @@ export default function AddStatus() {
                 <Button
                     variant='contained'
                     onClick={handleClickToday}
-                    disabled={todaysStatusExists}
+                    disabled={todaysStatusExists || props.disabled}
                 >
                     + Status heute
                 </Button>
-                <Button onClick={handleClickCalendar}>
+                <Button
+                    onClick={handleClickCalendar}
+                    disabled={props.disabled}
+                >
                     <CalendarMonthIcon />
                 </Button>
             </ButtonGroup>
