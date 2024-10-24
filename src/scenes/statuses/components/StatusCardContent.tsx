@@ -13,6 +13,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkMode from '@mui/icons-material/DarkMode'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import HotelIcon from '@mui/icons-material/Hotel';
+import Skeleton from '@mui/lab/Skeleton'
 
 export default function StatusCardContent(props: {
     status: Status,
@@ -22,6 +23,7 @@ export default function StatusCardContent(props: {
     const [morningFitness, setMorningFitness] = useState(props.status?.morning?.fitness)
     const [morningSleep, setMorningSleep] = useState(props.status?.morning?.sleep)
     const [eveningFitness, setEveningFitness] = useState(props.status?.evening?.fitness)
+    const [isLoading, setIsLoading] = useState(false)
 
     useDidUpdateEffect(() => {
         const params: PutStatusParams = {
@@ -32,7 +34,8 @@ export default function StatusCardContent(props: {
             sleep: morningSleep,
             morningOrEveningId: props.status?.morning?.id,
         }
-        updateStatus(params)
+        setIsLoading(true)
+        updateStatus(params).finally(() => setIsLoading(false))
 
 
     }, [morningFitness, morningSleep])
@@ -45,7 +48,8 @@ export default function StatusCardContent(props: {
             timeOfDay: 'evening',
             morningOrEveningId: props.status?.evening?.id,
         }
-        updateStatus(params)
+        setIsLoading(true)
+        updateStatus(params).finally(() => setIsLoading(false))
 
     }, [eveningFitness])
 
@@ -82,14 +86,25 @@ export default function StatusCardContent(props: {
         if (v) setEveningFitness(v)
     }
 
+    const SleepIcon = (props: { sleep?: number }) => {
+        return <HotelIcon sx={{ margin: '4px' }} color={colorMapping(props.sleep)} />
+    }
+    const FitnessIcon = (props: { fitness?: number }) => {
+        return <FitnessCenterIcon sx={{ margin: '4px' }} color={colorMapping(props.fitness)} />
+    }
+
     return (
         <Card variant='elevation' >
             <Grid2 container>
                 <Grid2 size={6}>
                     <CardHeader avatar={<LightModeIcon />} sx={{ padding: '8px' }} />
                     <CardContent>
-                        <HotelIcon sx={{ margin: '4px' }} color={colorMapping(props.status?.morning?.sleep)} />
-                        <FitnessCenterIcon sx={{ margin: '4px' }} color={colorMapping(props.status?.morning?.fitness)} />
+                        {isLoading ?
+                            <Skeleton><SleepIcon /><FitnessIcon /></Skeleton> : <>
+                                <SleepIcon sleep={props.status?.morning?.sleep} />
+                                <FitnessIcon fitness={props.status?.morning?.fitness} />
+                            </>
+                        }
                         <Collapse in={props.expanded} onClick={handleCardActionsClick}>
                             <CardActions>
                                 <Grid2 container>
@@ -121,7 +136,10 @@ export default function StatusCardContent(props: {
                 <Grid2 size={6}>
                     <CardHeader avatar={<DarkMode />} sx={{ padding: '8px' }} />
                     <CardContent>
-                        <FitnessCenterIcon sx={{ margin: '4px' }} color={colorMapping(props.status?.evening?.fitness)} />
+                        {isLoading ?
+                            <Skeleton><FitnessIcon /></Skeleton> :
+                            <FitnessIcon fitness={props.status?.evening?.fitness} />
+                        }
                         <Collapse in={props.expanded} onClick={handleCardActionsClick}>
                             <CardActions>
                                 <DebouncedSlider
