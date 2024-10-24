@@ -18,7 +18,6 @@ export default function StatusCard(props: { status: Status }) {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'))
     const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'))
-    // const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'))
     let cardWidth = '100%'
     if (isSmallScreen) {
         cardWidth = '100%'
