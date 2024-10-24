@@ -5,6 +5,11 @@ import scenes from './scenes'
 import CssBaseline from '@mui/material/CssBaseline';
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { routeToPrivateRoute } from './authentification/ensureLogin';
+import dayjs from 'dayjs';
+import 'dayjs/locale/de';
+
+
+dayjs.locale('de');
 
 
 const darkTheme = createTheme({
@@ -13,6 +18,8 @@ const darkTheme = createTheme({
     },
 });
 
+
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
         <React.StrictMode>
@@ -20,8 +27,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                 <CssBaseline />
                 <Routes>
                     {scenes.map(scene => {
-                        // eslint-disable-next-line react/jsx-key
-                        return <Route {...routeToPrivateRoute(scene.name, { ...scene.routeProps })} />
+                        return <Route key={scene.name} {...routeToPrivateRoute(scene.name, { ...scene.routeProps })} />
                     })}
                     <Route
                         path="*"

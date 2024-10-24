@@ -74,10 +74,8 @@ export const createSymptomSlice: StateCreator<
 
         },
         postConditionEvent: async () => {
-            const date = new Date()
-            const params: api.ConditionEventRequestParams = { date: date.toISOString() }
             try {
-                const resp = await client.api.CreateConditionEvent(params)
+                const resp = await client.api.CreateConditionEvent()
                 set(produce((draft: State) => {
                     const event: ConditionEvent = respToConditionEvent(resp)
                     draft.conditionEvents.unshift(event)
