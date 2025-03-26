@@ -10,7 +10,8 @@ import Skeleton from '@mui/material/Skeleton'
 
 
 export default function Status() {
-    const [getStatuses, statuses] = useHista(state => [state.getStatuses, state.statuses])
+    const getStatuses = useHista(state => state.getStatuses)
+    const statuses = useHista(state => state.statuses)
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
