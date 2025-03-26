@@ -7,3 +7,5 @@ dist
 
 # Different things
 stats.html
+tsconfig.node.tsbuildinfo
+tsconfig.tsbuildinfo
