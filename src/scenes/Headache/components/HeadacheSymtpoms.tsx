@@ -9,7 +9,6 @@ export default function HeadacheSymptomsButtons() {
     const patchSymptoms = useHista(state => state.patchHeadacheSymptoms)
 
     const [selectedSymptoms, setSelectedSymptoms] = useState(symptoms)
-    const [loading, setLoading] = useState(false)
 
 
     useEffect(() => {
@@ -22,8 +21,7 @@ export default function HeadacheSymptomsButtons() {
             return
         }
         if (selectedSymptoms != symptoms) {
-            setLoading(true)
-            patchSymptoms(selectedSymptoms).finally(() => setLoading(false))
+            patchSymptoms(selectedSymptoms)
         }
     }, [selectedSymptoms])
 
@@ -41,7 +39,6 @@ export default function HeadacheSymptomsButtons() {
             label="Weitere Symptome"
             values={symptoms}
             options={validHeadacheSymptoms}
-            loading={loading}
             onAdd={onAdd}
             onRemove={onRemove}
         />

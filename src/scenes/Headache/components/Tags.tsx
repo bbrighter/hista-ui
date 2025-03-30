@@ -7,7 +7,6 @@ export default function HeadacheInputs(props: {
     label: string
     values: Array<ValueLabelPair>
     options: Array<ValueLabelPair>
-    loading: boolean
     onAdd: (value: ValueLabelPair) => void
     onRemove: (value: ValueLabelPair) => void
 }) {
@@ -24,7 +23,6 @@ export default function HeadacheInputs(props: {
                         <HeadacheTag
                             key={opt.value}
                             value={opt}
-                            loading={props.loading}
                             active={isFound}
                             onAdd={props.onAdd}
                             onRemove={props.onRemove}
@@ -43,7 +41,6 @@ export interface ValueLabelPair {
 
 function HeadacheTag(props: {
     value: ValueLabelPair,
-    loading: boolean,
     active: boolean,
     onAdd: (value: ValueLabelPair) => void
     onRemove: (value: ValueLabelPair) => void
@@ -57,19 +54,12 @@ function HeadacheTag(props: {
         }
     }
 
-    let color: 'primary' | 'default' | 'secondary' = 'primary'
-    if (props.active) {
-        color = 'default'
-    }
-    if (props.loading) {
-        color = 'secondary'
-    }
 
     return (
         <Chip
             label={<Typography variant='body1' >{props.value.label}</Typography >}
             onClick={handleClick}
-            color={color}
+            color={props.active ? 'primary' : 'default'}
             sx={{
                 margin: 0.5,
                 padding: 0.2,

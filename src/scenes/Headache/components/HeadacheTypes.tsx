@@ -9,15 +9,11 @@ export default function HeadacheTypesButtons() {
     const types = useHista(state => state.headache.types)
     const patchTypes = useHista(state => state.patchHeadacheTypes)
 
-
     const [selectTypes, setSelectedTypes] = useState(types)
-    const [loading, setLoading] = useState(false)
-
 
     useEffect(() => {
         setSelectedTypes(types)
     }, [types])
-
 
 
     useEffect(() => {
@@ -26,8 +22,7 @@ export default function HeadacheTypesButtons() {
             return
         }
         if (selectTypes != types) {
-            setLoading(true)
-            patchTypes(selectTypes).finally(() => setLoading(false))
+            patchTypes(selectTypes)
         }
     }, [selectTypes])
 
@@ -47,7 +42,6 @@ export default function HeadacheTypesButtons() {
             values={types}
             onAdd={onAdd}
             onRemove={onRemove}
-            loading={loading}
         />
     )
 }

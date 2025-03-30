@@ -63,7 +63,7 @@ export const createHeadacheSlice: StateCreator<
         postHeadache: async () => {
             try {
                 const date = new Date()
-                const severity = 3
+                const severity = 5
                 const resp = await client.api.PostHeadache({ date: date.toISOString(), severity: severity })
                 set(produce((draft: State) => {
                     draft.headaches.unshift({

@@ -12,7 +12,6 @@ export default function HeadachePositionsButtons() {
 
     const [selectedPositions, setSelectedPositions] = useState(positions)
 
-    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         setSelectedPositions(positions)
@@ -25,8 +24,7 @@ export default function HeadachePositionsButtons() {
             return
         }
         if (selectedPositions != positions) {
-            setLoading(true)
-            patchPositions(selectedPositions).finally(() => setLoading(false))
+            patchPositions(selectedPositions)
         }
     }, [selectedPositions])
 
@@ -46,7 +44,6 @@ export default function HeadachePositionsButtons() {
             values={positions}
             onAdd={onAdd}
             onRemove={onRemove}
-            loading={loading}
         />
     )
 }
