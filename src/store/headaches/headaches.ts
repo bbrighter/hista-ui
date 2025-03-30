@@ -18,14 +18,15 @@ interface ValueLabelPair {
 export type HeadachePositions = Array<ValueLabelPair>
 
 export const validHeadachePositions: HeadachePositions = [
-    { value: 'front', label: 'Stirn' },
-    { value: 'back', label: 'Hinterkopf' },
-    { value: 'both', label: 'Beide Seiten' },
     { value: 'left', label: 'Links' },
     { value: 'right', label: 'Rechts' },
-    { value: 'neck', label: 'Nacken' },
-    { value: 'ear', label: 'Ohr' },
+    { value: 'top', label: 'Oben' },
+    { value: 'back', label: 'Hinterkopf' },
+    { value: 'side', label: 'Seite' },
     { value: 'temple', label: 'Schläfe' },
+    { value: 'front', label: 'Stirn' },
+    { value: 'ear', label: 'Ohr' },
+    { value: 'neck', label: 'Nacken' },
 ]
 
 export type HeadacheTypes = Array<ValueLabelPair>;

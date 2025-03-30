@@ -44,6 +44,7 @@ export default function DebouncedSlider(props: {
                     onChange={handleSliderChange}
                     max={props.max || 5}
                     min={props.min || 0}
+                    valueLabelDisplay='auto'
                     color={props.muiColorMapping ? props.muiColorMapping(value) : 'primary'}
                     sx={{
                         '& .MuiSlider-thumb': {
