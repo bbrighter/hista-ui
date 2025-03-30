@@ -1,7 +1,6 @@
 
 import Chip from '@mui/material/Chip'
 import Divider from '@mui/material/Divider'
-import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
 
 export default function HeadacheInputs(props: {
@@ -25,7 +24,7 @@ export default function HeadacheInputs(props: {
                         <HeadacheTag
                             key={opt.value}
                             value={opt}
-                            loading={false}
+                            loading={props.loading}
                             active={isFound}
                             onAdd={props.onAdd}
                             onRemove={props.onRemove}
@@ -58,23 +57,24 @@ function HeadacheTag(props: {
         }
     }
 
+    let color: 'primary' | 'default' | 'secondary' = 'primary'
+    if (props.active) {
+        color = 'default'
+    }
+    if (props.loading) {
+        color = 'secondary'
+    }
+
     return (
-        <>
-            {props.loading ?
-                <Skeleton> <Chip label={props.value.label} sx={{ margin: 0.5, padding: 0.5 }} /></Skeleton> :
-                <Chip
-                    label={<Typography variant='body1' >{props.value.label}</Typography >}
-                    onClick={handleClick}
-                    // avatar={props.loading ? <CircularProgress size={16} /> : null}
-                    color={props.active ? 'primary' : 'default'}
-                    sx={{
-                        margin: 0.5,
-                        padding: 0.2,
-                    }}
-                />}
-
-        </>
-
+        <Chip
+            label={<Typography variant='body1' >{props.value.label}</Typography >}
+            onClick={handleClick}
+            color={color}
+            sx={{
+                margin: 0.5,
+                padding: 0.2,
+            }}
+        />
     )
 
 }
