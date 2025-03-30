@@ -21,6 +21,7 @@ export default function OverviewList(props: {
     onClick: (id: number) => void
     onDelete: (id: number) => Promise<void>
     getData: () => Promise<void>
+    severityColorMapping?: (severity: number) => string
 }) {
     const [loading, setLoading] = useState(false)
 
@@ -44,6 +45,8 @@ export default function OverviewList(props: {
                         onDelete={() => props.onDelete(i.id)}
                         showSeverity={props.showSeverity}
                         severity={i.severity}
+                        severityColorMapping={props.severityColorMapping}
+
                     />
                 ))}
             </List>
@@ -58,27 +61,11 @@ function OverviewListItem(props: {
     showSeverity: boolean
     onClick: () => void
     onDelete: (e: React.MouseEvent) => Promise<void>
+    severityColorMapping?: (severity: number) => string
 }) {
     const onDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation()
         await props.onDelete(e)
-    }
-
-    const colorMapping = (v: number | undefined) => {
-        switch (v) {
-            case 0:
-                return 'error'
-            case 1:
-                return 'warning'
-            case 2:
-                return 'info'
-            case 3:
-                return 'primary'
-            case 4:
-                return 'success'
-            default:
-                return
-        }
     }
 
     return (
@@ -95,7 +82,9 @@ function OverviewListItem(props: {
                 secondary={props.secondary}
             />
             {props.showSeverity && props.severity &&
-                <ListItemIcon><CircleIcon color={colorMapping(props.severity)} /> </ListItemIcon>}
+                <ListItemIcon><CircleIcon
+                    sx={{ color: props.severityColorMapping(props.severity) }}
+                /> </ListItemIcon>}
         </StyledListItem>
     )
 

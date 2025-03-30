@@ -6,6 +6,7 @@ import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { url } from '../../constants';
+import { getColor } from '../Headache/components/colorMapping';
 
 
 export default function Headaches() {
@@ -44,6 +45,7 @@ export default function Headaches() {
                 onClick={onClick}
                 onDelete={deleteHeadache}
                 showSeverity
+                severityColorMapping={getColor}
             />
         </Container>
 

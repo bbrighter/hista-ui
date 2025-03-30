@@ -23,7 +23,7 @@ interface Actions {
 
 export interface HeadacheStore extends State, Actions { }
 
-const initalState: State = {
+const initialState: State = {
     headaches: [],
     headache: { id: 0, date: new Date(), positions: [], symptoms: [], types: [], severity: 0 },
 }
@@ -33,7 +33,7 @@ export const createHeadacheSlice: StateCreator<
     [],
     [],
     HeadacheStore> = ((set, get) => ({
-        ...initalState,
+        ...initialState,
 
         getHeadaches: async () => {
             try {
@@ -116,8 +116,9 @@ export const createHeadacheSlice: StateCreator<
         },
         patchHeadachePositions: async (pos: HeadachePositions) => {
             const headacheId = get().headache.id
+            if (headacheId == 0) return
             try {
-                await client.api.PatchHeadachePositions(headacheId, { positions: pos })
+                await client.api.PatchHeadachePositions(headacheId, { positions: pos.map(p => p.value) })
                 set(produce((draft: State) => {
                     draft.headache.positions = pos
                 }))
@@ -128,7 +129,7 @@ export const createHeadacheSlice: StateCreator<
         patchHeadacheTypes: async (types: HeadacheTypes) => {
             const headacheId = get().headache.id
             try {
-                await client.api.PatchHeadacheTypes(headacheId, { types: types })
+                await client.api.PatchHeadacheTypes(headacheId, { types: types.map(t => t.value) })
                 set(produce((draft: State) => {
                     draft.headache.types = types
                 }))
@@ -140,7 +141,7 @@ export const createHeadacheSlice: StateCreator<
         patchHeadacheSymptoms: async (symptoms: HeadacheSymptoms) => {
             const headacheId = get().headache.id
             try {
-                await client.api.PatchHeadacheSymptoms(headacheId, { symptoms: symptoms })
+                await client.api.PatchHeadacheSymptoms(headacheId, { symptoms: symptoms.map(s => s.value) })
                 set(produce((draft: State) => {
                     draft.headache.symptoms = symptoms
                 }))
