@@ -58,9 +58,9 @@ const respToHeadache = (resp: entity.HeadacheResponse): Headache => {
         id: resp.id,
         date: new Date(resp.date),
         severity: resp.severity,
-        positions: resp.positions.map(p => ({ value: p, label: validHeadachePositions.find(v => v.value == p).label })),
-        types: resp.types.map(t => ({ value: t, label: validHeadacheTypes.find(v => v.value == t).label })),
-        symptoms: resp.symptoms.map(s => ({ value: s, label: validHeadacheSymptoms.find(v => v.value == s).label })),
+        positions: resp.positions ? resp.positions.map(p => ({ value: p, label: validHeadachePositions.find(v => v.value == p).label })) : [],
+        types: resp.types ? resp.types.map(t => ({ value: t, label: validHeadacheTypes.find(v => v.value == t).label })) : [],
+        symptoms: resp.symptoms ? resp.symptoms.map(s => ({ value: s, label: validHeadacheSymptoms.find(v => v.value == s).label })) : [],
     }
     return headache
 }
