@@ -103,13 +103,38 @@ export namespace api {
         text?: string
     }
 
+    export interface PatchHeadacheDateParams {
+        date: string
+    }
+
+    export interface PatchHeadachePositionsParams {
+        positions: entity.HeadachePositions
+    }
+
+    export interface PatchHeadacheSeverityParams {
+        severity: entity.HeadacheSeverity
+    }
+
+    export interface PatchHeadacheSymptomsParams {
+        symptoms: entity.HeadacheSymptoms
+    }
+
+    export interface PatchHeadacheTypesParams {
+        types: entity.HeadacheTypes
+    }
+
     export interface PatchSeverityRequestParams {
-        severity: entity.ConditionSeverity
+        severity: entity.Severity
     }
 
     export interface PostFoodResponse {
         food: entity.FoodResponse
         ingredients: entity.IngredientsResponse
+    }
+
+    export interface PostHeadacheParams {
+        date: string
+        severity: entity.HeadacheSeverity
     }
 
     export interface PostSymptomCategoryRequest {
@@ -161,6 +186,10 @@ export namespace api {
             return await resp.json() as entity.IngredientsResponse
         }
 
+        public async DeleteHeadache(id: number): Promise<void> {
+            await this.baseClient.callAPI("DELETE", `/headaches/${encodeURIComponent(id)}`)
+        }
+
         public async DeleteMeal(id: number): Promise<entity.IngredientsResponse> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callAPI("DELETE", `/meals/${encodeURIComponent(id)}`)
@@ -197,6 +226,18 @@ export namespace api {
             // Now make the actual call to the API
             const resp = await this.baseClient.callAPI("GET", `/meal/${encodeURIComponent(mealId)}/foods`)
             return await resp.json() as entity.FoodsResponse
+        }
+
+        public async GetHeadache(id: number): Promise<entity.HeadacheResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("GET", `/headaches/${encodeURIComponent(id)}`)
+            return await resp.json() as entity.HeadacheResponse
+        }
+
+        public async GetHeadaches(): Promise<entity.HeadachesResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("GET", `/headaches`)
+            return await resp.json() as entity.HeadachesResponse
         }
 
         public async GetIngredients(): Promise<entity.IngredientsResponse> {
@@ -284,6 +325,26 @@ export namespace api {
             await this.baseClient.callAPI("PATCH", `/foods/${encodeURIComponent(foodId)}/condition`, undefined, {query})
         }
 
+        public async PatchHeadacheDate(id: number, params: PatchHeadacheDateParams): Promise<void> {
+            await this.baseClient.callAPI("PATCH", `/headaches/${encodeURIComponent(id)}/date`, JSON.stringify(params))
+        }
+
+        public async PatchHeadachePositions(id: number, params: PatchHeadachePositionsParams): Promise<void> {
+            await this.baseClient.callAPI("PATCH", `/headaches/${encodeURIComponent(id)}/positions`, JSON.stringify(params))
+        }
+
+        public async PatchHeadacheSeverity(id: number, params: PatchHeadacheSeverityParams): Promise<void> {
+            await this.baseClient.callAPI("PATCH", `/headaches/${encodeURIComponent(id)}/severity`, JSON.stringify(params))
+        }
+
+        public async PatchHeadacheSymptoms(id: number, params: PatchHeadacheSymptomsParams): Promise<void> {
+            await this.baseClient.callAPI("PATCH", `/headaches/${encodeURIComponent(id)}/symptoms`, JSON.stringify(params))
+        }
+
+        public async PatchHeadacheTypes(id: number, params: PatchHeadacheTypesParams): Promise<void> {
+            await this.baseClient.callAPI("PATCH", `/headaches/${encodeURIComponent(id)}/types`, JSON.stringify(params))
+        }
+
         public async PatchMeal(id: number, params: entity.MealParams): Promise<void> {
             await this.baseClient.callAPI("PATCH", `/meals/${encodeURIComponent(id)}`, JSON.stringify(params))
         }
@@ -302,6 +363,12 @@ export namespace api {
             // Now make the actual call to the API
             const resp = await this.baseClient.callAPI("POST", `/meal/${encodeURIComponent(mealId)}/foods`, JSON.stringify(params))
             return await resp.json() as PostFoodResponse
+        }
+
+        public async PostHeadache(params: PostHeadacheParams): Promise<entity.IDResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callAPI("POST", `/headaches`, JSON.stringify(params))
+            return await resp.json() as entity.IDResponse
         }
 
         public async PostMeal(params: entity.MealParams): Promise<entity.MealResponse> {
@@ -385,10 +452,8 @@ export namespace entity {
     export interface ConditionResponse {
         id: number
         symptom: SymptomResponse
-        severity: ConditionSeverity
+        severity: Severity
     }
-
-    export type ConditionSeverity = number
 
     export type DiaryType = string
 
@@ -415,6 +480,42 @@ export namespace entity {
     }
 
     export type Freshness = number
+
+    /**
+     * @enum front, back, both, left, right, neck, ear, temple
+     */
+    export type HeadachePosition = string
+
+    export type HeadachePositions = HeadachePosition[]
+
+    export interface HeadacheResponse {
+        id: number
+        date: string
+        severity: HeadacheSeverity
+        types: HeadacheTypes
+        positions: HeadachePositions
+        symptoms: HeadacheSymptoms
+    }
+
+    export type HeadacheSeverity = number
+
+    /**
+     * @enum short-term memory, tinnitus, light-sensitive, noise-sensitive, odor-sensitive, dizziness, lack of concentration, tired, exhausted
+     */
+    export type HeadacheSymptom = string
+
+    export type HeadacheSymptoms = HeadacheSymptom[]
+
+    /**
+     * @enum pulsating-pounding, dull-pressing, stabbing
+     */
+    export type HeadacheType = string
+
+    export type HeadacheTypes = HeadacheType[]
+
+    export interface HeadachesResponse {
+        headaches: HeadacheResponse[]
+    }
 
     export interface IDResponse {
         id: number
@@ -504,6 +605,8 @@ export namespace entity {
         severity: string
         category: string
     }
+
+    export type Severity = number
 
     export interface StatisticBySymptom {
         symptomId: number

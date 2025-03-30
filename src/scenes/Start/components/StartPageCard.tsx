@@ -3,6 +3,7 @@ import SickIcon from '@mui/icons-material/Sick';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import NoteIcon from '@mui/icons-material/Note';
 import ForestIcon from '@mui/icons-material/Forest';
+import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural';
 import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +16,7 @@ import CardContent from '@mui/material/CardContent';
 import Card from '@mui/material/Card';
 
 export default function StartPageCard(props: {
-    type: 'meals' | 'conditionEvents' | 'statistics' | 'notes' | 'pollens' | 'status'
+    type: 'meals' | 'conditionEvents' | 'statistics' | 'notes' | 'pollens' | 'status' | 'headaches'
 }) {
     const navigate = useNavigate()
 
@@ -59,6 +60,12 @@ export default function StartPageCard(props: {
             content = 'Wie geht\'s denn heute?'
             icon = <SelfImprovementIcon />
             navigateTo = url.STATUSES
+            break
+        case 'headaches':
+            title = 'Kopfweh'
+            content = 'Kopfschmerztagebuch'
+            icon = <FaceRetouchingNaturalIcon />
+            navigateTo = url.HEADACHES
     }
 
     return (

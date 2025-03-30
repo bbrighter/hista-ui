@@ -12,7 +12,8 @@ export default function DebouncedSlider(props: {
     label: string
     min?: number
     max?: number
-    colorMapping?: (value: number) => 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
+    muiColorMapping?: (value: number) => 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
+    colorMapping?: (value: number) => string
     icon?: JSX.Element
     iconMapping?: (value: number) => JSX.Element
 }) {
@@ -30,6 +31,7 @@ export default function DebouncedSlider(props: {
         props.onChange(debouncedSliderValue)
     }, [debouncedSliderValue])
 
+
     return (
         <Box sx={{ width: '100%' }}>
             <Typography gutterBottom>{props.label}</Typography>
@@ -42,7 +44,15 @@ export default function DebouncedSlider(props: {
                     onChange={handleSliderChange}
                     max={props.max || 5}
                     min={props.min || 0}
-                    color={props.colorMapping ? props.colorMapping(value) : 'primary'}
+                    color={props.muiColorMapping ? props.muiColorMapping(value) : 'primary'}
+                    sx={{
+                        '& .MuiSlider-thumb': {
+                            backgroundColor: props.colorMapping ? props.colorMapping(value) : 'primary',
+                        },
+                        '& .MuiSlider-track': {
+                            backgroundColor: props.colorMapping ? props.colorMapping(value) : 'primary',
+                        },
+                    }}
                 />
             </Stack>
         </Box>

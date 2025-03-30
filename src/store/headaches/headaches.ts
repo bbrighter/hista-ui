@@ -1,0 +1,69 @@
+import { entity } from '../../api/generatedApi'
+
+export interface Headache {
+    id: number
+    date: Date
+    severity: number
+    positions: HeadachePositions
+    types: HeadacheTypes
+    symptoms: HeadacheSymptoms
+}
+
+interface ValueLabelPair {
+    value: string
+    label: string
+}
+
+
+export type HeadachePositions = Array<ValueLabelPair>
+
+export const validHeadachePositions: HeadachePositions = [
+    { value: 'front', label: 'Stirn' },
+    { value: 'back', label: 'Hinterkopf' },
+    { value: 'both', label: 'Beide Seiten' },
+    { value: 'left', label: 'Links' },
+    { value: 'right', label: 'Rechts' },
+    { value: 'neck', label: 'Nacken' },
+    { value: 'ear', label: 'Ohr' },
+    { value: 'temple', label: 'Schläfe' },
+]
+
+export type HeadacheTypes = Array<ValueLabelPair>;
+
+export const validHeadacheTypes: HeadacheTypes = [
+    { value: 'pulsating-pounding', label: 'Pulsierend-klopfend' },
+    { value: 'dull-pressing', label: 'Dumpf-drückend' },
+    { value: 'stabbing', label: 'Stechend' },
+];
+
+
+
+export type HeadacheSymptoms = Array<ValueLabelPair>;
+
+export const validHeadacheSymptoms: HeadacheSymptoms = [
+    { value: 'short-term memory', label: 'Kurzzeitgedächtnis' },
+    { value: 'tinnitus', label: 'Tinnitus' },
+    { value: 'light-sensitive', label: 'Lichtempfindlichkeit' },
+    { value: 'noise-sensitive', label: 'Lärmempfindlichkeit' },
+    { value: 'odor-sensitive', label: 'Geruchsempfindlichkeit' },
+    { value: 'dizziness', label: 'Schwindel' },
+    { value: 'lack of concentration', label: 'Konzentrationsstörung' },
+    { value: 'tired', label: 'Müdigkeit' },
+    { value: 'exhausted', label: 'Erschöpfung' },
+];
+
+const respToHeadache = (resp: entity.HeadacheResponse): Headache => {
+    const headache: Headache = {
+        id: resp.id,
+        date: new Date(resp.date),
+        severity: resp.severity,
+        positions: resp.positions.map(p => ({ value: p, label: validHeadachePositions.find(v => v.value == p).label })),
+        types: resp.types.map(t => ({ value: t, label: validHeadacheTypes.find(v => v.value == t).label })),
+        symptoms: resp.symptoms.map(s => ({ value: s, label: validHeadacheSymptoms.find(v => v.value == s).label })),
+    }
+    return headache
+}
+
+export const respToHeadaches = (resp: entity.HeadachesResponse): Array<Headache> => {
+    return resp.headaches.map(h => respToHeadache(h))
+}

@@ -6,20 +6,22 @@ import List from '@mui/material/List';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItem from '@mui/material/ListItem';
-
+import ListItemIcon from '@mui/material/ListItemIcon';
+import CircleIcon from '@mui/icons-material/Circle';
 
 interface ListItemInterface {
     id: number
     date: Date
-    secondary?: string
+    severity?: number
 }
 
 export default function OverviewList(props: {
     items: Array<ListItemInterface>
-    secondary?: string
+    showSeverity?: boolean
     onClick: (id: number) => void
     onDelete: (id: number) => Promise<void>
     getData: () => Promise<void>
+    severityColorMapping?: (severity: number) => string
 }) {
     const [loading, setLoading] = useState(false)
 
@@ -41,7 +43,10 @@ export default function OverviewList(props: {
                         date={i.date}
                         onClick={() => props.onClick(i.id)}
                         onDelete={() => props.onDelete(i.id)}
-                        secondary={i.secondary}
+                        showSeverity={props.showSeverity}
+                        severity={i.severity}
+                        severityColorMapping={props.severityColorMapping}
+
                     />
                 ))}
             </List>
@@ -52,8 +57,11 @@ export default function OverviewList(props: {
 function OverviewListItem(props: {
     date: Date
     secondary?: string
+    severity?: number
+    showSeverity: boolean
     onClick: () => void
     onDelete: (e: React.MouseEvent) => Promise<void>
+    severityColorMapping?: (severity: number) => string
 }) {
     const onDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation()
@@ -73,6 +81,10 @@ function OverviewListItem(props: {
                 primary={props.date.toLocaleString([], { dateStyle: 'long', timeStyle: 'short' })}
                 secondary={props.secondary}
             />
+            {props.showSeverity && props.severity &&
+                <ListItemIcon><CircleIcon
+                    sx={{ color: props.severityColorMapping(props.severity) }}
+                /> </ListItemIcon>}
         </StyledListItem>
     )
 
