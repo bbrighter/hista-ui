@@ -115,7 +115,7 @@ export default function StatusCardContent(props: {
                                             initialValue={props.status?.morning?.sleep}
                                             onChange={handleMorningSleepChange}
                                             label={'Schlaf'}
-                                            colorMapping={colorMapping}
+                                            muiColorMapping={colorMapping}
                                         />
                                     </Grid2>
                                     <Grid2 size={12}>
@@ -125,7 +125,7 @@ export default function StatusCardContent(props: {
                                             initialValue={props.status?.morning?.fitness}
                                             onChange={handleMorningFitnessChange}
                                             label={'Fitness'}
-                                            colorMapping={colorMapping}
+                                            muiColorMapping={colorMapping}
                                         />
                                     </Grid2>
                                 </Grid2>

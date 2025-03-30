@@ -6,17 +6,18 @@ import List from '@mui/material/List';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItem from '@mui/material/ListItem';
-
+import ListItemIcon from '@mui/material/ListItemIcon';
+import CircleIcon from '@mui/icons-material/Circle';
 
 interface ListItemInterface {
     id: number
     date: Date
-    secondary?: string
+    severity?: number
 }
 
 export default function OverviewList(props: {
     items: Array<ListItemInterface>
-    secondary?: string
+    showSeverity?: boolean
     onClick: (id: number) => void
     onDelete: (id: number) => Promise<void>
     getData: () => Promise<void>
@@ -41,7 +42,8 @@ export default function OverviewList(props: {
                         date={i.date}
                         onClick={() => props.onClick(i.id)}
                         onDelete={() => props.onDelete(i.id)}
-                        secondary={i.secondary}
+                        showSeverity={props.showSeverity}
+                        severity={i.severity}
                     />
                 ))}
             </List>
@@ -52,12 +54,31 @@ export default function OverviewList(props: {
 function OverviewListItem(props: {
     date: Date
     secondary?: string
+    severity?: number
+    showSeverity: boolean
     onClick: () => void
     onDelete: (e: React.MouseEvent) => Promise<void>
 }) {
     const onDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation()
         await props.onDelete(e)
+    }
+
+    const colorMapping = (v: number | undefined) => {
+        switch (v) {
+            case 0:
+                return 'error'
+            case 1:
+                return 'warning'
+            case 2:
+                return 'info'
+            case 3:
+                return 'primary'
+            case 4:
+                return 'success'
+            default:
+                return
+        }
     }
 
     return (
@@ -73,6 +94,8 @@ function OverviewListItem(props: {
                 primary={props.date.toLocaleString([], { dateStyle: 'long', timeStyle: 'short' })}
                 secondary={props.secondary}
             />
+            {props.showSeverity && props.severity &&
+                <ListItemIcon><CircleIcon color={colorMapping(props.severity)} /> </ListItemIcon>}
         </StyledListItem>
     )
 

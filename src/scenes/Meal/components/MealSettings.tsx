@@ -60,7 +60,7 @@ export default function MealSettings() {
                         onChange={setStressLevel}
                         max={4}
                         min={0}
-                        colorMapping={colorFromStressLevel}
+                        muiColorMapping={colorFromStressLevel}
                         initialValue={meal.stressLevel}
                         iconMapping={iconFromStressLevel}
                     />}

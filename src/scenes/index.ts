@@ -9,6 +9,8 @@ import Notes from './Notes'
 import Note from './Note'
 import Pollens from './Pollens'
 import Status from './statuses'
+import Headaches from './Headaches'
+import Headache from './Headache'
 
 const indices = [
     Start,
@@ -22,6 +24,8 @@ const indices = [
     Note,
     Pollens,
     Status,
+    Headaches,
+    Headache,
 ]
 
 export default indices
