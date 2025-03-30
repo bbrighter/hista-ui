@@ -7,8 +7,9 @@ import DateInput from '../components/DateIpnut'
 import { Dayjs } from 'dayjs'
 import HeadachePositionsButtons from './components/HeadachePositions'
 import HeadacheTypesButtons from './components/HeadacheTypes'
-import HeadacheSymptomsButtons from './components/HeadacheSymtpoms'
+import HeadacheSymptomsButtons from './components/HeadacheSymptoms'
 import { getColor } from './components/colorMapping'
+import { Typography } from '@mui/material'
 
 export default function Headache() {
     const isFirstRender = useRef(true);
@@ -34,6 +35,21 @@ export default function Headache() {
         patchDate(v.toDate())
     }
 
+    const iconMapping = (value: number) => {
+        return (
+            <Typography sx={{
+                borderRadius: '50%',
+                width: '2rem', height: '2rem',
+                backgroundColor: getColor(value), color: 'black',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1.2rem',
+                fontWeight: 'bold',
+            }}>{value}</Typography>
+
+        )
+    }
 
     return (
         <Container sx={{ padding: '2rem' }}>
@@ -45,15 +61,14 @@ export default function Headache() {
                 initialValue={headache.severity}
                 onChange={onSeverityChange}
                 label={'Schwere'}
+                min={1}
                 max={10}
                 colorMapping={getColor}
+                iconMapping={iconMapping}
             />
-            {/* <Box sx={{ width: '100%', backgroundColor: 'red' }}> */}
-
             <HeadachePositionsButtons />
             <HeadacheTypesButtons />
             <HeadacheSymptomsButtons />
-            {/* </Box> */}
         </Container>
     )
 }
