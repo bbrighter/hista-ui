@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import useHista from '../../store/store'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import DebouncedSlider from '../components/DebouncedSlider'
 import Container from '@mui/material/Container'
 import DateInput from '../components/DateIpnut'
@@ -10,25 +10,24 @@ import HeadacheTypesButtons from './components/HeadacheTypes'
 import HeadacheSymptomsButtons from './components/HeadacheSymptoms'
 import { getColor } from './components/colorMapping'
 import { Typography } from '@mui/material'
+import HeadacheDescription from './components/HeadacheDescription'
 
 export default function Headache() {
-    const isFirstRender = useRef(true);
     const params = useParams<{ id: string }>()
     const headache = useHista(state => state.headache)
     const getHeadache = useHista(state => state.getHeadache)
     const patchSeverity = useHista(state => state.patchHeadacheSeverity)
     const patchDate = useHista(state => state.patchHeadacheDate)
 
+
     useEffect(() => {
         getHeadache(Number(params.id))
-    }, [])
+    }, [params.id])
 
     const onSeverityChange = (v: number) => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false
-            return
+        if (v != headache.severity) {
+            patchSeverity(v)
         }
-        patchSeverity(v)
     }
 
     const onDateChange = (v: Dayjs) => {
@@ -61,7 +60,7 @@ export default function Headache() {
                 initialValue={headache.severity}
                 onChange={onSeverityChange}
                 label={'Schwere'}
-                min={1}
+                min={0}
                 max={10}
                 colorMapping={getColor}
                 iconMapping={iconMapping}
@@ -69,6 +68,7 @@ export default function Headache() {
             <HeadachePositionsButtons />
             <HeadacheTypesButtons />
             <HeadacheSymptomsButtons />
+            <HeadacheDescription />
         </Container>
     )
 }

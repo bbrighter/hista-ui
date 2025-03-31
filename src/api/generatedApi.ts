@@ -107,6 +107,10 @@ export namespace api {
         date: string
     }
 
+    export interface PatchHeadacheDescriptionParams {
+        description: string
+    }
+
     export interface PatchHeadachePositionsParams {
         positions: entity.HeadachePositions
     }
@@ -329,6 +333,10 @@ export namespace api {
             await this.baseClient.callAPI("PATCH", `/headaches/${encodeURIComponent(id)}/date`, JSON.stringify(params))
         }
 
+        public async PatchHeadacheDescription(id: number, params: PatchHeadacheDescriptionParams): Promise<void> {
+            await this.baseClient.callAPI("PATCH", `/headaches/${encodeURIComponent(id)}/description`, JSON.stringify(params))
+        }
+
         public async PatchHeadachePositions(id: number, params: PatchHeadachePositionsParams): Promise<void> {
             await this.baseClient.callAPI("PATCH", `/headaches/${encodeURIComponent(id)}/positions`, JSON.stringify(params))
         }
@@ -481,9 +489,6 @@ export namespace entity {
 
     export type Freshness = number
 
-    /**
-     * @enum front, back, both, left, right, neck, ear, temple
-     */
     export type HeadachePosition = string
 
     export type HeadachePositions = HeadachePosition[]
@@ -492,23 +497,18 @@ export namespace entity {
         id: number
         date: string
         severity: HeadacheSeverity
-        types: HeadacheTypes
-        positions: HeadachePositions
-        symptoms: HeadacheSymptoms
+        types?: HeadacheTypes
+        positions?: HeadachePositions
+        symptoms?: HeadacheSymptoms
+        description: string
     }
 
     export type HeadacheSeverity = number
 
-    /**
-     * @enum short-term memory, tinnitus, light-sensitive, noise-sensitive, odor-sensitive, dizziness, lack of concentration, tired, exhausted
-     */
     export type HeadacheSymptom = string
 
     export type HeadacheSymptoms = HeadacheSymptom[]
 
-    /**
-     * @enum pulsating-pounding, dull-pressing, stabbing
-     */
     export type HeadacheType = string
 
     export type HeadacheTypes = HeadacheType[]
