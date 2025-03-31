@@ -19,13 +19,14 @@ interface Actions {
     patchHeadachePositions(pos: HeadachePositions): Promise<void>
     patchHeadacheTypes(types: HeadacheTypes): Promise<void>
     patchHeadacheSymptoms(symptoms: HeadacheSymptoms): Promise<void>
+    patchHeadacheDescription(description: string): Promise<void>
 }
 
 export interface HeadacheStore extends State, Actions { }
 
 const initialState: State = {
     headaches: [],
-    headache: { id: 0, date: new Date(), positions: [], symptoms: [], types: [], severity: 0 },
+    headache: { id: 0, date: new Date(), positions: [], symptoms: [], types: [], severity: 0, description: '' },
 }
 
 export const createHeadacheSlice: StateCreator<
@@ -73,6 +74,7 @@ export const createHeadacheSlice: StateCreator<
                         positions: [],
                         symptoms: [],
                         types: [],
+                        description: '',
                     })
                 }))
                 return resp.id
@@ -144,6 +146,17 @@ export const createHeadacheSlice: StateCreator<
                 await client.api.PatchHeadacheSymptoms(headacheId, { symptoms: symptoms.map(s => s.value) })
                 set(produce((draft: State) => {
                     draft.headache.symptoms = symptoms
+                }))
+            } catch (e) {
+                get().setError(e)
+            }
+        },
+        patchHeadacheDescription: async (description: string) => {
+            const headacheId = get().headache.id
+            try {
+                await client.api.PatchHeadacheDescription(headacheId, { description: description })
+                set(produce((draft: State) => {
+                    draft.headache.description = description
                 }))
             } catch (e) {
                 get().setError(e)

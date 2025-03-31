@@ -7,6 +7,7 @@ export interface Headache {
     positions: HeadachePositions
     types: HeadacheTypes
     symptoms: HeadacheSymptoms
+    description: string
 }
 
 interface ValueLabelPair {
@@ -32,7 +33,7 @@ export const validHeadachePositions: HeadachePositions = [
 export type HeadacheTypes = Array<ValueLabelPair>;
 
 export const validHeadacheTypes: HeadacheTypes = [
-    { value: 'pulsating-pounding', label: 'Pulsierend-klopfend' },
+    { value: 'pulsating-pounding', label: 'Pulsierend-pochend' },
     { value: 'dull-pressing', label: 'Dumpf-drückend' },
     { value: 'stabbing', label: 'Stechend' },
 ];
@@ -51,6 +52,7 @@ export const validHeadacheSymptoms: HeadacheSymptoms = [
     { value: 'lack of concentration', label: 'Konzentrationsstörung' },
     { value: 'tired', label: 'Müdigkeit' },
     { value: 'exhausted', label: 'Erschöpfung' },
+    { value: 'physical activity', label: 'Verstärkt durch körperliche Aktivität' },
 ];
 
 const respToHeadache = (resp: entity.HeadacheResponse): Headache => {
@@ -58,9 +60,10 @@ const respToHeadache = (resp: entity.HeadacheResponse): Headache => {
         id: resp.id,
         date: new Date(resp.date),
         severity: resp.severity,
-        positions: resp.positions ? resp.positions.map(p => ({ value: p, label: validHeadachePositions.find(v => v.value == p).label })) : [],
-        types: resp.types ? resp.types.map(t => ({ value: t, label: validHeadacheTypes.find(v => v.value == t).label })) : [],
-        symptoms: resp.symptoms ? resp.symptoms.map(s => ({ value: s, label: validHeadacheSymptoms.find(v => v.value == s).label })) : [],
+        positions: resp.positions?.map(p => ({ value: p, label: validHeadachePositions.find(v => v.value == p).label || p })) ?? [],
+        types: resp.types?.map(t => ({ value: t, label: validHeadacheTypes.find(v => v.value == t).label || t })) ?? [],
+        symptoms: resp.symptoms?.map(s => ({ value: s, label: validHeadacheSymptoms.find(v => v.value == s).label || s })) ?? [],
+        description: resp.description,
     }
     return headache
 }

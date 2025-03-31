@@ -46,7 +46,6 @@ export default function OverviewList(props: {
                         showSeverity={props.showSeverity}
                         severity={i.severity}
                         severityColorMapping={props.severityColorMapping}
-
                     />
                 ))}
             </List>
@@ -81,7 +80,7 @@ function OverviewListItem(props: {
                 primary={props.date.toLocaleString([], { dateStyle: 'long', timeStyle: 'short' })}
                 secondary={props.secondary}
             />
-            {props.showSeverity && props.severity &&
+            {props.showSeverity && props.severity !== undefined &&
                 <ListItemIcon><CircleIcon
                     sx={{ color: props.severityColorMapping(props.severity) }}
                 /> </ListItemIcon>}
