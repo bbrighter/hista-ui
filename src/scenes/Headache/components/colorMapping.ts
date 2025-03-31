@@ -11,7 +11,11 @@ export const getColor = (value: number): string => {
 
     let r: number, g: number, b: number
 
-    if (value <= mid) {
+    if (value == 0) {
+        r = 0
+        g = 0
+        b = 255
+    } else if (value <= mid) {
         // Interpolate from green to yellow
         const ratio = value / mid;
         r = Math.round(colors[0].r + ratio * (colors[1].r - colors[0].r));
