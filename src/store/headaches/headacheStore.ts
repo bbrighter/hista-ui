@@ -7,6 +7,7 @@ import { produce } from 'immer'
 interface State {
     headaches: Array<Headache>
     headache: Headache
+    isLoaded: boolean
 }
 interface Actions {
     getHeadaches(): Promise<void>
@@ -27,6 +28,7 @@ export interface HeadacheStore extends State, Actions { }
 const initialState: State = {
     headaches: [],
     headache: { id: 0, date: new Date(), positions: [], symptoms: [], types: [], severity: 0, description: '' },
+    isLoaded: false,
 }
 
 export const createHeadacheSlice: StateCreator<
@@ -41,6 +43,7 @@ export const createHeadacheSlice: StateCreator<
                 const resp = await client.api.GetHeadaches()
                 set(produce((draft: State) => {
                     draft.headaches = respToHeadaches(resp)
+                    draft.isLoaded = true
                 }))
             } catch (error) {
                 get().setError(error)
@@ -49,7 +52,7 @@ export const createHeadacheSlice: StateCreator<
 
         getHeadache: async (id: number) => {
             try {
-                if (get().headaches.length == 0) {
+                if (!get().isLoaded) {
                     await get().getHeadaches()
                 }
                 const headache = get().headaches.find(h => h.id == id)
