@@ -1,8 +1,6 @@
 import { StateCreator } from 'zustand'
 import { login } from '../../api/api'
 import { produce } from 'immer'
-import { SymptomStore } from '../symptom/symptomStore'
-import { MealStore } from '../meal/mealStore'
 import { ErrorStore } from '../error/errorStore'
 import { ErrCode } from '../../api/generatedApi'
 
@@ -24,7 +22,7 @@ const initialState: State = {
 }
 
 export const createAuthSlice: StateCreator<
-    AuthStore & ErrorStore & MealStore & SymptomStore,
+    AuthStore & ErrorStore,
     [],
     [],
     AuthStore> = ((set, get) => ({
