@@ -21,4 +21,6 @@ jobs:
 
             - name: Test
               run: npm test
+              env:
+                TZ: Europe/Berlin
             
