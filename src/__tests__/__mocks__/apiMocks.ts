@@ -12,6 +12,7 @@ export const mockClient = {
         PostFood: vi.fn(),
         DeleteFood: vi.fn(),
         PatchFoodCondition: vi.fn(),
+        GetIngredients: vi.fn(),
 
         GetHeadaches: vi.fn(),
         PostHeadache: vi.fn(),
