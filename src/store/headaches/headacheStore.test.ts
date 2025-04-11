@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import '../../__tests__/__mocks__/apiMocks'
 import '../../__tests__/__mocks__/authStoreMock'
 import '../../__tests__/__mocks__/errorStoreMock'
 
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-import { client } from '../../api/api'
+import { mockClient } from '../../__tests__/__mocks__/apiMocks'
 import { entity } from '../../api/generatedApi'
 import { createTestStore } from '../../__tests__/storeUtils'
 
@@ -32,7 +31,7 @@ describe('headache store', () => {
             ],
         }
 
-            ; (client.api.GetHeadaches as any).mockResolvedValue(mockResp)
+        mockClient.api.GetHeadaches.mockResolvedValue(mockResp)
 
         await store.getState().getHeadaches()
 
@@ -64,7 +63,7 @@ describe('headache store', () => {
     })
 
     it('posts a new headache', async () => {
-        ; (client.api.PostHeadache as any).mockResolvedValue({ id: 42 })
+        mockClient.api.PostHeadache.mockResolvedValue({ id: 42 })
 
         const id = await store.getState().postHeadache()
 
@@ -85,6 +84,6 @@ describe('headache store', () => {
         await store.getState().deleteHeadache(5)
 
         expect(store.getState().headaches).toHaveLength(0)
-        expect(client.api.DeleteHeadache).toHaveBeenCalledWith(5)
+        expect(mockClient.api.DeleteHeadache).toHaveBeenCalledWith(5)
     })
 })

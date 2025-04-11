@@ -10,7 +10,6 @@ interface State {
 }
 
 interface Actions {
-    // Auth
     logout: () => void
     login: (password: string, userName: string) => Promise<boolean>
 }

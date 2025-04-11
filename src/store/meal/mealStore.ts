@@ -4,7 +4,6 @@ import { produce } from 'immer'
 import { Meals, MetaMeal, respToMetaMeals } from './meals'
 import { Freshness, Meal, respToMeal, stringToFreshness } from './meal'
 import { Ingredients, respToIngredients } from './ingredients'
-import { SymptomStore } from '../symptom/symptomStore'
 import { AuthStore } from '../auth/authStore'
 import { ErrorStore } from '../error/errorStore'
 import { FoodCondition, respToFood } from './food'
@@ -25,7 +24,6 @@ interface Actions {
     deleteMeal: (id: number) => Promise<void>
 
     // Meal
-    setMealDate: (dateString: string) => Promise<void>
     updateMeal: (params: entity.MealParams) => Promise<void>
     getMeal: (id: number) => Promise<void>
 
@@ -58,7 +56,7 @@ const initialState: State = {
 }
 
 export const createMealSlice: StateCreator<
-    AuthStore & ErrorStore & MealStore & SymptomStore,
+    AuthStore & ErrorStore & MealStore,
     [],
     [],
     MealStore> = ((set, get) => ({
@@ -110,21 +108,6 @@ export const createMealSlice: StateCreator<
         },
 
         // Meal
-        setMealDate: async (dateString: string) => {
-            const params: entity.MealParams = { date: dateString }
-            const id = get().meal.id
-            try {
-                if (!id) return
-                await client.api.PatchMeal(id, params)
-                const date = new Date(dateString)
-                set(produce((draft: State) => {
-                    draft.meal.date = date
-                }))
-            } catch (error) {
-                get().setError(error)
-            }
-
-        },
         updateMeal: async (params: entity.MealParams) => {
             const id = get().meal.id
             if (!id) return
@@ -134,13 +117,13 @@ export const createMealSlice: StateCreator<
                     if (params.date) {
                         draft.meal.date = new Date(params.date)
                     }
-                    if (params.freshness) {
+                    if (params.freshness != undefined) {
                         draft.meal.freshness = stringToFreshness(params.freshness)
                     }
                     if (params.isAlone != undefined) {
                         draft.meal.isAlone = params.isAlone
                     }
-                    if (params.stressLevel) {
+                    if (params.stressLevel != undefined) {
                         draft.meal.stressLevel = params.stressLevel
                     }
                 }))
