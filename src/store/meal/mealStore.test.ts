@@ -162,13 +162,16 @@ describe('mealStore', () => {
     })
 
     it('patchFoodCondition', async () => {
-        testMeal.foods = [{
-            id: 1,
-            ingredientId: 10,
-            ingredientName: 'name',
-            condition: 'raw',
-        }]
-        store.setState({ ...store.getState(), meal: testMeal })
+        const tMeal: Meal = {
+            ...testMeal, foods: [{
+                id: 1,
+                ingredientId: 10,
+                ingredientName: 'name',
+                condition: 'raw',
+            }],
+        }
+
+        store.setState({ ...store.getState(), meal: tMeal })
         mockClient.api.PatchFoodCondition.mockResolvedValue(undefined)
 
         await store.getState().patchFoodCondition(1, 'cooked')
@@ -177,20 +180,5 @@ describe('mealStore', () => {
         // Patching non-existing food doesn't change the state
         await store.getState().patchFoodCondition(100, 'raw')
         expect(store.getState().meal.foods[0].condition).toBe('cooked')
-    })
-
-    it('getIngredients', async () => {
-        const mockResp: entity.IngredientsResponse = {
-            ingredients: [{ id: 1, name: 'name' }],
-        }
-        mockClient.api.GetIngredients.mockResolvedValue(mockResp)
-
-        expect(store.getState().ingredientsAreLoaded).toBeFalsy()
-        await store.getState().getIngredients()
-        expect(store.getState().ingredients).toHaveLength(1)
-        expect(store.getState().ingredients[0].id).toBe(1)
-        expect(store.getState().ingredients[0].name).toBe('name')
-        expect(store.getState().ingredientsAreLoaded).toBeTruthy()
-
     })
 })

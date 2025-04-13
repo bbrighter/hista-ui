@@ -3,18 +3,16 @@ import { client } from '../../api/api'
 import { produce } from 'immer'
 import { Meals, MetaMeal, respToMetaMeals } from './meals'
 import { Freshness, Meal, respToMeal, stringToFreshness } from './meal'
-import { Ingredients, respToIngredients } from './ingredients'
 import { AuthStore } from '../auth/authStore'
 import { ErrorStore } from '../error/errorStore'
 import { FoodCondition, respToFood } from './food'
 import { api, entity } from '../../api/generatedApi'
+import { IngredientStore } from './ingredientStore'
 
 interface State {
     meals: Meals
     mealsAreLoaded: boolean
     meal: Meal
-    ingredients: Ingredients
-    ingredientsAreLoaded: boolean
 }
 
 interface Actions {
@@ -22,18 +20,11 @@ interface Actions {
     getMeals: () => Promise<void>
     postMeal: () => Promise<number | void>
     deleteMeal: (id: number) => Promise<void>
-
-    // Meal
     updateMeal: (params: entity.MealParams) => Promise<void>
     getMeal: (id: number) => Promise<void>
 
-    // Ingredients
-    getIngredients: () => Promise<void>
-
     // Foods
     postFood: (ingredientName?: string, ingredientId?: number) => Promise<void>
-
-    // Food
     deleteFood: (foodId: number) => Promise<void>
     patchFoodCondition: (foodId: number, newCondition: FoodCondition) => Promise<void>
 }
@@ -51,12 +42,10 @@ const initialState: State = {
         foods: [],
         isLoading: true,
     },
-    ingredients: [],
-    ingredientsAreLoaded: false,
 }
 
 export const createMealSlice: StateCreator<
-    AuthStore & ErrorStore & MealStore,
+    AuthStore & ErrorStore & MealStore & IngredientStore,
     [],
     [],
     MealStore> = ((set, get) => ({
@@ -100,8 +89,8 @@ export const createMealSlice: StateCreator<
                 const resp = await client.api.DeleteMeal(id)
                 set(produce((draft: State) => {
                     draft.meals = removeItemById(id, get().meals)
-                    draft.ingredients = respToIngredients(resp)
                 }))
+                get().setIngredients(resp)
             } catch (error) {
                 get().setError(error)
             }
@@ -145,22 +134,6 @@ export const createMealSlice: StateCreator<
             }
         },
 
-
-        // Ingredients
-        getIngredients: async () => {
-            if (!get().ingredientsAreLoaded || get().ingredients.length == 0) {
-                try {
-                    const resp = await client.api.GetIngredients()
-                    set(produce((draft: State) => {
-                        draft.ingredients = respToIngredients(resp)
-                        draft.ingredientsAreLoaded = true
-                    }))
-                } catch (error) {
-                    get().setError(error)
-                }
-            }
-        },
-
         // Foods
         postFood: async (ingredientName?: string, ingredientId?: number) => {
             const mealId = get().meal.id
@@ -174,11 +147,10 @@ export const createMealSlice: StateCreator<
                 }
                 const resp = await client.api.PostFood(mealId, params)
                 const food = respToFood(resp.food)
-                const ingredients = respToIngredients(resp.ingredients)
                 set(produce((draft: State) => {
                     draft.meal.foods.unshift(food)
-                    draft.ingredients = ingredients
                 }))
+                get().setIngredients(resp.ingredients)
             } catch (error) {
                 get().setError(error)
             }
@@ -189,10 +161,10 @@ export const createMealSlice: StateCreator<
         deleteFood: async (foodId: number) => {
             try {
                 const resp = await client.api.DeleteFood(foodId)
-                const ingredients = respToIngredients(resp)
+                get().setIngredients(resp)
                 set(produce((draft: State) => {
                     draft.meal.foods = removeItemById(foodId, get().meal.foods)
-                    draft.ingredients = ingredients
+
                 }))
             } catch (error) {
                 get().setError(error)
