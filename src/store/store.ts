@@ -8,17 +8,29 @@ import { NotesStore, createNotesSlice } from './notes/notesStore'
 import { PollenStore, createPollensSlice } from './pollen/pollenStore'
 import { createStatusSlice, StatusStore } from './status/statusStore'
 import { createHeadacheSlice, HeadacheStore } from './headaches/headacheStore'
+import { createIngredientSlice, IngredientStore } from './meal/ingredientStore'
 
-const useHista = create<AuthStore & ErrorStore & MealStore & SymptomStore & StatisticsStore & NotesStore & PollenStore & StatusStore & HeadacheStore>()((...a) => ({
-    ...createMealSlice(...a),
-    ...createAuthSlice(...a),
-    ...createSymptomSlice(...a),
-    ...createErrorSlice(...a),
-    ...createStatisticsSlice(...a),
-    ...createNotesSlice(...a),
-    ...createPollensSlice(...a),
-    ...createStatusSlice(...a),
-    ...createHeadacheSlice(...a),
-}))
+const useHista = create<
+    AuthStore &
+    ErrorStore &
+    MealStore &
+    IngredientStore &
+    SymptomStore &
+    StatisticsStore &
+    NotesStore &
+    PollenStore &
+    StatusStore &
+    HeadacheStore>()((...a) => ({
+        ...createMealSlice(...a),
+        ...createIngredientSlice(...a),
+        ...createAuthSlice(...a),
+        ...createSymptomSlice(...a),
+        ...createErrorSlice(...a),
+        ...createStatisticsSlice(...a),
+        ...createNotesSlice(...a),
+        ...createPollensSlice(...a),
+        ...createStatusSlice(...a),
+        ...createHeadacheSlice(...a),
+    }))
 
 export default useHista

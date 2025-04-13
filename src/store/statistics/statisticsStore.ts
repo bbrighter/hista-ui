@@ -8,6 +8,7 @@ import { client } from '../../api/api';
 import { produce } from 'immer';
 import { api } from '../../api/generatedApi';
 import { FoodStatistics, SymptomStatistics, respToStatistics, respToSymptomStatistics } from './statistics';
+import { IngredientStore } from '../meal/ingredientStore';
 
 interface State {
     diaryEntries: Array<RawDiary>
@@ -32,7 +33,7 @@ const initialState: State = {
 }
 
 export const createStatisticsSlice: StateCreator<
-    AuthStore & ErrorStore & MealStore & SymptomStore & StatisticsStore,
+    AuthStore & ErrorStore & MealStore & SymptomStore & StatisticsStore & IngredientStore,
     [],
     [],
     StatisticsStore
