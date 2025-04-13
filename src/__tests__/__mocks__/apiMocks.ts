@@ -23,6 +23,11 @@ export const mockClient = {
         PatchHeadacheTypes: vi.fn(),
         PatchHeadacheSymptoms: vi.fn(),
         PatchHeadacheDescription: vi.fn(),
+
+        GetNotes: vi.fn(),
+        PatchNote: vi.fn(),
+        PostNote: vi.fn(),
+        DeleteNote: vi.fn(),
     },
 }
 
