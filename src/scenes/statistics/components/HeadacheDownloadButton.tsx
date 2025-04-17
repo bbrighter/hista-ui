@@ -1,13 +1,22 @@
 import Download from '@mui/icons-material/Download';
-import Button from '@mui/material/Button';
-import useHista from '../../store/store';
 import { Workbook } from 'exceljs';
-import { validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from '../../store/headaches/headaches';
+import useHista from '../../../store/store';
+import { validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from '../../../store/headaches/headaches';
+import { useState } from 'react';
+import { LoadingButton } from '@mui/lab';
+
 
 export default function DownloadButton() {
+    const [loading, setLoading] = useState(false)
+
+    const getHeadaches = useHista(state => state.getHeadaches)
     const headaches = useHista(state => state.headaches)
 
+
     const onClick = async () => {
+        setLoading(true)
+        await getHeadaches()
+
         const book = new Workbook()
         const sheet = book.addWorksheet('Kopfschmerz')
 
@@ -55,13 +64,14 @@ export default function DownloadButton() {
             [
                 h.date,
                 h.severity,
-                ...validHeadachePositions.map(v => h.positions.some(p => p.value == v.value)),
-                ...validHeadacheTypes.map(v => h.types.some(t => t.value == v.value)),
-                ...validHeadacheSymptoms.map(v => h.symptoms.some(s => s.value == v.value)),
+                ...validHeadachePositions.map(v => h.positions.some(p => p.value == v.value) ? 'x' : ''),
+                ...validHeadacheTypes.map(v => h.types.some(t => t.value == v.value) ? 'x' : ''),
+                ...validHeadacheSymptoms.map(v => h.symptoms.some(s => s.value == v.value) ? 'x' : ''),
             ]
         ))
 
         sheet.addRows(data)
+        sheet.getColumn(1).numFmt = 'dd.mm.yyyy hh:mm'
 
         const buffer = await book.xlsx.writeBuffer()
         const blob = new Blob([buffer], {
@@ -73,14 +83,16 @@ export default function DownloadButton() {
         link.download = 'kopfschmerz.xlsx'
         link.click()
         URL.revokeObjectURL(url)
+        setLoading(false)
     }
 
 
 
-    return (<Button
+    return (<LoadingButton
         startIcon={<Download />}
         onClick={onClick}
+        loading={loading}
     >
-        Herunterladen
-    </Button>)
+        Kopfschmerzen herunterladen
+    </LoadingButton>)
 }
