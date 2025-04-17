@@ -1,4 +1,3 @@
-
 import useHista from '../../store/store'
 import OverviewList from '../components/OverviewList'
 import LoadingButton from '@mui/lab/LoadingButton'
@@ -8,8 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { url } from '../../constants';
 import { getColor } from '../Headache/components/colorMapping';
 import Container from '@mui/material/Container';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import DownloadButton from './DownloadButton';
 
 
 export default function Headaches() {
@@ -35,17 +32,13 @@ export default function Headaches() {
 
     return (
         <Container sx={{ padding: '2rem' }}>
-            <ButtonGroup>
-                <LoadingButton
-                    startIcon={<FaceRetouchingNaturalIcon />}
-                    variant='contained'
-                    onClick={onCreate}
-                    loading={loading}
-                >Neuer Kopfschmerz
-                </LoadingButton>
-                <DownloadButton />
-            </ButtonGroup>
-
+            <LoadingButton
+                startIcon={<FaceRetouchingNaturalIcon />}
+                variant='outlined'
+                onClick={onCreate}
+                loading={loading}
+            >Neuer Kopfschmerz
+            </LoadingButton>
             <OverviewList
                 getData={getHeadaches}
                 items={headaches}
