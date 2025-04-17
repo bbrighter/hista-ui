@@ -10,3 +10,13 @@ export const mockedConditionEventResp: entity.ConditionEventResponse = {
     conditions: [],
 }
 
+export const mockedPollenEventsResp: entity.PollenEventsResponse = {
+    pollens: [
+        {
+            date: '2024-01-01T00:00:00Z', pollens: [
+                { intensity: 3, intensityString: 'Mittel', type: 'Esche' },
+                { intensity: 1, intensityString: 'Gering', type: 'Beifuss' },
+            ],
+        },
+    ],
+}

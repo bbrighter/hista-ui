@@ -41,6 +41,8 @@ export const mockClient = {
         CreateConditionEvent: vi.fn(),
         DeleteConditionEvent: vi.fn(),
         PatchDate: vi.fn(),
+
+        GetPollens: vi.fn(),
     },
 }
 
