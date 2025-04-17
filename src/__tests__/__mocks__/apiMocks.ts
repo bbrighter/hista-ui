@@ -28,6 +28,19 @@ export const mockClient = {
         PatchNote: vi.fn(),
         PostNote: vi.fn(),
         DeleteNote: vi.fn(),
+
+        PostSymptomCategory: vi.fn(),
+        GetSymptoms: vi.fn(),
+
+        PostCondition: vi.fn(),
+        DeleteCondition: vi.fn(),
+        PatchCondition: vi.fn(),
+
+        GetConditionEvents: vi.fn(),
+        GetConditionEvent: vi.fn(),
+        CreateConditionEvent: vi.fn(),
+        DeleteConditionEvent: vi.fn(),
+        PatchDate: vi.fn(),
     },
 }
 

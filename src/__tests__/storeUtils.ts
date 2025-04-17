@@ -5,9 +5,11 @@ import { AuthStore, createAuthSlice } from '../store/auth/authStore'
 import { createMealSlice, MealStore } from '../store/meal/mealStore'
 import { createIngredientSlice, IngredientStore } from '../store/meal/ingredientStore'
 import { createNotesSlice, NotesStore } from '../store/notes/notesStore'
+import { createConditionSlice, ConditionStore } from '../store/symptom/conditionStore'
+import { createSymptomSlice, SymptomStore } from '../store/symptom/symptomStore'
 
 
-type StoreType = HeadacheStore & ErrorStore & AuthStore & MealStore & IngredientStore & NotesStore
+type StoreType = HeadacheStore & ErrorStore & AuthStore & MealStore & IngredientStore & NotesStore & ConditionStore & SymptomStore
 
 export const createTestStore = () =>
   createStore<StoreType>()((...args) => ({
@@ -17,4 +19,6 @@ export const createTestStore = () =>
     ...createMealSlice(...args),
     ...createIngredientSlice(...args),
     ...createNotesSlice(...args),
+    ...createConditionSlice(...args),
+    ...createSymptomSlice(...args),
   }))
