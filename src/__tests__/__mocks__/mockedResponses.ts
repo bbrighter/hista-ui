@@ -1,4 +1,4 @@
-import { entity } from '../../api/generatedApi';
+import { api, entity } from '../../api/generatedApi';
 
 export const conditionEventsMockedResp: entity.ConditionEventsResponse = {
     conditionEvents: [{ id: 1, date: '2024-01-01T00:00:00Z' }],
@@ -29,4 +29,23 @@ export const statusMockedResp: entity.StatusResponse = {
 
 export const statusesMockedResp: entity.StatusesResponse = {
     statuses: [statusMockedResp],
+}
+
+export const diaryRespMock: api.DiaryResp = {
+    diaries: [
+        {
+            category: 'category food',
+            content: 'content food',
+            date: '2024-01-01T00:00:00Z',
+            severity: 'raw',
+            type: 'Food',
+        },
+        {
+            category: 'category symptom',
+            content: 'content symptom',
+            date: '2023-01-01T00:00:00Z',
+            severity: '3',
+            type: 'Symptom',
+        },
+    ],
 }

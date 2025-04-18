@@ -48,6 +48,11 @@ export const mockClient = {
         PostStatus: vi.fn(),
         PutStatus: vi.fn(),
         DeleteStatus: vi.fn(),
+
+        GetStatisticsByIngredientsIds: vi.fn(),
+        GetStatisticsBySymptomIds: vi.fn(),
+        GetDiary: vi.fn(),
+
     },
 }
 
