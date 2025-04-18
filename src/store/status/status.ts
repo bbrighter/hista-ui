@@ -1,10 +1,9 @@
 import dayjs, { Dayjs } from 'dayjs'
-import { client } from '../../api/api'
-import { api, entity } from '../../api/generatedApi'
+import { entity } from '../../api/generatedApi'
 
 export type Statuses = Array<Status>
 
-const respToStatuses = (resp: entity.StatusesResponse): Statuses => {
+export const respToStatuses = (resp: entity.StatusesResponse): Statuses => {
     return resp.statuses.map(s => (
         {
             id: s.id,
@@ -22,7 +21,7 @@ export interface Status {
     evening?: EveningStatus
 }
 
-const respToStatus = (resp: entity.StatusResponse): Status => {
+export const respToStatus = (resp: entity.StatusResponse): Status => {
     return {
         id: resp.id,
         date: dayjs(resp.date),
@@ -63,11 +62,6 @@ const respToEvening = (resp: entity.EveningStatus | undefined): EveningStatus | 
 }
 
 
-export const addNewStatus = async (date: Dayjs): Promise<Status> => {
-    const resp = await client.api.PostStatus({ date: date.toISOString() })
-    return respToStatus(resp)
-}
-
 export interface PutStatusParams {
     statusId: number
     date: Dayjs
@@ -75,25 +69,4 @@ export interface PutStatusParams {
     fitness: number
     sleep?: number
     morningOrEveningId?: number
-}
-
-export const putStatus = async (p: PutStatusParams): Promise<Status> => {
-    const params: api.StatusParams = {
-        date: p.date.toISOString(),
-        fitness: p.fitness,
-        timeOfDay: p.timeOfDay,
-        sleep: p.sleep,
-        id: p.morningOrEveningId,
-    }
-    const resp = await client.api.PutStatus(p.statusId, params)
-    return respToStatus(resp)
-}
-
-export const listStatuses = async (): Promise<Statuses> => {
-    const resp = await client.api.ListStatus()
-    return respToStatuses(resp)
-}
-
-export const deleteStatus = async (id: number) => {
-    await client.api.DeleteStatus(id)
 }
