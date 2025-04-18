@@ -7,8 +7,8 @@
     "start": "vite --open",
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . && tsc -b",
-    "lint:fix": "eslint . --fix && tsc -b",
+    "lint": "eslint . && tsc",
+    "lint:fix": "eslint . --fix && tsc",
     "test": "vitest",
     "tsc": "tsc",
     "knip": "knip"
