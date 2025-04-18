@@ -2,7 +2,7 @@ import '../../__tests__/__mocks__/apiMocks'
 import '../../__tests__/__mocks__/authStoreMock'
 import '../../__tests__/__mocks__/errorStoreMock'
 import { mockClient } from '../../__tests__/__mocks__/apiMocks';
-import { mockedPollenEventsResp } from '../../__tests__/__mocks__/mockedResponses';
+import { pollenEventsMockedResp } from '../../__tests__/__mocks__/mockedResponses';
 
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { createTestStore } from '../../__tests__/storeUtils';
@@ -16,7 +16,7 @@ describe('pollenStore', () => {
     })
 
     it('getPollens', async () => {
-        mockClient.api.GetPollens.mockResolvedValue(mockedPollenEventsResp)
+        mockClient.api.GetPollens.mockResolvedValue(pollenEventsMockedResp)
 
         expect(store.getState().pollensAreLoaded).toBeFalsy()
         await store.getState().getPollens()

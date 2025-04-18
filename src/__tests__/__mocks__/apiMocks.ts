@@ -43,6 +43,11 @@ export const mockClient = {
         PatchDate: vi.fn(),
 
         GetPollens: vi.fn(),
+
+        ListStatus: vi.fn(),
+        PostStatus: vi.fn(),
+        PutStatus: vi.fn(),
+        DeleteStatus: vi.fn(),
     },
 }
 

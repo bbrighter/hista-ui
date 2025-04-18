@@ -6,7 +6,7 @@ import { mockClient } from '../../__tests__/__mocks__/apiMocks'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { entity } from '../../api/generatedApi'
-import { mockedConditionEventResp, mockedConditionsEventResp } from '../../__tests__/__mocks__/mockedResponses'
+import { conditionEventMockedResp, conditionEventsMockedResp } from '../../__tests__/__mocks__/mockedResponses'
 import { mockedConditionEventState } from '../../__tests__/__mocks__/mockedStates'
 
 describe('symptomStore', () => {
@@ -18,7 +18,7 @@ describe('symptomStore', () => {
     })
 
     it('getConditionEvents', async () => {
-        mockClient.api.GetConditionEvents.mockResolvedValue(mockedConditionsEventResp)
+        mockClient.api.GetConditionEvents.mockResolvedValue(conditionEventsMockedResp)
 
         await store.getState().getConditionEvents()
         expect(store.getState().conditionEvents).toHaveLength(1)
@@ -27,7 +27,7 @@ describe('symptomStore', () => {
     })
 
     it('postConditionEvent', async () => {
-        mockClient.api.CreateConditionEvent.mockResolvedValue(mockedConditionEventResp)
+        mockClient.api.CreateConditionEvent.mockResolvedValue(conditionEventMockedResp)
 
         await store.getState().postConditionEvent()
         expect(store.getState().conditionEvents).toHaveLength(1)
