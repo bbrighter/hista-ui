@@ -8,6 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import StatusCardContent from './StatusCardContent';
 import useTheme from '@mui/material/styles/useTheme';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { formatDate } from '../../../utils/formatDate';
 
 
 
@@ -42,7 +43,8 @@ export default function StatusCard(props: { status: Status }) {
         >
             <CardHeader
                 sx={{ padding: '12px' }}
-                title={props.status.date.format('dddd, DD.MM.YYYY')}
+                // title={props.status.date.format('dddd, DD.MM.YYYY')}
+                title={formatDate(props.status.date)}
                 titleTypographyProps={{ variant: 'overline' }}
                 action={
                     <IconButton onClick={handleDelete} size='small'>
