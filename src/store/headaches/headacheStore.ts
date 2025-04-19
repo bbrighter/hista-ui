@@ -10,7 +10,7 @@ interface State {
     isLoaded: boolean
 }
 interface Actions {
-    getHeadaches(): Promise<void>
+    getHeadaches(): Promise<Array<Headache>>
     getHeadache(id: number): Promise<void>
     postHeadache(): Promise<number>
     deleteHeadache(id: number): Promise<void>
@@ -39,15 +39,18 @@ export const createHeadacheSlice: StateCreator<
         ...initialState,
 
         getHeadaches: async () => {
+            let headaches: Array<Headache> = []
             try {
                 const resp = await client.api.GetHeadaches()
+                headaches = respToHeadaches(resp)
                 set(produce((draft: State) => {
-                    draft.headaches = respToHeadaches(resp)
+                    draft.headaches = headaches
                     draft.isLoaded = true
                 }))
             } catch (error) {
                 get().setError(error)
             }
+            return headaches
         },
 
         getHeadache: async (id: number) => {

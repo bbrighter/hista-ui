@@ -33,8 +33,9 @@ describe('headache store', () => {
 
         mockClient.api.GetHeadaches.mockResolvedValue(mockResp)
 
-        await store.getState().getHeadaches()
+        const headaches = await store.getState().getHeadaches()
 
+        expect(store.getState().headaches).toStrictEqual(headaches)
         expect(store.getState().headaches.length).toBe(1)
         const headache = store.getState().headaches[0]
         expect(headache.id).toBe(1)

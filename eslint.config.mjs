@@ -3,6 +3,7 @@ import pluginJs from '@eslint/js';
 import pluginReact from 'eslint-plugin-react';
 import tseslint from 'typescript-eslint';
 import stylistic from '@stylistic/eslint-plugin'
+import reactCompiler from 'eslint-plugin-react-compiler'
 
 
 export default [
@@ -26,6 +27,7 @@ export default [
     },
     pluginReact.configs.flat.recommended,
     pluginJs.configs.recommended,
+    reactCompiler.configs.recommended,
     ...tseslint.configs.recommended,
     {
         rules: {
