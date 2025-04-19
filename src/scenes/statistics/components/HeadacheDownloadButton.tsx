@@ -10,12 +10,11 @@ export default function DownloadButton() {
     const [loading, setLoading] = useState(false)
 
     const getHeadaches = useHista(state => state.getHeadaches)
-    const headaches = useHista(state => state.headaches)
 
 
     const onClick = async () => {
         setLoading(true)
-        await getHeadaches()
+        const headaches = await getHeadaches()
 
         const book = new Workbook()
         const sheet = book.addWorksheet('Kopfschmerz')
@@ -40,6 +39,10 @@ export default function DownloadButton() {
             {
                 sharedHeader: 'Symptom',
                 columns: validHeadacheSymptoms.map(s => s.label),
+            },
+            {
+                sharedHeader: '',
+                columns: ['Notizen'],
             },
         ]
 
@@ -67,6 +70,7 @@ export default function DownloadButton() {
                 ...validHeadachePositions.map(v => h.positions.some(p => p.value == v.value) ? 'x' : ''),
                 ...validHeadacheTypes.map(v => h.types.some(t => t.value == v.value) ? 'x' : ''),
                 ...validHeadacheSymptoms.map(v => h.symptoms.some(s => s.value == v.value) ? 'x' : ''),
+                h.description,
             ]
         ))
 
