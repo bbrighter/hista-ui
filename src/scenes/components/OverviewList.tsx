@@ -21,7 +21,7 @@ export default function OverviewList(props: {
     showSeverity?: boolean
     onClick: (id: number) => void
     onDelete: (id: number) => Promise<void>
-    getData: () => Promise<void>
+    getData: () => Promise<void | Array<unknown>>
     severityColorMapping?: (severity: number) => string
 }) {
     const [loading, setLoading] = useState(false)
