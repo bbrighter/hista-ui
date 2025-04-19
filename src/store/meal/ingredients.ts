@@ -1,7 +1,7 @@
 import { entity } from '../../api/generatedApi'
 
 
-export interface Ingredient {
+interface Ingredient {
     id: number
     name: string
 }

@@ -3,7 +3,7 @@ import { Symptom, respToSymptom } from './symptom'
 
 type Severity = 5 | 4 | 3 | 2 | 1
 
-export interface Condition {
+interface Condition {
     id: number
     symptom: Symptom
     severity: Severity
@@ -28,15 +28,15 @@ export const colorFromSeverity = (severity: number | Array<number>) => {
         sev = Math.max(...severity)
     }
     switch (sev) {
-    case 1:
-        return 'success'
-    case 2:
-        return 'primary'
-    case 3:
-        return 'secondary'
-    case 4:
-        return 'warning'
-    case 5:
-        return 'error'
+        case 1:
+            return 'success'
+        case 2:
+            return 'primary'
+        case 3:
+            return 'secondary'
+        case 4:
+            return 'warning'
+        case 5:
+            return 'error'
     }
 }

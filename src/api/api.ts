@@ -25,10 +25,6 @@ const options: ClientOptions = { auth: authGenerator }
 
 export const client = new Client(baseUrl, options)
 
-export const is401Response = (error: unknown): boolean => {
-    return isAPIError(error) && error.status == 401
-}
-
 export const login = async (userName: string, password: string): Promise<{ token: string, status: string, details?: string }> => {
     const loginParams: internalAuth.LoginParams = { userName: userName, password: password }
     const params: RequestInit = {

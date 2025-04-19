@@ -1,9 +1,7 @@
 import { StateCreator } from 'zustand'
 import { produce } from 'immer'
-import { SymptomStore } from '../symptom/symptomStore'
 import { AuthStore } from '../auth/authStore'
 import { ErrorStore } from '../error/errorStore'
-import { MealStore } from '../meal/mealStore'
 import { Note, respToNote, respToNotes } from './notes'
 import { client } from '../../api/api'
 import { api } from '../../api/generatedApi'
@@ -29,7 +27,7 @@ const initialState: State = {
 }
 
 export const createNotesSlice: StateCreator<
-    AuthStore & ErrorStore & MealStore & SymptomStore & NotesStore,
+    AuthStore & ErrorStore & NotesStore,
     [],
     [],
     NotesStore> = ((set, get) => ({
@@ -50,6 +48,7 @@ export const createNotesSlice: StateCreator<
                 const resp = await client.api.PostNote()
                 set(produce((draft: State) => {
                     draft.note = respToNote(resp)
+                    draft.notes.push(draft.note)
                 }))
                 return resp.id
             } catch (error) {
@@ -85,10 +84,17 @@ export const createNotesSlice: StateCreator<
                 text: text,
             }
             try {
+                const noteIndex = get().notes.findIndex(v => v.id == id)
                 await client.api.PatchNote(id, params)
                 set(produce((draft: State) => {
-                    if (date) draft.note.date = new Date(date)
-                    if (text) draft.note.text = text
+                    if (date) {
+                        draft.note.date = new Date(date)
+                        draft.notes[noteIndex].date = new Date(date)
+                    }
+                    if (text) {
+                        draft.note.text = text
+                        draft.notes[noteIndex].text = text
+                    }
                 }))
             } catch (error) {
                 get().setError(error)

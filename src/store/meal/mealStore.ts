@@ -3,19 +3,16 @@ import { client } from '../../api/api'
 import { produce } from 'immer'
 import { Meals, MetaMeal, respToMetaMeals } from './meals'
 import { Freshness, Meal, respToMeal, stringToFreshness } from './meal'
-import { Ingredients, respToIngredients } from './ingredients'
-import { SymptomStore } from '../symptom/symptomStore'
 import { AuthStore } from '../auth/authStore'
 import { ErrorStore } from '../error/errorStore'
 import { FoodCondition, respToFood } from './food'
 import { api, entity } from '../../api/generatedApi'
+import { IngredientStore } from './ingredientStore'
 
 interface State {
     meals: Meals
     mealsAreLoaded: boolean
     meal: Meal
-    ingredients: Ingredients
-    ingredientsAreLoaded: boolean
 }
 
 interface Actions {
@@ -23,19 +20,11 @@ interface Actions {
     getMeals: () => Promise<void>
     postMeal: () => Promise<number | void>
     deleteMeal: (id: number) => Promise<void>
-
-    // Meal
-    setMealDate: (dateString: string) => Promise<void>
     updateMeal: (params: entity.MealParams) => Promise<void>
     getMeal: (id: number) => Promise<void>
 
-    // Ingredients
-    getIngredients: () => Promise<void>
-
     // Foods
     postFood: (ingredientName?: string, ingredientId?: number) => Promise<void>
-
-    // Food
     deleteFood: (foodId: number) => Promise<void>
     patchFoodCondition: (foodId: number, newCondition: FoodCondition) => Promise<void>
 }
@@ -53,12 +42,10 @@ const initialState: State = {
         foods: [],
         isLoading: true,
     },
-    ingredients: [],
-    ingredientsAreLoaded: false,
 }
 
 export const createMealSlice: StateCreator<
-    AuthStore & ErrorStore & MealStore & SymptomStore,
+    AuthStore & ErrorStore & MealStore & IngredientStore,
     [],
     [],
     MealStore> = ((set, get) => ({
@@ -102,29 +89,14 @@ export const createMealSlice: StateCreator<
                 const resp = await client.api.DeleteMeal(id)
                 set(produce((draft: State) => {
                     draft.meals = removeItemById(id, get().meals)
-                    draft.ingredients = respToIngredients(resp)
                 }))
+                get().setIngredients(resp)
             } catch (error) {
                 get().setError(error)
             }
         },
 
         // Meal
-        setMealDate: async (dateString: string) => {
-            const params: entity.MealParams = { date: dateString }
-            const id = get().meal.id
-            try {
-                if (!id) return
-                await client.api.PatchMeal(id, params)
-                const date = new Date(dateString)
-                set(produce((draft: State) => {
-                    draft.meal.date = date
-                }))
-            } catch (error) {
-                get().setError(error)
-            }
-
-        },
         updateMeal: async (params: entity.MealParams) => {
             const id = get().meal.id
             if (!id) return
@@ -134,13 +106,13 @@ export const createMealSlice: StateCreator<
                     if (params.date) {
                         draft.meal.date = new Date(params.date)
                     }
-                    if (params.freshness) {
+                    if (params.freshness != undefined) {
                         draft.meal.freshness = stringToFreshness(params.freshness)
                     }
                     if (params.isAlone != undefined) {
                         draft.meal.isAlone = params.isAlone
                     }
-                    if (params.stressLevel) {
+                    if (params.stressLevel != undefined) {
                         draft.meal.stressLevel = params.stressLevel
                     }
                 }))
@@ -162,22 +134,6 @@ export const createMealSlice: StateCreator<
             }
         },
 
-
-        // Ingredients
-        getIngredients: async () => {
-            if (!get().ingredientsAreLoaded || get().ingredients.length == 0) {
-                try {
-                    const resp = await client.api.GetIngredients()
-                    set(produce((draft: State) => {
-                        draft.ingredients = respToIngredients(resp)
-                        draft.ingredientsAreLoaded = true
-                    }))
-                } catch (error) {
-                    get().setError(error)
-                }
-            }
-        },
-
         // Foods
         postFood: async (ingredientName?: string, ingredientId?: number) => {
             const mealId = get().meal.id
@@ -191,11 +147,10 @@ export const createMealSlice: StateCreator<
                 }
                 const resp = await client.api.PostFood(mealId, params)
                 const food = respToFood(resp.food)
-                const ingredients = respToIngredients(resp.ingredients)
                 set(produce((draft: State) => {
                     draft.meal.foods.unshift(food)
-                    draft.ingredients = ingredients
                 }))
+                get().setIngredients(resp.ingredients)
             } catch (error) {
                 get().setError(error)
             }
@@ -206,10 +161,10 @@ export const createMealSlice: StateCreator<
         deleteFood: async (foodId: number) => {
             try {
                 const resp = await client.api.DeleteFood(foodId)
-                const ingredients = respToIngredients(resp)
+                get().setIngredients(resp)
                 set(produce((draft: State) => {
                     draft.meal.foods = removeItemById(foodId, get().meal.foods)
-                    draft.ingredients = ingredients
+
                 }))
             } catch (error) {
                 get().setError(error)

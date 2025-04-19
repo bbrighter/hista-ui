@@ -2,7 +2,7 @@ import globals from 'globals';
 import pluginJs from '@eslint/js';
 import pluginReact from 'eslint-plugin-react';
 import tseslint from 'typescript-eslint';
-import stylisticJs from '@stylistic/eslint-plugin-js'
+import stylistic from '@stylistic/eslint-plugin'
 
 
 export default [
@@ -21,7 +21,7 @@ export default [
     },
     {
         plugins: {
-            '@stylistic/js': stylisticJs,
+            '@stylistic': stylistic,
         },
     },
     pluginReact.configs.flat.recommended,

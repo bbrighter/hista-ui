@@ -8,6 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import CircleIcon from '@mui/icons-material/Circle';
+import { formatDate } from '../../utils/formatDate';
 
 interface ListItemInterface {
     id: number
@@ -77,7 +78,7 @@ function OverviewListItem(props: {
             }
         >
             <ListItemText
-                primary={props.date.toLocaleString([], { dateStyle: 'long', timeStyle: 'short' })}
+                primary={formatDate(props.date, 'withTime')}
                 secondary={props.secondary}
             />
             {props.showSeverity && props.severity !== undefined &&

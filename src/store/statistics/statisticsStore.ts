@@ -3,11 +3,13 @@ import { RawDiary, respToRawDiary } from './diary';
 import { AuthStore } from '../auth/authStore';
 import { ErrorStore } from '../error/errorStore';
 import { MealStore } from '../meal/mealStore';
-import { SymptomStore } from '../symptom/symptomStore';
+import { ConditionStore } from '../symptom/conditionStore';
 import { client } from '../../api/api';
 import { produce } from 'immer';
 import { api } from '../../api/generatedApi';
 import { FoodStatistics, SymptomStatistics, respToStatistics, respToSymptomStatistics } from './statistics';
+import { IngredientStore } from '../meal/ingredientStore';
+import { SymptomStore } from '../symptom/symptomStore';
 
 interface State {
     diaryEntries: Array<RawDiary>
@@ -32,7 +34,7 @@ const initialState: State = {
 }
 
 export const createStatisticsSlice: StateCreator<
-    AuthStore & ErrorStore & MealStore & SymptomStore & StatisticsStore,
+    AuthStore & ErrorStore & MealStore & ConditionStore & StatisticsStore & IngredientStore & SymptomStore,
     [],
     [],
     StatisticsStore

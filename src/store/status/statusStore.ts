@@ -1,9 +1,10 @@
 import { StateCreator } from 'zustand'
 import { AuthStore } from '../auth/authStore'
 import { ErrorStore } from '../error/errorStore'
-import { addNewStatus, deleteStatus, listStatuses, putStatus, PutStatusParams, Statuses } from './status'
+import { PutStatusParams, respToStatus, respToStatuses, Statuses } from './status'
 import { produce } from 'immer'
 import { Dayjs } from 'dayjs'
+import { client } from '../../api/api'
 
 
 interface State {
@@ -31,9 +32,9 @@ export const createStatusSlice: StateCreator<
         ...initialState,
         getStatuses: async () => {
             try {
-                const statuses = await listStatuses()
+                const resp = await client.api.ListStatus()
                 set(produce((draft: State) => {
-                    draft.statuses = statuses
+                    draft.statuses = respToStatuses(resp)
                 }))
             } catch (error) {
                 get().setError(error)
@@ -41,7 +42,10 @@ export const createStatusSlice: StateCreator<
         },
         addStatus: async (date: Dayjs) => {
             try {
-                const status = await addNewStatus(date)
+                const resp = await client.api.PostStatus({
+                    date: date.toISOString(),
+                })
+                const status = respToStatus(resp)
                 set(produce((draft: State) => {
                     draft.statuses.unshift(status)
                     draft.statuses.sort((a, b) => b.date.diff(a.date))
@@ -53,10 +57,16 @@ export const createStatusSlice: StateCreator<
         updateStatus: async (p: PutStatusParams) => {
             try {
                 const statusIndex = get().statuses.findIndex(s => s.id == p.statusId)
-                const status = await putStatus(p)
+                const resp = await client.api.PutStatus(p.statusId, {
+                    date: p.date.toISOString(),
+                    fitness: p.fitness,
+                    timeOfDay: p.timeOfDay,
+                    sleep: p.sleep,
+                    id: p.statusId,
+                })
                 set(produce((draft: State) => {
                     if (statusIndex > -1) {
-                        draft.statuses[statusIndex] = status
+                        draft.statuses[statusIndex] = respToStatus(resp)
                     }
                 }))
             } catch (error) {
@@ -65,7 +75,7 @@ export const createStatusSlice: StateCreator<
         },
         deleteStatus: async (id: number) => {
             try {
-                await deleteStatus(id)
+                await client.api.DeleteStatus(id)
                 set(produce((draft: State) => {
                     draft.statuses = get().statuses.filter(s => s.id != id)
                 }))
