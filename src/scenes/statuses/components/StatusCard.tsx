@@ -6,9 +6,9 @@ import useHista from '../../../store/store';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import StatusCardContent from './StatusCardContent';
-import useTheme from '@mui/material/styles/useTheme';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { formatDate } from '../../../utils/formatDate';
+import { useTheme } from '@mui/material/styles';
 
 
 

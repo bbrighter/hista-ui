@@ -10,12 +10,12 @@ export default function SeverityFilter(props: {
 }) {
     return (
         <Grid container sx={{ mt: 2 }} >
-            <Grid item xs={2}>
+            <Grid size={{ xs: 2 }}>
                 <Icon>
                     <FilterAltIcon />
                 </Icon>
             </Grid>
-            <Grid item xs={8}>
+            <Grid size={{ xs: 8 }}>
                 <Slider
                     max={5}
                     min={1}

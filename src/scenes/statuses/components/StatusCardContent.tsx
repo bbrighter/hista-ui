@@ -3,7 +3,6 @@ import { PutStatusParams, Status } from '../../../store/status/status'
 import useHista from '../../../store/store'
 import { useDidUpdateEffect } from '../../../hooks/useDidUpdateEffect'
 import Card from '@mui/material/Card'
-import Grid2 from '@mui/material/Grid2'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import Collapse from '@mui/material/Collapse'
@@ -13,7 +12,8 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkMode from '@mui/icons-material/DarkMode'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import HotelIcon from '@mui/icons-material/Hotel';
-import Skeleton from '@mui/lab/Skeleton'
+import Grid from '@mui/material/Grid'
+import Skeleton from '@mui/material/Skeleton'
 
 export default function StatusCardContent(props: {
     status: Status,
@@ -95,8 +95,8 @@ export default function StatusCardContent(props: {
 
     return (
         <Card variant='elevation' >
-            <Grid2 container>
-                <Grid2 size={6}>
+            <Grid container>
+                <Grid size={6}>
                     <CardHeader avatar={<LightModeIcon />} sx={{ padding: '8px' }} />
                     <CardContent>
                         {isLoading ?
@@ -107,8 +107,8 @@ export default function StatusCardContent(props: {
                         }
                         <Collapse in={props.expanded} onClick={handleCardActionsClick}>
                             <CardActions>
-                                <Grid2 size={12}>
-                                    <Grid2 size={12}>
+                                <Grid size={12}>
+                                    <Grid size={12}>
                                         <DebouncedSlider
                                             min={0}
                                             max={4}
@@ -117,8 +117,8 @@ export default function StatusCardContent(props: {
                                             label={'Schlaf'}
                                             muiColorMapping={colorMapping}
                                         />
-                                    </Grid2>
-                                    <Grid2 size={12}>
+                                    </Grid>
+                                    <Grid size={12}>
                                         <DebouncedSlider
                                             min={0}
                                             max={4}
@@ -127,13 +127,13 @@ export default function StatusCardContent(props: {
                                             label={'Fitness'}
                                             muiColorMapping={colorMapping}
                                         />
-                                    </Grid2>
-                                </Grid2>
+                                    </Grid>
+                                </Grid>
                             </CardActions>
                         </Collapse>
                     </CardContent>
-                </Grid2>
-                <Grid2 size={6}>
+                </Grid>
+                <Grid size={6}>
                     <CardHeader avatar={<DarkMode />} sx={{ padding: '8px' }} />
                     <CardContent>
                         {isLoading ?
@@ -142,7 +142,7 @@ export default function StatusCardContent(props: {
                         }
                         <Collapse in={props.expanded} onClick={handleCardActionsClick}>
                             <CardActions>
-                                <Grid2 size={12}>
+                                <Grid size={12}>
                                     <DebouncedSlider
                                         min={0}
                                         max={4}
@@ -151,12 +151,12 @@ export default function StatusCardContent(props: {
                                         label={'Fitness'}
                                         colorMapping={colorMapping}
                                     />
-                                </Grid2>
+                                </Grid>
                             </CardActions>
                         </Collapse>
                     </CardContent>
-                </Grid2>
-            </Grid2>
+                </Grid>
+            </Grid>
         </Card >
     )
 }

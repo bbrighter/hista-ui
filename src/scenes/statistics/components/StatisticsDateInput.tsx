@@ -12,7 +12,7 @@ export default function StatisticsDateInput(props: {
 
     return (
         <Grid container>
-            <Grid item xs={6}>
+            <Grid size={{ xs: 6 }}>
                 <DateInput
                     title="Von"
                     onChange={props.handleFromDateChange}
@@ -20,7 +20,7 @@ export default function StatisticsDateInput(props: {
                     hideTime
                 />
             </Grid>
-            <Grid item xs={6}>
+            <Grid size={{ xs: 6 }}>
                 <DateInput
                     title="Bis"
                     onChange={props.handleToDateChange}
