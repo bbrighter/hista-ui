@@ -1,4 +1,3 @@
-
 import dayjs from 'dayjs';
 import 'dayjs/locale/de';
 import { useState } from 'react';
@@ -15,8 +14,8 @@ export default function DateInput(props: {
     onChange: ((value: dayjs.Dayjs | null) => void)
     hideTime?: boolean
 }) {
-    const date = dayjs(props.date)
-    const [inputValue, setInputValue] = useState(date)
+    const initialValue = dayjs(props.date)
+    const [inputValue, setInputValue] = useState(initialValue)
     const debouncedInputValue = useDebounce(inputValue, 500)
 
     useDidUpdateEffect(() => {
@@ -28,21 +27,21 @@ export default function DateInput(props: {
             setInputValue(value)
         }
     }
-    const hideTime = props.hideTime != undefined && props.hideTime
+    const hideTime = !!props.hideTime
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
             {hideTime && <DatePicker
                 sx={{ width: '99%' }}
                 label={props.title}
-                value={date}
+                value={inputValue}
                 onChange={handleInputChange}
             />}
             {!hideTime &&
                 <DateTimePicker
                     sx={{ width: '99%' }}
                     label={props.title}
-                    value={date}
+                    value={inputValue}
                     onChange={handleInputChange}
                 />}
         </LocalizationProvider>

@@ -54,6 +54,7 @@ export const validHeadacheSymptoms: HeadacheSymptoms = [
     { value: 'exhausted', label: 'Erschöpfung' },
     { value: 'physical activity', label: 'Verstärkt durch körperliche Aktivität' },
     { value: 'mind activity', label: 'Verstärkt durch geistige Aktivität' },
+    { value: 'nausea', label: 'Übelkeit' },
 ];
 
 const respToHeadache = (resp: entity.HeadacheResponse): Headache => {
