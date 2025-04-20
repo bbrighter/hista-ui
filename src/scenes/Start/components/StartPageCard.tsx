@@ -70,7 +70,6 @@ export default function StartPageCard(props: {
 
     return (
         <Grid
-            item
             sx={{ width: '50%', minWidth: '350px' }}
         >
             <StyledCard

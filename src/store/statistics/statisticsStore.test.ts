@@ -22,12 +22,12 @@ describe('statisticsStore', () => {
         await store.getState().getDiaryEntries()
         expect(store.getState().diaryEntries).toHaveLength(2)
         const food = store.getState().diaryEntries[0]
-        expect(food.Typ).toStrictEqual('Essen')
-        expect(food.Schwere).toStrictEqual(mealConstants.RAW)
+        expect(food.Type).toStrictEqual('Essen')
+        expect(food.Severity).toStrictEqual(mealConstants.RAW)
 
         const symptom = store.getState().diaryEntries[1]
-        expect(symptom.Typ).toStrictEqual('Symptom')
-        expect(symptom.Schwere).toStrictEqual('3')
+        expect(symptom.Type).toStrictEqual('Symptom')
+        expect(symptom.Severity).toStrictEqual('3')
 
     })
 

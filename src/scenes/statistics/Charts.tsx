@@ -80,17 +80,17 @@ function IngredientChart(props: {
     onSliderChange: (event: Event, value: number | number[], activeThumb: number) => void
 }) {
     return (
-        <>
-            <Grid item xs={12}>
+        <Grid container size={12}>
+            <Grid size={{ xs: 12 }}>
                 <IngredientSelect onChange={props.onIdChange} />
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
                 <SeverityFilter
                     severity={props.severity}
                     onChange={props.onSliderChange} />
             </Grid>
             <IngredientEvalulation severityFilter={props.severity} />
-        </>
+        </Grid>
     )
 }
 
@@ -99,7 +99,7 @@ function SymptomChart(props: {
 }) {
     return (
         <>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
                 <SymptomSelect onChange={props.onIdChange} />
             </Grid>
             <SymptomEvaluation />

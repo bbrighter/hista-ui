@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import MealList from './components/MealList'
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import { url } from '../../constants'
-import { LoadingButton } from '@mui/lab'
 import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
 
 export default function Meals() {
     const navigate = useNavigate()
@@ -23,13 +23,13 @@ export default function Meals() {
 
     return (
         <Container sx={{ padding: '2rem' }}>
-            <LoadingButton
+            <Button
                 startIcon={<RestaurantIcon />}
                 variant='outlined'
                 onClick={onCreate}
                 loading={loading}
             >Neue Mahlzeit
-            </LoadingButton>
+            </Button>
             <MealList />
         </Container>
     )

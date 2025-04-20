@@ -11,11 +11,11 @@ import PeopleIcon from '@mui/icons-material/People';
 import PersonIcon from '@mui/icons-material/Person';
 import LunchDiningIcon from '@mui/icons-material/LunchDining';
 import { useState } from 'react';
-import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ToggleButton from '@mui/material/ToggleButton';
 import CircularProgress from '@mui/material/CircularProgress';
+import Grid from '@mui/material/Grid';
 
 export default function MealSettings() {
     const patchMeal = useHista(state => state.updateMeal)
@@ -42,7 +42,7 @@ export default function MealSettings() {
             alignItems='center'
             justifyContent='center'
         >
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
                 {meal.isLoading ?
                     <Skeleton height={'4rem'} variant='rectangular' /> :
                     <DateInput
@@ -51,7 +51,7 @@ export default function MealSettings() {
                         onChange={(e) => setDate(e?.toISOString() || new Date().toISOString())}
                     />}
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
                 {meal.isLoading ?
                     <Skeleton height={'3rem'} variant='rectangular' /> :
                     <DebouncedSlider
@@ -65,7 +65,7 @@ export default function MealSettings() {
                         iconMapping={iconFromStressLevel}
                     />}
             </Grid>
-            <Grid item xs={8}>
+            <Grid size={{ xs: 8 }}>
                 {meal.isLoading ? <Skeleton variant='rectangular' height={'3rem'} /> :
                     <DebouncedSlider
                         key={meal.freshness}
@@ -78,7 +78,7 @@ export default function MealSettings() {
                         iconMapping={iconFromFreshness}
                     />}
             </Grid>
-            <Grid item xs={4} sx={{ textAlign: 'center' }} >
+            <Grid size={{ xs: 4 }} sx={{ textAlign: 'center' }} >
                 {meal.isLoading ?
                     <Skeleton variant='rectangular' height={'3rem'} /> :
                     <ToggleButtonGroup

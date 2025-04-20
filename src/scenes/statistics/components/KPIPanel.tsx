@@ -43,7 +43,7 @@ export default function KPIGrid(props: {
     })
 
     return (
-        <Grid container>
+        <Grid>
             <GridSettings
                 onToggleChange={() => setIsRelative(!isRelative)}
                 showRelative={isRelative}
@@ -119,7 +119,7 @@ function KPIHeaderCell(props: {
     const xs = props.xs ? props.xs : 3
 
     return (
-        <Grid item xs={xs}>
+        <Grid size={{ xs: xs }}>
             <Paper
                 elevation={10}
                 sx={CellStyle}
@@ -166,7 +166,7 @@ function KPIValueCell(props: {
 
     const xs = props.xs ? props.xs : 3
     return (
-        <Grid item xs={xs}>
+        <Grid size={{ xs: xs }}>
             <Paper
                 elevation={1}
                 sx={{ ...CellStyle, backgroundColor: backgroundColor }}

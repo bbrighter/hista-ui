@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import useHista from '../../store/store'
-import Grid2 from '@mui/material/Grid2'
 import AddStatus from './components/AddStatus'
 import Container from '@mui/material/Container'
 import StatusCard from './components/StatusCard'
 
 import dayjs from 'dayjs'
 import Skeleton from '@mui/material/Skeleton'
+import Grid from '@mui/material/Grid'
 
 
 export default function Status() {
@@ -22,7 +22,7 @@ export default function Status() {
     return (
         <Container sx={{ padding: '2rem' }}>
             <AddStatus disabled={isLoading} />
-            <Grid2 container>
+            <Grid container>
                 {isLoading ?
                     <>
                         {[{ id: 1, date: dayjs() }, { id: 2, date: dayjs() }, { id: 3, date: dayjs() }].map(s =>
@@ -37,7 +37,7 @@ export default function Status() {
                     ))
                     }</>
                 }
-            </Grid2>
+            </Grid>
         </Container >
     )
 

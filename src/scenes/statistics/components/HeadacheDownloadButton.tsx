@@ -3,7 +3,7 @@ import { Workbook } from 'exceljs';
 import useHista from '../../../store/store';
 import { validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from '../../../store/headaches/headaches';
 import { useState } from 'react';
-import { LoadingButton } from '@mui/lab';
+import Button from '@mui/material/Button';
 
 
 export default function DownloadButton() {
@@ -92,11 +92,13 @@ export default function DownloadButton() {
 
 
 
-    return (<LoadingButton
-        startIcon={<Download />}
-        onClick={onClick}
-        loading={loading}
-    >
-        Kopfschmerzen herunterladen
-    </LoadingButton>)
+    return (
+        <Button
+            startIcon={<Download />}
+            onClick={onClick}
+            loading={loading}
+        >
+            Kopfschmerzen herunterladen
+        </Button>
+    )
 }
