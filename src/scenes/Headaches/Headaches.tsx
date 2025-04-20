@@ -1,12 +1,12 @@
 import useHista from '../../store/store'
 import OverviewList from '../components/OverviewList'
-import LoadingButton from '@mui/lab/LoadingButton'
 import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural';
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { url } from '../../constants';
 import { getColor } from '../Headache/components/colorMapping';
 import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
 
 
 export default function Headaches() {
@@ -32,13 +32,13 @@ export default function Headaches() {
 
     return (
         <Container sx={{ padding: '2rem' }}>
-            <LoadingButton
+            <Button
                 startIcon={<FaceRetouchingNaturalIcon />}
                 variant='outlined'
                 onClick={onCreate}
                 loading={loading}
             >Neuer Kopfschmerz
-            </LoadingButton>
+            </Button>
             <OverviewList
                 getData={getHeadaches}
                 items={headaches}

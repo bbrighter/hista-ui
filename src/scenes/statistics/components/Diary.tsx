@@ -2,9 +2,9 @@ import DownloadIcon from '@mui/icons-material/Download';
 import { useEffect, useState } from 'react';
 import useHista from '../../../store/store';
 import { writeRawDiaryToExcel } from '../excel';
-import LoadingButton from '@mui/lab/LoadingButton';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import HeadacheDownloadButton from './HeadacheDownloadButton';
+import Button from '@mui/material/Button';
 
 export default function Diary() {
     const diaryEntries = useHista(state => state.diaryEntries)
@@ -30,13 +30,13 @@ export default function Diary() {
             sx={{ pt: 3 }}
             orientation='vertical'
         >
-            <LoadingButton
+            <Button
                 startIcon={<DownloadIcon />}
                 variant="outlined"
                 loading={loading}
                 onClick={onClick}>
                 Ernährungstagebuch exportieren
-            </LoadingButton>
+            </Button>
             <HeadacheDownloadButton />
         </ButtonGroup>
     )
