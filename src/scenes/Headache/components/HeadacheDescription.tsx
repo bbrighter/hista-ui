@@ -10,12 +10,14 @@ export default function HeadacheDescription() {
     const description = useHista(state => state.headache.description)
     const patchDescription = useHista(state => state.patchHeadacheDescription)
 
-    const [textInput, setTextInput] = useState(description)
+    const [textInput, setTextInput] = useState('')
     const [isDirty, setIsDirty] = useState(false)
     const debouncedValue = useDebounce(textInput, 1000)
 
     useEffect(() => {
-        setTextInput(description)
+        if (firstUpdate.current) {
+            setTextInput(description)
+        }
     }, [description])
 
     useDidUpdateEffect(() => {
@@ -44,9 +46,7 @@ export default function HeadacheDescription() {
                 fullWidth
                 color={isDirty ? 'secondary' : 'primary'}
                 onChange={onChange}
-
             />
         </>
-
     )
 }
