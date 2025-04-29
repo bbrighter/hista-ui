@@ -6,6 +6,7 @@ import { url } from '../../constants'
 import { useState } from 'react';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 
 export default function ConditionEvents() {
@@ -13,7 +14,7 @@ export default function ConditionEvents() {
     const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
 
-    const onClick = async () => {
+    const onClickAddSymptom = async () => {
         setLoading(true)
         const id = await postConditionEvent()
         setLoading(false)
@@ -22,16 +23,25 @@ export default function ConditionEvents() {
         }
     }
 
+    const onClickManageSymptoms = () => {
+        navigate(url.MANAGE_SYMPTOMS)
+    }
+
     return (
         <Container sx={{ paddingTop: '2rem' }}>
-            <Button
-                startIcon={<SickIcon />}
-                onClick={onClick}
-                variant="outlined"
-                loading={loading}
-            >
-                Neues Symtpom
-            </Button>
+            <ButtonGroup variant='outlined'>
+                <Button
+                    variant='contained'
+                    startIcon={<SickIcon />}
+                    onClick={onClickAddSymptom}
+                    loading={loading}
+                >
+                    Neues Symptom
+                </Button>
+                <Button onClick={onClickManageSymptoms}>
+                    Symptome verwalten
+                </Button>
+            </ButtonGroup>
             <EventList />
         </Container>
     )

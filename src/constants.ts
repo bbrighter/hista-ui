@@ -7,6 +7,7 @@ export namespace url {
     export const POLLENS = '/pollens'
     export const STATUSES = '/statuses'
     export const HEADACHES = '/headaches'
+    export const MANAGE_SYMPTOMS = '/manage-symptoms'
 }
 
 export namespace mealConstants {

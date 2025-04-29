@@ -6,7 +6,7 @@ export interface Symptom {
     categoryId: number
 }
 
-interface SymptomCategory {
+export interface SymptomCategory {
     categoryId: number
     categoryName: string
     symptoms: Array<Symptom>

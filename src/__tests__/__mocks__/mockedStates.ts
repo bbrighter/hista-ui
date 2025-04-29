@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import { Status } from '../../store/status/status'
+import { SymptomCategories } from '../../store/symptom/symptom'
 
 export const mockedConditionEventState = {
     conditionEvents: [
@@ -17,3 +18,19 @@ export const statusStateMock: Status = {
         timeOfDay: 'evening',
     },
 }
+
+export const symptomsMock: SymptomCategories = [
+    {
+        categoryId: 1,
+        categoryName: 'Cat',
+        symptoms: [
+            { id: 1, name: 'symptom1', categoryId: 1 },
+            { id: 2, name: 'symptom2', categoryId: 1 },
+        ],
+    },
+    {
+        categoryId: 2,
+        categoryName: 'Cat2',
+        symptoms: [],
+    },
+]

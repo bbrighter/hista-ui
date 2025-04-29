@@ -103,6 +103,10 @@ export namespace api {
         text?: string
     }
 
+    export interface PatchCategoryNameParams {
+        name: string
+    }
+
     export interface PatchHeadacheDateParams {
         date: string
     }
@@ -129,6 +133,14 @@ export namespace api {
 
     export interface PatchSeverityRequestParams {
         severity: entity.Severity
+    }
+
+    export interface PatchSymptomCategoryParams {
+        toCategoryId: number
+    }
+
+    export interface PatchSymptomNameParams {
+        name: string
     }
 
     export interface PostFoodResponse {
@@ -206,6 +218,10 @@ export namespace api {
 
         public async DeleteStatus(id: number): Promise<void> {
             await this.baseClient.callAPI("DELETE", `/status/${encodeURIComponent(id)}`)
+        }
+
+        public async DeleteSymptomCategory(id: number): Promise<void> {
+            await this.baseClient.callAPI("DELETE", `/symptom-categories/${encodeURIComponent(id)}`)
         }
 
         public async GetConditionEvent(eventId: number): Promise<entity.ConditionEventResponse> {
@@ -312,6 +328,10 @@ export namespace api {
             return await resp.json() as entity.StatusesResponse
         }
 
+        public async PatchCategoryName(id: number, params: PatchCategoryNameParams): Promise<void> {
+            await this.baseClient.callAPI("PATCH", `/symptom-categories/${encodeURIComponent(id)}`, JSON.stringify(params))
+        }
+
         public async PatchCondition(conditionID: number, params: PatchSeverityRequestParams): Promise<void> {
             await this.baseClient.callAPI("PATCH", `/conditions/${encodeURIComponent(conditionID)}`, JSON.stringify(params))
         }
@@ -361,6 +381,14 @@ export namespace api {
             await this.baseClient.callAPI("PATCH", `/notes/${encodeURIComponent(noteId)}`, JSON.stringify(params))
         }
 
+        public async PatchSymptomCategory(id: number, params: PatchSymptomCategoryParams): Promise<void> {
+            await this.baseClient.callAPI("PATCH", `/symptoms/${encodeURIComponent(id)}/category`, JSON.stringify(params))
+        }
+
+        public async PatchSymptomName(id: number, params: PatchSymptomNameParams): Promise<void> {
+            await this.baseClient.callAPI("PATCH", `/symptoms/${encodeURIComponent(id)}/name`, JSON.stringify(params))
+        }
+
         public async PostCondition(eventId: number, params: ConditionRequestParams): Promise<entity.PostConditionResponse> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callAPI("POST", `/condition-events/${encodeURIComponent(eventId)}/conditions`, JSON.stringify(params))
@@ -399,7 +427,7 @@ export namespace api {
 
         public async PostSymptomCategory(params: PostSymptomCategoryRequest): Promise<entity.IDResponse> {
             // Now make the actual call to the API
-            const resp = await this.baseClient.callAPI("POST", `/symptoms/categories`, JSON.stringify(params))
+            const resp = await this.baseClient.callAPI("POST", `/symptom-categories`, JSON.stringify(params))
             return await resp.json() as entity.IDResponse
         }
 
