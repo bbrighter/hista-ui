@@ -1,11 +1,23 @@
 import { useState } from 'react'
-import { Accordion, AccordionDetails, AccordionSummary, Box, IconButton, List, ListItem, ListItemText, Typography } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
-import SaveIcon from '@mui/icons-material/Save';
 import { Symptom, SymptomCategory } from '../../../store/symptom/symptom';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextFieldSaveAndAbort from './TextFieldSaveAndAbort';
 import useHista from '../../../store/store';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+
+// ------------------------------------------------- //
+// TODO: Add deletion of symptom and category
+// TODO: Add reordering of symptoms 
+// ------------------------------------------------- //
 
 
 export default function SymptomCategoryAccordion(props: {
@@ -94,8 +106,8 @@ function SymptomAccordionEntry(props: {
                 !isEditTitle &&
                 <IconButton onClick={() => setIsEditTitle(!isEditTitle)}>
                     <CreateIcon />
-                </IconButton>}
-
+                </IconButton>
+            }
         >
             {
                 isEditTitle ?
