@@ -101,17 +101,13 @@ export const createSymptomSlice: StateCreator<
             try {
                 await client.api.PatchSymptomName(symptomId, { name: trimmedName })
                 set(produce((draft: State) => {
-                    draft.symptoms = draft.symptoms.map(c => {
-                        return {
-                            ...c,
-                            symptoms: c.symptoms.map(s => {
-                                if (s.id === symptomId) {
-                                    return { ...s, name: trimmedName }
-                                }
-                                return s
-                            }),
+                    for (const category of draft.symptoms) {
+                        const symptom = category.symptoms.find(s => s.id == symptomId)
+                        if (symptom) {
+                            symptom.name = trimmedName
+                            return
                         }
-                    })
+                    }
                 }))
             }
             catch (error) {
@@ -119,7 +115,7 @@ export const createSymptomSlice: StateCreator<
             }
         },
 
-        changeSymptomCategoryName: async (categoryId, newName) => {
+        changeSymptomCategoryName: async (categoryId: number, newName: string) => {
             const trimmedName = newName.trim()
             try {
                 await client.api.PatchCategoryName(categoryId, { name: trimmedName })

@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import CreateIcon from '@mui/icons-material/Create';
 import { Symptom, SymptomCategory } from '../../../store/symptom/symptom';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import TextFieldSaveAndAbort from './TextFieldSaveAndAbort';
@@ -7,74 +5,50 @@ import useHista from '../../../store/store';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-
-// ------------------------------------------------- //
-// TODO: Add deletion of symptom and category
-// TODO: Add reordering of symptoms 
-// ------------------------------------------------- //
 
 
 export default function SymptomCategoryAccordion(props: {
     symptom: SymptomCategory
 }) {
-    const [isEditTitle, setIsEditTitle] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-    const [categoryName, setCategoryName] = useState(props.symptom.categoryName)
+    const symptoms = useHista(state => state.symptoms)
     const changeCategoryName = useHista(state => state.changeSymptomCategoryName)
     const isCategoryNameAvailable = useHista(state => state.isCategoryNameAvailable)
+    const deleteCategory = useHista(state => state.deleteCategory)
+
+    const onSave = async (v: string) => changeCategoryName(props.symptom.categoryId, v)
+    const onDelete = async () => await deleteCategory(props.symptom.categoryId)
+    const isDeletable = props.symptom.symptoms.length === 0
 
 
 
-    const symptom = props.symptom
-
-    const onSave = async () => {
-        setIsLoading(true)
-        changeCategoryName(symptom.categoryId, categoryName).finally(() => {
-            setIsLoading(false)
-            setIsEditTitle(false)
-        })
-    }
-
-    const onClickRenameCategory = (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation()
-        setIsEditTitle(!isEditTitle)
-    }
 
     return (
-        <Accordion key={symptom.categoryId}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                    {isEditTitle ?
-                        <TextFieldSaveAndAbort
-                            label={'Kategoriename'}
-                            value={categoryName}
-                            onSave={onSave}
-                            onCancel={() => setIsEditTitle(false)}
-                            isLoading={isLoading}
-                            isSaveable={isCategoryNameAvailable(categoryName)}
-                            onChange={(e) => setCategoryName(e.target.value)}
-                            size='small'
-                        />
-                        :
-                        <>
-                            <Typography>{symptom.categoryName} ({symptom.symptoms.length})</Typography>
-                            <IconButton onClick={onClickRenameCategory}>
-                                <CreateIcon />
-                            </IconButton>
-                        </>}
+        <Accordion key={props.symptom.categoryId} slotProps={{ transition: { unmountOnExit: true } }}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />} component='div'>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }} onClick={(e) => e.stopPropagation()}>
+                    <TextFieldSaveAndAbort
+                        label={'Kategoriename'}
+                        value={props.symptom.categoryName}
+                        onSave={onSave}
+                        onDelete={onDelete}
+                        isSaveable={isCategoryNameAvailable}
+                        size='medium'
+                        isHeader
+                        numberOfObjects={props.symptom.symptoms.length}
+                        isDeletable={isDeletable}
+                    />
+
                 </Box>
             </AccordionSummary>
             <AccordionDetails>
                 <List>
-                    {symptom.symptoms.map(s => (
-                        <SymptomAccordionEntry key={s.id} symptom={s} />
-                    ))}
+                    {Array.isArray(props.symptom.symptoms) ?
+                        props.symptom.symptoms.map(s => (
+                            <SymptomAccordionEntry key={s.id} symptom={s} categories={symptoms} />
+                        )) : null}
                 </List>
             </AccordionDetails>
         </Accordion>
@@ -85,46 +59,28 @@ export default function SymptomCategoryAccordion(props: {
 
 function SymptomAccordionEntry(props: {
     symptom: Symptom
+    categories: SymptomCategory[]
 }) {
-    const [symptomName, setSymptomName] = useState(props.symptom.name)
-    const [isEditTitle, setIsEditTitle] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
     const isSymptomNameAvailable = useHista(state => state.isSymptomNameAvailable)
     const changeSymptomName = useHista(state => state.changeSymptomName)
+    const changeSymptomCategory = useHista(state => state.changeSymptomCategory)
 
-    const onSave = async () => {
-        setIsLoading(true)
-        changeSymptomName(props.symptom.id, symptomName).finally(() => {
-            setIsLoading(false)
-            setIsEditTitle(false)
-        })
-    }
+    const onSave = async (v: string) => changeSymptomName(props.symptom.id, v)
+    const onSwap = async (targetId: number) => changeSymptomCategory(props.symptom.id, props.symptom.categoryId, targetId)
 
     return (
-        <ListItem
-            secondaryAction={
-                !isEditTitle &&
-                <IconButton onClick={() => setIsEditTitle(!isEditTitle)}>
-                    <CreateIcon />
-                </IconButton>
-            }
-        >
-            {
-                isEditTitle ?
-                    <TextFieldSaveAndAbort
-                        label='Symptomname'
-                        value={symptomName}
-                        onChange={(e) => setSymptomName(e.target.value)
-                        }
-                        onSave={onSave}
-                        onCancel={() => setIsEditTitle(false)}
-                        isLoading={isLoading}
-                        isSaveable={isSymptomNameAvailable(symptomName, props.symptom.categoryId)}
-                        size='small'
-                    />
-                    :
-                    <ListItemText primary={props.symptom.name} />
-            }
+        <ListItem>
+            <TextFieldSaveAndAbort
+                label='Symptomname'
+                value={props.symptom.name}
+                onSave={onSave}
+                isSaveable={(v) => isSymptomNameAvailable(v, props.symptom.categoryId)}
+                size='small'
+                onSwap={onSwap}
+                swapLabel='Neue Kategorie'
+                categoryId={props.symptom.categoryId}
+                categories={props.categories}
+            />
         </ListItem >
     )
 }
