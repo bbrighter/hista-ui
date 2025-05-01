@@ -30,7 +30,10 @@ export const mockClient = {
         DeleteNote: vi.fn(),
 
         PostSymptomCategory: vi.fn(),
+        DeleteSymptomCategory: vi.fn(),
+        PatchSymptomCategory: vi.fn(),
         GetSymptoms: vi.fn(),
+        PatchSymptomName: vi.fn(),
 
         PostCondition: vi.fn(),
         DeleteCondition: vi.fn(),

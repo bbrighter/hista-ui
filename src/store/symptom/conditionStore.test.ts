@@ -9,7 +9,7 @@ import { entity } from '../../api/generatedApi'
 import { conditionEventMockedResp, conditionEventsMockedResp } from '../../__tests__/__mocks__/mockedResponses'
 import { mockedConditionEventState } from '../../__tests__/__mocks__/mockedStates'
 
-describe('symptomStore', () => {
+describe('conditionStore', () => {
     let store: ReturnType<typeof createTestStore>
 
     beforeEach(() => {

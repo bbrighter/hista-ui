@@ -33,7 +33,6 @@ export default function OverviewList(props: {
         )
     }, [])
 
-
     return (
         <>
             {loading && <CircularProgress sx={{ position: 'absolute', left: '50%', top: '50%' }} />}
@@ -72,7 +71,7 @@ function OverviewListItem(props: {
         <StyledListItem
             onClick={props.onClick}
             secondaryAction={
-                <IconButton onClick={onDelete}>
+                <IconButton onClick={onDelete} title='Löschen'>
                     <DeleteIcon />
                 </IconButton>
             }
@@ -82,7 +81,7 @@ function OverviewListItem(props: {
                 secondary={props.secondary}
             />
             {props.showSeverity && props.severity !== undefined &&
-                <ListItemIcon><CircleIcon
+                <ListItemIcon title='Schwere'><CircleIcon
                     sx={{ color: props.severityColorMapping(props.severity) }}
                 /> </ListItemIcon>}
         </StyledListItem>

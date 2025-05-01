@@ -18,6 +18,7 @@
     "jsx": "react-jsx",
     "types": [
       "node",
+      "@testing-library/jest-dom",
     ]
     /* Linting */
     // "strict": true,

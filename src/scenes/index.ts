@@ -11,6 +11,7 @@ import Pollens from './Pollens'
 import Status from './statuses'
 import Headaches from './Headaches'
 import Headache from './Headache'
+import SymptomManagement from './SymptomManagement'
 
 const indices = [
     Start,
@@ -26,6 +27,7 @@ const indices = [
     Status,
     Headaches,
     Headache,
+    SymptomManagement,
 ]
 
 export default indices

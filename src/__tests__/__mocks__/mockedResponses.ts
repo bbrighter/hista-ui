@@ -49,3 +49,14 @@ export const diaryRespMock: api.DiaryResp = {
         },
     ],
 }
+
+export const symptomsRespMock: entity.SymptomCategoriesResponse = {
+    Categories: [
+        {
+            id: 1, name: 'Cat', symptoms: [
+                { id: 1, name: 'symptom1', categoryId: 1 },
+            ],
+        },
+        { id: 2, name: 'Cat2', symptoms: [] },
+    ],
+}
