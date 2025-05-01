@@ -30,8 +30,9 @@ export default function TextFieldSaveAndAbort(props: {
     numberOfObjects?: number
     categoryId?: number
     categories?: SymptomCategory[]
+    initiallyEdit?: boolean
 }) {
-    const [mode, setMode] = useState<'default' | 'editing' | 'deleting' | 'swapping'>('default')
+    const [mode, setMode] = useState<'default' | 'editing' | 'deleting' | 'swapping'>(props.initiallyEdit ? 'editing' : 'default')
     const [value, setValue] = useState(props.value)
     const [targetCategoryId, setTargetCategoryId] = useState(props.categoryId)
     const [isLoading, setIsLoading] = useState(false)

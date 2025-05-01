@@ -9,8 +9,6 @@ import Fab from '@mui/material/Fab';
 
 export default function AddSymptomCategory() {
     const [open, setOpen] = useState(false)
-    const [categoryName, setCategoryName] = useState('')
-    const [isLoading, setIsLoading] = useState(false)
     const postSymptomCategory = useHista(state => state.postSymptomCategory)
     const isCategoryNameAvailable = useHista(state => state.isCategoryNameAvailable)
 
@@ -29,9 +27,9 @@ export default function AddSymptomCategory() {
     }
 
 
-    const onSave = async () => {
-        setIsLoading(true)
-        postSymptomCategory(categoryName).finally(() => setIsLoading(false))
+    const onSave = async (v: string) => {
+        await postSymptomCategory(v)
+        closeModal()
     }
 
     return (
@@ -43,12 +41,10 @@ export default function AddSymptomCategory() {
                 <Box sx={style}>
                     <TextFieldSaveAndAbort
                         label={'Kategoriename'}
-                        value={categoryName}
-                        onChange={(e) => setCategoryName(e.target.value)}
-                        isLoading={isLoading}
-                        isSaveable={isCategoryNameAvailable(categoryName)}
+                        value=''
+                        isSaveable={isCategoryNameAvailable}
                         onSave={onSave}
-                        onCancel={closeModal}
+                        initiallyEdit
                         size={'medium'}
                     />
                 </Box>
