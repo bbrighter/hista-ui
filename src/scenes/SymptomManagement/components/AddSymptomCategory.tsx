@@ -2,10 +2,10 @@
 import AddIcon from '@mui/icons-material/Add';
 import useHista from '../../../store/store';
 import { useState } from 'react';
-import TextFieldSaveAndAbort from './TextFieldSaveAndAbort';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
+import TextFieldSaveAndAbort from './TextFieldSaveAndAbort';
 
 export default function AddSymptomCategory() {
     const [open, setOpen] = useState(false)
@@ -44,8 +44,8 @@ export default function AddSymptomCategory() {
                         value=''
                         isSaveable={isCategoryNameAvailable}
                         onSave={onSave}
-                        initiallyEdit
                         size={'medium'}
+                        onCancel={closeModal}
                     />
                 </Box>
             </Modal>
