@@ -44,7 +44,7 @@ export default function TextFieldSaveAndAbort(props: {
                 color={'success'}
                 loading={isLoading}
                 onClick={onSave}
-                title='Speichern'
+                title='Umbenennen speichern'
             >
                 <SaveIcon />
             </IconButton>

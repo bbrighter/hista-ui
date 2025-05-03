@@ -9,7 +9,6 @@ export default function SymptomManagement() {
     const getSymptoms = useHista(state => state.getSymptoms)
     const symptoms = useHista(state => state.symptoms)
 
-
     useEffect(() => {
         getSymptoms()
     }, [])

@@ -1,139 +1,56 @@
-import '../../__tests__/__mocks__/apiMocks'
-import '../../__tests__/__mocks__/authStoreMock'
-import '../../__tests__/__mocks__/errorStoreMock'
-import { createTestStore } from '../../__tests__/storeUtils'
-import { mockClient } from '../../__tests__/__mocks__/apiMocks'
-
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { entity } from '../../api/generatedApi'
-import { conditionEventMockedResp, conditionEventsMockedResp } from '../../__tests__/__mocks__/mockedResponses'
-import { mockedConditionEventState } from '../../__tests__/__mocks__/mockedStates'
+import { beforeEach, describe, expect, it } from 'vitest'
+import useHista from '../store'
 
 describe('conditionStore', () => {
-    let store: ReturnType<typeof createTestStore>
 
-    beforeEach(() => {
-        store = createTestStore()
-        vi.clearAllMocks()
+    beforeEach(async () => {
+        await useHista.getState().getConditionEvents()
+        await useHista.getState().getConditionEvent(1)
     })
 
     it('getConditionEvents', async () => {
-        mockClient.api.GetConditionEvents.mockResolvedValue(conditionEventsMockedResp)
-
-        await store.getState().getConditionEvents()
-        expect(store.getState().conditionEvents).toHaveLength(1)
-        expect(store.getState().conditionEvents[0].id).toStrictEqual(1)
-        expect(store.getState().conditionEvents[0].date).toStrictEqual(new Date('2024-01-01T00:00:00Z'))
+        const store = useHista.getState()
+        expect(store.conditionEvents).toHaveLength(1)
+        expect(store.conditionEvents[0].id).toStrictEqual(1)
+        expect(store.conditionEvents[0].date).toStrictEqual(new Date('2024-01-01T00:00:00Z'))
     })
 
     it('postConditionEvent', async () => {
-        mockClient.api.CreateConditionEvent.mockResolvedValue(conditionEventMockedResp)
+        await useHista.getState().postConditionEvent()
 
-        await store.getState().postConditionEvent()
-        expect(store.getState().conditionEvents).toHaveLength(1)
-        expect(store.getState().conditionEvents[0].id).toStrictEqual(2)
-        expect(store.getState().conditionEvents[0].date).toStrictEqual(new Date('2024-01-01T00:00:00Z'))
+        const store = useHista.getState()
+        expect(store.conditionEvents).toHaveLength(2)
+        expect(store.conditionEvents[0].id).toStrictEqual(2)
+        expect(store.conditionEvents[0].date, 'sorted desc by date').toStrictEqual(new Date('2025-01-31T12:00:00Z'))
     })
 
-    it('postConditionEvent, sorted by date', async () => {
-        store.setState(mockedConditionEventState)
-        const mockResp: entity.ConditionEventResponse = {
-            id: 3,
-            date: '2023-01-01T00:00:00Z',
-            conditions: [],
-        }
-        mockClient.api.CreateConditionEvent.mockResolvedValue(mockResp)
-
-        await store.getState().postConditionEvent()
-        expect(store.getState().conditionEvents).toHaveLength(3)
-        expect(store.getState().conditionEvents[1].id).toStrictEqual(3)
+    it('get one condition event', async () => {
+        const event = useHista.getState().conditionEvent
+        expect(event.id).toBe(1)
+        expect(event.date).toStrictEqual(new Date('2024-01-01T00:00:00Z'))
+        expect(event.conditions).toHaveLength(1)
+        expect(event.conditions[0].id).toStrictEqual(1)
+        expect(event.conditions[0].severity).toStrictEqual(3)
+        expect(event.conditions[0].symptom.name).toBe('symptom1')
     })
 
-    it('getConditionEvent', async () => {
-        const mockResp: entity.ConditionEventResponse = {
-            id: 1,
-            date: '2024-01-01T00:00:00Z',
-            conditions: [
-                {
-                    id: 10, severity: 3, symptom: {
-                        id: 20, name: 'symptom', categoryId: 1,
-                    },
-                },
-            ],
-        }
-        mockClient.api.GetConditionEvent.mockResolvedValue(mockResp)
+    it('delete one condition event', async () => {
+        await useHista.getState().deleteConditionEvent(1)
 
-        await store.getState().getConditionEvent(1)
-        expect(store.getState().conditionEvent.id).toStrictEqual(1)
-        expect(store.getState().conditionEvent.date).toStrictEqual(new Date('2024-01-01T00:00:00Z'))
-        expect(store.getState().conditionEvent.conditions).toHaveLength(1)
-        expect(store.getState().conditionEvent.conditions[0].id).toStrictEqual(10)
-        expect(store.getState().conditionEvent.conditions[0].severity).toStrictEqual(3)
-        expect(store.getState().conditionEvent.conditions[0].symptom.id).toStrictEqual(20)
+        expect(useHista.getState().conditionEvents).toHaveLength(0)
     })
 
-    it('deleteConditionEvent', async () => {
-        store.setState({
-            ...store.getState(),
-            conditionEvents: [
-                { id: 1, date: new Date('2024-01-01T00:00:00Z') },
-                { id: 2, date: new Date('2022-01-01T00:00:00Z') },
-            ],
-            symptoms: [],
-        })
-        const mockResp: entity.SymptomCategoriesResponse = {
-            Categories: [{ id: 1, name: 'category', symptoms: [{ id: 10, name: 'symptom', categoryId: 1 }] }],
-        }
-        mockClient.api.DeleteConditionEvent.mockResolvedValue(mockResp)
+    it('change condition event date', async () => {
+        await useHista.getState().setConditionEventDate(new Date('2000-06-06T13:45:00Z'))
 
-        await store.getState().deleteConditionEvent(1)
-        expect(store.getState().conditionEvents).toHaveLength(1)
-        expect(store.getState().conditionEvents[0].id).toStrictEqual(2)
-        expect(store.getState().symptoms).toHaveLength(1)
-        expect(store.getState().symptoms[0].symptoms).toHaveLength(1)
+        expect(useHista.getState().conditionEvent.date).toStrictEqual(new Date('2000-06-06T13:45:00Z'))
     })
 
-    it('setConditionEventDate', async () => {
-        store.setState({
-            ...store.getState(),
-            conditionEvent: { id: 1, date: new Date(), conditions: [] },
-            conditionEvents: [{ id: 1, date: new Date() }],
-        })
-        mockClient.api.PatchDate.mockResolvedValue(undefined)
+    it('add new condition to event', async () => {
+        await useHista.getState().postCondition(1, 1, undefined)
 
-        const newDate = new Date('2024-01-01T00:00:00Z')
-        await store.getState().setConditionEventDate(newDate)
-        expect(store.getState().conditionEvent.date).toStrictEqual(newDate)
-        expect(store.getState().conditionEvents[0].date).toStrictEqual(newDate)
+        const event = useHista.getState().conditionEvent
+        expect(event.conditions).toHaveLength(2)
+
     })
-
-    it('postCondition', async () => {
-        store.setState({
-            ...store.getState(),
-            conditionEvent: { id: 1, date: new Date(), conditions: [{ id: 9, severity: 2, symptom: { id: 10, categoryId: 3, name: 'old symptom' } }] },
-            conditionEvents: [{ id: 1, date: new Date() }],
-        })
-        const mockResp: entity.PostConditionResponse = {
-            condition: {
-                id: 10, severity: 3, symptom: {
-                    id: 20, name: 'Symptom', categoryId: 3,
-                },
-            },
-            symptoms: {
-                Categories: [
-                    {
-                        id: 3, name: 'Category', symptoms: [
-                            { id: 20, name: 'Symptom', categoryId: 3 },
-                        ],
-                    },
-                ],
-            },
-        }
-        mockClient.api.PostCondition.mockResolvedValue(mockResp)
-
-        await store.getState().postCondition(3, 20, undefined)
-        expect(store.getState().conditionEvent.conditions).toHaveLength(2)
-        expect(store.getState().conditionEvent.conditions[0].id).toStrictEqual(10)
-    })
-
 })

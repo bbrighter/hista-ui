@@ -19,18 +19,11 @@ const mockLocalStorage = (() => {
 })()
 
 
-
-// Object.defineProperty(window, 'localStorage', {
-//     value: mockLocalStorage,
-// });
-
-
 describe('error store', () => {
     let store: ReturnType<typeof createTestStore>
 
     beforeEach(() => {
         mockLocalStorage.clear()
-        // store = createTestStore()
         vi.clearAllMocks()
     })
 

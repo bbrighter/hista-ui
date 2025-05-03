@@ -45,8 +45,9 @@ export default function AccordionCategory(props: {
     }
 
     return (
-        <AccordionSummary expandIcon={<ExpandMoreIcon />} component='div'>
-            {mode == 'default' &&
+        <AccordionSummary expandIcon={<ExpandMoreIcon titleAccess='Ausklappen' />} component='div'>
+            {
+                mode == 'default' &&
                 <Box
                     sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}
                     onClick={(e) => e.stopPropagation()}
@@ -57,7 +58,7 @@ export default function AccordionCategory(props: {
                     <ButtonGroup>
                         <IconButton
                             onClick={() => setMode('editing')}
-                            title='Umbenennen'
+                            title='Kategorie umbenennen'
                         >
                             <CreateIcon />
                         </IconButton>
@@ -72,7 +73,8 @@ export default function AccordionCategory(props: {
                     </ButtonGroup>
                 </Box>
             }
-            {mode == 'editing' &&
+            {
+                mode == 'editing' &&
                 <TextFieldSaveAndAbort
                     label='Kategoriename'
                     isSaveable={isSaveable}
@@ -82,7 +84,8 @@ export default function AccordionCategory(props: {
                     value={props.category.categoryName}
                 />
             }
-            {mode == 'deleting' &&
+            {
+                mode == 'deleting' &&
                 <>
                     <Typography variant='h6' sx={{ pt: '12px', pb: '12px' }}>
                         {props.category.categoryName} wirklich löschen?

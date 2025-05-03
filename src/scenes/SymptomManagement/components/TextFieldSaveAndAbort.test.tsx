@@ -20,7 +20,7 @@ describe('TextFieldSaveAndAbort', () => {
     it('Renders', async () => {
         expect(await screen.findByLabelText('label')).toBeInTheDocument()
         expect(screen.getByDisplayValue('value')).toBeInTheDocument()
-        expect(screen.getByTitle('Speichern')).toBeDisabled()
+        expect(screen.getByTitle('Umbenennen speichern')).toBeDisabled()
         expect(screen.getByTitle('Umbenennen abbrechen')).toBeInTheDocument()
 
     })
@@ -32,7 +32,7 @@ describe('TextFieldSaveAndAbort', () => {
             fireEvent.change(textInput, { target: { value: 'new value' } })
         })
         expect(await screen.findByDisplayValue('new value')).toBeInTheDocument()
-        const saveButton = screen.getByTitle('Speichern')
+        const saveButton = screen.getByTitle('Umbenennen speichern')
         expect(saveButton).not.toBeDisabled()
         await act(async () => {
             fireEvent.click(saveButton)

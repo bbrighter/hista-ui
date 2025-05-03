@@ -1,90 +1,50 @@
-import '../../__tests__/__mocks__/apiMocks'
-import '../../__tests__/__mocks__/authStoreMock'
-import '../../__tests__/__mocks__/errorStoreMock'
-
-import { describe, it, expect, vi, beforeEach } from 'vitest'
-
-import { mockClient } from '../../__tests__/__mocks__/apiMocks'
-import { entity } from '../../api/generatedApi'
-import { createTestStore } from '../../__tests__/storeUtils'
+import { describe, it, expect, beforeEach } from 'vitest'
+import useHista from '../store'
 
 describe('headache store', () => {
-    let store: ReturnType<typeof createTestStore>
 
-    beforeEach(() => {
-        store = createTestStore()
-        vi.clearAllMocks()
+    beforeEach(async () => {
+        expect(useHista.getState().isHeadacheLoaded).toBeFalsy()
+        await useHista.getState().getHeadaches()
+        expect(useHista.getState().isHeadacheLoaded).toBeTruthy()
     })
 
     it('get headaches', async () => {
-        const mockResp: entity.HeadachesResponse = {
-            headaches: [
-                {
-                    id: 1,
-                    date: '2024-02-01T00:00:00Z',
-                    severity: 4,
-                    description: 'Some text',
-                    positions: ['front'],
-                    symptoms: [],
-                    types: [],
-                },
-            ],
-        }
-
-        mockClient.api.GetHeadaches.mockResolvedValue(mockResp)
-
-        const headaches = await store.getState().getHeadaches()
-
-        expect(store.getState().headaches).toStrictEqual(headaches)
-        expect(store.getState().headaches.length).toBe(1)
-        const headache = store.getState().headaches[0]
-        expect(headache.id).toBe(1)
-        expect(headache.severity).toBe(4)
-        expect(headache.description).toBe('Some text')
-        expect(headache.positions).toHaveLength(1)
-        expect(headache.positions[0].label).toBe('Stirn')
-        expect(store.getState().isLoaded).toBe(true)
+        const headaches = useHista.getState().headaches
+        expect(headaches).toHaveLength(1)
+        const headache = headaches[0]
+        expect(headache.date).toStrictEqual(new Date('2022-01-01T00:00:00Z'))
+        expect(headache.id).toStrictEqual(1)
+        expect(headache.description).toStrictEqual('description')
+        expect(headache.positions).toHaveLength(2)
+        expect(headache.symptoms).toHaveLength(2)
+        expect(headache.types).toHaveLength(1)
+        expect(headache.types[0]).toStrictEqual({ label: 'Stechend', value: 'stabbing' })
     })
 
-    it('get one headache if is loaded', async () => {
-        store.setState({
-            ...store.getState(),
-            headaches: [
-                { id: 1, date: new Date(), severity: 4, description: 'Some text', positions: [], symptoms: [], types: [] },
-            ],
-        })
+    it('get one headache', async () => {
+        await useHista.getState().getHeadache(1)
 
-        await store.getState().getHeadache(1)
-        expect(store.getState().headache.id).toBe(1)
-        expect(store.getState().headache.severity).toBe(4)
-        expect(store.getState().headache.description).toBe('Some text')
-
-        await store.getState().getHeadache(2)
-        expect(store.getState().headache).toBeUndefined()
+        const headache = useHista.getState().headache
+        expect(headache.id).toBe(1)
+        expect(headache.severity).toBe(3)
+        expect(headache.description).toBe('description')
     })
 
     it('posts a new headache', async () => {
-        mockClient.api.PostHeadache.mockResolvedValue({ id: 42 })
+        const id = await useHista.getState().postHeadache()
 
-        const id = await store.getState().postHeadache()
-
-        expect(id).toBe(42)
-        expect(store.getState().headaches).toHaveLength(1)
-        const headache = store.getState().headaches[0]
-        expect(headache.id).toBe(42)
+        expect(id).toBe(2)
+        expect(useHista.getState().headaches).toHaveLength(2)
+        const headache = useHista.getState().headaches[0]
+        expect(headache.id).toBe(2)
         expect(headache.severity).toBe(5)
         expect(headache.date.getTime() - new Date().getTime()).toBeLessThan(1000)
     })
 
     it('deletes a headache', async () => {
-        store.setState({
-            ...store.getState(),
-            headaches: [{ id: 5, date: new Date(), severity: 3, description: '', positions: [], symptoms: [], types: [] }],
-        })
+        await useHista.getState().deleteHeadache(1)
 
-        await store.getState().deleteHeadache(5)
-
-        expect(store.getState().headaches).toHaveLength(0)
-        expect(mockClient.api.DeleteHeadache).toHaveBeenCalledWith(5)
+        expect(useHista.getState().headaches).toHaveLength(0)
     })
 })

@@ -11,6 +11,8 @@ interface State {
 }
 
 interface Actions {
+    resetPollens: () => void,
+
     getPollens: () => Promise<void>
 }
 
@@ -27,6 +29,8 @@ export const createPollensSlice: StateCreator<
     [],
     PollenStore> = ((set, get) => ({
         ...initialState,
+
+        resetPollens: () => set(initialState),
 
         getPollens: async () => {
             try {

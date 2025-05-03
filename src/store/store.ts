@@ -22,18 +22,19 @@ const useHista = create<
     NotesStore &
     PollenStore &
     StatusStore &
-    HeadacheStore>()((...a) => ({
-        ...createMealSlice(...a),
-        ...createIngredientSlice(...a),
-        ...createAuthSlice(...a),
-        ...createConditionSlice(...a),
-        ...createSymptomSlice(...a),
-        ...createErrorSlice(...a),
-        ...createStatisticsSlice(...a),
-        ...createNotesSlice(...a),
-        ...createPollensSlice(...a),
-        ...createStatusSlice(...a),
-        ...createHeadacheSlice(...a),
-    }))
+    HeadacheStore
+>((...a) => ({
+    ...createMealSlice(...a),
+    ...createIngredientSlice(...a),
+    ...createAuthSlice(...a),
+    ...createConditionSlice(...a),
+    ...createSymptomSlice(...a),
+    ...createErrorSlice(...a),
+    ...createStatisticsSlice(...a),
+    ...createNotesSlice(...a),
+    ...createPollensSlice(...a),
+    ...createStatusSlice(...a),
+    ...createHeadacheSlice(...a),
+}))
 
 export default useHista

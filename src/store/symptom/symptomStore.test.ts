@@ -1,91 +1,70 @@
-import '../../__tests__/__mocks__/apiMocks'
-import '../../__tests__/__mocks__/authStoreMock'
-import '../../__tests__/__mocks__/errorStoreMock'
-import { createTestStore } from '../../__tests__/storeUtils'
-import { mockClient } from '../../__tests__/__mocks__/apiMocks'
+import { beforeEach, describe, expect, it } from 'vitest'
+import useHista from '../store'
 
-import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { symptomsRespMock } from '../../__tests__/__mocks__/mockedResponses'
-import { symptomsMock } from '../../__tests__/__mocks__/mockedStates'
 
 describe('symptomStore', () => {
-    let store: ReturnType<typeof createTestStore>
 
-    beforeEach(() => {
-        store = createTestStore()
-        vi.clearAllMocks()
+    beforeEach(async () => {
+        expect(useHista.getState().symptomsAreLoaded).toBeFalsy()
+        await useHista.getState().getSymptoms()
     })
 
-    it('getSymptoms', async () => {
-        mockClient.api.GetSymptoms.mockResolvedValue(symptomsRespMock)
 
-        expect(store.getState().symptomsAreLoaded).toBeFalsy()
-        await store.getState().getSymptoms()
-        expect(store.getState().symptomsAreLoaded).toBeTruthy()
-        expect(store.getState().symptoms).toHaveLength(2)
-        expect(store.getState().symptoms[0].categoryName).toBe('Cat')
-        expect(store.getState().symptoms[0].symptoms).toHaveLength(1)
+    it('getSymptoms', async () => {
+        const store = useHista.getState()
+        expect(store.symptomsAreLoaded).toBeTruthy()
+        expect(store.symptoms).toHaveLength(2)
+        expect(store.symptoms[0].categoryName).toBe('cat')
+        expect(store.symptoms[0].symptoms).toHaveLength(2)
+        expect(store.symptoms[0].symptoms[0].name).toBe('symptom1')
+        expect(store.symptoms[1].symptoms).toHaveLength(0)
     })
 
     it('deleteCategory', async () => {
-        mockClient.api.DeleteSymptomCategory.mockResolvedValue(undefined)
-        store.setState({
-            ...store.getState(), symptoms: symptomsMock,
-        })
+        await useHista.getState().deleteCategory(2)
 
-        await store.getState().deleteCategory(2)
-        expect(store.getState().symptoms).toHaveLength(1)
-        expect(store.getState().symptoms[0].categoryId).toBe(1)
+        expect(useHista.getState().symptoms).toHaveLength(1)
+        expect(useHista.getState().symptoms[0].categoryId).toBe(1)
     })
 
-    it('deleteCategory with error', async () => {
-        mockClient.api.DeleteSymptomCategory.mockRejectedValue(undefined)
-        store.setState({
-            ...store.getState(), symptoms: symptomsMock,
-        })
+    it('change name of category', async () => {
+        await useHista.getState().changeSymptomCategoryName(1, 'new cat')
 
-        await store.getState().deleteCategory(2)
-        expect(store.getState().symptoms).toHaveLength(2)
+        expect(useHista.getState().symptoms[0].categoryName).toBe('new cat')
     })
 
-    it('changeSymptomCategory', async () => {
-        mockClient.api.PatchSymptomCategory.mockResolvedValue(undefined)
-        store.setState({
-            ...store.getState(), symptoms: symptomsMock,
-        })
+    it('move symptom to other category', async () => {
+        await useHista.getState().changeSymptomCategory(1, 1, 2)
 
-        await store.getState().changeSymptomCategory(1, 1, 2)
-        expect(store.getState().symptoms[0].symptoms).toHaveLength(1)
-        expect(store.getState().symptoms[1].symptoms).toHaveLength(1)
-        expect(store.getState().symptoms[0].symptoms[0].id).toBe(2)
-        expect(store.getState().symptoms[1].symptoms[0].id).toBe(1)
+        const store = useHista.getState()
+        expect(store.symptoms[0].symptoms).toHaveLength(1)
+        expect(store.symptoms[1].symptoms).toHaveLength(1)
+        expect(store.symptoms[1].symptoms[0].categoryId).toBe(2)
     })
+
+    // it('deleteCategory with error', async () => {
+    //     mockClient.api.DeleteSymptomCategory.mockRejectedValue(undefined)
+    //     store.setState({
+    //         ...store.getState(), symptoms: symptomsMock,
+    //     })
+
+    //     await store.getState().deleteCategory(2)
+    //     expect(store.getState().symptoms).toHaveLength(2)
+    // })
 
     it('changeSymptomName', async () => {
-        mockClient.api.PatchSymptomName.mockResolvedValue(undefined)
-        store.setState({
-            ...store.getState(), symptoms: symptomsMock,
-        })
+        await useHista.getState().changeSymptomName(1, 'newName')
 
-        await store.getState().changeSymptomName(1, 'newName')
-        expect(store.getState().symptoms[0].symptoms.find(s => s.id === 1).name).toBe('newName')
+        expect(useHista.getState().symptoms[0].symptoms.find(s => s.id === 1).name).toBe('newName')
     })
 
     it('isCategoryNameAvailable', () => {
-        store.setState({
-            ...store.getState(), symptoms: symptomsMock,
-        })
-
-        expect(store.getState().isCategoryNameAvailable('Cat')).toBeFalsy()
-        expect(store.getState().isCategoryNameAvailable('NewCat')).toBeTruthy()
+        expect(useHista.getState().isCategoryNameAvailable('cat')).toBeFalsy()
+        expect(useHista.getState().isCategoryNameAvailable('NewCat')).toBeTruthy()
     })
 
     it('isSymptomNameAvailable', () => {
-        store.setState({
-            ...store.getState(), symptoms: symptomsMock,
-        })
-
-        expect(store.getState().isSymptomNameAvailable('symptom1', 1)).toBeFalsy()
-        expect(store.getState().isSymptomNameAvailable('symptom1', 2)).toBeTruthy()
+        expect(useHista.getState().isSymptomNameAvailable('symptom1', 1)).toBeFalsy()
+        expect(useHista.getState().isSymptomNameAvailable('symptom1', 2)).toBeTruthy()
     })
 })

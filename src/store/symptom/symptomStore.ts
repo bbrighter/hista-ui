@@ -12,6 +12,7 @@ interface State {
 }
 
 interface Actions {
+    resetSymptoms: () => void
     setSymptoms: (s: SymptomCategories | entity.SymptomCategoriesResponse) => void
     addSymptomCategory: (cId: number, name: string) => void,
     getSymptoms: () => Promise<void>,
@@ -37,6 +38,7 @@ export const createSymptomSlice: StateCreator<
     SymptomStore> = ((set, get) => ({
         ...initialState,
 
+        resetSymptoms: () => set(initialState),
         setSymptoms: (s: SymptomCategories | entity.SymptomCategoriesResponse) => {
             let symptoms: SymptomCategories = []
             if (Array.isArray(s)) {
@@ -91,6 +93,8 @@ export const createSymptomSlice: StateCreator<
                     }
                     toCategory.symptoms.push(draft.symptoms[fromCategoryIndex].symptoms.find(s => s.id == symptomId))
                     draft.symptoms[fromCategoryIndex].symptoms = draft.symptoms[fromCategoryIndex].symptoms.filter(s => s.id != symptomId)
+                    const symptom = toCategory.symptoms.find(s => s.id == symptomId)
+                    symptom.categoryId = toCategoryId
                 }))
             } catch (error) {
                 get().setError(error)
