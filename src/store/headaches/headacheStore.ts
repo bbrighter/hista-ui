@@ -7,9 +7,11 @@ import { produce } from 'immer'
 interface State {
     headaches: Array<Headache>
     headache: Headache
-    isLoaded: boolean
+    isHeadacheLoaded: boolean
 }
 interface Actions {
+    resetHeadaches: () => void,
+
     getHeadaches(): Promise<Array<Headache>>
     getHeadache(id: number): Promise<void>
     postHeadache(): Promise<number>
@@ -28,7 +30,7 @@ export interface HeadacheStore extends State, Actions { }
 const initialState: State = {
     headaches: [],
     headache: { id: 0, date: new Date(), positions: [], symptoms: [], types: [], severity: 0, description: '' },
-    isLoaded: false,
+    isHeadacheLoaded: false,
 }
 
 export const createHeadacheSlice: StateCreator<
@@ -38,6 +40,8 @@ export const createHeadacheSlice: StateCreator<
     HeadacheStore> = ((set, get) => ({
         ...initialState,
 
+        resetHeadaches: () => set(initialState),
+
         getHeadaches: async () => {
             let headaches: Array<Headache> = []
             try {
@@ -45,7 +49,7 @@ export const createHeadacheSlice: StateCreator<
                 headaches = respToHeadaches(resp)
                 set(produce((draft: State) => {
                     draft.headaches = headaches
-                    draft.isLoaded = true
+                    draft.isHeadacheLoaded = true
                 }))
             } catch (error) {
                 get().setError(error)
@@ -55,7 +59,7 @@ export const createHeadacheSlice: StateCreator<
 
         getHeadache: async (id: number) => {
             try {
-                if (!get().isLoaded) {
+                if (!get().isHeadacheLoaded) {
                     await get().getHeadaches()
                 }
                 const headache = get().headaches.find(h => h.id == id)

@@ -16,6 +16,7 @@ interface State {
 }
 
 interface Actions {
+    resetMeals: () => void,
     // Meals
     getMeals: () => Promise<void>
     postMeal: () => Promise<number | void>
@@ -50,6 +51,8 @@ export const createMealSlice: StateCreator<
     [],
     MealStore> = ((set, get) => ({
         ...initialState,
+
+        resetMeals: () => set(initialState),
 
         // Meals
         getMeals: async () => {

@@ -10,7 +10,11 @@ const getStageURL = (): string => {
     }
 }
 
-const baseUrl = import.meta.env.PROD ? getStageURL() : Local
+const baseUrl = import.meta.env.MODE === 'test'
+    ? 'http://localhost:4444'
+    : import.meta.env.PROD
+        ? getStageURL()
+        : Local
 
 const authGenerator: AuthDataGenerator = () => {
     return (
@@ -20,7 +24,7 @@ const authGenerator: AuthDataGenerator = () => {
         } as internalAuth.AuthParams)
 }
 
-const options: ClientOptions = { auth: authGenerator }
+const options: ClientOptions = { auth: authGenerator, fetcher: (...args: Parameters<typeof fetch>) => fetch(...args) }
 
 
 export const client = new Client(baseUrl, options)

@@ -16,6 +16,7 @@ interface State {
 }
 
 interface Actions {
+    resetConditionEvents: () => void
     // ConditionEvents
     getConditionEvents: () => Promise<void>,
     postConditionEvent: () => Promise<number | void>,
@@ -48,6 +49,8 @@ export const createConditionSlice: StateCreator<
     [],
     ConditionStore> = ((set, get) => ({
         ...initialState,
+
+        resetConditionEvents: () => set(initialState),
 
         // ConditionEvents
         getConditionEvents: async () => {

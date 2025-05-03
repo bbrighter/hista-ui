@@ -1,4 +1,3 @@
-import '../../__tests__/__mocks__/apiMocks'
 import '../../__tests__/__mocks__/authStoreMock'
 import { createTestStore } from '../../__tests__/storeUtils'
 import { APIError, ErrCode } from '../../api/generatedApi'

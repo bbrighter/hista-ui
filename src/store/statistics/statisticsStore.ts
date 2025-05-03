@@ -82,9 +82,6 @@ export const createStatisticsSlice: StateCreator<
         }
     },
     resetStatistics: () => {
-        set(produce((draft: State) => {
-            draft.foodStatistics = []
-            draft.symptomStatistics = []
-        }))
+        set(initialState)
     },
 }))

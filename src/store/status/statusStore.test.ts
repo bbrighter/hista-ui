@@ -1,98 +1,61 @@
-import '../../__tests__/__mocks__/apiMocks'
-import '../../__tests__/__mocks__/authStoreMock'
-import '../../__tests__/__mocks__/errorStoreMock'
-
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { createTestStore } from '../../__tests__/storeUtils';
-import { mockClient } from '../../__tests__/__mocks__/apiMocks';
-import { statusesMockedResp, statusMockedResp } from '../../__tests__/__mocks__/mockedResponses';
+import { beforeEach, describe, expect, it } from 'vitest';
 import dayjs from 'dayjs';
-import { statusStateMock } from '../../__tests__/__mocks__/mockedStates';
+import useHista from '../store';
 
 
 describe('statusStore', () => {
-    let store: ReturnType<typeof createTestStore>
+    beforeEach(async () => {
+        await useHista.getState().getStatuses()
 
-    const date = dayjs('2024-01-01T00:00:00Z')
-
-    beforeEach(() => {
-        store = createTestStore()
-        vi.clearAllMocks()
     })
 
     it('getStatuses', async () => {
-        mockClient.api.ListStatus.mockResolvedValue(statusesMockedResp)
+        const statuses = useHista.getState().statuses
+        expect(statuses).toHaveLength(2)
 
-        await store.getState().getStatuses()
+        const latestStatus = statuses[0]
+        expect(latestStatus.date).toStrictEqual(dayjs('2024-01-01T13:00:00Z'))
+        expect(latestStatus.id).toBe(1)
+        expect(latestStatus.morning).toBeDefined()
+        expect(latestStatus.morning.fitness).toBe(3)
+        expect(latestStatus.morning.sleep).toBe(2)
+        expect(latestStatus.morning.timeOfDay).toBe('morning')
+        expect(latestStatus.evening).toBeDefined()
+        expect(latestStatus.evening.fitness).toBe(1)
+        expect(latestStatus.evening.timeOfDay).toBe('evening')
 
-        expect(store.getState().statuses).toHaveLength(1)
-        const status = store.getState().statuses[0]
-        expect(status.date).toStrictEqual(date)
-        expect(status.id).toStrictEqual(1)
-        expect(status.morning.fitness).toStrictEqual(3)
-        expect(status.morning.sleep).toStrictEqual(2)
-        expect(status.morning.timeOfDay).toStrictEqual('morning')
-        expect(status.evening.fitness).toStrictEqual(1)
-        expect(status.evening.timeOfDay).toStrictEqual('evening')
+        const oldStatus = statuses[1]
+        expect(oldStatus.date).toStrictEqual(dayjs('2023-01-01T14:00:00Z'))
+        expect(oldStatus.id).toBe(2)
+        expect(oldStatus.morning).toBeDefined()
+        expect(oldStatus.evening).not.toBeDefined()
     })
 
-    it('addStatus', async () => {
-        mockClient.api.PostStatus.mockResolvedValue(statusMockedResp)
+    it('post status', async () => {
+        await useHista.getState().addStatus(dayjs('2024-03-31T00:00:00'))
 
-        await store.getState().addStatus(date)
-        expect(store.getState().statuses).toHaveLength(1)
-        const status = store.getState().statuses[0]
-        expect(status.id).toStrictEqual(1)
-        expect(status.date).toStrictEqual(date)
-        expect(status.id).toStrictEqual(1)
-        expect(status.morning.fitness).toStrictEqual(3)
-        expect(status.morning.sleep).toStrictEqual(2)
-        expect(status.morning.timeOfDay).toStrictEqual('morning')
-        expect(status.evening.fitness).toStrictEqual(1)
-        expect(status.evening.timeOfDay).toStrictEqual('evening')
+        const statuses = useHista.getState().statuses
+        expect(statuses).toHaveLength(3)
+        expect(statuses[0].date).toStrictEqual(dayjs('2024-03-31T00:00:00'))
     })
 
     it('updateStatus', async () => {
-        mockClient.api.PutStatus.mockResolvedValue(statusMockedResp)
-        store.setState({
-            ...store.getState(),
-            statuses: [statusStateMock],
-        })
-        expect(store.getState().statuses[0].morning).toBeUndefined()
-
-        await store.getState().updateStatus({
-            date: date,
+        await useHista.getState().updateStatus({
+            date: dayjs('2024-03-31T00:00:00'),
             fitness: 1,
-            timeOfDay: 'morning',
-            morningOrEveningId: 2,
-            statusId: 1,
-            sleep: 3,
+            timeOfDay: 'evening',
+            morningOrEveningId: 4,
+            statusId: 2,
         })
 
-        expect(store.getState().statuses).toHaveLength(1)
-        const status = store.getState().statuses[0]
-        expect(status.morning).toBeDefined()
+        const status = useHista.getState().statuses.find(s => s.id == 2)
+        expect(status).toBeDefined()
+        expect(status.evening.fitness).toBe(1)
     })
 
     it('deleteStatus', async () => {
-        mockClient.api.DeleteStatus.mockResolvedValue(undefined)
-        store.setState({
-            ...store.getState(),
-            statuses: [statusStateMock],
-        })
+        await useHista.getState().deleteStatus(1)
 
-        await store.getState().deleteStatus(1)
-        expect(store.getState().statuses).toHaveLength(0)
-    })
-
-    it('delete nonexisting status', async () => {
-        mockClient.api.DeleteStatus.mockResolvedValue(undefined)
-        store.setState({
-            ...store.getState(),
-            statuses: [statusStateMock],
-        })
-
-        await store.getState().deleteStatus(100)
-        expect(store.getState().statuses).toHaveLength(1)
+        expect(useHista.getState().statuses).toHaveLength(1)
     })
 })
