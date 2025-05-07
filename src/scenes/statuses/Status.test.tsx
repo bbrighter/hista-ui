@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 
-import Status from './temp';
+import Status from './Status';
 import userEvent from '@testing-library/user-event';
 
 describe('Status.tsx', async () => {

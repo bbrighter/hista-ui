@@ -1,5 +1,5 @@
 import { url } from '../../constants'
-import Status from './temp'
+import Status from './Status'
 
 const ind = {
     routeProps: {
