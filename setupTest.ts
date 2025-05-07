@@ -17,6 +17,7 @@ beforeEach(() => {
     store.resetHeadaches()
     store.resetPollens()
     store.resetStatistics()
+    store.resetStatus()
 
 })
 afterEach(() => {

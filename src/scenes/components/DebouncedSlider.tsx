@@ -16,6 +16,7 @@ export default function DebouncedSlider(props: {
     colorMapping?: (value: number) => string
     icon?: JSX.Element
     iconMapping?: (value: number) => JSX.Element
+    debounceTimeMs?: number
 }) {
     const [value, setValue] = useState(props.initialValue)
     useEffect(() => {
@@ -25,7 +26,7 @@ export default function DebouncedSlider(props: {
     const handleSliderChange = (_: Event, v: number | Array<number>) => {
         setValue(v as number)
     }
-    const debouncedSliderValue = useDebounce(value, 300)
+    const debouncedSliderValue = useDebounce(value, props.debounceTimeMs ?? 300)
 
     useDidUpdateEffect(() => {
         props.onChange(debouncedSliderValue)

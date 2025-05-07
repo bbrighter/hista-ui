@@ -51,12 +51,14 @@ export default function AddStatus(props: { disabled: boolean }) {
                     variant='contained'
                     onClick={handleClickToday}
                     disabled={todaysStatusExists || props.disabled}
+                    title='Heutigen Status hinzufügen'
                 >
                     + Status heute
                 </Button>
                 <Button
                     onClick={handleClickCalendar}
                     disabled={props.disabled}
+                    title='Status hinzufügen'
                 >
                     <CalendarMonthIcon />
                 </Button>
