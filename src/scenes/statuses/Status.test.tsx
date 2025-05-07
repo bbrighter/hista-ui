@@ -4,15 +4,9 @@ import { fireEvent, render, screen, waitFor, within } from '@testing-library/rea
 import Status from './Status';
 import userEvent from '@testing-library/user-event';
 
-describe.skip('Status.tsx', async () => {
-
+describe('Status.tsx', async () => {
     const getStatusCard = (dateString: string): HTMLElement => (screen.getByText(dateString).closest('.MuiPaper-root') as HTMLElement)
-    const getDeleteButton = (dateString: string): HTMLElement => (within(getStatusCard(dateString)!).getByTitle('Löschen'))
-    const getMorningPart = (dateString: string): HTMLElement => (within(getStatusCard(dateString)!).getByTitle('Morgens').closest('.MuiGrid-root'))
-    const getEveningPart = (dateString: string): HTMLElement => (within(getStatusCard(dateString)!).getByTitle('Abends').closest('.MuiGrid-root'))
-    const morningFitness = (dateString: string): HTMLElement => (within(getMorningPart(dateString)!).getByTitle('Fitness'))
-    const morningSleep = (dateString: string): HTMLElement => (within(getMorningPart(dateString)!).getByTitle('Schlaf'))
-    const eveningFitness = (dateString: string): HTMLElement => (within(getEveningPart(dateString)!).getByTitle('Fitness'))
+    const getEveningPart = (dateString: string): HTMLElement => (within(getStatusCard(dateString)!).getByText('Abends').closest('.MuiGrid-root'))
 
     it('Renders correctly', async () => {
         render(<Status />)
@@ -22,49 +16,67 @@ describe.skip('Status.tsx', async () => {
             expect(screen.getByTitle('Status hinzufügen')).toBeInTheDocument()
 
             const date = '01.01.2024'
-            expect(getStatusCard(date)).toBeInTheDocument()
-            expect(getDeleteButton(date)).toBeInTheDocument()
-            expect(getMorningPart(date)).toBeInTheDocument()
-            expect(getEveningPart(date)).toBeInTheDocument()
-            expect(morningFitness(date)).toBeInTheDocument()
-            expect(getComputedStyle(morningFitness(date)).color).toBe('rgb(25, 118, 210)')
-            expect(morningSleep(date)).toBeInTheDocument()
-            expect(getComputedStyle(morningSleep(date)).color).toBe('rgb(2, 136, 209)')
-            expect(eveningFitness(date)).toBeInTheDocument()
-            expect(getComputedStyle(eveningFitness(date)).color).toBe('rgb(237, 108, 2)')
+            const card = getStatusCard(date)
+            expect(card).toBeInTheDocument()
+            expect(within(card).getByTitle('Löschen')).toBeInTheDocument()
+            const morningPart = within(card).getByText('Morgens').closest('.MuiGrid-root') as HTMLElement
+            expect(getComputedStyle(
+                within(morningPart).getByTitle('Fitness'))
+                .color).toBe('rgb(2, 136, 209)')
+            expect(within(morningPart).getAllByRole('slider')).toHaveLength(2)
+            expect(getComputedStyle(
+                within(morningPart).getByTitle('Schlaf'))
+                .color).toBe('rgb(237, 108, 2)')
+            const eveningPart = within(card).getByText('Abends').closest('.MuiGrid-root') as HTMLElement
+            expect(getComputedStyle(
+                within(eveningPart).getByTitle('Fitness'))
+                .color).toBe('rgb(211, 47, 47)')
+            expect(within(eveningPart).getAllByRole('slider')).toHaveLength(1)
         })
     })
 
     it('Add a new status', async () => {
         render(<Status />)
 
-        userEvent.click(await screen.findByText('+ Status heute'))
+        const button = await screen.findByText('+ Status heute')
+        await userEvent.click(button)
 
+        expect(screen.getAllByText('Morgens')).toHaveLength(3)
         expect(await screen.findByText('31.03.2024')).toBeInTheDocument()
     })
 
-    it('Edit morning', async () => {
+
+
+    it('Edit', async () => {
         render(<Status />)
 
-        const date = '01.01.2023'
-
-        let morningPart: HTMLElement
+        let eveningPart: HTMLElement
         await waitFor(() => {
-            morningPart = getMorningPart(date)
+            const date = '01.01.2024'
+            eveningPart = getEveningPart(date)
         })
 
-        await userEvent.click(morningPart)
+        const slider = within(eveningPart).getByRole('slider')
+        fireEvent.change(slider, { target: { value: 5 } })
 
+        await waitFor(() => {
+            expect(getComputedStyle(
+                within(eveningPart).getByTitle('Fitness'))
+                .color).toBe('rgb(46, 125, 50)')
+        })
+    })
 
-        const morningSleepDiv = (within(morningPart)!).getByText('Schlaf', { ignore: 'title' }).closest('div') as HTMLElement
-        const morningSleepSlider = (within(morningSleepDiv)!).getByRole('slider')
-        fireEvent.change(morningSleepSlider, { target: { value: 4 } })
-        expect(getComputedStyle(morningSleep(date)).color).toBe('rgb(237, 108, 2)')
-        // await waitFor(() => (expect(getComputedStyle(morningSleep(date)).color).toBe('rgb(25, 118, 210)')), { timeout: 400 })
+    it('Delete', async () => {
+        render(<Status />)
 
+        const date = '01.01.2024'
+        let card: HTMLElement
+        await waitFor(() => {
+            card = getStatusCard(date)
+        })
 
+        await userEvent.click(within(card).getByTitle('Löschen'))
 
-        const morningFitnessSlider = (within(morningPart)!).getByText('Fitness', { ignore: 'title' })
-        expect(morningFitnessSlider).toBeInTheDocument()
+        expect(screen.queryByText(date)).toBeNull()
     })
 })

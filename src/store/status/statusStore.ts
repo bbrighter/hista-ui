@@ -12,6 +12,7 @@ interface State {
 }
 
 interface Actions {
+    resetStatus: () => void
     getStatuses: () => Promise<void>
     addStatus: (date: Dayjs) => Promise<void>
     updateStatus: (p: PutStatusParams) => Promise<void>
@@ -30,6 +31,7 @@ export const createStatusSlice: StateCreator<
     [],
     StatusStore> = ((set, get) => ({
         ...initialState,
+        resetStatus: () => set(initialState),
         getStatuses: async () => {
             try {
                 const resp = await client.api.ListStatus()

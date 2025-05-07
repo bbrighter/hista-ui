@@ -66,7 +66,7 @@ export default function StatusCardContent(props: {
                         avatar={
                             isLoading ?
                                 <CircularProgress size='1rem' /> :
-                                <LightModeIcon titleAccess='Morgens' />
+                                <LightModeIcon />
                         }
                         sx={{ padding: '8px' }}
                     />
@@ -108,7 +108,7 @@ export default function StatusCardContent(props: {
                         avatar={
                             isLoading ?
                                 <CircularProgress size='1rem' /> :
-                                <DarkMode titleAccess='Abends' />}
+                                <DarkMode />}
                         sx={{ padding: '8px' }}
                     />
                     <CardContent>
