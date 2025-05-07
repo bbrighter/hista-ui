@@ -57,16 +57,19 @@ export const createStatusSlice: StateCreator<
         updateStatus: async (p: PutStatusParams) => {
             try {
                 const statusIndex = get().statuses.findIndex(s => s.id == p.statusId)
-                const resp = await client.api.PutStatus(p.statusId, {
-                    date: p.date.toISOString(),
-                    fitness: p.fitness,
-                    timeOfDay: p.timeOfDay,
-                    sleep: p.sleep,
-                    id: p.statusId,
+                await client.api.PatchStatus(p.statusId, {
+                    date: p.date ? p.date.toISOString() : undefined,
+                    eveningFitness: p.eveningFitness,
+                    morningFitness: p.morningFitness,
+                    morningSleep: p.morningSleep,
                 })
                 set(produce((draft: State) => {
                     if (statusIndex > -1) {
-                        draft.statuses[statusIndex] = respToStatus(resp)
+                        const status = draft.statuses[statusIndex]
+                        if (p.date != undefined) status.date = p.date
+                        if (p.eveningFitness != undefined) status.eveningFitness = p.eveningFitness
+                        if (p.morningFitness != undefined) status.morningFitness = p.morningFitness
+                        if (p.morningSleep != undefined) status.morningSleep = p.morningSleep
                     }
                 }))
             } catch (error) {

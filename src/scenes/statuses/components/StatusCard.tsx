@@ -43,11 +43,10 @@ export default function StatusCard(props: { status: Status }) {
         >
             <CardHeader
                 sx={{ padding: '12px' }}
-                // title={props.status.date.format('dddd, DD.MM.YYYY')}
                 title={formatDate(props.status.date)}
-                titleTypographyProps={{ variant: 'overline' }}
+                slotProps={{ title: { variant: 'overline' } }}
                 action={
-                    <IconButton onClick={handleDelete} size='small'>
+                    <IconButton onClick={handleDelete} size='small' title='Löschen'>
                         <DeleteIcon />
                     </IconButton>}
             />

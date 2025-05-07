@@ -135,6 +135,13 @@ export namespace api {
         severity: entity.Severity
     }
 
+    export interface PatchStatusParams {
+        date?: string
+        morningFitness?: number
+        morningSleep?: number
+        eveningFitness?: number
+    }
+
     export interface PatchSymptomCategoryParams {
         toCategoryId: number
     }
@@ -161,14 +168,6 @@ export namespace api {
         ids: number[]
         fromDate: string
         toDate: string
-    }
-
-    export interface StatusParams {
-        timeOfDay: entity.TimeOfDay
-        date: string
-        fitness: entity.Quality
-        sleep?: entity.Quality
-        id?: number
     }
 
     export class ServiceClient {
@@ -381,6 +380,10 @@ export namespace api {
             await this.baseClient.callAPI("PATCH", `/notes/${encodeURIComponent(noteId)}`, JSON.stringify(params))
         }
 
+        public async PatchStatus(id: number, params: PatchStatusParams): Promise<void> {
+            await this.baseClient.callAPI("PATCH", `/status/${encodeURIComponent(id)}`, JSON.stringify(params))
+        }
+
         public async PatchSymptomCategory(id: number, params: PatchSymptomCategoryParams): Promise<void> {
             await this.baseClient.callAPI("PATCH", `/symptoms/${encodeURIComponent(id)}/category`, JSON.stringify(params))
         }
@@ -429,12 +432,6 @@ export namespace api {
             // Now make the actual call to the API
             const resp = await this.baseClient.callAPI("POST", `/symptom-categories`, JSON.stringify(params))
             return await resp.json() as entity.IDResponse
-        }
-
-        public async PutStatus(id: number, params: StatusParams): Promise<entity.StatusResponse> {
-            // Now make the actual call to the API
-            const resp = await this.baseClient.callAPI("PUT", `/status/${encodeURIComponent(id)}`, JSON.stringify(params))
-            return await resp.json() as entity.StatusResponse
         }
     }
 }
@@ -492,12 +489,6 @@ export namespace entity {
     }
 
     export type DiaryType = string
-
-    export interface EveningStatus {
-        id: number
-        statusId: number
-        fitness: Quality
-    }
 
     export type FoodCondition = string
 
@@ -583,13 +574,6 @@ export namespace entity {
         meals: MealMetaResponse[]
     }
 
-    export interface MorningStatus {
-        id: number
-        statusId: number
-        fitness: Quality
-        sleep: Quality
-    }
-
     export interface NoteResp {
         id: number
         date: string
@@ -624,8 +608,6 @@ export namespace entity {
         symptoms: SymptomCategoriesResponse
     }
 
-    export type Quality = number
-
     export interface RawDiary {
         date: string
         type: DiaryType
@@ -657,8 +639,9 @@ export namespace entity {
     export interface StatusResponse {
         id: number
         date: string
-        morning?: MorningStatus
-        evening?: EveningStatus
+        morningFitness?: number
+        eveningFitness?: number
+        morningSleep?: number
     }
 
     export interface StatusesResponse {
@@ -684,8 +667,6 @@ export namespace entity {
     export interface SymptomStatisticsResponse {
         statistics: StatisticBySymptom[]
     }
-
-    export type TimeOfDay = string
 }
 
 
