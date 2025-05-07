@@ -15,7 +15,6 @@ import debounce from 'lodash.debounce'
 import Slider from '@mui/material/Slider'
 import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
-import CircularProgress from '@mui/material/CircularProgress'
 
 export default function StatusCardContent(props: {
     status: Status,
@@ -25,12 +24,9 @@ export default function StatusCardContent(props: {
     const [morningFitness, setMorningFitness] = useState<number | undefined>(props.status.morningFitness)
     const [morningSleep, setMorningSleep] = useState<number | undefined>(props.status.morningSleep)
     const [eveningFitness, setEveningFitness] = useState<number | undefined>(props.status.eveningFitness)
-    const [isLoading, setIsLoading] = useState(false)
 
     const debouncedUpdate = useRef(debounce(async (params) => {
-        setIsLoading(true)
         await updateStatus(params)
-        setIsLoading(false)
     }, 1000)).current
 
     useDidUpdateEffect(() => {
@@ -44,36 +40,31 @@ export default function StatusCardContent(props: {
     }, [morningFitness, morningSleep, eveningFitness])
 
 
-    type MuiColor = 'error' | 'warning' | 'info' | 'primary' | 'success'
-    const colorMapping = (v: number | undefined): MuiColor => {
-        const colors: readonly MuiColor[] = ['error', 'warning', 'info', 'primary', 'success']
-        return colors[v - 1]
+    const colorMapping = (v: number | undefined): string => {
+        const colors = ['rgb(255, 0, 0)', 'rgb(255, 128, 0)', 'rgb(255, 255, 0)', 'rgb(99, 199, 0)', 'rgb(0, 131, 0)']
+        return v == undefined ? 'rgb(160, 160, 160)' : colors[v - 1]
     }
 
     const SleepIcon = () => {
-        return <HotelIcon sx={{ margin: '4px' }} color={colorMapping(morningSleep)} titleAccess='Schlaf' />
+        return <HotelIcon sx={{ margin: '4px', color: colorMapping(morningSleep) }} titleAccess='Schlaf' />
     }
     const FitnessIcon = (props: { fitness?: number }) => {
-        return <FitnessCenterIcon sx={{ margin: '4px' }} color={colorMapping(props.fitness)} titleAccess='Fitness' />
+        return <FitnessCenterIcon sx={{ margin: '4px', color: colorMapping(props.fitness) }} titleAccess='Fitness' />
     }
 
     return (
         <Card variant='elevation' >
             <Grid container>
-                <Grid size={6}>
+                <Grid size={12}>
                     <CardHeader
                         title={<Typography>Morgens</Typography>}
-                        avatar={
-                            isLoading ?
-                                <CircularProgress size='1rem' /> :
-                                <LightModeIcon />
-                        }
+                        avatar={<LightModeIcon />}
                         sx={{ padding: '8px' }}
                     />
                     <CardContent>
                         <CardActions>
                             <Grid size={12}>
-                                <Grid size={12}>
+                                <Grid size={12} sx={{ mb: 2 }}>
                                     <Stack spacing={2} direction='row'>
                                         <SleepIcon />
                                         <Slider
@@ -81,7 +72,8 @@ export default function StatusCardContent(props: {
                                             max={5}
                                             value={morningSleep}
                                             onChange={(_, v) => setMorningSleep(v)}
-                                            color={colorMapping(morningSleep)}
+                                            // color={colorMapping(morningSleep)}
+                                            sx={{ color: colorMapping(morningSleep) }}
                                         />
                                     </Stack>
 
@@ -94,7 +86,8 @@ export default function StatusCardContent(props: {
                                             max={5}
                                             value={morningFitness}
                                             onChange={(_, v) => setMorningFitness(v)}
-                                            color={colorMapping(morningFitness)}
+                                            // color={colorMapping(morningFitness)}
+                                            sx={{ color: colorMapping(morningFitness) }}
                                         />
                                     </Stack>
                                 </Grid>
@@ -102,17 +95,13 @@ export default function StatusCardContent(props: {
                         </CardActions>
                     </CardContent>
                 </Grid>
-                <Grid size={6}>
+                <Grid size={12}>
                     <CardHeader
                         title={<Typography>Abends</Typography>}
-                        avatar={
-                            isLoading ?
-                                <CircularProgress size='1rem' /> :
-                                <DarkMode />}
+                        avatar={<DarkMode />}
                         sx={{ padding: '8px' }}
                     />
                     <CardContent>
-
                         <CardActions>
                             <Grid size={12}>
                                 <Stack spacing={2} direction='row'>
@@ -122,7 +111,8 @@ export default function StatusCardContent(props: {
                                         max={5}
                                         value={eveningFitness}
                                         onChange={(_, v) => setEveningFitness(v)}
-                                        color={colorMapping(eveningFitness)}
+                                        // color={colorMapping(eveningFitness)}
+                                        sx={{ color: colorMapping(eveningFitness) }}
                                     />
                                 </Stack>
                             </Grid>

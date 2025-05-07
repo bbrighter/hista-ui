@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 
 import Status from './Status';
@@ -22,15 +22,15 @@ describe('Status.tsx', async () => {
             const morningPart = within(card).getByText('Morgens').closest('.MuiGrid-root') as HTMLElement
             expect(getComputedStyle(
                 within(morningPart).getByTitle('Fitness'))
-                .color).toBe('rgb(2, 136, 209)')
+                .color).toBe('rgb(255, 255, 0)')
             expect(within(morningPart).getAllByRole('slider')).toHaveLength(2)
             expect(getComputedStyle(
                 within(morningPart).getByTitle('Schlaf'))
-                .color).toBe('rgb(237, 108, 2)')
+                .color).toBe('rgb(255, 128, 0)')
             const eveningPart = within(card).getByText('Abends').closest('.MuiGrid-root') as HTMLElement
             expect(getComputedStyle(
                 within(eveningPart).getByTitle('Fitness'))
-                .color).toBe('rgb(211, 47, 47)')
+                .color).toBe('rgb(255, 0, 0)')
             expect(within(eveningPart).getAllByRole('slider')).toHaveLength(1)
         })
     })
@@ -59,10 +59,14 @@ describe('Status.tsx', async () => {
         const slider = within(eveningPart).getByRole('slider')
         fireEvent.change(slider, { target: { value: 5 } })
 
+        const fetchSpy = vi.spyOn(global, 'fetch')
+        expect(fetchSpy).not.toHaveBeenCalled()
+
         await waitFor(() => {
             expect(getComputedStyle(
                 within(eveningPart).getByTitle('Fitness'))
-                .color).toBe('rgb(46, 125, 50)')
+                .color).toBe('rgb(0, 131, 0)')
+            expect(fetchSpy).toHaveBeenCalled()
         })
     })
 
