@@ -1,4 +1,4 @@
-import Client, { AuthDataGenerator, ClientOptions, Environment, Local, internalAuth, isAPIError } from './generatedApi';
+import Client, { AuthDataGenerator, ClientOptions, Environment, internalAuth,isAPIError,Local } from './generatedApi';
 
 
 const getStageURL = (): string => {

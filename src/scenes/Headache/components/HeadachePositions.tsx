@@ -1,7 +1,8 @@
 
-import useHista from '../../../store/store'
-import { validHeadachePositions } from '../../../store/headaches/headaches'
 import { useEffect, useRef, useState } from 'react'
+
+import { validHeadachePositions } from '../../../store/headaches/headaches'
+import useHista from '../../../store/store'
 import HeadacheInputs, { ValueLabelPair } from './Tags'
 
 

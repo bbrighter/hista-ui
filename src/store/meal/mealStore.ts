@@ -1,13 +1,14 @@
-import { StateCreator } from 'zustand'
-import { client } from '../../api/api'
 import { produce } from 'immer'
-import { Meals, MetaMeal, respToMetaMeals } from './meals'
-import { Freshness, Meal, respToMeal, stringToFreshness } from './meal'
+import { StateCreator } from 'zustand'
+
+import { client } from '../../api/api'
+import { api, entity } from '../../api/generatedApi'
 import { AuthStore } from '../auth/authStore'
 import { ErrorStore } from '../error/errorStore'
 import { FoodCondition, respToFood } from './food'
-import { api, entity } from '../../api/generatedApi'
 import { IngredientStore } from './ingredientStore'
+import { Freshness, Meal, respToMeal, stringToFreshness } from './meal'
+import { Meals, MetaMeal, respToMetaMeals } from './meals'
 
 interface State {
     meals: Meals

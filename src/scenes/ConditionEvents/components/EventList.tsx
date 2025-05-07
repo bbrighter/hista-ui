@@ -1,7 +1,8 @@
+import { useNavigate } from 'react-router-dom';
+
+import { url } from '../../../constants';
 import useHista from '../../../store/store';
 import OverviewList from '../../components/OverviewList';
-import { useNavigate } from 'react-router-dom';
-import { url } from '../../../constants';
 
 export default function EventList() {
     const getConditionEvents = useHista(state => state.getConditionEvents)

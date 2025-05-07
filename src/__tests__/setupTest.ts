@@ -1,8 +1,9 @@
-import { afterAll, afterEach, beforeAll, beforeEach, expect } from 'vitest';
 import * as matchers from '@testing-library/jest-dom/matchers';
 import { setupServer } from 'msw/node'
-import handlers from './src/__tests__/__mocks__/handlers'
-import useHista from './src/store/store'
+import { afterAll, afterEach, beforeAll, beforeEach, expect } from 'vitest';
+
+import useHista from '../store/store';
+import handlers from './__mocks__/handlers';
 
 expect.extend(matchers);
 

@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw';
+import { http,HttpResponse } from 'msw';
 
 const ingredients = [
     { id: 1, name: 'ingredient1' },
@@ -26,4 +26,4 @@ const ingredientHandlers = (baseUrl: string) => ([
     http.get(baseUrl + '/ingredients', () => (HttpResponse.json({ ingredients: ingredients }))),
 ])
 
-export { mealHandlers, ingredientHandlers }
+export { ingredientHandlers,mealHandlers }

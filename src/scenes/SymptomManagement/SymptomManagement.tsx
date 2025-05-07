@@ -1,8 +1,9 @@
-import { useEffect } from 'react'
-import useHista from '../../store/store'
-import SymptomCategoryAccordion from './components/SymptomCategoryAccordion';
-import AddSymptomCategory from './components/AddSymptomCategory';
 import Container from '@mui/material/Container';
+import { useEffect } from 'react'
+
+import useHista from '../../store/store'
+import AddSymptomCategory from './components/AddSymptomCategory';
+import SymptomCategoryAccordion from './components/SymptomCategoryAccordion';
 
 
 export default function SymptomManagement() {

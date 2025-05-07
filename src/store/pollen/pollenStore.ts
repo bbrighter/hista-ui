@@ -1,9 +1,10 @@
-import { StateCreator } from 'zustand';
 import { produce } from 'immer';
+import { StateCreator } from 'zustand';
+
+import { client } from '../../api/api';
 import { AuthStore } from '../auth/authStore';
 import { ErrorStore } from '../error/errorStore';
 import { Pollens, respToPollens } from './pollen';
-import { client } from '../../api/api';
 
 interface State {
     pollensAreLoaded: boolean

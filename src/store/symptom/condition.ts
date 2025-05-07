@@ -1,5 +1,5 @@
 import { entity } from '../../api/generatedApi'
-import { Symptom, respToSymptom } from './symptom'
+import { respToSymptom,Symptom } from './symptom'
 
 type Severity = 5 | 4 | 3 | 2 | 1
 

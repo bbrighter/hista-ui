@@ -1,21 +1,22 @@
-import useHista from '../../../store/store';
-import DateInput from '../../components/DateIpnut';
-import { Freshness } from '../../../store/meal/meal';
-import DebouncedSlider from '../../components/DebouncedSlider';
-import MoodBadIcon from '@mui/icons-material/MoodBad';
+import LunchDiningIcon from '@mui/icons-material/LunchDining';
 import MoodIcon from '@mui/icons-material/Mood';
-import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
-import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
-import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import MoodBadIcon from '@mui/icons-material/MoodBad';
 import PeopleIcon from '@mui/icons-material/People';
 import PersonIcon from '@mui/icons-material/Person';
-import LunchDiningIcon from '@mui/icons-material/LunchDining';
-import { useState } from 'react';
-import Skeleton from '@mui/material/Skeleton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import ToggleButton from '@mui/material/ToggleButton';
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
+import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import CircularProgress from '@mui/material/CircularProgress';
 import Grid from '@mui/material/Grid';
+import Skeleton from '@mui/material/Skeleton';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { useState } from 'react';
+
+import { Freshness } from '../../../store/meal/meal';
+import useHista from '../../../store/store';
+import DateInput from '../../components/DateIpnut';
+import DebouncedSlider from '../../components/DebouncedSlider';
 
 export default function MealSettings() {
     const patchMeal = useHista(state => state.updateMeal)

@@ -1,9 +1,10 @@
-import { useState } from 'react'
-import useDebounce from '../../../hooks/useDebounce'
-import useHista from '../../../store/store'
-import { useDidUpdateEffect } from '../../../hooks/useDidUpdateEffect'
-import { colorFromSeverity } from '../../../store/symptom/condition'
 import Slider from '@mui/material/Slider'
+import { useState } from 'react'
+
+import useDebounce from '../../../hooks/useDebounce'
+import { useDidUpdateEffect } from '../../../hooks/useDidUpdateEffect'
+import useHista from '../../../store/store'
+import { colorFromSeverity } from '../../../store/symptom/condition'
 
 export default function Severity(props: {
     severity: number

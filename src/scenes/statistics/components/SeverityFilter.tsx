@@ -1,8 +1,9 @@
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import { colorFromSeverity } from '../../../store/symptom/condition';
 import Grid from '@mui/material/Grid';
 import Icon from '@mui/material/Icon';
 import Slider from '@mui/material/Slider';
+
+import { colorFromSeverity } from '../../../store/symptom/condition';
 
 export default function SeverityFilter(props: {
     severity: Array<number>,

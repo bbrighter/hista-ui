@@ -1,12 +1,14 @@
+import 'dayjs/locale/de';
+
+import CssBaseline from '@mui/material/CssBaseline';
+import { createTheme,ThemeProvider } from '@mui/material/styles'
+import dayjs from 'dayjs';
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import scenes from './scenes'
-import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+
 import { routeToPrivateRoute } from './authentification/ensureLogin';
-import dayjs from 'dayjs';
-import 'dayjs/locale/de';
+import scenes from './scenes'
 
 
 dayjs.locale('de');

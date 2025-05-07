@@ -1,8 +1,9 @@
 import '../../__tests__/__mocks__/authStoreMock'
-import { createTestStore } from '../../__tests__/storeUtils'
-import { APIError, ErrCode } from '../../api/generatedApi'
 
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+
+import { createTestStore } from '../../__tests__/storeUtils'
+import { APIError, ErrCode } from '../../api/generatedApi'
 
 global.alert = vi.fn((text: string) => text)
 

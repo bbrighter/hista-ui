@@ -1,10 +1,11 @@
-import useHista from '../../../store/store';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Severity from './Severity';
+import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
+
+import useHista from '../../../store/store';
+import Severity from './Severity';
 
 export default function ConditionList() {
     const deleteCondition = useHista(state => state.deleteCondition)

@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw'
+import { http,HttpResponse } from 'msw'
 
 const pollenHandlers = (baseUrl: string) => ([
     http.get(baseUrl + '/pollen', () => HttpResponse.json({

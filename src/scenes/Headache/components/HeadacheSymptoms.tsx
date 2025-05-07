@@ -1,6 +1,7 @@
-import useHista from '../../../store/store'
-import { validHeadacheSymptoms } from '../../../store/headaches/headaches'
 import { useEffect, useRef, useState } from 'react'
+
+import { validHeadacheSymptoms } from '../../../store/headaches/headaches'
+import useHista from '../../../store/store'
 import HeadacheInputs, { ValueLabelPair } from './Tags'
 
 export default function HeadacheSymptomsButtons() {

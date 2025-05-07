@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { api } from '../../api/generatedApi';
 import { respToRawDiary } from './diary';
 

@@ -1,9 +1,10 @@
-import TextField from '@mui/material/TextField';
-import useHista from '../../../store/store';
 import Divider from '@mui/material/Divider';
-import useDebounce from '../../../hooks/useDebounce';
+import TextField from '@mui/material/TextField';
 import { useEffect, useRef, useState } from 'react';
+
+import useDebounce from '../../../hooks/useDebounce';
 import { useDidUpdateEffect } from '../../../hooks/useDidUpdateEffect';
+import useHista from '../../../store/store';
 
 export default function HeadacheDescription() {
     const firstUpdate = useRef(true)

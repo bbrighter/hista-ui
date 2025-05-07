@@ -1,9 +1,10 @@
-import Diary from './components/Diary';
-import { useState } from 'react';
-import Charts from './Charts';
 import Container from '@mui/material/Container';
-import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import { useState } from 'react';
+
+import Charts from './Charts';
+import Diary from './components/Diary';
 
 type TabValue = 0 | 1 | 2
 interface TabType {

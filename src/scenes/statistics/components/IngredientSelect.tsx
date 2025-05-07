@@ -1,10 +1,11 @@
-import { SyntheticEvent, useEffect, useState } from 'react';
-import useHista from '../../../store/store';
 import Autocomplete from '@mui/material/Autocomplete';
-import TextField from '@mui/material/TextField';
-import ListItem from '@mui/material/ListItem';
 import Checkbox from '@mui/material/Checkbox';
+import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import TextField from '@mui/material/TextField';
+import { SyntheticEvent, useEffect, useState } from 'react';
+
+import useHista from '../../../store/store';
 
 interface Option {
     id: number

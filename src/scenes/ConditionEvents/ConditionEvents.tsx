@@ -1,12 +1,13 @@
-import useHista from '../../store/store'
-import { useNavigate } from 'react-router-dom'
-import EventList from './components/EventList'
 import SickIcon from '@mui/icons-material/Sick';
-import { url } from '../../constants'
-import { useState } from 'react';
-import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import Container from '@mui/material/Container';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
+
+import { url } from '../../constants'
+import useHista from '../../store/store'
+import EventList from './components/EventList'
 
 
 export default function ConditionEvents() {

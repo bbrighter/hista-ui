@@ -1,16 +1,17 @@
-import { useParams } from 'react-router-dom'
-import useHista from '../../store/store'
-import { useEffect } from 'react'
-import DebouncedSlider from '../components/DebouncedSlider'
-import Container from '@mui/material/Container'
-import DateInput from '../components/DateIpnut'
-import { Dayjs } from 'dayjs'
-import HeadachePositionsButtons from './components/HeadachePositions'
-import HeadacheTypesButtons from './components/HeadacheTypes'
-import HeadacheSymptomsButtons from './components/HeadacheSymptoms'
-import { getColor } from './components/colorMapping'
 import { Typography } from '@mui/material'
+import Container from '@mui/material/Container'
+import { Dayjs } from 'dayjs'
+import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+
+import useHista from '../../store/store'
+import DateInput from '../components/DateIpnut'
+import DebouncedSlider from '../components/DebouncedSlider'
+import { getColor } from './components/colorMapping'
 import HeadacheDescription from './components/HeadacheDescription'
+import HeadachePositionsButtons from './components/HeadachePositions'
+import HeadacheSymptomsButtons from './components/HeadacheSymptoms'
+import HeadacheTypesButtons from './components/HeadacheTypes'
 
 export default function Headache() {
     const params = useParams<{ id: string }>()

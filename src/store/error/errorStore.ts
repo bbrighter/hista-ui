@@ -1,7 +1,8 @@
-import { StateCreator } from 'zustand'
 import { produce } from 'immer'
-import { AuthStore } from '../auth/authStore'
+import { StateCreator } from 'zustand'
+
 import { isAPIError } from '../../api/generatedApi'
+import { AuthStore } from '../auth/authStore'
 
 interface State {
     errorMessage: string

@@ -1,6 +1,7 @@
-import { test, expect } from 'vitest'
-import { Freshness, respToMeal } from './meal'
+import { expect, test } from 'vitest'
+
 import { entity } from '../../api/generatedApi'
+import { Freshness, respToMeal } from './meal'
 
 test('Meal', () => {
     const resp: entity.MealResponse = {

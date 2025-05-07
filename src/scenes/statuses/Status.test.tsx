@@ -1,8 +1,8 @@
-import { describe, expect, it, vi } from 'vitest';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { describe, expect, it, vi } from 'vitest';
 
 import Status from './Status';
-import userEvent from '@testing-library/user-event';
 
 describe('Status.tsx', async () => {
     const getStatusCard = (dateString: string): HTMLElement => (screen.getByText(dateString).closest('.MuiPaper-root') as HTMLElement)

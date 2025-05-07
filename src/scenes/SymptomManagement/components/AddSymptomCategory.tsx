@@ -1,10 +1,11 @@
 
 import AddIcon from '@mui/icons-material/Add';
-import useHista from '../../../store/store';
-import { useState } from 'react';
-import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
+import Modal from '@mui/material/Modal';
+import { useState } from 'react';
+
+import useHista from '../../../store/store';
 import TextFieldSaveAndAbort from './TextFieldSaveAndAbort';
 
 export default function AddSymptomCategory() {

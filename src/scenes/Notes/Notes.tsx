@@ -1,13 +1,14 @@
-import useHista from '../../store/store';
-import OverviewList from '../components/OverviewList';
-import { useNavigate } from 'react-router-dom';
-import { url } from '../../constants';
-import { useEffect, useState } from 'react';
 import NoteIcon from '@mui/icons-material/Note';
-import NoteSearch from './components/NoteSearch';
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { url } from '../../constants';
+import useHista from '../../store/store';
+import OverviewList from '../components/OverviewList';
+import NoteSearch from './components/NoteSearch';
 
 export default function Notes() {
     const getNotes = useHista(state => state.getNotes)

@@ -1,12 +1,13 @@
-import { StateCreator } from 'zustand'
-import { client } from '../../api/api'
 import { produce } from 'immer'
+import { StateCreator } from 'zustand'
+
+import { client } from '../../api/api'
 import { api } from '../../api/generatedApi'
-import { ConditionEvents, respToConditionEvents } from './conditionEvents'
-import { ConditionEvent, respToConditionEvent } from './conditionEvent'
-import { respToCondition } from './condition'
 import { AuthStore } from '../auth/authStore'
 import { ErrorStore } from '../error/errorStore'
+import { respToCondition } from './condition'
+import { ConditionEvent, respToConditionEvent } from './conditionEvent'
+import { ConditionEvents, respToConditionEvents } from './conditionEvents'
 import { SymptomStore } from './symptomStore'
 
 interface State {

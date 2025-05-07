@@ -1,4 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom'
+
 import useHista from '../store/store'
 
 export default function RequireAuth({ children }: { children: JSX.Element }) {

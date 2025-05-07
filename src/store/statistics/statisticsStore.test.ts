@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+
 import useHista from '../store'
 
 describe('statisticsStore - SKIPPED! Better use component tests!', () => {

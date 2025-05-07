@@ -1,16 +1,17 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import useHista from '../../../store/store';
-import { mealConstants } from '../../../constants';
-import { FoodCondition } from '../../../store/meal/food';
-import { useState } from 'react';
-import LoadingIconButton from '../../components/LoadingIconButton';
+import CircularProgress from '@mui/material/CircularProgress';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import Typography from '@mui/material/Typography';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ToggleButton from '@mui/material/ToggleButton';
-import CircularProgress from '@mui/material/CircularProgress';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Typography from '@mui/material/Typography';
+import { useState } from 'react';
+
+import { mealConstants } from '../../../constants';
+import { FoodCondition } from '../../../store/meal/food';
+import useHista from '../../../store/store';
+import LoadingIconButton from '../../components/LoadingIconButton';
 
 export default function FoodList() {
     const food = useHista(state => state.meal.foods)

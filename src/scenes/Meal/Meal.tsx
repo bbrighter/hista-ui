@@ -1,13 +1,14 @@
-import useHista from '../../store/store';
+import Container from '@mui/material/Container';
+import FormControl from '@mui/material/FormControl';
+import FormGroup from '@mui/material/FormGroup';
+import Skeleton from '@mui/material/Skeleton';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+
+import useHista from '../../store/store';
 import AddFood from './components/AddFood';
 import FoodList from './components/FoodList';
 import MealSettings from './components/MealSettings';
-import Container from '@mui/material/Container';
-import FormGroup from '@mui/material/FormGroup';
-import FormControl from '@mui/material/FormControl';
-import Skeleton from '@mui/material/Skeleton';
 
 
 export default function Meal() {
