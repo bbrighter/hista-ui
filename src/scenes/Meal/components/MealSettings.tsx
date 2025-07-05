@@ -11,7 +11,7 @@ import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { useState } from 'react';
+import { JSX, useState } from 'react';
 
 import { Freshness } from '../../../store/meal/meal';
 import useHista from '../../../store/store';

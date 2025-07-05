@@ -1,9 +1,11 @@
+import { JSX } from 'react'
+
 import RequireAuth from './RequireAuth'
 
-export function routeToPrivateRoute(name: string, routeProps: { path: string, element: JSX.Element }) {
+export function routeToPrivateRoute(name: string, element: JSX.Element) {
     if (name == 'Login') {
-        return { ...routeProps }
+        return element
     } else {
-        return { path: routeProps.path, element: <RequireAuth>{routeProps.element}</RequireAuth> }
+        return <RequireAuth>{element}</RequireAuth>
     }
 }

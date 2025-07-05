@@ -4,9 +4,14 @@ import { StateCreator } from 'zustand'
 import { isAPIError } from '../../api/generatedApi'
 import { AuthStore } from '../auth/authStore'
 
-interface State {
-    errorMessage: string
+type HistaError = {
+    message: string
     status: number
+    detail?: string
+}
+
+type State = {
+    error?: HistaError
 }
 
 interface Actions {
@@ -15,10 +20,7 @@ interface Actions {
 
 export interface ErrorStore extends State, Actions { }
 
-const initialState: State = {
-    errorMessage: 'no error',
-    status: 0,
-}
+const initialState: State = {}
 
 export const createErrorSlice: StateCreator<
     AuthStore & ErrorStore,
@@ -36,10 +38,12 @@ export const createErrorSlice: StateCreator<
                         break
                     case 500:
                         set(produce((draft: State) => {
-                            draft.errorMessage = error.message
+                            draft.error = {
+                                message: error.message,
+                                status: error.status,
+                                detail: error.details,
+                            }
                         }))
-                        alert('Etwas ist furchtbar schief gelaufen! ' + get().errorMessage)
-
                         break
                     case 400:
                         if (error.message == 'invalid uuid') {
@@ -47,9 +51,12 @@ export const createErrorSlice: StateCreator<
                             break
                         }
                         set(produce((draft: State) => {
-                            draft.errorMessage = error.message
+                            draft.error = {
+                                message: error.message,
+                                status: error.status,
+                                detail: error.details,
+                            }
                         }))
-                        alert('Huch. Da habe ich mit gerechnet, aber es sollte nicht passieren: ' + get().errorMessage)
                         break
                 }
             } else {

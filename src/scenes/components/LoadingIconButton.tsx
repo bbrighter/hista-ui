@@ -1,5 +1,6 @@
 import CircularProgress from '@mui/material/CircularProgress'
 import IconButton from '@mui/material/IconButton'
+import { JSX } from 'react'
 
 
 export default function LoadingIconButton(props: {

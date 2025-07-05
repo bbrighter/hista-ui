@@ -7,6 +7,9 @@ export const url = {
     STATUSES: '/statuses',
     HEADACHES: '/headaches',
     MANAGE_SYMPTOMS: '/manage-symptoms',
+    LOGIN: '/login',
+    HOMEPAGE: '/',
+    ERROR: '/error',
 } as const;
 
 export const mealConstants = {

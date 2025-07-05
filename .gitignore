@@ -6,6 +6,6 @@ dist
 .vscode/*
 
 # Different things
-stats.html
+bundle-stats.html
 tsconfig.node.tsbuildinfo
 tsconfig.tsbuildinfo

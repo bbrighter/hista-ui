@@ -9,8 +9,8 @@ import Note from './Note'
 import Notes from './Notes'
 import Pollens from './Pollens'
 import Start from './Start'
-import Statistics from './statistics'
-import Status from './statuses'
+import Statistics from './Statistics'
+import Status from './Status'
 import SymptomManagement from './SymptomManagement'
 
 const indices = [

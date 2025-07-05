@@ -8,7 +8,10 @@ export default defineConfig({
     plugins: [
         react(),
         svgr(),
-        visualizer(),
+        visualizer({
+            filename: 'bundle-stats.html',
+            open: true,
+        }),
     ],
     build: {
         rollupOptions: {
