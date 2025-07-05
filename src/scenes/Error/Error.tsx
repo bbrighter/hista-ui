@@ -11,28 +11,24 @@ export default function ErrorBoundary() {
     const error = useRouteError()
     const goHome = useNavigateHomePage()
     const histaError = useHista(state => state.error)
+    const isError = useHista(state => state.isError)
+
+    const isKnownError = isRouteErrorResponse(error) || isError
+    const useError = isRouteErrorResponse(error) ? error : histaError
 
     return (
         <Container sx={{ padding: '2rem' }}>
-            {isRouteErrorResponse(error) &&
+            {isKnownError ?
                 <Box>
-                    <Typography variant='h1'>{error.status} - {error.statusText}</Typography>
-                    <Typography>{error.data?.message || 'Ein Fehler ist aufgetreten.'}</Typography>
+                    <Typography variant='h1'>{useError.status} - {useError.statusText}</Typography>
+                    <Typography>{useError.data?.message || 'Ein Fehler ist aufgetreten.'}</Typography>
                 </Box>
-            }
-            {histaError &&
-                <Box>
-                    <Typography variant='h1'>{histaError.status} - {histaError.message}</Typography>
-                    <Typography>{histaError.detail || 'Ein Fehler ist aufgetreten.'}</Typography>
-                </Box>
-            }
-            {!isRouteErrorResponse(error) &&
+                :
                 <Box>
                     <Typography variant='h1'>Etwas ist schiefgelaufen.</Typography>
                     <Typography>{(error as Error)?.message}</Typography>
                 </Box>
             }
-
             <Button
                 sx={{ mt: '2rem' }}
                 variant='contained'

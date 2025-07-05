@@ -5,22 +5,26 @@ import { isAPIError } from '../../api/generatedApi'
 import { AuthStore } from '../auth/authStore'
 
 type HistaError = {
-    message: string
+    statusText: string
     status: number
-    detail?: string
+    data?: {
+        message: string
+    }
 }
 
 type State = {
     error?: HistaError
+    isError: boolean
 }
 
 interface Actions {
     setError: (error: unknown) => void
+    resetError: () => void
 }
 
 export interface ErrorStore extends State, Actions { }
 
-const initialState: State = {}
+const initialState: State = { isError: false }
 
 export const createErrorSlice: StateCreator<
     AuthStore & ErrorStore,
@@ -39,10 +43,11 @@ export const createErrorSlice: StateCreator<
                     case 500:
                         set(produce((draft: State) => {
                             draft.error = {
-                                message: error.message,
+                                statusText: error.message,
                                 status: error.status,
-                                detail: error.details,
+                                data: { message: error.details },
                             }
+                            draft.isError = true
                         }))
                         break
                     case 400:
@@ -52,10 +57,11 @@ export const createErrorSlice: StateCreator<
                         }
                         set(produce((draft: State) => {
                             draft.error = {
-                                message: error.message,
+                                statusText: error.message,
                                 status: error.status,
-                                detail: error.details,
+                                data: { message: error.details },
                             }
+                            draft.isError = true
                         }))
                         break
                 }
@@ -63,4 +69,5 @@ export const createErrorSlice: StateCreator<
                 alert('Unbekannter Fehler: ' + error)
             }
         },
+        resetError: () => { set(initialState) },
     }))
