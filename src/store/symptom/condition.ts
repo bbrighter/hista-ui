@@ -1,5 +1,5 @@
 import { entity } from '../../api/generatedApi'
-import { MuiButtonColor } from '../../types'
+import { MuiSliderColor } from '../../types'
 import { respToSymptom, Symptom } from './symptom'
 
 interface Condition {
@@ -15,7 +15,7 @@ export const respToCondition = (resp: entity.ConditionResponse): Condition => ({
 })
 
 
-export const colorFromSeverity = (severity: number | Array<number>): MuiButtonColor => {
+export const colorFromSeverity = (severity: number | Array<number>): MuiSliderColor => {
     let sev = severity
     if (Array.isArray(severity)) {
         sev = Math.max(...severity)

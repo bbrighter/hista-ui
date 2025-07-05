@@ -1,5 +1,5 @@
 
-import { ButtonProps } from '@mui/material/Button'
+import { SliderProps } from '@mui/material/Slider'
 
-export type MuiButtonColor = ButtonProps['color']
+export type MuiSliderColor = SliderProps['color']
 
