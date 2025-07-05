@@ -5,7 +5,6 @@ const config: KnipConfig = {
     'src/__tests__/__mocks__/authStoreMock.ts',
     'src/__tests__/__mocks__/errorStoreMock.ts',
     'src/api/generatedApi.ts',
-    './setupTest.ts',
   ],
   ignoreDependencies: [
     '@types/babel__generator', // Needed for @stylistic/eslint

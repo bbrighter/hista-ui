@@ -5,7 +5,7 @@ import { StateCreator } from 'zustand'
 import { client } from '../../api/api'
 import { AuthStore } from '../auth/authStore'
 import { ErrorStore } from '../error/errorStore'
-import { PutStatusParams, respToStatus,respToStatuses,Statuses } from './status'
+import { PutStatusParams, respToStatus, respToStatuses, Statuses } from './status'
 
 
 interface State {

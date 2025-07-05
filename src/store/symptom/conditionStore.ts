@@ -118,6 +118,7 @@ export const createConditionSlice: StateCreator<
                 const params: api.ConditionEventRequestParams = { date: date.toISOString() }
                 await client.api.PatchDate(get().conditionEvent.id, params)
                 const index = get().conditionEvents.findIndex(v => v.id == get().conditionEvent.id)
+                if (index === -1) return
                 set(produce((draft: State) => {
                     draft.conditionEvent.date = date
                     draft.conditionEvents[index].date = date
