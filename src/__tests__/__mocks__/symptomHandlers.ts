@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw'
+import { http,HttpResponse } from 'msw'
 
 const categories = {
     Categories: [
@@ -60,4 +60,4 @@ const conditionEventHandlers = (baseUrl: string) => (
     ]
 )
 
-export { symptomHandlers, conditionEventHandlers }
+export { conditionEventHandlers,symptomHandlers }

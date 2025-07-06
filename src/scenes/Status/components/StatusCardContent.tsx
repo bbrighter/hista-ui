@@ -1,20 +1,21 @@
-import { useRef, useState } from 'react'
-import { PutStatusParams, Status } from '../../../store/status/status'
-import useHista from '../../../store/store'
-import { useDidUpdateEffect } from '../../../hooks/useDidUpdateEffect'
-import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
-import CardContent from '@mui/material/CardContent'
-import CardActions from '@mui/material/CardActions'
-import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkMode from '@mui/icons-material/DarkMode'
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import HotelIcon from '@mui/icons-material/Hotel';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
 import Grid from '@mui/material/Grid'
-import debounce from 'lodash.debounce'
 import Slider from '@mui/material/Slider'
-import Typography from '@mui/material/Typography'
 import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+import debounce from 'lodash.debounce'
+import { useRef, useState } from 'react'
+
+import { useDidUpdateEffect } from '../../../hooks/useDidUpdateEffect'
+import { PutStatusParams, Status } from '../../../store/status/status'
+import useHista from '../../../store/store'
 
 export default function StatusCardContent(props: {
     status: Status,

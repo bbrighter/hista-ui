@@ -1,8 +1,9 @@
-import { StateCreator } from 'zustand'
-import { login } from '../../api/api'
 import { produce } from 'immer'
-import { ErrorStore } from '../error/errorStore'
+import { StateCreator } from 'zustand'
+
+import { login } from '../../api/api'
 import { ErrCode } from '../../api/generatedApi'
+import { ErrorStore } from '../error/errorStore'
 
 
 interface State {

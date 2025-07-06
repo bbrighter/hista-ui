@@ -19,7 +19,8 @@
     "types": [
       "node",
       "@testing-library/jest-dom",
-    ]
+    ],
+    "forceConsistentCasingInFileNames": true
     /* Linting */
     // "strict": true,
     // "noUnusedLocals": true,

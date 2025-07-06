@@ -1,9 +1,10 @@
-import globals from 'globals';
 import pluginJs from '@eslint/js';
-import pluginReact from 'eslint-plugin-react';
-import tseslint from 'typescript-eslint';
 import stylistic from '@stylistic/eslint-plugin'
+import pluginReact from 'eslint-plugin-react';
 import reactCompiler from 'eslint-plugin-react-compiler'
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
 
 export default [
@@ -23,6 +24,7 @@ export default [
     {
         plugins: {
             '@stylistic': stylistic,
+            'simple-import-sort': simpleImportSort,
         },
     },
     pluginReact.configs.flat.recommended,
@@ -37,6 +39,8 @@ export default [
             'no-console': 'warn',
             'react/react-in-jsx-scope': 'off',
             'react/prop-types': 'off',
+            'simple-import-sort/imports': 'warn',
+            'simple-import-sort/exports': 'error',
         },
     },
     {

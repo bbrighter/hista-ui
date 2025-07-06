@@ -1,10 +1,11 @@
-import { StateCreator } from 'zustand'
-import { client } from '../../api/api'
 import { produce } from 'immer'
-import { Ingredients, respToIngredients } from './ingredients'
+import { StateCreator } from 'zustand'
+
+import { client } from '../../api/api'
+import { entity } from '../../api/generatedApi'
 import { AuthStore } from '../auth/authStore'
 import { ErrorStore } from '../error/errorStore'
-import { entity } from '../../api/generatedApi'
+import { Ingredients, respToIngredients } from './ingredients'
 
 interface State {
     ingredients: Ingredients
@@ -33,7 +34,7 @@ export const createIngredientSlice: StateCreator<
         setIngredients: (ingredients) => {
             let useIngredients: Ingredients = []
             if (Array.isArray(ingredients)) {
-                ingredients = useIngredients
+                useIngredients = ingredients
             } else {
                 useIngredients = respToIngredients(ingredients)
             }

@@ -1,10 +1,11 @@
-import { StateCreator } from 'zustand'
 import { produce } from 'immer'
+import { StateCreator } from 'zustand'
+
+import { client } from '../../api/api'
+import { api } from '../../api/generatedApi'
 import { AuthStore } from '../auth/authStore'
 import { ErrorStore } from '../error/errorStore'
 import { Note, respToNote, respToNotes } from './notes'
-import { client } from '../../api/api'
-import { api } from '../../api/generatedApi'
 
 interface State {
     notes: Array<Note>

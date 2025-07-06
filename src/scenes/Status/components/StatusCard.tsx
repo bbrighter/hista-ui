@@ -1,14 +1,15 @@
+import DeleteIcon from '@mui/icons-material/Delete';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import { Status } from '../../../store/status/status';
-import { useState } from 'react';
-import useHista from '../../../store/store';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import StatusCardContent from './StatusCardContent';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { formatDate } from '../../../utils/formatDate';
 import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useState } from 'react';
+
+import { Status } from '../../../store/status/status';
+import useHista from '../../../store/store';
+import { formatDate } from '../../../utils/formatDate';
+import StatusCardContent from './StatusCardContent';
 
 
 

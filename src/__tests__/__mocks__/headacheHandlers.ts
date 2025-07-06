@@ -1,4 +1,5 @@
-import { http, HttpResponse } from 'msw';
+import { http,HttpResponse } from 'msw';
+
 import { entity } from '../../api/generatedApi';
 
 const headache: entity.HeadacheResponse = {

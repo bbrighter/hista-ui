@@ -1,8 +1,9 @@
+import { produce } from 'immer'
 import { StateCreator } from 'zustand'
+
+import { client } from '../../api/api'
 import { ErrorStore } from '../error/errorStore'
 import { Headache, HeadachePositions, HeadacheSymptoms, HeadacheTypes, respToHeadaches } from './headaches'
-import { client } from '../../api/api'
-import { produce } from 'immer'
 
 interface State {
     headaches: Array<Headache>

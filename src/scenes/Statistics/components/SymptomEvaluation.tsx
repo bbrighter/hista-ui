@@ -1,7 +1,8 @@
-import useHista from '../../../store/store'
-import { useEffect } from 'react'
-import KPIGrid, { KPIGridValues } from './KPIPanel'
 import Box from '@mui/material/Box'
+import { useEffect } from 'react'
+
+import useHista from '../../../store/store'
+import KPIGrid, { KPIGridValues } from './KPIPanel'
 
 export default function SymptomEvaluation() {
     const statistics = useHista(state => state.foodStatistics)

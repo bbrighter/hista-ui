@@ -1,11 +1,12 @@
-import { useState } from 'react'
-import useHista from '../../store/store'
-import { useNavigate } from 'react-router-dom'
-import MealList from './components/MealList'
 import RestaurantIcon from '@mui/icons-material/Restaurant';
-import { url } from '../../constants'
-import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import { url } from '../../constants'
+import useHista from '../../store/store'
+import MealList from './components/MealList'
 
 export default function Meals() {
     const navigate = useNavigate()

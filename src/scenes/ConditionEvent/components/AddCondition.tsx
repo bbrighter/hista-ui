@@ -1,11 +1,12 @@
-import useHista from '../../../store/store';
-import { useEffect, useState } from 'react';
-import AddOrSelectCategory from './AddOrSelectCategory';
 import Autocomplete, { AutocompleteChangeReason } from '@mui/material/Autocomplete';
-import { FilterOptionsState } from '@mui/material/useAutocomplete';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import TextField from '@mui/material/TextField';
+import { FilterOptionsState } from '@mui/material/useAutocomplete';
+import { useEffect, useState } from 'react';
+
+import useHista from '../../../store/store';
+import AddOrSelectCategory from './AddOrSelectCategory';
 
 interface SymptomOption {
     categoryId: number

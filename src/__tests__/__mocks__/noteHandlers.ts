@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw';
+import { http,HttpResponse } from 'msw';
 
 const noteHandlers = (baseUrl: string) => ([
     http.get(baseUrl + '/notes', () => (HttpResponse.json({

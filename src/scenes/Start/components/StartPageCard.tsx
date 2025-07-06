@@ -1,19 +1,20 @@
-import RestaurantIcon from '@mui/icons-material/Restaurant';
-import SickIcon from '@mui/icons-material/Sick';
-import QueryStatsIcon from '@mui/icons-material/QueryStats';
-import NoteIcon from '@mui/icons-material/Note';
-import ForestIcon from '@mui/icons-material/Forest';
-import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural';
-import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
-import { url } from '../../../constants';
-import Grid from '@mui/material/Grid';
+import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural';
+import ForestIcon from '@mui/icons-material/Forest';
+import NoteIcon from '@mui/icons-material/Note';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
+import SickIcon from '@mui/icons-material/Sick';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
+import Grid from '@mui/material/Grid';
 import Icon from '@mui/material/Icon';
 import Typography from '@mui/material/Typography';
-import CardContent from '@mui/material/CardContent';
-import Card from '@mui/material/Card';
+import { useNavigate } from 'react-router-dom';
+
+import { url } from '../../../constants';
 
 export default function StartPageCard(props: {
     type: 'meals' | 'conditionEvents' | 'statistics' | 'notes' | 'pollens' | 'status' | 'headaches'

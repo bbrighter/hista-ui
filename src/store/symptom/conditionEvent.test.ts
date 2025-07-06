@@ -1,4 +1,5 @@
 import { expect, test } from 'vitest';
+
 import { entity } from '../../api/generatedApi';
 import { respToConditionEvent } from './conditionEvent';
 

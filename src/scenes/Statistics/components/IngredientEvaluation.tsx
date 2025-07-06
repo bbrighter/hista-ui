@@ -1,8 +1,9 @@
-import useHista from '../../../store/store'
-import { useEffect } from 'react'
-import KPIGrid, { KPIGridValues } from './KPIPanel'
-import { SymptomStatistics } from '../../../store/statistics/statistics'
 import Box from '@mui/material/Box'
+import { useEffect } from 'react'
+
+import { SymptomStatistics } from '../../../store/statistics/statistics'
+import useHista from '../../../store/store'
+import KPIGrid, { KPIGridValues } from './KPIPanel'
 
 export default function IngredientEvalulation(props: {
     severityFilter: Array<number>

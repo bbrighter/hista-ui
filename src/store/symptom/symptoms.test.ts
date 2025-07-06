@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { entity } from '../../api/generatedApi';
 import { respToSymptoms } from './symptom';
 

@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
+
 import useHista from '../store'
 
 
@@ -68,32 +69,27 @@ describe('mealStore', () => {
     //     expect(store.getState().meal.stressLevel).toEqual(0)
     // })
 
-    // it('getMeal', async () => {
-    //     const mockResponse: entity.MealResponse = {
-    //         id: 1,
-    //         date: '2024-02-01T00:00:00Z',
-    //         foods: [{ id: 1, ingredient: { name: 'name', id: 10 }, foodCondition: 'raw' }],
-    //         stressLevel: 3,
-    //         freshness: 1,
-    //         isAlone: true,
-    //     }
-    //     mockClient.api.GetMeal.mockResolvedValue(mockResponse)
+    it('getMeal', async () => {
+        const store = useHista.getState()
+        await store.getMeal(1)
 
-    //     await store.getState().getMeal(1)
-
-    //     const meal = store.getState().meal
-    //     expect(meal).toBeDefined()
-    //     expect(meal.id).toStrictEqual(1)
-    //     expect(meal.date).toStrictEqual(new Date('2024-02-01T00:00:00Z'))
-    //     expect(meal.stressLevel).toStrictEqual(3)
-    //     expect(meal.freshness).toStrictEqual(1)
-    //     expect(meal.isAlone).toBeTruthy()
-    //     expect(meal.foods).toHaveLength(1)
-    //     expect(meal.foods[0].id).toStrictEqual(1)
-    //     expect(meal.foods[0].condition).toStrictEqual('raw')
-    //     expect(meal.foods[0].ingredientId).toStrictEqual(10)
-    //     expect(meal.foods[0].ingredientName).toStrictEqual('name')
-    // })
+        const meal = store.meal
+        expect(meal).toBeDefined()
+        expect(meal.id).toStrictEqual(1)
+        expect(meal.date).toStrictEqual(new Date('2024-01-01T00:00:00Z'))
+        expect(meal.stressLevel).toStrictEqual(1)
+        expect(meal.freshness).toStrictEqual(2)
+        expect(meal.isAlone).toBeTruthy()
+        expect(meal.foods).toHaveLength(2)
+        expect(meal.foods[0].id).toStrictEqual(10)
+        expect(meal.foods[0].condition).toStrictEqual('raw')
+        expect(meal.foods[0].ingredientId).toStrictEqual(1)
+        expect(meal.foods[0].ingredientName).toStrictEqual('ingredient1')
+        expect(meal.foods[1].id).toStrictEqual(20)
+        expect(meal.foods[1].condition).toStrictEqual('cooked')
+        expect(meal.foods[1].ingredientId).toStrictEqual(2)
+        expect(meal.foods[1].ingredientName).toStrictEqual('ingredient2')
+    })
 
     // it('postFood', async () => {
     //     store.setState({ ...store.getState(), meal: testMeal })

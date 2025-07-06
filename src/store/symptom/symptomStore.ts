@@ -1,10 +1,11 @@
-import { StateCreator } from 'zustand'
-import { client } from '../../api/api'
 import { produce } from 'immer'
-import { SymptomCategories, respToSymptoms } from './symptom'
+import { StateCreator } from 'zustand'
+
+import { client } from '../../api/api'
+import { entity } from '../../api/generatedApi'
 import { AuthStore } from '../auth/authStore'
 import { ErrorStore } from '../error/errorStore'
-import { entity } from '../../api/generatedApi'
+import { respToSymptoms, SymptomCategories } from './symptom'
 
 interface State {
     symptoms: SymptomCategories

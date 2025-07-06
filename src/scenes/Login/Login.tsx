@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useHista from '../../store/store';
-import Button, { ButtonOwnProps } from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import Button, { ButtonOwnProps } from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
-import CircularProgress from '@mui/material/CircularProgress';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import useHista from '../../store/store';
 
 
 type LoadingState = 'loading' | 'error' | 'initial'

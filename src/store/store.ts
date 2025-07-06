@@ -1,15 +1,16 @@
 import { create } from 'zustand'
-import { createAuthSlice, AuthStore } from './auth/authStore'
-import { createMealSlice, MealStore } from './meal/mealStore'
-import { createConditionSlice, ConditionStore } from './symptom/conditionStore'
-import { ErrorStore, createErrorSlice } from './error/errorStore'
-import { StatisticsStore, createStatisticsSlice } from './statistics/statisticsStore'
-import { NotesStore, createNotesSlice } from './notes/notesStore'
-import { PollenStore, createPollensSlice } from './pollen/pollenStore'
-import { createStatusSlice, StatusStore } from './status/statusStore'
-import { createHeadacheSlice, HeadacheStore } from './headaches/headacheStore'
-import { createIngredientSlice, IngredientStore } from './meal/ingredientStore'
-import { createSymptomSlice, SymptomStore } from './symptom/symptomStore'
+
+import { AuthStore, createAuthSlice } from './auth/authStore'
+import { createErrorSlice,ErrorStore } from './error/errorStore'
+import { createHeadacheSlice,HeadacheStore } from './headaches/headacheStore'
+import { createIngredientSlice,IngredientStore } from './meal/ingredientStore'
+import { createMealSlice,MealStore } from './meal/mealStore'
+import { createNotesSlice,NotesStore } from './notes/notesStore'
+import { createPollensSlice,PollenStore } from './pollen/pollenStore'
+import { createStatisticsSlice,StatisticsStore } from './statistics/statisticsStore'
+import { createStatusSlice,StatusStore } from './status/statusStore'
+import { ConditionStore, createConditionSlice } from './symptom/conditionStore'
+import { createSymptomSlice,SymptomStore } from './symptom/symptomStore'
 
 const useHista = create<
     AuthStore &

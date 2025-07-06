@@ -1,5 +1,6 @@
 
 import Grid from '@mui/material/Grid';
+
 import StartPageCard from './components/StartPageCard';
 
 export default function Start() {

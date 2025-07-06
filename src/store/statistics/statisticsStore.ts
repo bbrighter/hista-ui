@@ -1,15 +1,16 @@
+import { produce } from 'immer';
 import { StateCreator } from 'zustand';
-import { RawDiary, respToRawDiary } from './diary';
+
+import { client } from '../../api/api';
+import { api } from '../../api/generatedApi';
 import { AuthStore } from '../auth/authStore';
 import { ErrorStore } from '../error/errorStore';
+import { IngredientStore } from '../meal/ingredientStore';
 import { MealStore } from '../meal/mealStore';
 import { ConditionStore } from '../symptom/conditionStore';
-import { client } from '../../api/api';
-import { produce } from 'immer';
-import { api } from '../../api/generatedApi';
-import { FoodStatistics, SymptomStatistics, respToStatistics, respToSymptomStatistics } from './statistics';
-import { IngredientStore } from '../meal/ingredientStore';
 import { SymptomStore } from '../symptom/symptomStore';
+import { RawDiary, respToRawDiary } from './diary';
+import { FoodStatistics, respToStatistics,respToSymptomStatistics,SymptomStatistics } from './statistics';
 
 interface State {
     diaryEntries: Array<RawDiary>

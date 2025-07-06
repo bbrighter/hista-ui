@@ -1,23 +1,30 @@
-import { StateCreator } from 'zustand'
 import { produce } from 'immer'
-import { AuthStore } from '../auth/authStore'
-import { isAPIError } from '../../api/generatedApi'
+import { StateCreator } from 'zustand'
 
-interface State {
-    errorMessage: string
+import { isAPIError } from '../../api/generatedApi'
+import { AuthStore } from '../auth/authStore'
+
+type HistaError = {
+    statusText: string
     status: number
+    data?: {
+        message: string
+    }
+}
+
+type State = {
+    error?: HistaError
+    isError: boolean
 }
 
 interface Actions {
     setError: (error: unknown) => void
+    resetError: () => void
 }
 
 export interface ErrorStore extends State, Actions { }
 
-const initialState: State = {
-    errorMessage: 'no error',
-    status: 0,
-}
+const initialState: State = { isError: false }
 
 export const createErrorSlice: StateCreator<
     AuthStore & ErrorStore,
@@ -35,10 +42,13 @@ export const createErrorSlice: StateCreator<
                         break
                     case 500:
                         set(produce((draft: State) => {
-                            draft.errorMessage = error.message
+                            draft.error = {
+                                statusText: error.message,
+                                status: error.status,
+                                data: { message: error.details },
+                            }
+                            draft.isError = true
                         }))
-                        alert('Etwas ist furchtbar schief gelaufen! ' + get().errorMessage)
-
                         break
                     case 400:
                         if (error.message == 'invalid uuid') {
@@ -46,13 +56,18 @@ export const createErrorSlice: StateCreator<
                             break
                         }
                         set(produce((draft: State) => {
-                            draft.errorMessage = error.message
+                            draft.error = {
+                                statusText: error.message,
+                                status: error.status,
+                                data: { message: error.details },
+                            }
+                            draft.isError = true
                         }))
-                        alert('Huch. Da habe ich mit gerechnet, aber es sollte nicht passieren: ' + get().errorMessage)
                         break
                 }
             } else {
                 alert('Unbekannter Fehler: ' + error)
             }
         },
+        resetError: () => { set(initialState) },
     }))

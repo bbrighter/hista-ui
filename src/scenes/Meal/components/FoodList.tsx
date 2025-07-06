@@ -1,16 +1,17 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import useHista from '../../../store/store';
-import { mealConstants } from '../../../constants';
-import { FoodCondition } from '../../../store/meal/food';
-import { useState } from 'react';
-import LoadingIconButton from '../../components/LoadingIconButton';
+import CircularProgress from '@mui/material/CircularProgress';
+import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import Typography from '@mui/material/Typography';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ToggleButton from '@mui/material/ToggleButton';
-import CircularProgress from '@mui/material/CircularProgress';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Typography from '@mui/material/Typography';
+import { useState } from 'react';
+
+import { mealConstants } from '../../../constants';
+import { FoodCondition } from '../../../store/meal/food';
+import useHista from '../../../store/store';
 
 export default function FoodList() {
     const food = useHista(state => state.meal.foods)
@@ -37,11 +38,14 @@ export default function FoodList() {
             {food.map(f => (
                 <ListItem key={f.id}
                     secondaryAction={
-                        <LoadingIconButton
+                        <IconButton
+                            title='Löschen'
                             onClick={() => onDelete(f.id)}
-                            isLoading={isDeleteLoading == f.id}
-                            icon={<DeleteIcon />}
-                        />
+                            loading={isDeleteLoading == f.id}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+
                     }>
                     <ListItemText>
                         <Typography noWrap >
