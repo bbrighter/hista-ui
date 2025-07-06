@@ -1,5 +1,5 @@
 import { headacheHandlers } from './headacheHandlers'
-import { ingredientHandlers, mealHandlers } from './mealHandlers'
+import { foodHandlers, ingredientHandlers, mealHandlers } from './mealHandlers'
 import { noteHandlers } from './noteHandlers'
 import { pollenHandlers } from './pollenHandlers'
 import { statusHandlers } from './statusHandler'
@@ -14,6 +14,7 @@ const handlers = [
     ...conditionEventHandlers(baseUrl),
     ...mealHandlers(baseUrl),
     ...ingredientHandlers(baseUrl),
+    ...foodHandlers(baseUrl),
     ...noteHandlers(baseUrl),
     ...headacheHandlers(baseUrl),
     ...pollenHandlers(baseUrl),

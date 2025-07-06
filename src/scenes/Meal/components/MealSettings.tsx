@@ -74,7 +74,7 @@ export default function MealSettings() {
                         onChange={setFreshness}
                         max={2}
                         min={0}
-                        colorMapping={colorFromFreshness}
+                        muiColorMapping={colorFromFreshness}
                         initialValue={meal.freshness}
                         iconMapping={iconFromFreshness}
                     />}
@@ -90,12 +90,14 @@ export default function MealSettings() {
                         <ToggleButton
                             sx={{ width: '3rem' }}
                             value={true}
+                            title='Alleine'
                         >
                             {isLoading == true ? <CircularProgress size={20} /> : <PersonIcon />}
                         </ToggleButton>
                         <ToggleButton
                             value={false}
                             sx={{ width: '3rem' }}
+                            title='Zusammen'
                         >
                             {isLoading == false ? <CircularProgress size={20} /> : <PeopleIcon />}
                         </ToggleButton>
