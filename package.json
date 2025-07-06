@@ -14,7 +14,7 @@
     "knip": "knip"
   },
   "engines": {
-    "node": ">=24.0.0",
+    "node": ">=22.0.0",
     "npm": ">=11.0.0"
   },
   "dependencies": {
