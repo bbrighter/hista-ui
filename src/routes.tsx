@@ -41,7 +41,7 @@ const rawRoutes: Array<RawRoute> = [
     },
     {
         path: url.STATISTICS,
-        element: lazy(() => import('./scenes/Statistics')),
+        element: lazy(() => import('./scenes/Statistics2')),
         name: 'Statistics',
     },
     {
