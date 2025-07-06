@@ -34,7 +34,7 @@ export const createIngredientSlice: StateCreator<
         setIngredients: (ingredients) => {
             let useIngredients: Ingredients = []
             if (Array.isArray(ingredients)) {
-                ingredients = useIngredients
+                useIngredients = ingredients
             } else {
                 useIngredients = respToIngredients(ingredients)
             }

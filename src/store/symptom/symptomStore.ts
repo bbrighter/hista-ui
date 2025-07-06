@@ -5,7 +5,7 @@ import { client } from '../../api/api'
 import { entity } from '../../api/generatedApi'
 import { AuthStore } from '../auth/authStore'
 import { ErrorStore } from '../error/errorStore'
-import { respToSymptoms,SymptomCategories } from './symptom'
+import { respToSymptoms, SymptomCategories } from './symptom'
 
 interface State {
     symptoms: SymptomCategories
