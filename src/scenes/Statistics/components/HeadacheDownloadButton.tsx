@@ -68,15 +68,23 @@ export default function DownloadButton() {
             [
                 h.date,
                 h.severity,
-                ...validHeadachePositions.map(v => h.positions.some(p => p.value == v.value) ? 'x' : ''),
-                ...validHeadacheTypes.map(v => h.types.some(t => t.value == v.value) ? 'x' : ''),
-                ...validHeadacheSymptoms.map(v => h.symptoms.some(s => s.value == v.value) ? 'x' : ''),
+                ...validHeadachePositions.map(v => h.positions.some(p => p.value == v.value) ? '✓' : ''),
+                ...validHeadacheTypes.map(v => h.types.some(t => t.value == v.value) ? '✓' : ''),
+                ...validHeadacheSymptoms.map(v => h.symptoms.some(s => s.value == v.value) ? '✓' : ''),
                 h.description,
             ]
         ))
 
         sheet.addRows(data)
         sheet.getColumn(1).numFmt = 'dd.mm.yyyy hh:mm'
+        sheet.columns.forEach(col => {
+            let maxLength = 0
+            col.eachCell({ includeEmpty: true }, (cell) => {
+                const v = cell.value ? cell.value.toString() : ''
+                maxLength = Math.max(maxLength, v.length)
+            })
+            col.width = maxLength + 2
+        })
 
         const buffer = await book.xlsx.writeBuffer()
         const blob = new Blob([buffer], {

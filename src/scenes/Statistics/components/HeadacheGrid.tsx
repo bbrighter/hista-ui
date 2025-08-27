@@ -10,10 +10,10 @@ export default function HeadacheGrid() {
     const columns: Array<GridColDef> = [
         { field: 'date', headerName: 'Zeit' },
         { field: 'severity', headerName: 'Schwere' },
-        { field: 'description', headerName: 'Beschreibung' },
         ...validHeadachePositions.map(v => ({ field: v.value, headerName: v.label })),
         ...validHeadacheTypes.map(v => ({ field: v.value, headerName: v.label })),
         ...validHeadacheSymptoms.map(s => ({ field: s.value, headerName: s.label })),
+        { field: 'description', headerName: 'Beschreibung' },
     ]
 
     const columnGroupingModel: GridColumnGroupingModel = [

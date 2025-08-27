@@ -43,6 +43,14 @@ const writeRawDiaryToExcel = async (diaryEntries: RawDiary[]) => {
         ]
     ))
     sheet.addRows(data)
+    sheet.columns.forEach(col => {
+        let maxLength = 0
+        col.eachCell({ includeEmpty: true }, (cell) => {
+            const v = cell.value ? cell.value.toString() : ''
+            maxLength = Math.max(maxLength, v.length)
+        })
+        col.width = maxLength + 2
+    })
 
     const buffer = await book.xlsx.writeBuffer()
     const blob = new Blob([buffer], {
