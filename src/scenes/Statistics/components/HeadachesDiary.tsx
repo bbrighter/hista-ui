@@ -1,0 +1,18 @@
+import Box from '@mui/material/Box';
+import { useEffect } from 'react';
+
+import useHista from '../../../store/store';
+import HeadacheDownloadButton from './HeadacheDownloadButton';
+import HeadacheGrid from './HeadacheGrid';
+
+export default function HeadacheDiary() {
+    const getHeadaches = useHista(state => state.getHeadaches)
+    useEffect(() => { getHeadaches() }, [getHeadaches])
+
+    return (
+        <Box>
+            <HeadacheDownloadButton />
+            <HeadacheGrid />
+        </Box>
+    )
+}

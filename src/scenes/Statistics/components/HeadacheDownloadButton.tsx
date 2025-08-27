@@ -95,9 +95,11 @@ export default function DownloadButton() {
 
     return (
         <Button
+            sx={{ marginTop: '1rem', marginBottom: '1rem' }}
             startIcon={<Download />}
             onClick={onClick}
             loading={loading}
+            variant='outlined'
         >
             Kopfschmerzen herunterladen
         </Button>
