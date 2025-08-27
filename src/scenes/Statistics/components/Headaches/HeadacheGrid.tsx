@@ -1,6 +1,6 @@
 import { DataGrid, GridRowsProp } from '@mui/x-data-grid';
 
-import useHista from '../../../store/store';
+import useHista from '../../../../store/store';
 import { headacheColumnGroupingModel, headacheGridColumns } from './headacheColumns';
 
 
@@ -30,13 +30,11 @@ export default function HeadacheGrid() {
 
 
     return (
-        <div style={{ height: '80vh', width: '100%' }}>
-            <DataGrid
-                columns={headacheGridColumns}
-                rows={rows}
-                columnGroupingModel={headacheColumnGroupingModel}
-                disableColumnMenu
-            />
-        </div>
+        <DataGrid
+            columns={headacheGridColumns}
+            rows={rows}
+            columnGroupingModel={headacheColumnGroupingModel}
+            disableColumnMenu
+        />
     )
 }

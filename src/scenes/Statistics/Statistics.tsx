@@ -3,7 +3,7 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { JSX, useState } from 'react';
 
-import Charts from './Charts';
+import Charts from './components/Charts';
 import Diary from './components/Diary';
 import HeadacheDiary from './components/HeadachesDiary';
 

@@ -3,8 +3,8 @@ import Button from '@mui/material/Button';
 import { Workbook } from 'exceljs';
 import { useState } from 'react';
 
-import { validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from '../../../store/headaches/headaches';
-import useHista from '../../../store/store';
+import { validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from '../../../../store/headaches/headaches';
+import useHista from '../../../../store/store';
 import { headacheExcelColumnGrouping } from './headacheColumns';
 
 

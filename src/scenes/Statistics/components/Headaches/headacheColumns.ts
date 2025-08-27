@@ -1,6 +1,6 @@
 import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
 
-import { validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from '../../../store/headaches/headaches';
+import { validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from '../../../../store/headaches/headaches';
 
 export const headacheGridColumns: Array<GridColDef> = [
     { field: 'date', headerName: 'Zeit' },

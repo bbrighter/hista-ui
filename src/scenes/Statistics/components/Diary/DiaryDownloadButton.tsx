@@ -2,8 +2,8 @@ import DownloadIcon from '@mui/icons-material/Download';
 import Button from '@mui/material/Button';
 import { Workbook } from 'exceljs';
 
-import { RawDiary } from '../../../store/statistics/diary';
-import useHista from '../../../store/store';
+import { RawDiary } from '../../../../store/statistics/diary';
+import useHista from '../../../../store/store';
 import { diaryExcelColumns } from './diaryColumns';
 
 export default function DiaryDownloadButton() {

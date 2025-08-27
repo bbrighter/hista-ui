@@ -1,6 +1,6 @@
 import { DataGrid, GridRowsProp } from '@mui/x-data-grid';
 
-import useHista from '../../../store/store';
+import useHista from '../../../../store/store';
 import { diaryGridColumns } from './diaryColumns';
 
 export default function DiaryGrid() {
@@ -20,12 +20,10 @@ export default function DiaryGrid() {
 
 
     return (
-        <div style={{ height: '80vh', width: '100%' }}>
-            <DataGrid
-                columns={diaryGridColumns}
-                rows={rows}
-                disableColumnMenu
-            />
-        </div>
+        <DataGrid
+            columns={diaryGridColumns}
+            rows={rows}
+            disableColumnMenu
+        />
     )
 }

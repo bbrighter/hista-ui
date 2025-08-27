@@ -5,25 +5,27 @@ import ListItemText from '@mui/material/ListItemText';
 import TextField from '@mui/material/TextField';
 import { SyntheticEvent, useEffect, useState } from 'react';
 
-import useHista from '../../../store/store';
+import useHista from '../../../../store/store';
 
 interface Option {
     id: number
     name: string
+    categoryId: number
+    categoryName: string
 }
 
 type Options = Array<Option>
 
-export default function IngredientSelect(props: {
+export default function SymptomSelect(props: {
     onChange: (ids: Array<number>) => void
 }) {
-    const getIngredients = useHista(state => state.getIngredients)
-    const ingredients = useHista(state => state.ingredients)
+    const getSymptoms = useHista(state => state.getSymptoms)
+    const symptoms = useHista(state => state.symptoms)
     const [values, setValues] = useState<Options>([])
 
     useEffect(() => {
-        if (ingredients.length == 0) {
-            getIngredients()
+        if (symptoms.length == 0) {
+            getSymptoms()
         }
     }, [])
 
@@ -31,10 +33,12 @@ export default function IngredientSelect(props: {
         props.onChange(values.map(v => v.id))
     }, [values])
 
-    const options: Options = ingredients.map(ing => ({
-        id: ing.id,
-        name: ing.name,
-    }))
+    const options: Options = symptoms.flatMap(c => c.symptoms.map(s => ({
+        id: s.id,
+        name: s.name,
+        categoryId: s.categoryId,
+        categoryName: c.categoryName,
+    })))
 
     const handleChange = (_: SyntheticEvent, value: Options) => {
         setValues(value)
@@ -52,9 +56,10 @@ export default function IngredientSelect(props: {
             renderInput={(params) => (
                 <TextField
                     {...params}
-                    label="Essen"
+                    label="Symptome"
                 />
             )}
+            groupBy={(option) => option.categoryName}
             value={values}
             onChange={handleChange}
             renderOption={(props, options, { selected }) => (
