@@ -4,6 +4,7 @@ import { Workbook } from 'exceljs';
 
 import { RawDiary } from '../../../store/statistics/diary';
 import useHista from '../../../store/store';
+import { diaryExcelColumns } from './diaryColumns';
 
 export default function DiaryDownloadButton() {
     const diaryEntries = useHista(state => state.diaryEntries)
@@ -26,11 +27,7 @@ const writeRawDiaryToExcel = async (diaryEntries: RawDiary[]) => {
     const book = new Workbook()
     const sheet = book.addWorksheet('Rohdaten')
 
-    const columnHeaders = ['Datum', 'Stunde', 'Typ', 'Was', 'Schwere', 'Kategorie']
-
-    columnHeaders.forEach((header, index) => {
-        sheet.getCell(1, index + 1).value = header
-    })
+    sheet.columns = diaryExcelColumns
 
     const data = diaryEntries.map(entry => (
         [

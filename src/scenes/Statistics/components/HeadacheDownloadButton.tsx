@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 import { validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from '../../../store/headaches/headaches';
 import useHista from '../../../store/store';
+import { headacheExcelColumnGrouping } from './headacheColumns';
 
 
 export default function DownloadButton() {
@@ -20,35 +21,8 @@ export default function DownloadButton() {
         const book = new Workbook()
         const sheet = book.addWorksheet('Kopfschmerz')
 
-        const columnHeaders = [
-            {
-                sharedHeader: '',
-                columns: ['Datum'],
-            },
-            {
-                sharedHeader: '',
-                columns: ['Schwere'],
-            },
-            {
-                sharedHeader: 'Position',
-                columns: validHeadachePositions.map(p => p.label),
-            },
-            {
-                sharedHeader: 'Typ',
-                columns: validHeadacheTypes.map(t => t.label),
-            },
-            {
-                sharedHeader: 'Symptom',
-                columns: validHeadacheSymptoms.map(s => s.label),
-            },
-            {
-                sharedHeader: '',
-                columns: ['Notizen'],
-            },
-        ]
-
         let currentCol = 1
-        columnHeaders.forEach(group => {
+        headacheExcelColumnGrouping.forEach(group => {
             const colCount = group.columns.length
             if (colCount == 1) {
                 sheet.getCell(2, currentCol).value = group.columns[0]
