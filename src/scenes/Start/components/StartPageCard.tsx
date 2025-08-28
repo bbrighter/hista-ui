@@ -1,4 +1,3 @@
-import styled from '@emotion/styled';
 import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural';
 import ForestIcon from '@mui/icons-material/Forest';
 import NoteIcon from '@mui/icons-material/Note';
@@ -10,80 +9,30 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Grid from '@mui/material/Grid';
-import Icon from '@mui/material/Icon';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 
 import { url } from '../../../constants';
 
-export default function StartPageCard(props: {
-    type: 'meals' | 'conditionEvents' | 'statistics' | 'notes' | 'pollens' | 'status' | 'headaches'
-}) {
+export default function StartPageCard({ type }: { type: keyof typeof CARD_CONFIG }) {
     const navigate = useNavigate()
-
-    let title = ''
-    let content = ''
-    let icon
-    let navigateTo = ''
-    switch (props.type) {
-        case 'meals':
-            title = 'Mahlzeiten'
-            content = 'Mahlzeiten hinzufügen, ansehen und bearbeiten'
-            icon = <RestaurantIcon />
-            navigateTo = url.MEAL
-            break
-        case 'conditionEvents':
-            title = 'Symptome'
-            content = 'Symptome aufzeichnen'
-            icon = <SickIcon />
-            navigateTo = url.CONDITION_EVENTS
-            break
-        case 'statistics':
-            title = 'Auswertungen'
-            content = 'Ernährungstagebuch und mehr'
-            icon = <QueryStatsIcon />
-            navigateTo = url.STATISTICS
-            break
-        case 'notes':
-            title = 'Notizen'
-            content = 'Notizen anfertigen und durchsuchen'
-            icon = <NoteIcon />
-            navigateTo = url.NOTES
-            break
-        case 'pollens':
-            title = 'Pollen'
-            content = 'Pollenflug bewundern'
-            icon = <ForestIcon />
-            navigateTo = url.POLLENS
-            break
-        case 'status':
-            title = 'Status'
-            content = 'Wie geht\'s denn heute?'
-            icon = <SelfImprovementIcon />
-            navigateTo = url.STATUSES
-            break
-        case 'headaches':
-            title = 'Kopfweh'
-            content = 'Kopfschmerztagebuch'
-            icon = <FaceRetouchingNaturalIcon />
-            navigateTo = url.HEADACHES
-    }
-
+    const { title, content, icon, navigateTo } = CARD_CONFIG[type];
     return (
-        <Grid
-            sx={{ width: '50%', minWidth: '350px' }}
-        >
-            <StyledCard
-                sx={{ width: '100%' }}
+        <Grid size={{ xs: 12, sm: 12, md: 6, lg: 4 }}>
+            <Card
+                sx={{
+                    width: '100%',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.2s ease',
+                    '&:hover': {
+                        backgroundColor: 'action.hover', // uses theme color
+                    },
+                }}
                 variant="outlined"
                 onClick={() => navigate(navigateTo)}
             >
                 <CardHeader
-                    avatar={
-                        <Icon>
-                            {icon}
-                        </Icon>
-                    }
+                    avatar={icon}
                     title={
                         <Typography variant="h4">{title}</Typography>}>
                 </CardHeader>
@@ -92,14 +41,52 @@ export default function StartPageCard(props: {
                         {content}
                     </Typography>
                 </CardContent>
-            </StyledCard>
-        </Grid>
+            </Card>
+        </Grid >
     )
 }
 
-const StyledCard = styled(Card)`
-    :hover{
-        cursor: pointer;
-        background-color: rgba(255,255,255,0.1);
-    }
-`
+const CARD_CONFIG = {
+    meals: {
+        title: 'Mahlzeiten',
+        content: 'Mahlzeiten hinzufügen, ansehen und bearbeiten',
+        icon: <RestaurantIcon />,
+        navigateTo: url.MEAL,
+    },
+    conditionEvents: {
+        title: 'Symptome',
+        content: 'Symptome aufzeichnen',
+        icon: <SickIcon />,
+        navigateTo: url.CONDITION_EVENTS,
+    },
+    statistics: {
+        title: 'Auswertungen',
+        content: 'Ernährungstagebuch und mehr',
+        icon: <QueryStatsIcon />,
+        navigateTo: url.STATISTICS,
+    },
+    notes: {
+        title: 'Notizen',
+        content: 'Notizen anfertigen und durchsuchen',
+        icon: <NoteIcon />,
+        navigateTo: url.NOTES,
+    },
+    pollens: {
+        title: 'Pollen',
+        content: 'Pollenflug bewundern',
+        icon: <ForestIcon />,
+        navigateTo: url.POLLENS,
+    },
+    status: {
+        title: 'Status',
+        content: 'Wie geht\'s denn heute?',
+        icon: <SelfImprovementIcon />,
+        navigateTo: url.STATUSES,
+    },
+    headaches: {
+        title: 'Kopfweh',
+        content: 'Kopfschmerztagebuch',
+        icon: <FaceRetouchingNaturalIcon />,
+        navigateTo: url.HEADACHES,
+    },
+} as const;
