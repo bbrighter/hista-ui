@@ -1,9 +1,9 @@
-import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
+import { GridColDef, GridColumnGroupingModel, GridRowsProp } from '@mui/x-data-grid';
 
-import { validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from '../../../../store/headaches/headaches';
+import { Headache, validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from '../../../../store/headaches/headaches';
 
 export const headacheGridColumns: Array<GridColDef> = [
-    { field: 'date', headerName: 'Zeit' },
+    { field: 'date', headerName: 'Zeit', type: 'dateTime' },
     { field: 'severity', headerName: 'Schwere' },
     ...validHeadachePositions.map(v => ({ field: v.value, headerName: v.label })),
     ...validHeadacheTypes.map(v => ({ field: v.value, headerName: v.label })),
@@ -36,3 +36,24 @@ export const headacheExcelColumnGrouping: Array<GroupedColumn> = headacheGridCol
     }
     return acc
 }, [])
+
+export const headacheRows = (headaches: Array<Headache>): GridRowsProp => {
+    return headaches.map((h, i) => ({
+        id: i,
+        date: h.date,
+        severity: h.severity,
+        description: h.description,
+        ...h.positions.reduce((acc, { value }) => {
+            acc[value] = '✓'
+            return acc
+        }, {}),
+        ...h.types.reduce((acc, { value }) => {
+            acc[value] = '✓'
+            return acc
+        }, {}),
+        ...h.symptoms.reduce((acc, { value }) => {
+            acc[value] = '✓'
+            return acc
+        }, {}),
+    }))
+}

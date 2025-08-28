@@ -4,7 +4,7 @@ import { Workbook } from 'exceljs';
 
 import { RawDiary } from '../../../../store/statistics/diary';
 import useHista from '../../../../store/store';
-import { diaryExcelColumns } from './diaryColumns';
+import { diaryExcelColumns, diaryRows } from './diaryColumns';
 
 export default function DiaryDownloadButton() {
     const diaryEntries = useHista(state => state.diaryEntries)
@@ -18,7 +18,7 @@ export default function DiaryDownloadButton() {
             startIcon={<DownloadIcon />}
             variant="outlined"
             onClick={onClick}>
-            Ernährungstagebuch exportieren
+            Ernährungstagebuch herunterladen
         </Button>
     )
 }
@@ -28,18 +28,8 @@ const writeRawDiaryToExcel = async (diaryEntries: RawDiary[]) => {
     const sheet = book.addWorksheet('Rohdaten')
 
     sheet.columns = diaryExcelColumns
-
-    const data = diaryEntries.map(entry => (
-        [
-            entry.DateString,
-            entry.Hour,
-            entry.Type,
-            entry.What,
-            entry.Severity,
-            entry.Category,
-        ]
-    ))
-    sheet.addRows(data)
+    const data = diaryRows(diaryEntries)
+    sheet.addRows([...data])
     sheet.columns.forEach(col => {
         let maxLength = 0
         col.eachCell({ includeEmpty: true }, (cell) => {
@@ -48,6 +38,7 @@ const writeRawDiaryToExcel = async (diaryEntries: RawDiary[]) => {
         })
         col.width = maxLength + 2
     })
+    sheet.getColumn('date').numFmt = 'dd.mm.YYYY hh:mm'
 
     const buffer = await book.xlsx.writeBuffer()
     const blob = new Blob([buffer], {

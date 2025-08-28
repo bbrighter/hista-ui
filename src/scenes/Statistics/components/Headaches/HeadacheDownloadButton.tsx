@@ -3,9 +3,8 @@ import Button from '@mui/material/Button';
 import { Workbook } from 'exceljs';
 import { useState } from 'react';
 
-import { validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from '../../../../store/headaches/headaches';
 import useHista from '../../../../store/store';
-import { headacheExcelColumnGrouping } from './headacheColumns';
+import { headacheExcelColumnGrouping, headacheGridColumns, headacheRows } from './headacheColumns';
 
 
 export default function DownloadButton() {
@@ -21,6 +20,10 @@ export default function DownloadButton() {
         const book = new Workbook()
         const sheet = book.addWorksheet('Kopfschmerz')
 
+        sheet.columns = headacheGridColumns.map(c => ({
+            'header': c.headerName,
+            'key': c.field,
+        }))
         let currentCol = 1
         headacheExcelColumnGrouping.forEach(group => {
             const colCount = group.columns.length
@@ -37,20 +40,9 @@ export default function DownloadButton() {
             }
             currentCol += colCount
         })
-
-        const data = headaches.map(h => (
-            [
-                h.date,
-                h.severity,
-                ...validHeadachePositions.map(v => h.positions.some(p => p.value == v.value) ? '✓' : ''),
-                ...validHeadacheTypes.map(v => h.types.some(t => t.value == v.value) ? '✓' : ''),
-                ...validHeadacheSymptoms.map(v => h.symptoms.some(s => s.value == v.value) ? '✓' : ''),
-                h.description,
-            ]
-        ))
-
-        sheet.addRows(data)
-        sheet.getColumn(1).numFmt = 'dd.mm.yyyy hh:mm'
+        const data = headacheRows(headaches)
+        sheet.addRows([...data])
+        sheet.getColumn('date').numFmt = 'dd.mm.yyyy hh:mm'
         sheet.columns.forEach(col => {
             let maxLength = 0
             col.eachCell({ includeEmpty: true }, (cell) => {
