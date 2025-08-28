@@ -2,8 +2,7 @@ import { api, entity } from '../../api/generatedApi'
 import { mealConstants } from '../../constants'
 
 export interface RawDiary {
-    DateString: string
-    Hour: string
+    Date: Date
     Type: DiaryEntryType
     What: string
     Severity: string
@@ -14,8 +13,7 @@ type DiaryEntryType = 'Essen' | 'Symptom' | 'Notiz' | 'Pollen'
 
 export const respToRawDiary = (resp: api.DiaryResp): Array<RawDiary> => {
     return resp.diaries.map(d => ({
-        DateString: new Date(d.date).toLocaleDateString('de-DE'),
-        Hour: new Date(d.date).toLocaleTimeString('de-DE'),
+        Date: new Date(d.date),
         What: d.content,
         Category: d.category,
         ...respToTypeAndSeverity(d),

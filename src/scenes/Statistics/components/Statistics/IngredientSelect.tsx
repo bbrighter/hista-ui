@@ -5,27 +5,25 @@ import ListItemText from '@mui/material/ListItemText';
 import TextField from '@mui/material/TextField';
 import { SyntheticEvent, useEffect, useState } from 'react';
 
-import useHista from '../../../store/store';
+import useHista from '../../../../store/store';
 
 interface Option {
     id: number
     name: string
-    categoryId: number
-    categoryName: string
 }
 
 type Options = Array<Option>
 
-export default function SymptomSelect(props: {
+export default function IngredientSelect(props: {
     onChange: (ids: Array<number>) => void
 }) {
-    const getSymptoms = useHista(state => state.getSymptoms)
-    const symptoms = useHista(state => state.symptoms)
+    const getIngredients = useHista(state => state.getIngredients)
+    const ingredients = useHista(state => state.ingredients)
     const [values, setValues] = useState<Options>([])
 
     useEffect(() => {
-        if (symptoms.length == 0) {
-            getSymptoms()
+        if (ingredients.length == 0) {
+            getIngredients()
         }
     }, [])
 
@@ -33,12 +31,10 @@ export default function SymptomSelect(props: {
         props.onChange(values.map(v => v.id))
     }, [values])
 
-    const options: Options = symptoms.flatMap(c => c.symptoms.map(s => ({
-        id: s.id,
-        name: s.name,
-        categoryId: s.categoryId,
-        categoryName: c.categoryName,
-    })))
+    const options: Options = ingredients.map(ing => ({
+        id: ing.id,
+        name: ing.name,
+    }))
 
     const handleChange = (_: SyntheticEvent, value: Options) => {
         setValues(value)
@@ -56,10 +52,9 @@ export default function SymptomSelect(props: {
             renderInput={(params) => (
                 <TextField
                     {...params}
-                    label="Symptome"
+                    label="Essen"
                 />
             )}
-            groupBy={(option) => option.categoryName}
             value={values}
             onChange={handleChange}
             renderOption={(props, options, { selected }) => (

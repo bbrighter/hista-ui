@@ -3,10 +3,11 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { JSX, useState } from 'react';
 
-import Charts from './Charts';
+import Charts from './components/Charts';
 import Diary from './components/Diary';
+import HeadacheDiary from './components/HeadachesDiary';
 
-type TabValue = 0 | 1 | 2
+type TabValue = 0 | 1 | 2 | 3
 interface TabType {
     label: string
     value: TabValue
@@ -23,7 +24,8 @@ export default function Statistics() {
     const tabs: Array<TabType> = [
         { label: 'Symptom', value: 0, child: <Charts type='symptom' /> },
         { label: 'Essen', value: 1, child: <Charts type='ingredient' /> },
-        { label: 'Export', value: 2, child: <Diary /> },
+        { label: 'Ernährungstagebuch', value: 2, child: <Diary /> },
+        { label: 'Kopfschmerzen', value: 3, child: <HeadacheDiary /> },
     ]
 
     return (

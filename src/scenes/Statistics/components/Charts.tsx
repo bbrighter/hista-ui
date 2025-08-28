@@ -2,13 +2,13 @@ import Grid from '@mui/material/Grid'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 
-import useHista from '../../store/store'
-import IngredientEvalulation from './components/IngredientEvaluation'
-import IngredientSelect from './components/IngredientSelect'
-import SeverityFilter from './components/SeverityFilter'
-import StatisticsDateInput from './components/StatisticsDateInput'
-import SymptomEvaluation from './components/SymptomEvaluation'
-import SymptomSelect from './components/SymptomSelect'
+import useHista from '../../../store/store'
+import IngredientEvalulation from './Statistics/IngredientEvaluation'
+import IngredientSelect from './Statistics/IngredientSelect'
+import SeverityFilter from './Statistics/SeverityFilter'
+import StatisticsDateInput from './Statistics/StatisticsDateInput'
+import SymptomEvaluation from './Statistics/SymptomEvaluation'
+import SymptomSelect from './Statistics/SymptomSelect'
 
 
 export default function Charts(props: {
