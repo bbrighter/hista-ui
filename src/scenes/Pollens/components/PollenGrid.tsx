@@ -110,7 +110,7 @@ export default function PollenGrid(props: { loading: boolean }) {
                 }}
                 disableColumnMenu
                 disableColumnSorting
-                pageSizeOptions={[100, 365]}
+                pageSizeOptions={[100]}
 
             />
         </Box>
