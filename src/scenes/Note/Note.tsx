@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import useDebounce from '../../hooks/useDebounce';
 import { useDidUpdateEffect } from '../../hooks/useDidUpdateEffect';
 import useHista from '../../store/store';
-import DateInput from '../components/DateIpnut';
+import DateInput from '../components/DateInput';
 
 export default function Note() {
     const getNote = useHista(state => state.getNote)
@@ -21,11 +21,11 @@ export default function Note() {
 
     useEffect(() => {
         getNote(Number(params.id))
-    }, [getNote, params.id])
+    }, [params.id])
 
     useEffect(() => {
         setTextInput(note.text)
-    }, [note])
+    }, [note.text])
 
     useDidUpdateEffect(() => {
         patchNote(note.id, undefined, debouncedInputValue).then(
@@ -34,8 +34,8 @@ export default function Note() {
     }, [debouncedInputValue])
 
     const onDateChange = (e: dayjs.Dayjs | null) => {
-        const date = e || new Date()
-        patchNote(note.id, date.toISOString(), undefined)
+        const isoDate = (e ?? dayjs()).toISOString()
+        patchNote(note.id, isoDate, undefined)
     }
 
     const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,16 +47,17 @@ export default function Note() {
         <Container sx={{ padding: '2rem' }}>
             <FormGroup>
                 <DateInput
-                    title="Notiz"
+                    title="Zeit"
                     date={note.date}
                     onChange={onDateChange}
                 />
                 <TextField
+                    helperText={isUpToDate ? '' : 'Noch nicht gespeichert...'}
                     sx={{ marginTop: '1rem', height: '200px' }}
                     multiline
                     value={textInput}
                     onChange={onTextChange}
-                    label="Notiz erstellen"
+                    label="Notiz"
                     minRows={15}
                     color={isUpToDate ? 'primary' : 'secondary'}
                 />

@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import useHista from '../../store/store';
-import DateInput from '../components/DateIpnut';
+import DateInput from '../components/DateInput';
 import AddCondition from './components/AddCondition';
 import ConditionList from './components/ConditionList';
 

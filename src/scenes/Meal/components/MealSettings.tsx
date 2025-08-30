@@ -15,7 +15,7 @@ import { JSX, useState } from 'react';
 
 import { Freshness } from '../../../store/meal/meal';
 import useHista from '../../../store/store';
-import DateInput from '../../components/DateIpnut';
+import DateInput from '../../components/DateInput';
 import DebouncedSlider from '../../components/DebouncedSlider';
 
 export default function MealSettings() {
