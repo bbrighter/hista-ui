@@ -66,7 +66,7 @@ export default function PollenGrid(props: { loading: boolean }) {
     return (
         <Box
             sx={{
-                height: 300,
+                height: '100%',
                 width: '100%',
                 [`.${gridClasses.cell}.level-1`]: {
                     backgroundColor: 'darkgreen',
@@ -110,6 +110,8 @@ export default function PollenGrid(props: { loading: boolean }) {
                 }}
                 disableColumnMenu
                 disableColumnSorting
+                pageSizeOptions={[100, 365]}
+
             />
         </Box>
     );
