@@ -11,6 +11,7 @@ import useHista from '../../store/store';
 import Pollens from '../Pollens';
 import ErrorBoundary from './Error';
 
+vi.mock('../../store/store', { spy: true })
 
 const mocks = vi.hoisted(() => ({
     useRouteErrorMock: vi.fn(),

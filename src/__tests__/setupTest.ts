@@ -19,6 +19,8 @@ beforeEach(() => {
     store.resetPollens()
     store.resetStatistics()
     store.resetStatus()
+    store.logout()
+
 
 })
 afterEach(() => {
