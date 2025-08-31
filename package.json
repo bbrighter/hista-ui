@@ -10,6 +10,7 @@
     "lint": "eslint . && tsc",
     "lint:fix": "eslint . --fix && tsc",
     "test": "vitest",
+    "test:nowatch": "vitest run",
     "tsc": "tsc",
     "knip": "knip",
     "prepare": "husky"
