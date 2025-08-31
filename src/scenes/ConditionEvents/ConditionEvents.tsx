@@ -20,7 +20,7 @@ export default function ConditionEvents() {
         const id = await postConditionEvent()
         setLoading(false)
         if (id) {
-            navigate(url.CONDITION_EVENTS + '/' + String(id))
+            navigate(`${url.CONDITION_EVENTS}/${id}`)
         }
     }
 
