@@ -9,15 +9,13 @@ import useHista from '../../store/store'
 
 
 export default function ErrorBoundary() {
-    const routeError = useRouteError() as Error
-    const goHome = useNavigateHomePage()
+    const routeError = useRouteError()
     const histaError = useHista(state => state.error)
-    const isError = useHista(state => state.isError)
-    const isKnownError = isRouteErrorResponse(routeError) || isError
-    const useError = isRouteErrorResponse(routeError) ? routeError : histaError
+    const error = isRouteErrorResponse(routeError) ? routeError : histaError
+    const header = error ? `${error.status} - ${error.statusText}` : 'Unbekannter Fehler'
+    const details = error?.data?.message || 'Ein Fehler ist aufgetreten.'
 
-    const header = isKnownError ? `${useError.status} - ${useError.statusText}` : 'Etwas ist schiefgelaufen'
-    const details = isKnownError ? useError.data?.message || 'Ein Fehler ist aufgetreten.' : routeError?.message
+    const goHome = useNavigateHomePage()
 
     return (
         <Container sx={{ padding: '2rem' }}>
