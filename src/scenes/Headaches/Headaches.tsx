@@ -23,12 +23,12 @@ export default function Headaches() {
         const id = await postHeadache()
         setLoading(false)
         if (id) {
-            navigate(url.HEADACHES + '/' + id)
+            navigate(`${url.HEADACHES}/${id}`)
         }
     }
 
     const onClick = (id: number) => {
-        navigate(url.HEADACHES + '/' + id)
+        navigate(`${url.HEADACHES}/${id}`)
     }
 
     return (
