@@ -20,9 +20,8 @@ export default function ConditionEvent() {
         [getConditionEvent, params.id])
 
     const onChange = (v: dayjs.Dayjs | null) => {
-        if (v != null) {
-            setConditionEventDate(v.toDate())
-        }
+        if (v === null) return
+        setConditionEventDate(v)
     }
 
     return (

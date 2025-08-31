@@ -26,7 +26,10 @@ export default function ConditionList() {
         <List>
             {conditionsAndCategories.map(con => (
                 <ListItem key={con.id} secondaryAction={
-                    <IconButton onClick={() => onDelete(con.id)}>
+                    <IconButton
+                        onClick={() => onDelete(con.id)}
+                        title='Löschen'
+                    >
                         <DeleteIcon />
                     </IconButton>
                 } >

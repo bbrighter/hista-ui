@@ -1,4 +1,4 @@
-import { http,HttpResponse } from 'msw'
+import { http, HttpResponse } from 'msw'
 
 const categories = {
     Categories: [
@@ -54,10 +54,16 @@ const conditionEventHandlers = (baseUrl: string) => (
             return HttpResponse.json({})
         }),
         http.post(baseUrl + '/condition-events/:id/conditions', () => (HttpResponse.json({
-            condition: { id: 4, severity: 1, symptom: { id: 1, name: 'symptom1', categoryId: 1 } },
+            condition: { id: 4, severity: 1, symptom: { id: 2, name: 'symptom2', categoryId: 1 } },
             symptoms: categories,
         }))),
     ]
 )
 
-export { conditionEventHandlers,symptomHandlers }
+const conditionHandlers = (baseUrl: string) => (
+    [
+        http.delete(baseUrl + '/conditions/:id', () => (HttpResponse.json(categories))),
+    ]
+)
+
+export { conditionEventHandlers, conditionHandlers, symptomHandlers }
