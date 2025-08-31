@@ -25,7 +25,7 @@ export default function StartPageCard({ type }: { type: keyof typeof CARD_CONFIG
                     cursor: 'pointer',
                     transition: 'background-color 0.2s ease',
                     '&:hover': {
-                        backgroundColor: 'action.hover', // uses theme color
+                        backgroundColor: 'action.hover',
                     },
                 }}
                 variant="outlined"
