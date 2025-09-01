@@ -46,7 +46,9 @@ export default function Headache() {
                 justifyContent: 'center',
                 fontSize: '1.2rem',
                 fontWeight: 'bold',
-            }}>{value}</Typography>
+            }}
+                data-testid='slider-icon'
+            >{value}</Typography>
 
         )
     }
