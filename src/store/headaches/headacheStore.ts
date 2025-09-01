@@ -2,6 +2,7 @@ import { produce } from 'immer'
 import { StateCreator } from 'zustand'
 
 import { client } from '../../api/api'
+import { ValueLabelPair } from '../../scenes/Headache/components/Tags'
 import { ErrorStore } from '../error/errorStore'
 import { Headache, HeadachePositions, HeadacheSymptoms, HeadacheTypes, respToHeadaches } from './headaches'
 
@@ -128,6 +129,7 @@ export const createHeadacheSlice: StateCreator<
             }
         },
         patchHeadachePositions: async (pos: HeadachePositions) => {
+            if (equalPositions(pos, get().headache.positions)) return
             const headacheId = get().headache.id
             if (headacheId == 0) return
             try {
@@ -140,6 +142,7 @@ export const createHeadacheSlice: StateCreator<
             }
         },
         patchHeadacheTypes: async (types: HeadacheTypes) => {
+            if (equalPositions(types, get().headache.types)) return
             const headacheId = get().headache.id
             try {
                 await client.api.PatchHeadacheTypes(headacheId, { types: types.map(t => t.value) })
@@ -152,6 +155,7 @@ export const createHeadacheSlice: StateCreator<
 
         },
         patchHeadacheSymptoms: async (symptoms: HeadacheSymptoms) => {
+            if (equalPositions(symptoms, get().headache.symptoms)) return
             const headacheId = get().headache.id
             try {
                 await client.api.PatchHeadacheSymptoms(headacheId, { symptoms: symptoms.map(s => s.value) })
@@ -174,3 +178,7 @@ export const createHeadacheSlice: StateCreator<
             }
         },
     }))
+
+
+const equalPositions = (a: ValueLabelPair[], b: ValueLabelPair[]) =>
+    a.length === b.length && a.every((p, i) => p.value === b[i].value)

@@ -43,12 +43,13 @@ describe('A headache can be edited and displayed', () => {
         expect(slider.ariaValueNow).toBe('1')
         expect(screen.getByTestId('slider-icon')).toHaveStyle({ backgroundColor: 'rgb(51,255,0)' })
         await waitFor(() => {
-            expect(patchHeadacheSeverity).toHaveBeenCalled()
+            expect(patchHeadacheSeverity).toHaveBeenCalledOnce()
         })
 
     })
 
     it('Change position', async () => {
+        const patchHeadachePositions = vi.spyOn(useHista.getState(), 'patchHeadachePositions')
         render(<MemoryRouter initialEntries={['/headaches/1']}>
             <Routes>
                 <Route path="/headaches/:id" element={<Headache />} />
@@ -76,10 +77,12 @@ describe('A headache can be edited and displayed', () => {
         const upTag = getTagByText('Oben')
         await userEvent.click(upTag)
         expect(isTagActive('Oben')).toBeTruthy()
+        expect(patchHeadachePositions).toHaveBeenCalledOnce()
 
         const leftTag = getTagByText('Links')
         await userEvent.click(leftTag)
         expect(isTagActive('Links')).toBeFalsy()
+        expect(patchHeadachePositions).toHaveBeenCalledTimes(2)
     })
 
     it('Change type', async () => {
@@ -104,11 +107,12 @@ describe('A headache can be edited and displayed', () => {
 
         const stabbingTag = getTagByText('Stechend')
         await userEvent.click(stabbingTag)
-        expect(patchHeadacheTypes).toHaveBeenCalled()
+        expect(patchHeadacheTypes).toHaveBeenCalledOnce()
         expect(isTagActive('Stechend')).toBeFalsy()
     })
 
     it('Change symptoms', async () => {
+        const patchHeadacheSymptoms = vi.spyOn(useHista.getState(), 'patchHeadacheSymptoms')
         render(<MemoryRouter initialEntries={['/headaches/1']}>
             <Routes>
                 <Route path="/headaches/:id" element={<Headache />} />
@@ -122,10 +126,13 @@ describe('A headache can be edited and displayed', () => {
         const dizzinessTag = getTagByText('Schwindel')
         await userEvent.click(dizzinessTag)
         expect(isTagActive('Schwindel')).toBeTruthy()
+        expect(patchHeadacheSymptoms).toHaveBeenCalledOnce()
 
         const nauseaTag = getTagByText('Übelkeit')
         await userEvent.click(nauseaTag)
         expect(isTagActive('Übelkeit')).toBeFalsy()
+        expect(patchHeadacheSymptoms).toHaveBeenCalledTimes(2)
+
     })
 
     it('Change description', async () => {
