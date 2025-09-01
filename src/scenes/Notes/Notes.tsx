@@ -2,7 +2,7 @@ import NoteIcon from '@mui/icons-material/Note';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { url } from '../../constants';
@@ -19,9 +19,8 @@ export default function Notes() {
 
     const [loading, setLoading] = useState(false)
     const [searchValue, setSearchValue] = useState('')
-    const [filteredNotes, setFilteredNotes] = useState<Array<{ id: number, date: Date, secondary: string }>>([])
 
-    useEffect(() => {
+    const filteredNotes = useMemo(() => {
         const filterResults = notes.filter(note =>
             note.text.toLowerCase().includes(searchValue.toLowerCase()),
         )
@@ -36,17 +35,13 @@ export default function Notes() {
                 secondary: shortText,
             }
         })
-        setFilteredNotes(items)
-    }, [notes, searchValue])
+        return items
+    }, [searchValue, notes])
 
 
-    const onClick = (id: number) => {
-        navigate(url.NOTES + '/' + id)
-    }
+    const onClick = (id: number) => navigate(`${url.NOTES}/${id}`)
 
-    const onDelete = async (id: number) => {
-        await deleteNote(id)
-    }
+    const onDelete = async (id: number) => await deleteNote(id)
 
     const onCreate = async () => {
         setLoading(true)
@@ -55,6 +50,10 @@ export default function Notes() {
         if (id) {
             navigate(url.NOTES + '/' + id)
         }
+    }
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchValue(e.target.value)
     }
 
     return (
@@ -71,7 +70,7 @@ export default function Notes() {
                 <NoteSearch
                     searchValue={searchValue}
                     onClear={() => setSearchValue('')}
-                    onChange={(e) => setSearchValue(e.target.value)}
+                    onChange={handleSearchChange}
                 />
             </Box>
             <OverviewList

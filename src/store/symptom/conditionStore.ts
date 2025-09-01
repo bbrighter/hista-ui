@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { produce } from 'immer'
 import { StateCreator } from 'zustand'
 
@@ -25,7 +26,7 @@ interface Actions {
     // ConditionEvent
     getConditionEvent: (eventId: number) => Promise<void>,
     deleteConditionEvent: (eventId: number) => Promise<void>,
-    setConditionEventDate: (date: Date) => Promise<void>,
+    setConditionEventDate: (date: Date | dayjs.Dayjs) => Promise<void>,
 
     // Conditions
     postSymptomCategory: (name: string) => Promise<number>,
@@ -113,15 +114,16 @@ export const createConditionSlice: StateCreator<
                 get().setError(error)
             }
         },
-        setConditionEventDate: async (date: Date) => {
+        setConditionEventDate: async (date: Date | dayjs.Dayjs) => {
             try {
                 const params: api.ConditionEventRequestParams = { date: date.toISOString() }
                 await client.api.PatchDate(get().conditionEvent.id, params)
                 const index = get().conditionEvents.findIndex(v => v.id == get().conditionEvent.id)
                 if (index === -1) return
+                const dateDate = date instanceof Date ? date : date.toDate()
                 set(produce((draft: State) => {
-                    draft.conditionEvent.date = date
-                    draft.conditionEvents[index].date = date
+                    draft.conditionEvent.date = dateDate
+                    draft.conditionEvents[index].date = dateDate
                 }))
             } catch (error) {
                 get().setError(error)

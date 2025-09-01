@@ -12,7 +12,7 @@ interface Pollen {
     roggen: PollenIntensity
 }
 
-interface PollenIntensity {
+export interface PollenIntensity {
     intensity: number
     intensityString: string
 }

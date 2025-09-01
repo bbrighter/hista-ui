@@ -3,7 +3,7 @@ import { foodHandlers, ingredientHandlers, mealHandlers } from './mealHandlers'
 import { noteHandlers } from './noteHandlers'
 import { pollenHandlers } from './pollenHandlers'
 import { statusHandlers } from './statusHandler'
-import { conditionEventHandlers, symptomHandlers } from './symptomHandlers'
+import { conditionEventHandlers, conditionHandlers, symptomHandlers } from './symptomHandlers'
 
 
 const baseUrl = 'http://localhost:4444'
@@ -12,6 +12,7 @@ const baseUrl = 'http://localhost:4444'
 const handlers = [
     ...symptomHandlers(baseUrl),
     ...conditionEventHandlers(baseUrl),
+    ...conditionHandlers(baseUrl),
     ...mealHandlers(baseUrl),
     ...ingredientHandlers(baseUrl),
     ...foodHandlers(baseUrl),

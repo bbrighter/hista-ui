@@ -26,6 +26,7 @@ export default function NoteSearch(props: {
             type='search'
             value={props.searchValue}
             onChange={props.onChange}
+            title='Suche'
         />
     )
 }

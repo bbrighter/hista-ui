@@ -84,6 +84,7 @@ function OverviewListItem(props: {
             {props.showSeverity && props.severity !== undefined &&
                 <ListItemIcon title='Schwere'><CircleIcon
                     sx={{ color: props.severityColorMapping(props.severity) }}
+                    data-testid='circle-icon'
                 /> </ListItemIcon>}
         </StyledListItem>
     )

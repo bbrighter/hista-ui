@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import useHista from '../../store/store'
-import DateInput from '../components/DateIpnut'
+import DateInput from '../components/DateInput'
 import DebouncedSlider from '../components/DebouncedSlider'
 import { getColor } from './components/colorMapping'
 import HeadacheDescription from './components/HeadacheDescription'
@@ -46,7 +46,9 @@ export default function Headache() {
                 justifyContent: 'center',
                 fontSize: '1.2rem',
                 fontWeight: 'bold',
-            }}>{value}</Typography>
+            }}
+                data-testid='slider-icon'
+            >{value}</Typography>
 
         )
     }

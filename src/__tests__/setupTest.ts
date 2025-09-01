@@ -7,7 +7,7 @@ import handlers from './__mocks__/handlers';
 
 expect.extend(matchers);
 
-const server = setupServer(...handlers)
+export const server = setupServer(...handlers)
 
 beforeAll(() => server.listen({ onUnhandledRequest: 'warn' }))
 beforeEach(() => {
@@ -19,6 +19,8 @@ beforeEach(() => {
     store.resetPollens()
     store.resetStatistics()
     store.resetStatus()
+    store.logout()
+
 
 })
 afterEach(() => {

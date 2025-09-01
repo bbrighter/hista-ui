@@ -1,3 +1,3 @@
-import Pollensview from './Pollens'
+import Pollens from './Pollens'
 
-export default Pollensview
+export default Pollens

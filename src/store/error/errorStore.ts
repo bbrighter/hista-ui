@@ -1,20 +1,12 @@
 import { produce } from 'immer'
+import { ErrorResponse } from 'react-router-dom'
 import { StateCreator } from 'zustand'
 
 import { isAPIError } from '../../api/generatedApi'
 import { AuthStore } from '../auth/authStore'
 
-type HistaError = {
-    statusText: string
-    status: number
-    data?: {
-        message: string
-    }
-}
-
 type State = {
-    error?: HistaError
-    isError: boolean
+    error?: ErrorResponse
 }
 
 interface Actions {
@@ -24,7 +16,7 @@ interface Actions {
 
 export interface ErrorStore extends State, Actions { }
 
-const initialState: State = { isError: false }
+const initialState: State = {}
 
 export const createErrorSlice: StateCreator<
     AuthStore & ErrorStore,
@@ -47,7 +39,6 @@ export const createErrorSlice: StateCreator<
                                 status: error.status,
                                 data: { message: error.details },
                             }
-                            draft.isError = true
                         }))
                         break
                     case 400:
@@ -61,7 +52,6 @@ export const createErrorSlice: StateCreator<
                                 status: error.status,
                                 data: { message: error.details },
                             }
-                            draft.isError = true
                         }))
                         break
                 }

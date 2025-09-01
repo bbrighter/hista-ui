@@ -11,5 +11,8 @@ export default defineConfig({
                 inline: ['@mui/x-data-grid'],
             },
         },
+        coverage: {
+            provider: 'v8',
+        },
     },
 })

@@ -1,6 +1,7 @@
 # Build and package folders
 node_modules
 dist
+coverage
 
 # VSCode folder
 .vscode/*

@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid'
 import dayjs from 'dayjs'
 
-import DateInput from '../../../components/DateIpnut'
+import DateInput from '../../../components/DateInput'
 
 
 export default function StatisticsDateInput(props: {

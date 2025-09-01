@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import useHista from '../../store/store';
-import DateInput from '../components/DateIpnut';
+import DateInput from '../components/DateInput';
 import AddCondition from './components/AddCondition';
 import ConditionList from './components/ConditionList';
 
@@ -20,9 +20,8 @@ export default function ConditionEvent() {
         [getConditionEvent, params.id])
 
     const onChange = (v: dayjs.Dayjs | null) => {
-        if (v != null) {
-            setConditionEventDate(v.toDate())
-        }
+        if (v === null) return
+        setConditionEventDate(v)
     }
 
     return (
