@@ -1,6 +1,6 @@
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button, { ButtonOwnProps } from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
@@ -27,8 +27,9 @@ export default function Login() {
 
     const onClick = async () => {
         setLoadingState('loading')
-        const ok = await login(password, name)
-        if (ok) { setLoadingState('initial') } else { setLoadingState('error') }
+        await login(password, name)
+        if (!isAuthenticated) setLoadingState('error')
+
     }
 
     const buttonColor = () => {
@@ -78,15 +79,15 @@ export default function Login() {
                         color={buttonColor()}
                         variant="contained"
                         onClick={onClick}
+                        loading={loadingState == 'loading'}
                     >Login
-                        {loadingState == 'loading' && (
-                            <CircularProgress
-                                size={24}
-                                color="primary"
-                                sx={{ position: 'absolute' }}
-                            />
-                        )}
                     </Button>
+                    {loadingState == 'error' &&
+                        <Alert
+                            severity='error'
+                            sx={{ mt: 2 }}
+                        >Login fehlgeschlagen</Alert>
+                    }
                 </Box>
             </Paper>
         </Box>)

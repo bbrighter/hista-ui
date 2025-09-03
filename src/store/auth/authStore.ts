@@ -1,4 +1,3 @@
-import { produce } from 'immer'
 import { StateCreator } from 'zustand'
 
 import { login } from '../../api/api'
@@ -12,13 +11,13 @@ interface State {
 
 interface Actions {
     logout: () => void
-    login: (password: string, userName: string) => Promise<boolean>
+    login: (password: string, userName: string) => Promise<void>
 }
 
 export interface AuthStore extends State, Actions { }
 
 const initialState: State = {
-    isAuthenticated: window.localStorage.isAuthenticated || false,
+    isAuthenticated: window.localStorage.getItem('isAuthenticated') === 'true' || false,
 }
 
 export const createAuthSlice: StateCreator<
@@ -29,35 +28,41 @@ export const createAuthSlice: StateCreator<
         ...initialState,
 
         logout() {
-            set(produce((draft: State) => {
-                draft.isAuthenticated = false
-                window.localStorage.isAuthenticated = false
-                window.localStorage.token = ''
-                window.localStorage.user = ''
-            }))
+            clearAuth()
+            set({ isAuthenticated: false })
         },
-        login: async (password, userName) => {
-            let isAuthenticated = false
 
+        login: async (password: string, userName: string) => {
             const resp = await login(userName, password)
             if (resp.status == ErrCode.OK) {
-                isAuthenticated = true
-                window.localStorage.token = resp.token
-                window.localStorage.user = userName
-            } else {
-                isAuthenticated = false
-                if (resp.status == ErrCode.Internal) {
-                    alert('Login furchtbar schiefgegangen!')
-                } else {
-                    alert('Login fehlgeschlagen: ' + resp.status + ': ' + resp.details)
-                }
+                set({ isAuthenticated: true })
+                persistAuth(true, resp.token, userName)
+                return
+            }
+            if (resp.status == ErrCode.Unauthenticated) {
+                clearAuth()
+                return
             }
 
-            window.localStorage.isAuthenticated = isAuthenticated
-            set(produce((draft: State) => {
-                draft.isAuthenticated = isAuthenticated
-            }))
+            if (resp.status == ErrCode.Internal) {
+                get().setError(resp)
+                return
+            }
 
-            return get().isAuthenticated
+            persistAuth(false)
+            set({ isAuthenticated: false })
         },
     }))
+
+
+const persistAuth = (isAuthenticated: boolean, token?: string, user?: string) => {
+    window.localStorage.setItem('isAuthenticated', String(isAuthenticated))
+    window.localStorage.setItem('token', token ?? '')
+    window.localStorage.setItem('user', user)
+}
+
+const clearAuth = () => {
+    window.localStorage.removeItem('isAuthenticated')
+    window.localStorage.removeItem('token')
+    window.localStorage.removeItem('user')
+}
