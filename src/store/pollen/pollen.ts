@@ -1,6 +1,6 @@
 import { entity } from '../../api/generatedApi'
 
-interface Pollen {
+export interface Pollen {
     date: Date
     ambrosia: PollenIntensity
     beifuss: PollenIntensity
@@ -12,7 +12,7 @@ interface Pollen {
     roggen: PollenIntensity
 }
 
-export interface PollenIntensity {
+interface PollenIntensity {
     intensity: number
     intensityString: string
 }

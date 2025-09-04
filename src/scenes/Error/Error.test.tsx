@@ -8,7 +8,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { server } from '../../__tests__/setupTest';
 import { APIError, ErrCode } from '../../api/generatedApi';
 import useHista from '../../store/store';
-import Pollens from '../Pollens';
+import Meals from '../Meals';
 import ErrorBoundary from './Error';
 
 vi.mock('../../store/store', { spy: true })
@@ -39,12 +39,12 @@ describe('Error boundary is displayed correctly', () => {
     it('Error is set', async () => {
         const setErrorSpy = vi.spyOn(useHista.getState(), 'setError')
         server.use(
-            http.get('http://localhost:4444/pollen', () => (HttpResponse.json(
+            http.get('http://localhost:4444/meals', () => (HttpResponse.json(
                 { message: 'oh no' },
                 { status: 500 },
             )),
             ))
-        render(<Pollens />)
+        render(<Meals />)
 
         await waitFor(() => { expect(setErrorSpy).toHaveBeenCalled() })
 
