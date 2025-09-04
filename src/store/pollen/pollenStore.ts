@@ -34,6 +34,7 @@ export const createPollensSlice: StateCreator<
         resetPollens: () => set(initialState),
 
         getPollens: async () => {
+            if (get().pollensAreLoaded) return
             try {
                 const resp = await client.api.GetPollens()
                 set(produce((draft: State) => {
