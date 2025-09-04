@@ -1,7 +1,7 @@
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
-import Button, { ButtonOwnProps } from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
+import Button, { ButtonProps } from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,12 @@ import useHista from '../../store/store';
 
 
 type LoadingState = 'loading' | 'error' | 'initial'
+
+const LOGIN_STATES: Record<LoadingState, ButtonProps['color']> = {
+    'initial': 'primary',
+    'loading': 'secondary',
+    'error': 'error',
+} as const
 
 export default function Login() {
     const isAuthenticated = useHista(state => state.isAuthenticated)
@@ -29,66 +35,47 @@ export default function Login() {
         setLoadingState('loading')
         await login(password, name)
         if (!isAuthenticated) setLoadingState('error')
-
-    }
-
-    const buttonColor = () => {
-        const props: ButtonOwnProps = { color: 'primary' }
-        switch (loadingState) {
-            case 'loading':
-                props.color = 'secondary'
-                break
-            case 'error':
-                props.color = 'error'
-                break
-            case 'initial':
-                props.color = 'primary'
-                break
-        }
-        return props.color
     }
 
     return (
-        <Box component="form" sx={{
-            width: '350px',
-            left: 'calc(50vw - 175px)',
-            top: '20px',
-            position: 'absolute',
-
-        }}>
-            <Paper sx={{
-                padding: '10px',
-                textAlign: 'center',
-                paddingTop: '20px',
-                paddingBottom: '20px',
+        <Box
+            sx={{
+                display: 'flex',
+                width: '100vw',
+                justifyContent: 'center',
+                height: '100vh',
+                alignItems: 'center',
             }}>
+            <Stack
+                spacing={2}
+                width='300px'
+                textAlign='center'
+            >
                 <TextField
                     label="Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                 />
                 <TextField
-                    sx={{ mt: '2rem', mb: '2rem' }}
                     label="Passwort"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     type='password'
                 />
-                <Box sx={{ position: 'relative', m: 1 }}>
-                    <Button
-                        color={buttonColor()}
-                        variant="contained"
-                        onClick={onClick}
-                        loading={loadingState == 'loading'}
-                    >Login
-                    </Button>
-                    {loadingState == 'error' &&
-                        <Alert
-                            severity='error'
-                            sx={{ mt: 2 }}
-                        >Login fehlgeschlagen</Alert>
-                    }
-                </Box>
-            </Paper>
-        </Box>)
+
+                <Button
+                    sx={{ width: '50%', alignSelf: 'center' }}
+                    color={LOGIN_STATES[loadingState]}
+                    variant="contained"
+                    onClick={onClick}
+                    loading={loadingState == 'loading'}
+                >Login</Button>
+                {loadingState == 'error' &&
+                    <Alert
+                        severity='error'
+                    >Login fehlgeschlagen</Alert>
+                }
+            </Stack>
+        </Box>
+    )
 }
