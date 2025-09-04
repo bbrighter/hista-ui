@@ -1,7 +1,7 @@
 import { JSX, lazy, LazyExoticComponent, Suspense, useEffect } from 'react'
 import { createBrowserRouter, RouteObject } from 'react-router-dom'
 
-import { routeToPrivateRoute } from './authentification/ensureLogin'
+import { routeToPrivateRoute } from './authentication/ensureLogin'
 import { url } from './constants'
 import { useNavigateErrorPage } from './hooks/useNavigate'
 import Error from './scenes/Error'
