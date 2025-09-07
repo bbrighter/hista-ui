@@ -2,8 +2,6 @@ import { produce } from 'immer';
 import { StateCreator } from 'zustand';
 
 import { client } from '../../api/api';
-import { AuthStore } from '../auth/authStore';
-import { ErrorStore } from '../error/errorStore';
 import { Pollens, respToPollens } from './pollen';
 
 interface State {
@@ -25,7 +23,7 @@ const initialState: State = {
 }
 
 export const createPollensSlice: StateCreator<
-    AuthStore & ErrorStore & PollenStore,
+    PollenStore,
     [],
     [],
     PollenStore> = ((set, get) => ({
@@ -35,14 +33,10 @@ export const createPollensSlice: StateCreator<
 
         getPollens: async () => {
             if (get().pollensAreLoaded) return
-            try {
-                const resp = await client.api.GetPollens()
-                set(produce((draft: State) => {
-                    draft.pollens = respToPollens(resp)
-                    draft.pollensAreLoaded = true
-                }))
-            } catch (error) {
-                get().setError(error)
-            }
+            const resp = await client.api.GetPollens()
+            set(produce((draft: State) => {
+                draft.pollens = respToPollens(resp)
+                draft.pollensAreLoaded = true
+            }))
         },
     }))

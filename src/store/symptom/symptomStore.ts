@@ -3,8 +3,6 @@ import { StateCreator } from 'zustand'
 
 import { client } from '../../api/api'
 import { entity } from '../../api/generatedApi'
-import { AuthStore } from '../auth/authStore'
-import { ErrorStore } from '../error/errorStore'
 import { respToSymptoms, SymptomCategories } from './symptom'
 
 interface State {
@@ -33,7 +31,7 @@ const initialState: State = {
 }
 
 export const createSymptomSlice: StateCreator<
-    AuthStore & ErrorStore & SymptomStore,
+    SymptomStore,
     [],
     [],
     SymptomStore> = ((set, get) => ({
@@ -61,79 +59,58 @@ export const createSymptomSlice: StateCreator<
 
         getSymptoms: async () => {
             if (!get().symptomsAreLoaded || get().symptoms.length == 0) {
-                try {
-                    const resp = await client.api.GetSymptoms()
-                    get().setSymptoms(resp)
-                    set(produce((draft: State) => {
-                        draft.symptomsAreLoaded = true
-                    }))
-                } catch (error) {
-                    get().setError(error)
-                }
+                const resp = await client.api.GetSymptoms()
+                get().setSymptoms(resp)
+                set(produce((draft: State) => {
+                    draft.symptomsAreLoaded = true
+                }))
             }
         },
 
         deleteCategory: async (cId: number) => {
-            try {
-                await client.api.DeleteSymptomCategory(cId)
-                set(produce((draft: State) => {
-                    draft.symptoms = draft.symptoms.filter(c => c.categoryId !== cId)
-                }))
-            } catch (error) {
-                get().setError(error)
-            }
+            await client.api.DeleteSymptomCategory(cId)
+            set(produce((draft: State) => {
+                draft.symptoms = draft.symptoms.filter(c => c.categoryId !== cId)
+            }))
         },
         changeSymptomCategory: async (symptomId: number, fromCategoryId: number, toCategoryId: number) => {
-            try {
-                await client.api.PatchSymptomCategory(symptomId, { toCategoryId: toCategoryId })
-                set(produce((draft: State) => {
-                    const fromCategoryIndex = draft.symptoms.findIndex(c => c.categoryId == fromCategoryId)
-                    const toCategory = draft.symptoms.find(c => c.categoryId == toCategoryId)
-                    if (fromCategoryIndex < 0 || !toCategory) {
-                        return
-                    }
-                    toCategory.symptoms.push(draft.symptoms[fromCategoryIndex].symptoms.find(s => s.id == symptomId))
-                    draft.symptoms[fromCategoryIndex].symptoms = draft.symptoms[fromCategoryIndex].symptoms.filter(s => s.id != symptomId)
-                    const symptom = toCategory.symptoms.find(s => s.id == symptomId)
-                    symptom.categoryId = toCategoryId
-                }))
-            } catch (error) {
-                get().setError(error)
-            }
+            await client.api.PatchSymptomCategory(symptomId, { toCategoryId: toCategoryId })
+            set(produce((draft: State) => {
+                const fromCategoryIndex = draft.symptoms.findIndex(c => c.categoryId == fromCategoryId)
+                const toCategory = draft.symptoms.find(c => c.categoryId == toCategoryId)
+                if (fromCategoryIndex < 0 || !toCategory) {
+                    return
+                }
+                toCategory.symptoms.push(draft.symptoms[fromCategoryIndex].symptoms.find(s => s.id == symptomId))
+                draft.symptoms[fromCategoryIndex].symptoms = draft.symptoms[fromCategoryIndex].symptoms.filter(s => s.id != symptomId)
+                const symptom = toCategory.symptoms.find(s => s.id == symptomId)
+                symptom.categoryId = toCategoryId
+            }))
         },
         changeSymptomName: async (symptomId: number, newName: string) => {
             const trimmedName = newName.trim()
-            try {
-                await client.api.PatchSymptomName(symptomId, { name: trimmedName })
-                set(produce((draft: State) => {
-                    for (const category of draft.symptoms) {
-                        const symptom = category.symptoms.find(s => s.id == symptomId)
-                        if (symptom) {
-                            symptom.name = trimmedName
-                            return
-                        }
+            await client.api.PatchSymptomName(symptomId, { name: trimmedName })
+            set(produce((draft: State) => {
+                for (const category of draft.symptoms) {
+                    const symptom = category.symptoms.find(s => s.id == symptomId)
+                    if (symptom) {
+                        symptom.name = trimmedName
+                        return
                     }
-                }))
-            }
-            catch (error) {
-                get().setError(error)
-            }
+                }
+            }))
         },
 
         changeSymptomCategoryName: async (categoryId: number, newName: string) => {
             const trimmedName = newName.trim()
-            try {
-                await client.api.PatchCategoryName(categoryId, { name: trimmedName })
-                set(produce((draft: State) => {
-                    const categoryIndex = draft.symptoms.findIndex(c => c.categoryId == categoryId)
-                    if (categoryIndex < 0) {
-                        return
-                    }
-                    draft.symptoms[categoryIndex].categoryName = trimmedName
-                }))
-            } catch (error) {
-                get().setError(error)
-            }
+            await client.api.PatchCategoryName(categoryId, { name: trimmedName })
+            set(produce((draft: State) => {
+                const categoryIndex = draft.symptoms.findIndex(c => c.categoryId == categoryId)
+                if (categoryIndex < 0) {
+                    return
+                }
+                draft.symptoms[categoryIndex].categoryName = trimmedName
+            }))
         },
 
         isCategoryNameAvailable: (categoryName: string) => {

@@ -3,8 +3,6 @@ import { StateCreator } from 'zustand'
 
 import { client } from '../../api/api'
 import { entity } from '../../api/generatedApi'
-import { AuthStore } from '../auth/authStore'
-import { ErrorStore } from '../error/errorStore'
 import { Ingredients, respToIngredients } from './ingredients'
 
 interface State {
@@ -25,7 +23,7 @@ const initialState: State = {
 }
 
 export const createIngredientSlice: StateCreator<
-    AuthStore & ErrorStore & IngredientStore,
+    IngredientStore,
     [],
     [],
     IngredientStore> = ((set, get) => ({
@@ -45,15 +43,11 @@ export const createIngredientSlice: StateCreator<
         // Ingredients
         getIngredients: async () => {
             if (!get().ingredientsAreLoaded || get().ingredients.length == 0) {
-                try {
-                    const resp = await client.api.GetIngredients()
-                    set(produce((draft: State) => {
-                        draft.ingredients = respToIngredients(resp)
-                        draft.ingredientsAreLoaded = true
-                    }))
-                } catch (error) {
-                    get().setError(error)
-                }
+                const resp = await client.api.GetIngredients()
+                set(produce((draft: State) => {
+                    draft.ingredients = respToIngredients(resp)
+                    draft.ingredientsAreLoaded = true
+                }))
             }
         },
 
