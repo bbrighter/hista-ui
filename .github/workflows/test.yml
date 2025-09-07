@@ -25,6 +25,9 @@ jobs:
             - name: Knip
               run: npm run knip
 
+            - name: Dependencies
+              run: npm run dependencies:ci
+
             - name: Test
               run: npm test
               env:

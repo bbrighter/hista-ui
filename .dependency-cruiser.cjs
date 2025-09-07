@@ -99,7 +99,8 @@ module.exports = {
       severity: 'error',
       from: {
         path: '^(src)',
-        pathNot: '[.](?:spec|test)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$',
+        // pathNot: '[.](?:spec|test)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$',
+        pathNot: '([.]test[.])|(__tests__)|vite-env.d.ts',
       },
       to: {
         dependencyTypes: [

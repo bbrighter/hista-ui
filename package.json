@@ -14,6 +14,7 @@
     "tsc": "tsc",
     "knip": "knip",
     "prepare": "husky",
+    "dependencies:ci": "npx depcruise src",
     "dependencies:show": "npx depcruise --include-only \"^src\" --output-type dot src | dot -T svg > graph.svg"
   },
   "engines": {
