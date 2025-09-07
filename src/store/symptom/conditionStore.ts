@@ -4,8 +4,6 @@ import { StateCreator } from 'zustand'
 
 import { client } from '../../api/api'
 import { api } from '../../api/generatedApi'
-import { AuthStore } from '../auth/authStore'
-import { ErrorStore } from '../error/errorStore'
 import { respToCondition } from './condition'
 import { ConditionEvent, respToConditionEvent } from './conditionEvent'
 import { ConditionEvents, respToConditionEvents } from './conditionEvents'
@@ -46,7 +44,7 @@ const initialState: State = {
 }
 
 export const createConditionSlice: StateCreator<
-    AuthStore & ErrorStore & ConditionStore & SymptomStore,
+    ConditionStore & SymptomStore,
     [],
     [],
     ConditionStore> = ((set, get) => ({
@@ -57,133 +55,95 @@ export const createConditionSlice: StateCreator<
         // ConditionEvents
         getConditionEvents: async () => {
             if (!get().conditionEventsAreLoaded || get().conditionEvents.length == 0) {
-                try {
-                    const resp = await client.api.GetConditionEvents()
-                    const states = respToConditionEvents(resp)
-                    set(produce((draft: State) => {
-                        draft.conditionEvents = states
-                        draft.conditionEventsAreLoaded = true
-                    }))
-                } catch (error) {
-                    get().setError(error)
-                }
+                const resp = await client.api.GetConditionEvents()
+                const states = respToConditionEvents(resp)
+                set(produce((draft: State) => {
+                    draft.conditionEvents = states
+                    draft.conditionEventsAreLoaded = true
+                }))
             }
 
         },
         postConditionEvent: async () => {
-            try {
-                const resp = await client.api.CreateConditionEvent()
-                set(produce((draft: State) => {
-                    const event: ConditionEvent = respToConditionEvent(resp)
-                    const index = draft.conditionEvents.findIndex(
-                        (e) => new Date(event.date) > new Date(e.date),
-                    )
-                    if (index === -1) {
-                        draft.conditionEvents.push(event)
-                    } else {
-                        draft.conditionEvents.splice(index, 0, event)
-                    }
-                }))
-                return resp.id
-            } catch (error) {
-                get().setError(error)
-            }
+            const resp = await client.api.CreateConditionEvent()
+            set(produce((draft: State) => {
+                const event: ConditionEvent = respToConditionEvent(resp)
+                const index = draft.conditionEvents.findIndex(
+                    (e) => new Date(event.date) > new Date(e.date),
+                )
+                if (index === -1) {
+                    draft.conditionEvents.push(event)
+                } else {
+                    draft.conditionEvents.splice(index, 0, event)
+                }
+            }))
+            return resp.id
         },
 
         // ConditionEvent
         getConditionEvent: async (eventId: number) => {
-            try {
-                const resp = await client.api.GetConditionEvent(eventId)
-                const event = respToConditionEvent(resp)
-                set(produce((draft: State) => {
-                    draft.conditionEvent = event
-                }))
-
-            } catch (error) {
-                get().setError(error)
-            }
+            const resp = await client.api.GetConditionEvent(eventId)
+            const event = respToConditionEvent(resp)
+            set(produce((draft: State) => {
+                draft.conditionEvent = event
+            }))
         },
         deleteConditionEvent: async (eventId: number) => {
-            try {
-                const resp = await client.api.DeleteConditionEvent(eventId)
-                set(produce((draft: State) => {
-                    draft.conditionEvents = removeItemById(eventId, get().conditionEvents)
-                }))
-                get().setSymptoms(resp)
-            } catch (error) {
-                get().setError(error)
-            }
+            const resp = await client.api.DeleteConditionEvent(eventId)
+            set(produce((draft: State) => {
+                draft.conditionEvents = removeItemById(eventId, get().conditionEvents)
+            }))
+            get().setSymptoms(resp)
         },
         setConditionEventDate: async (date: Date | dayjs.Dayjs) => {
-            try {
-                const params: api.ConditionEventRequestParams = { date: date.toISOString() }
-                await client.api.PatchDate(get().conditionEvent.id, params)
-                const index = get().conditionEvents.findIndex(v => v.id == get().conditionEvent.id)
-                if (index === -1) return
-                const dateDate = date instanceof Date ? date : date.toDate()
-                set(produce((draft: State) => {
-                    draft.conditionEvent.date = dateDate
-                    draft.conditionEvents[index].date = dateDate
-                }))
-            } catch (error) {
-                get().setError(error)
-            }
+            const params: api.ConditionEventRequestParams = { date: date.toISOString() }
+            await client.api.PatchDate(get().conditionEvent.id, params)
+            const index = get().conditionEvents.findIndex(v => v.id == get().conditionEvent.id)
+            if (index === -1) return
+            const dateDate = date instanceof Date ? date : date.toDate()
+            set(produce((draft: State) => {
+                draft.conditionEvent.date = dateDate
+                draft.conditionEvents[index].date = dateDate
+            }))
         },
 
 
         // Conditions
         postCondition: async (symptomCategoryId: number, symptomId?: number, symptomName?: string) => {
-            try {
-                const params: api.ConditionRequestParams = {
-                    categoryId: symptomCategoryId,
-                    symptomId: symptomId,
-                    symptomName: symptomName,
-                }
-                const resp = await client.api.PostCondition(get().conditionEvent.id, params)
-                const condition = respToCondition(resp.condition)
-                get().setSymptoms(resp.symptoms)
-                set(produce((draft: State) => {
-                    draft.conditionEvent.conditions.unshift(condition)
-                }))
-            } catch (error) {
-                get().setError(error)
+            const params: api.ConditionRequestParams = {
+                categoryId: symptomCategoryId,
+                symptomId: symptomId,
+                symptomName: symptomName,
             }
+            const resp = await client.api.PostCondition(get().conditionEvent.id, params)
+            const condition = respToCondition(resp.condition)
+            get().setSymptoms(resp.symptoms)
+            set(produce((draft: State) => {
+                draft.conditionEvent.conditions.unshift(condition)
+            }))
         },
         postSymptomCategory: async (name: string): Promise<number> => {
             const params: api.PostSymptomCategoryRequest = { name: name }
-            try {
-                const resp = await client.api.PostSymptomCategory(params)
-                get().addSymptomCategory(resp.id, name)
-                return resp.id
-            } catch (error) {
-                get().setError(error)
-                return 0
-            }
+            const resp = await client.api.PostSymptomCategory(params)
+            get().addSymptomCategory(resp.id, name)
+            return resp.id
         },
         patchCondition: async (conditionId: number, severity: number): Promise<void> => {
             const params: api.PatchSeverityRequestParams = {
                 severity: severity,
             }
-            try {
-                await client.api.PatchCondition(conditionId, params)
-                const conditionIndex = get().conditionEvent.conditions.findIndex(c => c.id == conditionId)
-                set(produce((draft: State) => {
-                    draft.conditionEvent.conditions[conditionIndex].severity = severity
-                }))
-            } catch (error) {
-                get().setError(error)
-            }
+            await client.api.PatchCondition(conditionId, params)
+            const conditionIndex = get().conditionEvent.conditions.findIndex(c => c.id == conditionId)
+            set(produce((draft: State) => {
+                draft.conditionEvent.conditions[conditionIndex].severity = severity
+            }))
         },
         deleteCondition: async (conditionId: number): Promise<void> => {
-            try {
-                const resp = await client.api.DeleteCondition(conditionId)
-                get().setSymptoms(resp)
-                set(produce((draft: State) => {
-                    draft.conditionEvent.conditions = removeItemById(conditionId, get().conditionEvent.conditions)
-                }))
-            } catch (error) {
-                get().setError(error)
-            }
+            const resp = await client.api.DeleteCondition(conditionId)
+            get().setSymptoms(resp)
+            set(produce((draft: State) => {
+                draft.conditionEvent.conditions = removeItemById(conditionId, get().conditionEvent.conditions)
+            }))
         },
 
     }))

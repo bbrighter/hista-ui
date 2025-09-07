@@ -3,8 +3,6 @@ import { StateCreator } from 'zustand'
 
 import { client } from '../../api/api'
 import { api } from '../../api/generatedApi'
-import { AuthStore } from '../auth/authStore'
-import { ErrorStore } from '../error/errorStore'
 import { Note, respToNote, respToNotes } from './notes'
 
 interface State {
@@ -28,78 +26,58 @@ const initialState: State = {
 }
 
 export const createNotesSlice: StateCreator<
-    AuthStore & ErrorStore & NotesStore,
+    NotesStore,
     [],
     [],
     NotesStore> = ((set, get) => ({
         ...initialState,
 
         getNotes: async () => {
-            try {
-                const resp = await client.api.GetNotes()
-                set(produce((draft: State) => {
-                    draft.notes = respToNotes(resp)
-                }))
-            } catch (error) {
-                get().setError(error)
-            }
+            const resp = await client.api.GetNotes()
+            set(produce((draft: State) => {
+                draft.notes = respToNotes(resp)
+            }))
         },
         postNote: async () => {
-            try {
-                const resp = await client.api.PostNote()
-                set(produce((draft: State) => {
-                    draft.note = respToNote(resp)
-                    draft.notes.push(draft.note)
-                }))
-                return resp.id
-            } catch (error) {
-                get().setError(error)
-            }
+            const resp = await client.api.PostNote()
+            set(produce((draft: State) => {
+                draft.note = respToNote(resp)
+                draft.notes.push(draft.note)
+            }))
+            return resp.id
         },
         getNote: async (id: number) => {
-            try {
-                if (get().notes.length == 0) {
-                    await get().getNotes()
-                }
-                const note = get().notes.find(v => v.id == id) || { date: new Date(), id: id, text: '' }
-                set(produce((draft: State) => {
-                    draft.note = note
-                }))
-            } catch (error) {
-                get().setError(error)
+            if (get().notes.length == 0) {
+                await get().getNotes()
             }
+            const note = get().notes.find(v => v.id == id) || { date: new Date(), id: id, text: '' }
+            set(produce((draft: State) => {
+                draft.note = note
+            }))
         },
         deleteNote: async (id: number) => {
-            try {
-                await client.api.DeleteNote(id)
-                set(produce((draft: State) => {
-                    draft.notes = get().notes.filter(v => v.id != id)
-                }))
-            } catch (error) {
-                get().setError(error)
-            }
+            await client.api.DeleteNote(id)
+            set(produce((draft: State) => {
+                draft.notes = get().notes.filter(v => v.id != id)
+            }))
         },
         patchNote: async (id: number, date?: string, text?: string) => {
             const params: api.NoteParams = {
                 date: date,
                 text: text,
             }
-            try {
-                const noteIndex = get().notes.findIndex(v => v.id == id)
-                await client.api.PatchNote(id, params)
-                set(produce((draft: State) => {
-                    if (date) {
-                        draft.note.date = new Date(date)
-                        draft.notes[noteIndex].date = new Date(date)
-                    }
-                    if (text) {
-                        draft.note.text = text
-                        draft.notes[noteIndex].text = text
-                    }
-                }))
-            } catch (error) {
-                get().setError(error)
-            }
+            const noteIndex = get().notes.findIndex(v => v.id == id)
+            await client.api.PatchNote(id, params)
+            set(produce((draft: State) => {
+                if (date) {
+                    draft.note.date = new Date(date)
+                    draft.notes[noteIndex].date = new Date(date)
+                }
+                if (text) {
+                    draft.note.text = text
+                    draft.notes[noteIndex].text = text
+                }
+            }))
         },
-    }))
-
+    })
+    )
