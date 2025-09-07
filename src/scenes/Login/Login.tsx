@@ -4,8 +4,8 @@ import Button, { ButtonProps } from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
+import { useNavigateHomePage } from '../../hooks/useNavigate';
 import useHista from '../../store/store';
 
 
@@ -23,12 +23,10 @@ export default function Login() {
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
     const [loadingState, setLoadingState] = useState<LoadingState>('initial')
-    const navigate = useNavigate()
+    const navigate = useNavigateHomePage()
 
     useEffect(() => {
-        if (isAuthenticated) {
-            navigate('/')
-        }
+        if (isAuthenticated) navigate()
     }, [isAuthenticated])
 
     const onClick = async () => {

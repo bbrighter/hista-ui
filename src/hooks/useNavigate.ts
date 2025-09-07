@@ -6,8 +6,3 @@ export const useNavigateHomePage = () => {
     const navigate = useNavigate()
     return () => navigate(url.HOMEPAGE)
 }
-
-export const useNavigateErrorPage = () => {
-    const navigate = useNavigate()
-    return () => navigate(url.ERROR)
-}

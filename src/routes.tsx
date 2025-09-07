@@ -1,11 +1,11 @@
-import { JSX, lazy, LazyExoticComponent, Suspense, useEffect } from 'react'
+import { JSX, lazy, LazyExoticComponent, Suspense } from 'react'
+import { ErrorBoundary } from 'react-error-boundary';
 import { createBrowserRouter, RouteObject } from 'react-router-dom'
 
 import { routeToPrivateRoute } from './authentication/ensureLogin'
 import { url } from './constants'
-import { useNavigateErrorPage } from './hooks/useNavigate'
-import Error from './scenes/Error'
-import useHista from './store/store'
+import { ErrorFallback } from './scenes/Error/ErrorFallback';
+import { ErrorBridge } from './store/error/ErrorBridge';
 
 type RawRoute = {
     path: string
@@ -84,12 +84,6 @@ const rawRoutes: Array<RawRoute> = [
         element: lazy(() => import('./scenes/Start')),
         name: 'Start',
     },
-    {
-        path: url.ERROR,
-        element: lazy(() => import('./scenes/Error')),
-        name: 'Error',
-    },
-
 ]
 
 const withSuspense = (Component: LazyExoticComponent<() => JSX.Element>) => {
@@ -102,24 +96,16 @@ const withSuspense = (Component: LazyExoticComponent<() => JSX.Element>) => {
     )
 }
 
-const WithErrorHandling = ({ children }: { children: JSX.Element }) => {
-    const navigateToError = useNavigateErrorPage()
-    const error = useHista(state => state.error)
-
-    useEffect(() => {
-        if (error) {
-            navigateToError()
-        }
-    }, [error])
-
-    return children
-}
-
 const routes: Array<RouteObject> = rawRoutes.map(r => ({
     path: r.path,
     name: r.name,
-    element: <WithErrorHandling>{routeToPrivateRoute(r.name, withSuspense(r.element))}</WithErrorHandling>,
-    errorElement: <Error />,
+    element:
+        <ErrorBoundary
+            FallbackComponent={ErrorFallback}
+        >
+            <ErrorBridge />
+            {routeToPrivateRoute(r.name, withSuspense(r.element))}
+        </ErrorBoundary>,
 }))
 
 export default createBrowserRouter(routes)

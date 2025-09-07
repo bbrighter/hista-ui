@@ -1,17 +1,13 @@
-import { produce } from 'immer'
-import { ErrorResponse } from 'react-router-dom'
 import { StateCreator } from 'zustand'
 
-import { isAPIError } from '../../api/generatedApi'
 import { AuthStore } from '../auth/authStore'
+import { toAppError } from './appError'
+import { errorBus } from './errorBus'
 
-type State = {
-    error?: ErrorResponse
-}
+type State = object
 
 interface Actions {
     setError: (error: unknown) => void
-    resetError: () => void
 }
 
 export interface ErrorStore extends State, Actions { }
@@ -22,42 +18,35 @@ export const createErrorSlice: StateCreator<
     AuthStore & ErrorStore,
     [],
     [],
-    ErrorStore> = ((set, get) => ({
+    ErrorStore> = ((_, get) => ({
         ...initialState,
 
         setError: (error: unknown) => {
-            if (isAPIError(error)) {
-                const status = error.status
-                switch (status) {
-                    case 401:
-                        get().logout()
-                        break
-                    case 500:
-                        set(produce((draft: State) => {
-                            draft.error = {
-                                statusText: error.message,
-                                status: error.status,
-                                data: { message: error.details },
-                            }
-                        }))
-                        break
-                    case 400:
-                        if (error.message == 'invalid uuid') {
+            const appError = toAppError(error)
+            const status = appError.status
+            switch (appError.source) {
+                case 'api':
+                    switch (status) {
+                        case 401:
                             get().logout()
                             break
-                        }
-                        set(produce((draft: State) => {
-                            draft.error = {
-                                statusText: error.message,
-                                status: error.status,
-                                data: { message: error.details },
+                        case 400:
+                            if (appError.text == 'invalid uuid') {
+                                get().logout()
+                            } else {
+                                errorBus.emit('error', error)
                             }
-                        }))
-                        break
-                }
-            } else {
-                alert('Unbekannter Fehler: ' + error)
+                            break
+                        case 404:
+                            break
+                        case 500:
+                        default:
+                            errorBus.emit('error', error)
+                    }
+                    break
+                case 'router':
+                case 'unknown':
+                    errorBus.emit('error', error)
             }
         },
-        resetError: () => { set(initialState) },
     }))

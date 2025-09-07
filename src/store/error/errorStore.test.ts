@@ -1,44 +1,78 @@
-import '../../__tests__/__mocks__/authStoreMock'
-
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { createTestStore } from '../../__tests__/storeUtils'
 import { APIError, ErrCode } from '../../api/generatedApi'
+import { errorBus } from './errorBus'
 
-describe('error store', () => {
-    let store: ReturnType<typeof createTestStore>
 
-    beforeEach(() => {
-        store = createTestStore()
-        vi.clearAllMocks()
+describe('ErrorStore', () => {
+    it('catch unknown errors', { skip: true }, () => {
+        // How??
     })
 
+    it('catch 500 API error', () => {
+        const store = createTestStore()
+        const apiError = new APIError(
+            500,
+            {
+                code: ErrCode.Internal,
+                message: 'internal',
+                details: 'none',
+            },
+        )
 
-    it('no error', () => {
-        expect(store.getState().error).toBeUndefined()
+        const emitSpy = vi.spyOn(errorBus, 'emit')
+
+        store.getState().setError(apiError)
+        expect(emitSpy).toHaveBeenCalled()
     })
 
-    it('400', () => {
-        const error = new APIError(400, { code: ErrCode.InvalidArgument, message: 'message', details: 'details' })
-        store.getState().setError(error)
-        expect(store.getState().error.statusText).toBe('message')
+    it('catch 400 API error', () => {
+        const store = createTestStore()
+        const apiError = new APIError(
+            400,
+            {
+                code: ErrCode.InvalidArgument,
+                message: 'invalid_argument',
+                details: 'none',
+            },
+        )
+
+        const emitSpy = vi.spyOn(errorBus, 'emit')
+
+        store.getState().setError(apiError)
+        expect(emitSpy).toHaveBeenCalled()
     })
 
-    it('401', () => {
-        const error = new APIError(401, { code: ErrCode.Unauthenticated, message: 'unauth' })
-        store.getState().setError(error)
-        expect(store.getState().logout).toHaveBeenCalled()
+    it('do not catch 404 API error', () => {
+        const store = createTestStore()
+        const apiError = new APIError(
+            404,
+            {
+                code: ErrCode.NotFound,
+                message: 'not found',
+            },
+        )
+        const emitSpy = vi.spyOn(errorBus, 'emit')
+
+        store.getState().setError(apiError)
+        expect(emitSpy).not.toHaveBeenCalled()
     })
 
-    it('no valid uuid', () => {
-        const error = new APIError(400, { code: ErrCode.InvalidArgument, message: 'invalid uuid' })
-        store.getState().setError(error)
-        expect(store.getState().logout).toHaveBeenCalled()
-    })
+    it('logout when 401, but do not catch', () => {
+        const store = createTestStore()
+        const apiError = new APIError(
+            401,
+            {
+                code: ErrCode.Unauthenticated,
+                message: 'not authorized',
+            },
+        )
+        const emitSpy = vi.spyOn(errorBus, 'emit')
+        const logoutSpy = vi.spyOn(store.getState(), 'logout')
 
-    it('500', () => {
-        const error = new APIError(500, { code: ErrCode.Internal, message: 'message', details: 'details' })
-        store.getState().setError(error)
-        expect(store.getState().error.statusText).toBe('message')
+        store.getState().setError(apiError)
+        expect(emitSpy).not.toHaveBeenCalled()
+        expect(logoutSpy).toHaveBeenCalled()
     })
 })
