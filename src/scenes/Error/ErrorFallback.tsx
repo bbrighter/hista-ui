@@ -11,7 +11,7 @@ import { useNavigateHomePage } from '../../hooks/useNavigate';
 import { toAppError } from '../../store/error/appError'
 
 
-export function ErrorFallback({ error, resetErrorBoundary }) {
+export function ErrorFallback({ error, resetErrorBoundary }: { error: unknown; resetErrorBoundary: () => void }) {
     const navigate = useNavigateHomePage()
     const goToHomepage = () => {
         navigate()

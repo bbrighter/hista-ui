@@ -12,7 +12,7 @@ export function ErrorBridge() {
         return () => {
             errorBus.off('error', listener)
         }
-
     }, [showBoundary])
+
     return null
 }
