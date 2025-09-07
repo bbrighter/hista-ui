@@ -1,8 +1,7 @@
 import { StateCreator } from 'zustand'
 
 import { login } from '../../api/api'
-import { ErrCode } from '../../api/generatedApi'
-import { ErrorStore } from '../error/errorStore'
+import { ErrCode, isAPIError } from '../../api/generatedApi'
 
 
 interface State {
@@ -21,10 +20,10 @@ const initialState: State = {
 }
 
 export const createAuthSlice: StateCreator<
-    AuthStore & ErrorStore,
+    AuthStore,
     [],
     [],
-    AuthStore> = ((set, get) => ({
+    AuthStore> = ((set) => ({
         ...initialState,
 
         logout() {
@@ -34,6 +33,13 @@ export const createAuthSlice: StateCreator<
 
         login: async (password: string, userName: string) => {
             const resp = await login(userName, password)
+            if (isAPIError(resp)) {
+                if (resp.code == ErrCode.Unauthenticated) {
+                    clearAuth()
+                    return
+                }
+                throw (resp)
+            }
             if (resp.status == ErrCode.OK) {
                 set({ isAuthenticated: true })
                 persistAuth(true, resp.token, userName)
@@ -41,11 +47,6 @@ export const createAuthSlice: StateCreator<
             }
             if (resp.status == ErrCode.Unauthenticated) {
                 clearAuth()
-                return
-            }
-
-            if (resp.status == ErrCode.Internal) {
-                get().setError(resp)
                 return
             }
 

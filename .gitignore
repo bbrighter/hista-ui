@@ -10,3 +10,6 @@ coverage
 bundle-stats.html
 tsconfig.node.tsbuildinfo
 tsconfig.tsbuildinfo
+
+# Dependency cruiser
+graph.svg

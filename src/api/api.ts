@@ -1,4 +1,4 @@
-import Client, { AuthDataGenerator, ClientOptions, Environment, internalAuth,isAPIError,Local } from './generatedApi';
+import Client, { APIError, AuthDataGenerator, ClientOptions, Environment, internalAuth, Local } from './generatedApi';
 
 
 const getStageURL = (): string => {
@@ -29,7 +29,7 @@ const options: ClientOptions = { auth: authGenerator, fetcher: (...args: Paramet
 
 export const client = new Client(baseUrl, options)
 
-export const login = async (userName: string, password: string): Promise<{ token: string, status: string, details?: string }> => {
+export const login = async (userName: string, password: string): Promise<{ token: string, status: string, details?: string } | APIError> => {
     const loginParams: internalAuth.LoginParams = { userName: userName, password: password }
     const params: RequestInit = {
         body: JSON.stringify(loginParams),
@@ -41,12 +41,6 @@ export const login = async (userName: string, password: string): Promise<{ token
         return { token: json.token, status: 'ok' }
     } else {
         const json = await resp.json()
-        if (isAPIError(json)) {
-            return {
-                token: '', status: json.code, details: json.details,
-            }
-        } else {
-            return { token: '', status: json['code'], details: json['details'] }
-        }
+        return new APIError(json.status, json)
     }
 }

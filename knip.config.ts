@@ -11,6 +11,9 @@ const config: KnipConfig = {
     '@types/babel__template',// Needed for @stylistic/eslint
     '@types/babel__traverse',// Needed for @stylistic/eslint
   ],
+  ignoreBinaries: [
+    'dot', // Needed to visualize results from dependency-cruiser
+  ],
 
 };
 
