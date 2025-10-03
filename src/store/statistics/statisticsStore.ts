@@ -41,7 +41,7 @@ export const createStatisticsSlice: StateCreator<
     ...initialState,
 
     getDiaryEntries: async (): Promise<void> => {
-        const resp = await client.api.GetDiary()
+        const resp = await client.GetDiary()
         set(produce((draft: State) => {
             draft.diaryEntries = respToRawDiary(resp)
         }))
@@ -52,7 +52,7 @@ export const createStatisticsSlice: StateCreator<
             toDate: toDate.toISOString(),
             ids: symptomIds,
         }
-        const resp = await client.api.GetStatisticsBySymptomIds(params)
+        const resp = await client.GetStatisticsBySymptomIds(params)
         set(produce((draft: State) => {
             draft.foodStatistics = respToStatistics(resp, get().ingredients)
         }))
@@ -63,7 +63,7 @@ export const createStatisticsSlice: StateCreator<
             toDate: toDate.toISOString(),
             ids: ingredientIds,
         }
-        const resp = await client.api.GetStatisticsByIngredientsIds(params)
+        const resp = await client.GetStatisticsByIngredientsIds(params)
         set(produce((draft: State) => {
             draft.symptomStatistics = respToSymptomStatistics(resp, get().symptoms)
         }))

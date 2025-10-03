@@ -1,69 +1,77 @@
+import { produce } from 'immer'
 import { StateCreator } from 'zustand'
 
 import { login } from '../../api/api'
 import { ErrCode, isAPIError } from '../../api/generatedApi'
+import { getFirstPiidFromToken } from './tokenHandler';
 
 
 interface State {
-    isAuthenticated: boolean
+    token: string | null
+    piid: string | null
 }
 
 interface Actions {
     logout: () => void
-    login: (password: string, userName: string) => Promise<void>
+    login: (password: string, userName: string) => Promise<string | null>
+    setPiid: (piid: string) => void
 }
 
 export interface AuthStore extends State, Actions { }
 
 const initialState: State = {
-    isAuthenticated: window.localStorage.getItem('isAuthenticated') === 'true' || false,
+    token: window.localStorage.getItem('token'),
+    piid: getFirstPiidFromToken(window.localStorage.getItem('token')),
 }
 
 export const createAuthSlice: StateCreator<
     AuthStore,
     [],
     [],
-    AuthStore> = ((set) => ({
+    AuthStore> = ((set, get) => ({
         ...initialState,
+
+        setPiid(piid: string) {
+            set(produce((draft: State) => {
+                draft.piid = piid
+            }))
+        },
 
         logout() {
             clearAuth()
-            set({ isAuthenticated: false })
         },
 
-        login: async (password: string, userName: string) => {
+        login: async (password: string, userName: string): Promise<string | null> => {
             const resp = await login(userName, password)
             if (isAPIError(resp)) {
                 if (resp.code == ErrCode.Unauthenticated) {
                     clearAuth()
-                    return
+                    return null
+                }
+                if (resp.code == ErrCode.NotFound) {
+                    clearAuth()
+                    return null
                 }
                 throw (resp)
             }
             if (resp.status == ErrCode.OK) {
-                set({ isAuthenticated: true })
-                persistAuth(true, resp.token, userName)
-                return
+                const piid = getFirstPiidFromToken(resp.token)
+                get().setPiid(piid)
+                persistAuth(resp.token)
+                return piid
             }
             if (resp.status == ErrCode.Unauthenticated) {
                 clearAuth()
-                return
+                return null
             }
-
-            persistAuth(false)
-            set({ isAuthenticated: false })
         },
     }))
 
 
-const persistAuth = (isAuthenticated: boolean, token?: string, user?: string) => {
-    window.localStorage.setItem('isAuthenticated', String(isAuthenticated))
+const persistAuth = (token?: string) => {
     window.localStorage.setItem('token', token ?? '')
-    window.localStorage.setItem('user', user)
 }
 
 const clearAuth = () => {
-    window.localStorage.removeItem('isAuthenticated')
     window.localStorage.removeItem('token')
-    window.localStorage.removeItem('user')
 }

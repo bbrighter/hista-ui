@@ -1,4 +1,6 @@
-import Client, { APIError, AuthDataGenerator, ClientOptions, Environment, internalAuth, Local } from './generatedApi';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import useHista from '../store/store';
+import Client, { APIError, AuthDataGenerator, authentication, ClientOptions, Environment, Local } from './generatedApi';
 
 
 const getStageURL = (): string => {
@@ -17,27 +19,55 @@ const baseUrl = import.meta.env.MODE === 'test'
         : Local
 
 const authGenerator: AuthDataGenerator = () => {
-    return (
-        {
-            Authorization: window.localStorage.getItem('token') || '',
-            UserName: window.localStorage.getItem('user') || '',
-        } as internalAuth.AuthParams)
+    const auth: authentication.AuthParams = { Token: window.localStorage.getItem('token') || '' }
+    return auth
 }
 
 const options: ClientOptions = { auth: authGenerator, fetcher: (...args: Parameters<typeof fetch>) => fetch(...args) }
 
 
-export const client = new Client(baseUrl, options)
+const baseClient = new Client(baseUrl, options)
+
+// Remove first argument from function type
+type DropFirstArg<F> = F extends (first: any, ...rest: infer R) => infer Ret
+    ? (...args: R) => Ret
+    : F
+
+// Map over all client methods
+type PiidInjectedClient<T> = {
+    [K in keyof T]: DropFirstArg<T[K]>
+}
+
+export const client: PiidInjectedClient<typeof baseClient.api> = new Proxy(baseClient.api, {
+    get(target, prop, receiver) {
+        const orig = Reflect.get(target, prop, receiver)
+
+        if (typeof orig !== 'function') {
+            return orig
+        }
+
+        return (...args: any[]) => {
+            const piid = useHista.getState().piid
+            if (!piid) {
+                throw new Error('No piid set in Zustand store')
+            }
+
+            // Prepend piid to args automatically
+            return orig.call(target, piid, ...args)
+        }
+    },
+}) as any
+
 
 export const login = async (userName: string, password: string): Promise<{ token: string, status: string, details?: string } | APIError> => {
-    const loginParams: internalAuth.LoginParams = { userName: userName, password: password }
+    const loginParams: authentication.LoginParams = { userName: userName, password: password }
     const params: RequestInit = {
         body: JSON.stringify(loginParams),
         method: 'POST',
     }
     const resp = await fetch(baseUrl + '/login', params)
     if (resp.ok) {
-        const json = await resp.json() as internalAuth.LoginResponse
+        const json = await resp.json() as authentication.LoginResponse
         return { token: json.token, status: 'ok' }
     } else {
         const json = await resp.json()

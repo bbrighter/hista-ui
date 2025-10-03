@@ -7,7 +7,7 @@ describe('mealStore', () => {
 
     beforeEach(async () => {
         expect(useHista.getState().mealsAreLoaded).toBeFalsy()
-        await useHista.getState().getMeals()
+        await useHista.getState().listMeals()
         await useHista.getState().getMeal(1)
     })
 

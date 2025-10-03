@@ -4,7 +4,6 @@ import Container from '@mui/material/Container';
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-import { url } from '../../constants';
 import useHista from '../../store/store'
 import OverviewList from '../components/OverviewList'
 import { getColor } from '../Headache/components/colorMapping';
@@ -23,12 +22,12 @@ export default function Headaches() {
         const id = await postHeadache()
         setLoading(false)
         if (id) {
-            navigate(`${url.HEADACHES}/${id}`)
+            navigate(`${id}`)
         }
     }
 
     const onClick = (id: number) => {
-        navigate(`${url.HEADACHES}/${id}`)
+        navigate(`${id}`)
     }
 
     return (

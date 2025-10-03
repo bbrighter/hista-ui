@@ -33,7 +33,7 @@ export const createPollensSlice: StateCreator<
 
         getPollens: async () => {
             if (get().pollensAreLoaded) return
-            const resp = await client.api.GetPollens()
+            const resp = await client.ListPollens()
             set(produce((draft: State) => {
                 draft.pollens = respToPollens(resp)
                 draft.pollensAreLoaded = true

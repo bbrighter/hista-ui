@@ -2,14 +2,14 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
-import { url } from '../../constants'
+import { url } from '../../constants';
+import { useNavigateWithPiid } from '../../hooks/useNavigate';
 import useHista from '../../store/store'
 import MealList from './components/MealList'
 
 export default function Meals() {
-    const navigate = useNavigate()
+    const navigate = useNavigateWithPiid()
     const postMeal = useHista(state => state.postMeal)
     const [loading, setLoading] = useState(false)
 
@@ -18,7 +18,7 @@ export default function Meals() {
         const id = await postMeal()
         setLoading(false)
         if (id) {
-            navigate(url.MEAL + '/' + id)
+            navigate(url.MEALS(id))
         }
     }
 

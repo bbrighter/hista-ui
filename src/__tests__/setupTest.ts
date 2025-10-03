@@ -21,6 +21,7 @@ beforeEach(() => {
     store.resetStatus()
     // store.resetError()
     store.logout()
+    store.setPiid('123')
 
 
 })

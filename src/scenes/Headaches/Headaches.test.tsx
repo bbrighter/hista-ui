@@ -49,7 +49,7 @@ describe('Headache management', () => {
 
         await userEvent.click(createButton)
 
-        expect(mockNavigate).toHaveBeenCalledWith('/headaches/2')
+        expect(mockNavigate).toHaveBeenCalledWith('2')
     })
 
     it('Clicking a row opens the headache', async () => {
@@ -58,6 +58,6 @@ describe('Headache management', () => {
         const row = await findRowByDate('01.01.2022')
         await userEvent.click(row)
 
-        expect(mockNavigate).toHaveBeenCalledWith('/headaches/1')
+        expect(mockNavigate).toHaveBeenCalledWith('1')
     })
 })

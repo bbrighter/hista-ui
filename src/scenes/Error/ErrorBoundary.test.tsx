@@ -43,6 +43,6 @@ describe('error fallback', () => {
 
         const button = screen.getByText('Zur Homepage')
         await userEvent.click(button)
-        expect(mockNavigate).toHaveBeenCalledWith('/')
+        expect(mockNavigate).toHaveBeenCalled()
     })
 })

@@ -31,6 +31,6 @@ describe('error store', () => {
     it.skip('empty local storage', () => {
         expect(1).toBe(0)
         expect(window.localStorage.getItem('isAuthenticated')).toBeFalsy()
-        expect(store.getState().isAuthenticated).toBeFalsy()
+        expect(store.getState().token).toBeNull()
     })
 })

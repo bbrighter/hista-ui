@@ -43,7 +43,7 @@ export const createIngredientSlice: StateCreator<
         // Ingredients
         getIngredients: async () => {
             if (!get().ingredientsAreLoaded || get().ingredients.length == 0) {
-                const resp = await client.api.GetIngredients()
+                const resp = await client.ListIngredients()
                 set(produce((draft: State) => {
                     draft.ingredients = respToIngredients(resp)
                     draft.ingredientsAreLoaded = true
