@@ -6,7 +6,7 @@ import { statusHandlers } from './statusHandler'
 import { conditionEventHandlers, conditionHandlers, symptomHandlers } from './symptomHandlers'
 
 
-const baseUrl = 'http://localhost:4444'
+const baseUrl = 'http://localhost:4444/piid/:piid'
 
 
 const handlers = [

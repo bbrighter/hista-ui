@@ -3,9 +3,9 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { url } from '../../constants';
+import { useNavigateWithPiid } from '../../hooks/useNavigate';
 import useHista from '../../store/store';
 import OverviewList from '../components/OverviewList';
 import NoteSearch from './components/NoteSearch';
@@ -15,7 +15,7 @@ export default function Notes() {
     const createNote = useHista(state => state.postNote)
     const deleteNote = useHista(state => state.deleteNote)
     const notes = useHista(state => state.notes)
-    const navigate = useNavigate()
+    const navigate = useNavigateWithPiid()
 
     const [loading, setLoading] = useState(false)
     const [searchValue, setSearchValue] = useState('')
@@ -39,7 +39,7 @@ export default function Notes() {
     }, [searchValue, notes])
 
 
-    const onClick = (id: number) => navigate(`${url.NOTES}/${id}`)
+    const onClick = (id: number) => navigate(url.NOTES(id))
 
     const onDelete = async (id: number) => await deleteNote(id)
 
@@ -48,7 +48,7 @@ export default function Notes() {
         const id = await createNote()
         setLoading(false)
         if (id) {
-            navigate(url.NOTES + '/' + id)
+            navigate(url.NOTES(id))
         }
     }
 

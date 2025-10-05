@@ -1,19 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
     "lib": [
       "ES2021",
       "DOM",
       "DOM.Iterable"
     ],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    /* Bundler mode */
+    "module": "esnext",
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
+    "skipLibCheck": true,
     "noEmit": true,
     "jsx": "react-jsx",
     "types": [
@@ -21,11 +15,6 @@
       "@testing-library/jest-dom",
     ],
     "forceConsistentCasingInFileNames": true
-    /* Linting */
-    // "strict": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // "noFallthroughCasesInSwitch": true
   },
   "include": [
     "src"

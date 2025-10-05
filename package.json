@@ -14,7 +14,7 @@
     "tsc": "tsc",
     "knip": "knip",
     "prepare": "husky",
-    "dependencies:ci": "npx depcruise src",
+    "dependencies:ci": "npx depcruise src  --include-only \"^src\" --output-type html > graph.html",
     "dependencies:show": "npx depcruise --include-only \"^src\" --output-type dot src | dot -T svg > graph.svg"
   },
   "engines": {
@@ -31,6 +31,7 @@
     "dayjs": "^1.11.15",
     "exceljs": "^4.4.0",
     "immer": "^10.1.1",
+    "jwt-decode": "^4.0.0",
     "lodash.debounce": "^4.0.8",
     "mitt": "^3.0.1",
     "react": "^19.1.1",

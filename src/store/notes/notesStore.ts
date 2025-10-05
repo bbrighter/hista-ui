@@ -33,13 +33,13 @@ export const createNotesSlice: StateCreator<
         ...initialState,
 
         getNotes: async () => {
-            const resp = await client.api.GetNotes()
+            const resp = await client.ListNotes()
             set(produce((draft: State) => {
                 draft.notes = respToNotes(resp)
             }))
         },
         postNote: async () => {
-            const resp = await client.api.PostNote()
+            const resp = await client.PostNote()
             set(produce((draft: State) => {
                 draft.note = respToNote(resp)
                 draft.notes.push(draft.note)
@@ -56,7 +56,7 @@ export const createNotesSlice: StateCreator<
             }))
         },
         deleteNote: async (id: number) => {
-            await client.api.DeleteNote(id)
+            await client.DeleteNote(id)
             set(produce((draft: State) => {
                 draft.notes = get().notes.filter(v => v.id != id)
             }))
@@ -67,7 +67,7 @@ export const createNotesSlice: StateCreator<
                 text: text,
             }
             const noteIndex = get().notes.findIndex(v => v.id == id)
-            await client.api.PatchNote(id, params)
+            await client.PatchNote(id, params)
             set(produce((draft: State) => {
                 if (date) {
                     draft.note.date = new Date(date)

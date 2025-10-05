@@ -1,8 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 
 import { url } from '../constants';
+import useHista from '../store/store';
 
-export const useNavigateHomePage = () => {
+export const useNavigateHomePage = (piid: string) => {
     const navigate = useNavigate()
-    return () => navigate(url.HOMEPAGE)
+    return () => navigate('/' + piid + '/' + url.HOMEPAGE(), { replace: true })
+}
+
+
+export const useNavigateWithPiid = () => {
+    const navigate = useNavigate()
+    const piid = useHista(state => state.piid)
+    return (absoluteUrl: string) => navigate('/' + piid + '/' + absoluteUrl)
 }

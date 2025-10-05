@@ -6,13 +6,15 @@ import Alert from '@mui/material/Alert'
 import AlertTitle from '@mui/material/AlertTitle'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
+import { useParams } from 'react-router-dom';
 
 import { useNavigateHomePage } from '../../hooks/useNavigate';
 import { toAppError } from '../../store/error/appError'
 
 
 export function ErrorFallback({ error, resetErrorBoundary }: { error: unknown; resetErrorBoundary: () => void }) {
-    const navigate = useNavigateHomePage()
+    const piid = useParams<{ piid: string }>()
+    const navigate = useNavigateHomePage(piid.piid)
     const goToHomepage = () => {
         navigate()
         setTimeout(() => resetErrorBoundary(), 0)
