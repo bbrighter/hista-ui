@@ -61,6 +61,7 @@ describe('ErrorStore', () => {
 
     it('logout when 401, but do not catch', () => {
         const store = createTestStore()
+        store.setState({ logout: vi.fn() })
         const apiError = new APIError(
             401,
             {
