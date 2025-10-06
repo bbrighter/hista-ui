@@ -38,18 +38,22 @@ export const createAuthSlice: StateCreator<
         },
 
         logout() {
-            clearAuth()
+            window.localStorage.removeItem('token')
+            set(produce((draft: State) => {
+                draft.token = null
+                draft.piid = null
+            }))
         },
 
         login: async (password: string, userName: string): Promise<string | null> => {
             const resp = await login(userName, password)
             if (isAPIError(resp)) {
                 if (resp.code == ErrCode.Unauthenticated) {
-                    clearAuth()
+                    get().logout()
                     return null
                 }
                 if (resp.code == ErrCode.NotFound) {
-                    clearAuth()
+                    get().logout()
                     return null
                 }
                 throw (resp)
@@ -61,7 +65,7 @@ export const createAuthSlice: StateCreator<
                 return piid
             }
             if (resp.status == ErrCode.Unauthenticated) {
-                clearAuth()
+                get().logout()
                 return null
             }
         },
@@ -70,8 +74,4 @@ export const createAuthSlice: StateCreator<
 
 const persistAuth = (token?: string) => {
     window.localStorage.setItem('token', token ?? '')
-}
-
-const clearAuth = () => {
-    window.localStorage.removeItem('token')
 }

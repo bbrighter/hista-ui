@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { url } from '../../constants';
+import { useIsAuthenticated } from '../../store/auth/selectors';
 import useHista from '../../store/store';
 
 
@@ -27,6 +28,7 @@ export default function Login() {
     const [searchParams] = useSearchParams()
     const redirectTo = searchParams.get('redirectTo')
     const navigate = useNavigate()
+    const isAuth = useIsAuthenticated()
 
 
     useEffect(() => {
@@ -37,7 +39,7 @@ export default function Login() {
             navigate(redirectUrl, { replace: true })
             navigate(0) // This is a workaround. Otherwise, calling this without a valid token will not load anything
         }
-    }, [piid])
+    }, [piid, isAuth])
 
 
     const onClick = async () => {
