@@ -14,13 +14,3 @@ export const getFirstPiidFromToken = (token: string | null) => {
         return null
     }
 }
-
-
-export const isExpired = (token: string | null): boolean => {
-    try {
-        const { exp } = jwtDecode(token)
-        return exp * 1000 > new Date().getTime()
-    } catch {
-        return false
-    }
-}
