@@ -2,7 +2,6 @@ import { JSX, lazy, LazyExoticComponent, Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary';
 import { createBrowserRouter, RouteObject } from 'react-router-dom'
 
-import { protectedLoader } from './authentication/protectedLoader';
 import RequireAuth from './authentication/RequireAuth';
 import { url } from './constants'
 import { ErrorFallback } from './scenes/Error/ErrorFallback';
@@ -118,17 +117,20 @@ const routes: Array<RouteObject> = [
         element: <RequireAuth />,
         children: [
             ...childRoutes,
-            {
-                path: '*',
-                element: <Start />,
-            },
-
+            // {
+            //     path: '*',
+            //     element: <Start />,
+            // },
         ],
-        loader: protectedLoader,
+        loader: () => null, // Needed, otherwise React router thinks it's just a style route (or something like this)
     },
     {
         path: '*',
-        element: <Start />,
+        element: <RequireAuth />,
+        children: [{
+            path: '*',
+            element: <Start />,
+        }],
     },
 ]
 

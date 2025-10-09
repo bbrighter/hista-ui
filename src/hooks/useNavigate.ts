@@ -11,6 +11,6 @@ export const useNavigateHomePage = (piid: string) => {
 
 export const useNavigateWithPiid = () => {
     const navigate = useNavigate()
-    const piid = useHista(state => state.piid)
+    const piid = useHista(state => state.selectedPiid)
     return (absoluteUrl: string) => navigate('/' + piid + '/' + absoluteUrl)
 }

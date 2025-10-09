@@ -1,7 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { createTestStore } from '../../__tests__/storeUtils'
-
 const mockLocalStorage = (() => {
     let store: Record<string, string> = {}
 
@@ -21,7 +19,6 @@ const mockLocalStorage = (() => {
 
 
 describe('error store', () => {
-    let store: ReturnType<typeof createTestStore>
 
     beforeEach(() => {
         mockLocalStorage.clear()
@@ -31,6 +28,5 @@ describe('error store', () => {
     it.skip('empty local storage', () => {
         expect(1).toBe(0)
         expect(window.localStorage.getItem('isAuthenticated')).toBeFalsy()
-        expect(store.getState().token).toBeNull()
     })
 })
