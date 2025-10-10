@@ -45,8 +45,10 @@ export const createAuthSlice: StateCreator<
         },
 
         logout() {
+            window.localStorage.removeItem('token') // To clean up once! Remove for next PR
             set((produce((draft: State) => {
                 draft.isAuthProblem = true
+
             })))
         },
 
