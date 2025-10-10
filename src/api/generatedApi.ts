@@ -80,13 +80,6 @@ export interface ClientOptions {
 
     /** Default RequestInit to be used for the client */
     requestInit?: Omit<RequestInit, "headers"> & { headers?: Record<string, string> }
-
-    /**
-     * Allows you to set the authentication data to be used for each
-     * request either by passing in a static object or by passing in
-     * a function which returns a new object for each request.
-     */
-    auth?: authentication.AuthParams | AuthDataGenerator
 }
 
 export namespace api {
@@ -504,7 +497,6 @@ export namespace api {
 
 export namespace authentication {
     export interface AuthParams {
-        Token: string
     }
 
     export interface LoginParams {
@@ -513,7 +505,7 @@ export namespace authentication {
     }
 
     export interface LoginResponse {
-        token: string
+        Cookie: string
     }
 
     export interface UserListResponse {
@@ -531,6 +523,7 @@ export namespace authentication {
         constructor(baseClient: BaseClient) {
             this.baseClient = baseClient
             this.AddUserToProductInstance = this.AddUserToProductInstance.bind(this)
+            this.GetPermissions = this.GetPermissions.bind(this)
             this.GetUsersForProductInstance = this.GetUsersForProductInstance.bind(this)
             this.Login = this.Login.bind(this)
             this.RemoveUserFromProductInstance = this.RemoveUserFromProductInstance.bind(this)
@@ -538,6 +531,12 @@ export namespace authentication {
 
         public async AddUserToProductInstance(userId: string, productInstanceId: string): Promise<void> {
             await this.baseClient.callTypedAPI("POST", `/user/${encodeURIComponent(userId)}/product-instance/${encodeURIComponent(productInstanceId)}`)
+        }
+
+        public async GetPermissions(): Promise<entity.AuthData> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("GET", `/permissions`)
+            return await resp.json() as entity.AuthData
         }
 
         public async GetUsersForProductInstance(productInstanceId: string): Promise<UserListResponse> {
@@ -549,7 +548,14 @@ export namespace authentication {
         public async Login(params: LoginParams): Promise<LoginResponse> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("POST", `/login`, JSON.stringify(params))
-            return await resp.json() as LoginResponse
+
+            //Populate the return object from the JSON body and received headers
+            const rtn = await resp.json() as LoginResponse
+            // Skip set-cookie header in browser context as browsers doesn't have access to read it
+            if (!BROWSER) {
+                rtn.Cookie = mustBeSet("Header `set-cookie`", resp.headers.get("set-cookie"))
+            }
+            return rtn
         }
 
         public async RemoveUserFromProductInstance(userId: string, productInstanceId: string): Promise<void> {
@@ -579,6 +585,15 @@ export namespace users {
 }
 
 export namespace entity {
+    export interface AuthData {
+        instances: AuthProductInstance[]
+    }
+
+    export interface AuthProductInstance {
+        appMapping: { [key: string]: boolean }
+        piid: string
+    }
+
     export interface ConditionEventMetaResponse {
         id: number
         date: string
@@ -781,6 +796,70 @@ export namespace entity {
     }
 }
 
+export namespace http {
+    /**
+     * A Cookie represents an HTTP cookie as sent in the Set-Cookie header of an
+     * HTTP response or the Cookie header of an HTTP request.
+     * 
+     * See https://tools.ietf.org/html/rfc6265 for details.
+     */
+    export interface Cookie {
+        Name: string
+        Value: string
+        /**
+         * indicates whether the Value was originally quoted
+         */
+        Quoted: boolean
+
+        /**
+         * optional
+         */
+        Path: string
+
+        /**
+         * optional
+         */
+        Domain: string
+
+        /**
+         * optional
+         */
+        Expires: string
+
+        /**
+         * for reading cookies only
+         */
+        RawExpires: string
+
+        /**
+         * MaxAge=0 means no 'Max-Age' attribute specified.
+         * MaxAge<0 means delete cookie now, equivalently 'Max-Age: 0'
+         * MaxAge>0 means Max-Age attribute present and given in seconds
+         */
+        MaxAge: number
+
+        Secure: boolean
+        HttpOnly: boolean
+        SameSite: SameSite
+        Partitioned: boolean
+        Raw: string
+        /**
+         * Raw text of unparsed attribute-value pairs
+         */
+        Unparsed: string[]
+    }
+
+    /**
+     * SameSite allows a server to define a cookie attribute making it impossible for
+     * the browser to send this cookie along with cross-site requests. The main
+     * goal is to mitigate the risk of cross-origin information leakage, and provide
+     * some protection against cross-site request forgery attacks.
+     * 
+     * See https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site-00 for details.
+     */
+    export type SameSite = number
+}
+
 
 
 function encodeQuery(parts: Record<string, string | string[]>): string {
@@ -804,6 +883,21 @@ function makeRecord<K extends string | number | symbol, V>(record: Record<K, V |
         }
     }
     return record as Record<K, V>
+}
+
+
+// mustBeSet will throw an APIError with the Data Loss code if value is null or undefined
+function mustBeSet<A>(field: string, value: A | null | undefined): A {
+    if (value === null || value === undefined) {
+        throw new APIError(
+            500,
+            {
+                code: ErrCode.DataLoss,
+                message: `${field} was unexpectedly ${value}`, // ${value} will create the string "null" or "undefined"
+            },
+        )
+    }
+    return value
 }
 
 function encodeWebSocketHeaders(headers: Record<string, string>) {
@@ -985,11 +1079,6 @@ type CallParameters = Omit<RequestInit, "method" | "body" | "headers"> & {
     query?: Record<string, string | string[]>
 }
 
-// AuthDataGenerator is a function that returns a new instance of the authentication data required by this API
-export type AuthDataGenerator = () =>
-  | authentication.AuthParams
-  | Promise<authentication.AuthParams | undefined>
-  | undefined;
 
 // A fetcher is the prototype for the inbuilt Fetch function
 export type Fetcher = typeof fetch;
@@ -1001,7 +1090,6 @@ class BaseClient {
     readonly fetcher: Fetcher
     readonly headers: Record<string, string>
     readonly requestInit: Omit<RequestInit, "headers"> & { headers?: Record<string, string> }
-    readonly authGenerator?: AuthDataGenerator
 
     constructor(baseURL: string, options: ClientOptions) {
         this.baseURL = baseURL
@@ -1021,41 +1109,9 @@ class BaseClient {
         } else {
             this.fetcher = boundFetch
         }
-
-        // Setup an authentication data generator using the auth data token option
-        if (options.auth !== undefined) {
-            const auth = options.auth
-            if (typeof auth === "function") {
-                this.authGenerator = auth
-            } else {
-                this.authGenerator = () => auth
-            }
-        }
     }
 
     async getAuthData(): Promise<CallParameters | undefined> {
-        let authData: authentication.AuthParams | undefined;
-
-        // If authorization data generator is present, call it and add the returned data to the request
-        if (this.authGenerator) {
-            const mayBePromise = this.authGenerator();
-            if (mayBePromise instanceof Promise) {
-                authData = await mayBePromise;
-            } else {
-                authData = mayBePromise;
-            }
-        }
-
-        if (authData) {
-            const data: CallParameters = {};
-
-            data.headers = makeRecord<string, string>({
-                authorization: authData.Token,
-            });
-
-            return data;
-        }
-
         return undefined;
     }
 

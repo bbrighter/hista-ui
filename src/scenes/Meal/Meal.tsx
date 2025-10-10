@@ -14,10 +14,10 @@ import MealSettings from './components/MealSettings';
 export default function Meal() {
     const getMeal = useHista(state => state.getMeal)
     const isLoading = useHista(state => state.meal.isLoading)
-    const params = useParams<{ id: string }>()
+    const params = useParams<{ mealId: string }>()
 
     useEffect(() => {
-        getMeal(Number(params.id))
+        getMeal(Number(params.mealId))
     }, [])
 
 

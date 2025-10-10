@@ -10,13 +10,12 @@ import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { useNavigate } from 'react-router-dom';
 
-import { url } from '../../../constants';
+import { useAppNavigate } from '../../../hooks/useNavigate';
 
 export default function StartPageCard({ type }: { type: keyof typeof CARD_CONFIG }) {
-    const navigate = useNavigate()
-    const { title, content, icon, navigateTo } = CARD_CONFIG[type];
+    const navigate = useAppNavigate()
+    const { title, content, icon, onClick } = CARD_CONFIG[type](navigate);
     return (
         <Grid size={{ xs: 12, sm: 12, md: 6, lg: 4 }}>
             <Card
@@ -29,7 +28,7 @@ export default function StartPageCard({ type }: { type: keyof typeof CARD_CONFIG
                     },
                 }}
                 variant="outlined"
-                onClick={() => navigate(navigateTo)}
+                onClick={(onClick)}
             >
                 <CardHeader
                     avatar={icon}
@@ -47,46 +46,46 @@ export default function StartPageCard({ type }: { type: keyof typeof CARD_CONFIG
 }
 
 const CARD_CONFIG = {
-    meals: {
+    meals: (navigate: ReturnType<typeof useAppNavigate>) => ({
         title: 'Mahlzeiten',
         content: 'Mahlzeiten hinzufügen, ansehen und bearbeiten',
         icon: <RestaurantIcon />,
-        navigateTo: url.MEALS(),
-    },
-    conditionEvents: {
+        onClick: navigate.to.meals,
+    }),
+    conditionEvents: (navigate: ReturnType<typeof useAppNavigate>) => ({
         title: 'Symptome',
         content: 'Symptome aufzeichnen',
         icon: <SickIcon />,
-        navigateTo: url.CONDITION_EVENTS(),
-    },
-    statistics: {
+        onClick: navigate.to.conditionEvents,
+    }),
+    statistics: (navigate: ReturnType<typeof useAppNavigate>) => ({
         title: 'Auswertungen',
         content: 'Ernährungstagebuch und mehr',
         icon: <QueryStatsIcon />,
-        navigateTo: url.STATISTICS(),
-    },
-    notes: {
+        onClick: navigate.to.statistics,
+    }),
+    notes: (navigate: ReturnType<typeof useAppNavigate>) => ({
         title: 'Notizen',
         content: 'Notizen anfertigen und durchsuchen',
         icon: <NoteIcon />,
-        navigateTo: url.NOTES(),
-    },
-    pollens: {
+        onClick: navigate.to.notes,
+    }),
+    pollens: (navigate: ReturnType<typeof useAppNavigate>) => ({
         title: 'Pollen',
         content: 'Pollenflug bewundern',
         icon: <ForestIcon />,
-        navigateTo: url.POLLENS(),
-    },
-    status: {
+        onClick: navigate.to.pollens,
+    }),
+    status: (navigate: ReturnType<typeof useAppNavigate>) => ({
         title: 'Status',
         content: 'Wie geht\'s denn heute?',
         icon: <SelfImprovementIcon />,
-        navigateTo: url.STATUSES(),
-    },
-    headaches: {
+        onClick: navigate.to.statuses,
+    }),
+    headaches: (navigate: ReturnType<typeof useAppNavigate>) => ({
         title: 'Kopfweh',
         content: 'Kopfschmerztagebuch',
         icon: <FaceRetouchingNaturalIcon />,
-        navigateTo: url.HEADACHES(),
-    },
+        onClick: navigate.to.headaches,
+    }),
 } as const;

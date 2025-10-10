@@ -1,35 +1,31 @@
 import { useEffect } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 
-import { url } from '../constants'
-import { useIsAuthenticated } from '../store/auth/selectors'
 import useHista from '../store/store'
 
 export default function RequireAuth() {
     const navigate = useNavigate()
 
-    const setPiid = useHista(state => state.setPiid)
-    const tokenPiid = useHista(state => state.piid)
-
+    const selectedPiid = useHista(state => state.selectedPiid)
+    const isAuthProblem = useHista(state => state.isAuthProblem)
+    const getPermissions = useHista(state => state.getPermissions)
     const urlPiid = useUrlPiid()
-    const isAuthenticated = useIsAuthenticated()
+
+    useEffect(() => { getPermissions() }, [])
 
     useEffect(() => {
-        if (!isAuthenticated) {
-            navigate(url.LOGIN(), { replace: true })
-            return
+        if (!selectedPiid || urlPiid) return
+        navigate(
+            window.location.pathname.replace(/^\//, `/${selectedPiid}/`),
+            { replace: true },
+        )
+    }, [selectedPiid])
+
+    useEffect(() => {
+        if (isAuthProblem) {
+            navigate(`/login?redirectTo=${location.pathname}`)
         }
-        if (!urlPiid) {
-            navigate(
-                window.location.pathname.replace(/^\//, `/${tokenPiid}/`),
-                { replace: true },
-            )
-            return
-        }
-        if (urlPiid && urlPiid != tokenPiid) {
-            setPiid(urlPiid)
-        }
-    }, [tokenPiid, isAuthenticated, urlPiid])
+    }, [isAuthProblem])
 
 
     return <Outlet />

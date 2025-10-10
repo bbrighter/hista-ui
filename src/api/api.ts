@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import useHista from '../store/store';
-import Client, { APIError, AuthDataGenerator, authentication, ClientOptions, Environment, Local } from './generatedApi';
+import Client, { APIError, authentication, ClientOptions, Environment, Local } from './generatedApi';
 
 
 const getStageURL = (): string => {
@@ -18,15 +18,14 @@ const baseUrl = import.meta.env.MODE === 'test'
         ? getStageURL()
         : Local
 
-const authGenerator: AuthDataGenerator = () => {
-    const auth: authentication.AuthParams = { Token: window.localStorage.getItem('token') || '' }
-    return auth
-}
 
-const options: ClientOptions = { auth: authGenerator, fetcher: (...args: Parameters<typeof fetch>) => fetch(...args) }
+const options: ClientOptions = {
+    fetcher: (input: RequestInfo | URL, init?: RequestInit) => fetch(input, { ...init, ...{ credentials: 'include' } }),
+}
 
 
 const baseClient = new Client(baseUrl, options)
+export const authApi = baseClient.authentication
 
 // Remove first argument from function type
 type DropFirstArg<F> = F extends (first: any, ...rest: infer R) => infer Ret
@@ -47,28 +46,23 @@ export const client: PiidInjectedClient<typeof baseClient.api> = new Proxy(baseC
         }
 
         return (...args: any[]) => {
-            const piid = useHista.getState().piid
-            if (!piid) {
-                throw new Error('No piid set in Zustand store')
-            }
-
-            // Prepend piid to args automatically
+            const piid = useHista.getState().selectedPiid
             return orig.call(target, piid, ...args)
         }
     },
 }) as any
 
 
-export const login = async (userName: string, password: string): Promise<{ token: string, status: string, details?: string } | APIError> => {
+export const login = async (userName: string, password: string): Promise<boolean | APIError> => {
     const loginParams: authentication.LoginParams = { userName: userName, password: password }
     const params: RequestInit = {
         body: JSON.stringify(loginParams),
         method: 'POST',
+        credentials: 'include',
     }
     const resp = await fetch(baseUrl + '/login', params)
     if (resp.ok) {
-        const json = await resp.json() as authentication.LoginResponse
-        return { token: json.token, status: 'ok' }
+        return true
     } else {
         const json = await resp.json()
         return new APIError(json.status, json)

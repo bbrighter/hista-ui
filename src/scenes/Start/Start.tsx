@@ -1,9 +1,15 @@
 
 import Grid from '@mui/material/Grid';
+import { useEffect } from 'react';
 
+import useHista from '../../store/store';
 import StartPageCard from './components/StartPageCard';
 
 export default function Start() {
+    const getPermissions = useHista(state => state.getPermissions)
+    useEffect(() => {
+        getPermissions()
+    }, [])
 
     return (
         <Grid

@@ -1,27 +1,34 @@
 import { produce } from 'immer'
 import { StateCreator } from 'zustand'
 
-import { login } from '../../api/api'
+import { authApi, login } from '../../api/api'
 import { ErrCode, isAPIError } from '../../api/generatedApi'
-import { getFirstPiidFromToken } from './tokenHandler';
+import { Permissions, toPermission } from './permissions';
 
 
 interface State {
-    token: string | null
-    piid: string | null
+    selectedPiid: string | null
+    instances: Permissions
+    permissionsSet: boolean | 'running'
+    isLoggedIn: boolean
+    isAuthProblem: boolean
 }
 
 interface Actions {
     logout: () => void
-    login: (password: string, userName: string) => Promise<string | null>
+    login: (password: string, userName: string) => Promise<boolean>
+    getPermissions: () => Promise<void>
     setPiid: (piid: string) => void
 }
 
 export interface AuthStore extends State, Actions { }
 
 const initialState: State = {
-    token: window.localStorage.getItem('token'),
-    piid: getFirstPiidFromToken(window.localStorage.getItem('token')),
+    selectedPiid: null,
+    instances: [],
+    permissionsSet: false,
+    isLoggedIn: false,
+    isAuthProblem: false,
 }
 
 export const createAuthSlice: StateCreator<
@@ -33,45 +40,57 @@ export const createAuthSlice: StateCreator<
 
         setPiid(piid: string) {
             set(produce((draft: State) => {
-                draft.piid = piid
+                draft.selectedPiid = piid
             }))
         },
 
         logout() {
-            window.localStorage.removeItem('token')
-            set(produce((draft: State) => {
-                draft.token = null
-                draft.piid = null
-            }))
+            window.localStorage.removeItem('token') // To clean up once! Remove for next PR
+            set((produce((draft: State) => {
+                draft.isAuthProblem = true
+
+            })))
         },
 
-        login: async (password: string, userName: string): Promise<string | null> => {
+        login: async (password: string, userName: string): Promise<boolean> => {
             const resp = await login(userName, password)
             if (isAPIError(resp)) {
                 if (resp.code == ErrCode.Unauthenticated) {
                     get().logout()
-                    return null
+                    return false
                 }
                 if (resp.code == ErrCode.NotFound) {
                     get().logout()
-                    return null
+                    return false
                 }
                 throw (resp)
             }
-            if (resp.status == ErrCode.OK) {
-                const piid = getFirstPiidFromToken(resp.token)
-                get().setPiid(piid)
-                persistAuth(resp.token)
-                return piid
-            }
-            if (resp.status == ErrCode.Unauthenticated) {
+            if (resp) {
+                set(produce((draft: State) => {
+                    draft.isAuthProblem = false
+                }))
+                return true
+            } else {
                 get().logout()
-                return null
+                return false
             }
         },
+
+        getPermissions: async () => {
+            if (get().permissionsSet) return
+            set(produce((draft: State) => { draft.permissionsSet = 'running' }))
+            try {
+                const resp = await authApi.GetPermissions()
+                const perms = toPermission(resp)
+                set(produce((draft: State) => {
+                    draft.instances = perms
+                    draft.selectedPiid = perms[0].piid
+                    draft.permissionsSet = true
+                    draft.isAuthProblem = false
+                }))
+            } finally {
+                set(produce((draft: State) => { draft.permissionsSet = false }))
+            }
+
+        },
     }))
-
-
-const persistAuth = (token?: string) => {
-    window.localStorage.setItem('token', token ?? '')
-}

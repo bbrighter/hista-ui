@@ -4,16 +4,53 @@ export const mealConstants = {
 } as const;
 
 
-export const url = {
-    MEALS: (id?: number) => id ? `meals/${id}` : 'meals',
-    CONDITION_EVENTS: (id?: number) => id ? `condition-events/${id}` : 'condition-events',
-    STATISTICS: () => 'statistics',
-    NOTES: (id?: number) => id ? `notes/${id}` : 'notes',
-    POLLENS: () => 'pollens',
-    STATUSES: (id?: number) => id ? `statuses/${id}` : 'statuses',
-    HEADACHES: (id?: number) => id ? `headaches/${id}` : 'headaches',
-    MANAGE_SYMPTOMS: () => 'manage-symptoms',
-    LOGIN: () => '/login',
-    HOMEPAGE: () => '',
-    ERROR: () => '/error',
+const noPiidRoutes = {
+    homepage: '/',
+    error: '/error',
+    login: '/login',
+}
+
+const piidRoutes = {
+    homepagePiid: '/',
+    meals: '/meals',
+    mealDetails: '/meals/:mealId',
+    conditionEvents: '/condition-events/',
+    conditionEventDetails: '/condition-events/:eventId',
+    statistics: '/statistics',
+    notes: '/notes',
+    noteDetails: '/notes/:noteId',
+    pollens: '/pollens',
+    statuses: '/statuses',
+    statusDetails: '/statuses/:statusId',
+    headaches: '/headaches',
+    headacheDetails: '/headaches/:headacheId',
+    manageSymptoms: '/manage-symptoms',
+}
+
+const addPiid = (route: string): string => {
+    return '/:piid' + route
+}
+
+function mapValues<T extends Record<string, string>>(
+    obj: T,
+    fn: (value: string, key: keyof T) => string,
+): { [K in keyof T]: string } {
+    return Object.fromEntries(
+        Object.entries(obj).map(([key, value]) => [key, fn(value, key as keyof T)]),
+    ) as { [K in keyof T]: string };
+}
+
+export const appRoutes = {
+    ...noPiidRoutes,
+    ...mapValues(piidRoutes, addPiid),
+} as const
+
+export function buildPath(
+    template: string,
+    params: Record<string, string | number> = {},
+): string {
+    return Object.entries(params).reduce(
+        (path, [key, value]) => path.replace(`:${key}`, encodeURIComponent(String(value))),
+        template,
+    );
 }

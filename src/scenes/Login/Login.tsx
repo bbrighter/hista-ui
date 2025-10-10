@@ -6,8 +6,7 @@ import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { url } from '../../constants';
-import { useIsAuthenticated } from '../../store/auth/selectors';
+import { useAppNavigate } from '../../hooks/useNavigate';
 import useHista from '../../store/store';
 
 
@@ -20,33 +19,45 @@ const LOGIN_STATES: Record<LoadingState, ButtonProps['color']> = {
 } as const
 
 export default function Login() {
-    const login = useHista(state => state.login)
+    const [searchParams] = useSearchParams()
+
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
-    const piid = useHista(state => state.piid)
     const [loadingState, setLoadingState] = useState<LoadingState>('initial')
-    const [searchParams] = useSearchParams()
-    const redirectTo = searchParams.get('redirectTo')
+
+    const piid = useHista(state => state.selectedPiid)
+    const isAuthProblem = useHista(state => state.isAuthProblem)
+    const getPermissions = useHista(state => state.getPermissions)
+    const login = useHista(state => state.login)
+
     const navigate = useNavigate()
-    const isAuth = useIsAuthenticated()
+    const appNavigate = useAppNavigate()
+
 
 
     useEffect(() => {
         const regex = /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
-        if (piid && regex.test(piid)) {
-            const redirectUrl = redirectTo ? redirectTo : '/' + piid + '/' + url.HOMEPAGE()
+        if (piid && regex.test(piid) && !isAuthProblem) {
+            const redirectTo = searchParams.get('redirectTo')
+            if (redirectTo) {
+                navigate(redirectTo, { replace: true })
+            } else {
+                appNavigate.to.home()
+            }
             setLoadingState('initial')
-            navigate(redirectUrl, { replace: true })
-            navigate(0) // This is a workaround. Otherwise, calling this without a valid token will not load anything
+
         }
-    }, [piid, isAuth])
+    }, [piid, isAuthProblem])
 
 
     const onClick = async () => {
         setLoadingState('loading')
-        const resp = await login(password, name)
-        if (!resp) {
+        const ok = await login(password, name)
+        if (!ok) {
             setLoadingState('error')
+        } else {
+            getPermissions()
+            setLoadingState('initial')
         }
     }
 

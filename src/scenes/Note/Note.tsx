@@ -14,14 +14,14 @@ export default function Note() {
     const getNote = useHista(state => state.getNote)
     const patchNote = useHista(state => state.patchNote)
     const note = useHista(state => state.note)
-    const params = useParams<{ id: string }>()
+    const params = useParams<{ noteId: string }>()
     const [textInput, setTextInput] = useState(note.text)
     const debouncedInputValue = useDebounce(textInput, 1000)
     const [isUpToDate, setIsUpToDate] = useState(true)
 
     useEffect(() => {
-        getNote(Number(params.id))
-    }, [params.id])
+        getNote(Number(params.noteId))
+    }, [params.noteId])
 
     useEffect(() => {
         setTextInput(note.text)

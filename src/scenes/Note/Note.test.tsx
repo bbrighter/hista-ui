@@ -7,15 +7,18 @@ import Note from './Note';
 
 describe('A single note is rendered and can be updated', () => {
     it('Free text form is rendered an updated', async () => {
-        render(<MemoryRouter initialEntries={['/notes/1']}>
+        render(<MemoryRouter initialEntries={['/7b3047c2-d56d-4942-abc4-39eb85e785f2/notes/1']}>
             <Routes>
-                <Route path="/notes/:id" element={<Note />} />
+                <Route path="/:piid/notes/:noteId" element={<Note />} />
             </Routes>
         </MemoryRouter>)
 
 
         const textArea = await screen.findByLabelText('Notiz')
         expect(textArea).toBeInTheDocument()
+
+        const input = screen.getByRole('textbox')
+        screen.debug(input)
         expect(screen.getByText('text')).toBeInTheDocument()
 
         await userEvent.type(textArea, '2', { delay: 50 })

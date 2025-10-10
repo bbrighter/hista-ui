@@ -4,15 +4,14 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Container from '@mui/material/Container';
 import { useState } from 'react';
 
-import { url } from '../../constants'
-import { useNavigateWithPiid } from '../../hooks/useNavigate';
+import { useAppNavigate } from '../../hooks/useNavigate';
 import useHista from '../../store/store'
 import EventList from './components/EventList'
 
 
 export default function ConditionEvents() {
     const postConditionEvent = useHista(state => state.postConditionEvent)
-    const navigate = useNavigateWithPiid()
+    const navigate = useAppNavigate()
     const [loading, setLoading] = useState(false)
 
     const onClickAddSymptom = async () => {
@@ -20,12 +19,12 @@ export default function ConditionEvents() {
         const id = await postConditionEvent()
         setLoading(false)
         if (id) {
-            navigate(url.CONDITION_EVENTS(id))
+            navigate.to.conditionEventDetails(id)
         }
     }
 
     const onClickManageSymptoms = () => {
-        navigate(url.MANAGE_SYMPTOMS())
+        navigate.to.manageSymptoms()
     }
 
     return (
