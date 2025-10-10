@@ -3,7 +3,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { createBrowserRouter, RouteObject } from 'react-router-dom'
 
 import RequireAuth from './authentication/RequireAuth';
-import { url } from './constants'
+import { appRoutes } from './constants'
 import { ErrorFallback } from './scenes/Error/ErrorFallback';
 import Login from './scenes/Login';
 import Start from './scenes/Start';
@@ -17,68 +17,72 @@ type RawRoute = {
 
 const rawRoutes: Array<RawRoute> = [
     {
-        path: url.HEADACHES(),
+        path: appRoutes.headaches,
         element: lazy(() => import('./scenes/Headaches')),
         name: 'Headaches',
     },
     {
-        path: url.HEADACHES() + '/:id',
+        path: appRoutes.headacheDetails,
         element: lazy(() => import('./scenes/Headache')),
         name: 'Headache',
     },
     {
-        path: url.CONDITION_EVENTS() + '/:id',
+        path: appRoutes.conditionEvents,
+        element: lazy(() => import('./scenes/ConditionEvents')),
+        name: 'ConditionEvents',
+    },
+    {
+        path: appRoutes.conditionEventDetails,
         element: lazy(() => import('./scenes/ConditionEvent')),
         name: 'ConditionEvent',
     },
     {
-        path: url.MANAGE_SYMPTOMS(),
+        path: appRoutes.manageSymptoms,
         element: lazy(() => import('./scenes/SymptomManagement')),
         name: 'SymptomManagement',
     },
     {
-        path: url.STATUSES(),
+        path: appRoutes.statuses,
         element: lazy(() => import('./scenes/Status')),
         name: 'Status',
     },
     {
-        path: url.STATISTICS(),
+        path: appRoutes.statistics,
         element: lazy(() => import('./scenes/Statistics')),
         name: 'Statistics',
     },
     {
-        path: url.CONDITION_EVENTS(),
-        element: lazy(() => import('./scenes/ConditionEvents')),
-        name: 'ConditionEvents',
-    },
-
-    {
-        path: url.MEALS() + '/:id',
-        element: lazy(() => import('./scenes/Meal')),
-        name: 'Meal',
-    },
-    {
-        path: url.MEALS(),
+        path: appRoutes.meals,
         element: lazy(() => import('./scenes/Meals')),
         name: 'Meals',
     },
     {
-        path: url.NOTES() + '/:id',
+        path: appRoutes.mealDetails,
+        element: lazy(() => import('./scenes/Meal')),
+        name: 'Meal',
+    },
+    {
+        path: appRoutes.noteDetails,
         element: lazy(() => import('./scenes/Note')),
         name: 'Note',
     },
     {
-        path: url.NOTES(),
+        path: appRoutes.notes,
         element: lazy(() => import('./scenes/Notes')),
         name: 'Notes',
     },
     {
-        path: url.POLLENS(),
+        path: appRoutes.pollens,
         element: lazy(() => import('./scenes/Pollens')),
         name: 'Pollens',
     },
     {
-        path: url.HOMEPAGE(),
+        path: appRoutes.homepage,
+        element: lazy(() => import('./scenes/Start')),
+        name: 'Start',
+    },
+    {
+        path: appRoutes.homepagePiid,
         element: lazy(() => import('./scenes/Start')),
         name: 'Start',
     },
@@ -109,18 +113,14 @@ const childRoutes: Array<RouteObject> = rawRoutes.map(r => ({
 
 const routes: Array<RouteObject> = [
     {
-        path: url.LOGIN(),
+        path: appRoutes.login,
         element: <Login />,
     },
     {
-        path: '/:piid',
+        path: '',
         element: <RequireAuth />,
         children: [
             ...childRoutes,
-            // {
-            //     path: '*',
-            //     element: <Start />,
-            // },
         ],
         loader: () => null, // Needed, otherwise React router thinks it's just a style route (or something like this)
     },

@@ -44,6 +44,6 @@ describe('start page', () => {
         const card = await screen.findByText('Mahlzeiten')
         await userEvent.click(card)
 
-        expect(mockNavigate).toHaveBeenCalledWith('meals')
+        expect(mockNavigate).toHaveBeenCalledWith('/7b3047c2-d56d-4942-abc4-39eb85e785f2/meals')
     })
 })

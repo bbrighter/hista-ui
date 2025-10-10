@@ -47,7 +47,7 @@ describe('Login', () => {
         expect(confirmButton).toBeInTheDocument()
         await userEvent.click(confirmButton)
 
-        expect(mocks.useNavigate).toHaveBeenCalledWith('/7b3047c2-d56d-4942-abc4-39eb85e785f2/', { 'replace': true })
+        expect(mocks.useNavigate).toHaveBeenCalledWith('/7b3047c2-d56d-4942-abc4-39eb85e785f2/')
     })
 
     it('Errors shown on wrong credentials', async () => {

@@ -28,9 +28,9 @@ describe('A headache can be edited and displayed', () => {
 
     it('Change severity', async () => {
         const patchHeadacheSeverity = vi.spyOn(useHista.getState(), 'patchHeadacheSeverity')
-        render(<MemoryRouter initialEntries={['/headaches/1']}>
+        render(<MemoryRouter initialEntries={['/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1']}>
             <Routes>
-                <Route path="/headaches/:id" element={<Headache />} />
+                <Route path="/:piid/headaches/:headacheId" element={<Headache />} />
             </Routes>
         </MemoryRouter>)
 
@@ -50,9 +50,9 @@ describe('A headache can be edited and displayed', () => {
 
     it('Change position', async () => {
         const patchHeadachePositions = vi.spyOn(useHista.getState(), 'patchHeadachePositions')
-        render(<MemoryRouter initialEntries={['/headaches/1']}>
+        render(<MemoryRouter initialEntries={['/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1']}>
             <Routes>
-                <Route path="/headaches/:id" element={<Headache />} />
+                <Route path="/:piid/headaches/:headacheId" element={<Headache />} />
             </Routes>
         </MemoryRouter>)
 
@@ -87,9 +87,9 @@ describe('A headache can be edited and displayed', () => {
 
     it('Change type', async () => {
         const patchHeadacheTypes = vi.spyOn(useHista.getState(), 'patchHeadacheTypes')
-        render(<MemoryRouter initialEntries={['/headaches/1']}>
+        render(<MemoryRouter initialEntries={['/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1']}>
             <Routes>
-                <Route path="/headaches/:id" element={<Headache />} />
+                <Route path="/:piid/headaches/:headacheId" element={<Headache />} />
             </Routes>
         </MemoryRouter>)
 
@@ -113,9 +113,9 @@ describe('A headache can be edited and displayed', () => {
 
     it('Change symptoms', async () => {
         const patchHeadacheSymptoms = vi.spyOn(useHista.getState(), 'patchHeadacheSymptoms')
-        render(<MemoryRouter initialEntries={['/headaches/1']}>
+        render(<MemoryRouter initialEntries={['/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1']}>
             <Routes>
-                <Route path="/headaches/:id" element={<Headache />} />
+                <Route path="/:piid/headaches/:headacheId" element={<Headache />} />
             </Routes>
         </MemoryRouter>)
 
@@ -137,9 +137,9 @@ describe('A headache can be edited and displayed', () => {
 
     it('Change description', async () => {
         // const patchHeadacheDescription = vi.spyOn(useHista.getState(), 'patchHeadacheDescription')
-        render(<MemoryRouter initialEntries={['/headaches/1']}>
+        render(<MemoryRouter initialEntries={['/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1']}>
             <Routes>
-                <Route path="/headaches/:id" element={<Headache />} />
+                <Route path="/:piid/headaches/:headacheId" element={<Headache />} />
             </Routes>
         </MemoryRouter>)
 

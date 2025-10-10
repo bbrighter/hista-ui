@@ -14,7 +14,7 @@ import HeadacheSymptomsButtons from './components/HeadacheSymptoms'
 import HeadacheTypesButtons from './components/HeadacheTypes'
 
 export default function Headache() {
-    const params = useParams<{ id: string }>()
+    const params = useParams<{ headacheId: string }>()
     const headache = useHista(state => state.headache)
     const getHeadache = useHista(state => state.getHeadache)
     const patchSeverity = useHista(state => state.patchHeadacheSeverity)
@@ -22,8 +22,8 @@ export default function Headache() {
 
 
     useEffect(() => {
-        getHeadache(Number(params.id))
-    }, [params.id])
+        getHeadache(Number(params.headacheId))
+    }, [params.headacheId])
 
     const onSeverityChange = (v: number) => {
         if (v != headache.severity) {

@@ -3,13 +3,12 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { useState } from 'react'
 
-import { url } from '../../constants';
-import { useNavigateWithPiid } from '../../hooks/useNavigate';
+import { useAppNavigate } from '../../hooks/useNavigate';
 import useHista from '../../store/store'
 import MealList from './components/MealList'
 
 export default function Meals() {
-    const navigate = useNavigateWithPiid()
+    const navigate = useAppNavigate()
     const postMeal = useHista(state => state.postMeal)
     const [loading, setLoading] = useState(false)
 
@@ -18,7 +17,7 @@ export default function Meals() {
         const id = await postMeal()
         setLoading(false)
         if (id) {
-            navigate(url.MEALS(id))
+            navigate.to.mealDetail(id)
         }
     }
 

@@ -14,10 +14,10 @@ export default function ConditionEvent() {
     const getConditionEvent = useHista(state => state.getConditionEvent)
     const setConditionEventDate = useHista(state => state.setConditionEventDate)
     const conditionEvent = useHista(state => state.conditionEvent)
-    const params = useParams<{ id: string }>()
+    const params = useParams<{ eventId: string }>()
 
-    useEffect(() => { getConditionEvent(Number(params.id)) },
-        [getConditionEvent, params.id])
+    useEffect(() => { getConditionEvent(Number(params.eventId)) },
+        [getConditionEvent, params.eventId])
 
     const onChange = (v: dayjs.Dayjs | null) => {
         if (v === null) return

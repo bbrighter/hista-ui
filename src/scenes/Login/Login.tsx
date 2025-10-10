@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { url } from '../../constants';
+import { useAppNavigate } from '../../hooks/useNavigate';
 import useHista from '../../store/store';
 
 
@@ -31,6 +31,7 @@ export default function Login() {
     const login = useHista(state => state.login)
 
     const navigate = useNavigate()
+    const appNavigate = useAppNavigate()
 
 
 
@@ -38,9 +39,13 @@ export default function Login() {
         const regex = /^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
         if (piid && regex.test(piid) && !isAuthProblem) {
             const redirectTo = searchParams.get('redirectTo')
-            const redirectUrl = redirectTo ? redirectTo : '/' + piid + '/' + url.HOMEPAGE()
+            if (redirectTo) {
+                navigate(redirectTo, { replace: true })
+            } else {
+                appNavigate.to.home()
+            }
             setLoadingState('initial')
-            navigate(redirectUrl, { replace: true })
+
         }
     }, [piid, isAuthProblem])
 

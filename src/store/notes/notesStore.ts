@@ -34,6 +34,7 @@ export const createNotesSlice: StateCreator<
 
         getNotes: async () => {
             const resp = await client.ListNotes()
+            console.log(resp)
             set(produce((draft: State) => {
                 draft.notes = respToNotes(resp)
             }))
