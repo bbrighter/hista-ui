@@ -353,7 +353,6 @@ export namespace api {
 
         public async ListHeadaches(piid: string): Promise<entity.HeadachesResponse> {
             // Now make the actual call to the API
-            console.log(`/piid/${encodeURIComponent(piid)}/headaches`)
             const resp = await this.baseClient.callTypedAPI("GET", `/piid/${encodeURIComponent(piid)}/headaches`)
             return await resp.json() as entity.HeadachesResponse
         }

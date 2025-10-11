@@ -17,8 +17,6 @@ describe('A single note is rendered and can be updated', () => {
         const textArea = await screen.findByLabelText('Notiz')
         expect(textArea).toBeInTheDocument()
 
-        const input = screen.getByRole('textbox')
-        screen.debug(input)
         expect(screen.getByText('text')).toBeInTheDocument()
 
         await userEvent.type(textArea, '2', { delay: 50 })
