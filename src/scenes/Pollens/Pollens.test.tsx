@@ -52,7 +52,6 @@ describe('Everything is rendered', () => {
         // For whatever strange reason, the media query is not set correctly
         mocks.useMediaQuery.mockReturnValue(true)
         render(<ThemeProvider theme={theme}><Pollens /></ThemeProvider>)
-        screen.debug()
 
         await waitFor(() => {
             const firstRow = screen.getByText('2.1.2024').closest('li') as HTMLElement

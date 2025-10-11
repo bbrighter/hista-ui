@@ -20,17 +20,12 @@ describe('Status.tsx', async () => {
             expect(card).toBeInTheDocument()
             expect(within(card).getByTitle('Löschen')).toBeInTheDocument()
             const morningPart = within(card).getByText('Morgens').closest('.MuiGrid-root') as HTMLElement
-            expect(getComputedStyle(
-                within(morningPart).getByTitle('Fitness'))
-                .color).toBe('rgb(255, 255, 0)')
+            expect(within(morningPart).getByTestId('fitnessIcon')).toBeInTheDocument()
+            expect(within(morningPart).getByTestId('fitnessIcon')).toHaveStyle({ color: 'rgb(255,255,0' })
             expect(within(morningPart).getAllByRole('slider')).toHaveLength(2)
-            expect(getComputedStyle(
-                within(morningPart).getByTitle('Schlaf'))
-                .color).toBe('rgb(255, 128, 0)')
+            expect(within(morningPart).getByTestId('sleepIcon')).toHaveStyle({ color: 'rgb(255,128,0)' })
             const eveningPart = within(card).getByText('Abends').closest('.MuiGrid-root') as HTMLElement
-            expect(getComputedStyle(
-                within(eveningPart).getByTitle('Fitness'))
-                .color).toBe('rgb(255, 0, 0)')
+            expect(within(eveningPart).getByTestId('fitnessIcon')).toHaveStyle({ color: 'rgb(255,0,0)' })
             expect(within(eveningPart).getAllByRole('slider')).toHaveLength(1)
         })
     })
@@ -57,15 +52,14 @@ describe('Status.tsx', async () => {
         })
 
         const slider = within(eveningPart).getByRole('slider')
+        expect(slider).toHaveStyle({ color: 'rgb(255,0,0)' })
         fireEvent.change(slider, { target: { value: 5 } })
 
         const fetchSpy = vi.spyOn(global, 'fetch')
         expect(fetchSpy).not.toHaveBeenCalled()
 
         await waitFor(() => {
-            expect(getComputedStyle(
-                within(eveningPart).getByTitle('Fitness'))
-                .color).toBe('rgb(0, 131, 0)')
+            expect(within(eveningPart).getByTestId('fitnessIcon')).toHaveStyle({ color: 'rgb(0,131,0)' })
             expect(fetchSpy).toHaveBeenCalled()
         })
     })
