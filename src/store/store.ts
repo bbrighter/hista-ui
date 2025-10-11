@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 
+import { injectPiidGetter } from '../api/api'
 import { AuthStore, createAuthSlice } from './auth/authStore'
 import { wrapActionsWithErrorHandler } from './error/errorHandler'
 import { createErrorSlice, ErrorStore } from './error/errorStore'
@@ -41,5 +42,7 @@ const useHista = create<
     }
     return wrapActionsWithErrorHandler(store, createAuthSlice(...a))
 })
+
+injectPiidGetter(() => useHista.getState().selectedPiid)
 
 export default useHista

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import useHista from '../store/store';
 import Client, { ClientOptions, Environment, Local } from './generatedApi';
 
 
@@ -29,6 +28,8 @@ const baseClient = new Client(baseUrl, options)
 export const authApi = baseClient.authentication
 
 
+
+
 type DropFirstArg<F> = F extends (first: any, ...rest: infer R) => infer Ret
     ? (...args: R) => Ret
     : F
@@ -36,6 +37,13 @@ type DropFirstArg<F> = F extends (first: any, ...rest: infer R) => infer Ret
 type PiidInjectedClient<T> = {
     [K in keyof T]: DropFirstArg<T[K]>
 }
+
+
+let getPiid: (() => string | null) | null = null
+export const injectPiidGetter = (getter: () => string | null) => {
+    getPiid = getter
+}
+
 
 export const client: PiidInjectedClient<typeof baseClient.api> = new Proxy(baseClient.api, {
     get(target, prop, receiver) {
@@ -46,7 +54,8 @@ export const client: PiidInjectedClient<typeof baseClient.api> = new Proxy(baseC
         }
 
         return (...args: any[]) => {
-            const piid = useHista.getState().selectedPiid
+            // const piid = useHista.getState().selectedPiid
+            const piid = getPiid?.()
             return orig.call(target, piid, ...args)
         }
     },

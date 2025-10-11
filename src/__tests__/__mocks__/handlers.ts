@@ -1,3 +1,4 @@
+import { authHandlers } from './authHandler'
 import { headacheHandlers } from './headacheHandlers'
 import { foodHandlers, ingredientHandlers, mealHandlers } from './mealHandlers'
 import { noteHandlers } from './noteHandlers'
@@ -23,6 +24,7 @@ const handlers = [
     ...pollenHandlers(baseUrlWithPiid),
     ...statusHandlers(baseUrlWithPiid),
     ...permissionsHandler(baseUrl),
+    ...authHandlers(baseUrl),
 ]
 
 export default handlers

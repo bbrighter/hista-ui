@@ -4,7 +4,7 @@ module.exports = {
   forbidden: [
     {
       name: 'no-circular',
-      severity: 'warn',
+      severity: 'error',
       from: {},
       to: {
         circular: true,
@@ -12,7 +12,7 @@ module.exports = {
     },
     {
       name: 'no-orphans',
-      severity: 'warn',
+      severity: 'error',
       from: {
         orphan: true,
         pathNot: [
