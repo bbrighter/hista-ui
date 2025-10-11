@@ -30,7 +30,7 @@ describe('Login', () => {
         render(<MemoryRouter><Login /></MemoryRouter>)
         server.use(
             http.post('http://localhost:4444/login', () => (HttpResponse.json(
-                { Cookie: 'access_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IkJlbm5pIiwicHJvZHVjdEluc3RhbmNlcyI6W3sicGlpZCI6ImQ3MTQ4MzM2LTdkN2MtNGFhMS1hOTkzLTc1ZTQxMGE0NzA5ZCIsImFwcElkcyI6WyJ1c2VyLW1hbmFnZW1lbnQiXX1dLCJzdWIiOiJkYmZkNTlhMy0zNDUwLTQ1YTQtYTNlYi0zYmFjNjdiNzQ2OTUiLCJleHAiOjE3NTk1MTY5OTUsImlhdCI6MTc1OTQzMDU5NX0.jLFUz-OFpsju3xUfxIZe85-ev3eSWIKNxQCjudI6_DqNwA0ICf_oXzM0FoVDjEOWrw9vJGMl3Hm44GTaHZwFjYbwsvxtSD9UhXev9cQjur0zvK1y3jruUq9UAX1dJc0CCbujI7jfn2u57oQ1q5FjPPtPgUK0VxHcWKQXNDhUwuYMccUjEBprJlDEbSturbhfKI-QV_RxCy8b61dheuhGX9Ne3nGgurJccxBgdpTIG5b1s34oq10NRbHlwfxfgyzq9Jr1S_Sw7XaMaSxHf5ngCf9yGlXWvFsf7eZPsreux7hpXyk1PUMsr92M4micFktkooeiP3z_fE5AwY7Ksxws2w' } as authentication.LoginResponse,
+                { token: 'something' } as authentication.LoginResponse,
                 { status: 200 },
             )),
             ))
@@ -54,7 +54,7 @@ describe('Login', () => {
         render(<MemoryRouter><Login /></MemoryRouter>)
         server.use(
             http.post('http://localhost:4444/login', () => (HttpResponse.json(
-                { token: '', status: ErrCode.Unauthenticated },
+                { token: '', status: ErrCode.Unauthenticated } as authentication.LoginResponse,
                 { status: 401 },
             )),
             ))

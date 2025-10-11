@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import useHista from '../store/store';
-import Client, { APIError, authentication, ClientOptions, Environment, Local } from './generatedApi';
+import Client, { ClientOptions, Environment, Local } from './generatedApi';
 
 
 const getStageURL = (): string => {
@@ -20,19 +20,19 @@ const baseUrl = import.meta.env.MODE === 'test'
 
 
 const options: ClientOptions = {
-    fetcher: (input: RequestInfo | URL, init?: RequestInit) => fetch(input, { ...init, ...{ credentials: 'include' } }),
+    fetcher: (input: RequestInfo | URL, init?: RequestInit) => fetch(input, { ...init }),
+    auth: () => ({ Token: window.localStorage.getItem('token') || '' }),
 }
 
 
 const baseClient = new Client(baseUrl, options)
 export const authApi = baseClient.authentication
 
-// Remove first argument from function type
+
 type DropFirstArg<F> = F extends (first: any, ...rest: infer R) => infer Ret
     ? (...args: R) => Ret
     : F
 
-// Map over all client methods
 type PiidInjectedClient<T> = {
     [K in keyof T]: DropFirstArg<T[K]>
 }
@@ -51,20 +51,3 @@ export const client: PiidInjectedClient<typeof baseClient.api> = new Proxy(baseC
         }
     },
 }) as any
-
-
-export const login = async (userName: string, password: string): Promise<boolean | APIError> => {
-    const loginParams: authentication.LoginParams = { userName: userName, password: password }
-    const params: RequestInit = {
-        body: JSON.stringify(loginParams),
-        method: 'POST',
-        credentials: 'include',
-    }
-    const resp = await fetch(baseUrl + '/login', params)
-    if (resp.ok) {
-        return true
-    } else {
-        const json = await resp.json()
-        return new APIError(json.status, json)
-    }
-}
