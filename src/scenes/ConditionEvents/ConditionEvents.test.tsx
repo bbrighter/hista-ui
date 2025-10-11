@@ -48,7 +48,7 @@ describe('Manage condition events', () => {
         expect(createButton).toBeInTheDocument()
 
         await userEvent.click(createButton)
-        expect(mockNavigate).toHaveBeenCalledWith('/123/condition-events/2')
+        expect(mockNavigate).toHaveBeenCalledWith('/7b3047c2-d56d-4942-abc4-39eb85e785f2/condition-events/2')
     })
 
     it('Event can be opened', async () => {
@@ -57,7 +57,7 @@ describe('Manage condition events', () => {
         const row = await findRowByDate('01.01.2024')
 
         await userEvent.click(row)
-        expect(mockNavigate).toHaveBeenCalledWith('/123/condition-events/1')
+        expect(mockNavigate).toHaveBeenCalledWith('/7b3047c2-d56d-4942-abc4-39eb85e785f2/condition-events/1')
     })
 
     it('Symptom management can be opened', async () => {
@@ -67,6 +67,6 @@ describe('Manage condition events', () => {
         expect(managementButton).toBeInTheDocument()
 
         await userEvent.click(managementButton)
-        expect(mockNavigate).toHaveBeenCalledWith('/123/manage-symptoms')
+        expect(mockNavigate).toHaveBeenCalledWith('/7b3047c2-d56d-4942-abc4-39eb85e785f2/manage-symptoms')
     })
 })

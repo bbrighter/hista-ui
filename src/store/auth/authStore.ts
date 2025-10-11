@@ -1,12 +1,13 @@
 import { produce } from 'immer'
 import { StateCreator } from 'zustand'
 
-import { authApi, login } from '../../api/api'
+import { authApi } from '../../api/api'
 import { ErrCode, isAPIError } from '../../api/generatedApi'
 import { Permissions, toPermission } from './permissions';
 
 
 interface State {
+    token: string
     selectedPiid: string | null
     instances: Permissions
     permissionsSet: boolean | 'running'
@@ -24,6 +25,7 @@ interface Actions {
 export interface AuthStore extends State, Actions { }
 
 const initialState: State = {
+    token: window.localStorage.getItem('token') || '',
     selectedPiid: null,
     instances: [],
     permissionsSet: false,
@@ -45,34 +47,31 @@ export const createAuthSlice: StateCreator<
         },
 
         logout() {
-            window.localStorage.removeItem('token') // To clean up once! Remove for next PR
+            window.localStorage.removeItem('token')
             set((produce((draft: State) => {
                 draft.isAuthProblem = true
-
             })))
         },
 
         login: async (password: string, userName: string): Promise<boolean> => {
-            const resp = await login(userName, password)
-            if (isAPIError(resp)) {
-                if (resp.code == ErrCode.Unauthenticated) {
-                    get().logout()
-                    return false
-                }
-                if (resp.code == ErrCode.NotFound) {
-                    get().logout()
-                    return false
-                }
-                throw (resp)
-            }
-            if (resp) {
+            try {
+                const resp = await authApi.Login({ password: password, userName: userName })
                 set(produce((draft: State) => {
                     draft.isAuthProblem = false
+                    draft.token = resp.token
                 }))
+                window.localStorage.setItem('token', resp.token)
                 return true
-            } else {
-                get().logout()
-                return false
+            } catch (err: unknown) {
+                if (isAPIError(err)) {
+                    if (err.code == ErrCode.Unauthenticated || err.code == ErrCode.NotFound) {
+                        get().logout()
+                        return false
+                    } else {
+                        get().logout()
+                        return false
+                    }
+                }
             }
         },
 
