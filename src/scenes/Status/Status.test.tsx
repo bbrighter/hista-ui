@@ -20,12 +20,12 @@ describe('Status.tsx', async () => {
             expect(card).toBeInTheDocument()
             expect(within(card).getByTitle('Löschen')).toBeInTheDocument()
             const morningPart = within(card).getByText('Morgens').closest('.MuiGrid-root') as HTMLElement
-            expect(within(morningPart).getByTestId('fitnessIcon')).toBeInTheDocument()
-            expect(within(morningPart).getByTestId('fitnessIcon')).toHaveStyle({ color: 'rgb(255,255,0' })
+            expect(within(morningPart).getByRole('img', { name: 'Fitness' })).toBeInTheDocument()
+            expect(within(morningPart).getByRole('img', { name: 'Fitness' })).toHaveStyle({ color: 'rgb(255,255,0' })
             expect(within(morningPart).getAllByRole('slider')).toHaveLength(2)
-            expect(within(morningPart).getByTestId('sleepIcon')).toHaveStyle({ color: 'rgb(255,128,0)' })
+            expect(within(morningPart).getByRole('img', { name: 'Schlaf' })).toHaveStyle({ color: 'rgb(255,128,0)' })
             const eveningPart = within(card).getByText('Abends').closest('.MuiGrid-root') as HTMLElement
-            expect(within(eveningPart).getByTestId('fitnessIcon')).toHaveStyle({ color: 'rgb(255,0,0)' })
+            expect(within(eveningPart).getByRole('img', { name: 'Fitness' })).toHaveStyle({ color: 'rgb(255,0,0)' })
             expect(within(eveningPart).getAllByRole('slider')).toHaveLength(1)
         })
     })
@@ -59,7 +59,7 @@ describe('Status.tsx', async () => {
         expect(fetchSpy).not.toHaveBeenCalled()
 
         await waitFor(() => {
-            expect(within(eveningPart).getByTestId('fitnessIcon')).toHaveStyle({ color: 'rgb(0,131,0)' })
+            expect(within(eveningPart).getByRole('img', { name: 'Fitness' })).toHaveStyle({ color: 'rgb(0,131,0)' })
             expect(fetchSpy).toHaveBeenCalled()
         })
     })

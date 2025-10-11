@@ -47,10 +47,10 @@ export default function StatusCardContent(props: {
     }
 
     const SleepIcon = () => {
-        return <HotelIcon sx={{ margin: '4px', color: colorMapping(morningSleep) }} titleAccess='Schlaf' data-testid='sleepIcon' />
+        return <HotelIcon sx={{ margin: '4px', color: colorMapping(morningSleep) }} titleAccess='Schlaf' />
     }
     const FitnessIcon = (props: { fitness?: number }) => {
-        return <FitnessCenterIcon sx={{ margin: '4px', color: colorMapping(props.fitness) }} titleAccess='Fitness' data-testid='fitnessIcon' />
+        return <FitnessCenterIcon sx={{ margin: '4px', color: colorMapping(props.fitness) }} titleAccess='Fitness' />
     }
 
     return (
