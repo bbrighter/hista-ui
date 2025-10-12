@@ -2,7 +2,7 @@ import { produce } from 'immer'
 import { StateCreator } from 'zustand'
 
 import { client } from '../../api/api'
-import { api } from '../../api/generatedApi'
+import { hista } from '../../api/generatedApi'
 import { Note, respToNote, respToNotes } from './notes'
 
 interface State {
@@ -62,7 +62,7 @@ export const createNotesSlice: StateCreator<
             }))
         },
         patchNote: async (id: number, date?: string, text?: string) => {
-            const params: api.NoteParams = {
+            const params: hista.NoteParams = {
                 date: date,
                 text: text,
             }

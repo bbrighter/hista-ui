@@ -3,7 +3,7 @@ import { produce } from 'immer'
 import { StateCreator } from 'zustand'
 
 import { client } from '../../api/api'
-import { api } from '../../api/generatedApi'
+import { hista } from '../../api/generatedApi'
 import { respToCondition } from './condition'
 import { ConditionEvent, respToConditionEvent } from './conditionEvent'
 import { ConditionEvents, respToConditionEvents } from './conditionEvents'
@@ -96,7 +96,7 @@ export const createConditionSlice: StateCreator<
             get().setSymptoms(resp)
         },
         setConditionEventDate: async (date: Date | dayjs.Dayjs) => {
-            const params: api.ConditionEventRequestParams = { date: date.toISOString() }
+            const params: hista.ConditionEventRequestParams = { date: date.toISOString() }
             await client.PatchDate(get().conditionEvent.id, params)
             const index = get().conditionEvents.findIndex(v => v.id == get().conditionEvent.id)
             if (index === -1) return
@@ -110,7 +110,7 @@ export const createConditionSlice: StateCreator<
 
         // Conditions
         postCondition: async (symptomCategoryId: number, symptomId?: number, symptomName?: string) => {
-            const params: api.ConditionRequestParams = {
+            const params: hista.ConditionRequestParams = {
                 categoryId: symptomCategoryId,
                 symptomId: symptomId,
                 symptomName: symptomName,
@@ -123,13 +123,13 @@ export const createConditionSlice: StateCreator<
             }))
         },
         postSymptomCategory: async (name: string): Promise<number> => {
-            const params: api.PostSymptomCategoryRequest = { name: name }
+            const params: hista.PostSymptomCategoryRequest = { name: name }
             const resp = await client.PostSymptomCategory(params)
             get().addSymptomCategory(resp.id, name)
             return resp.id
         },
         patchCondition: async (conditionId: number, severity: number): Promise<void> => {
-            const params: api.PatchSeverityRequestParams = {
+            const params: hista.PatchSeverityRequestParams = {
                 severity: severity,
             }
             await client.PatchCondition(conditionId, params)

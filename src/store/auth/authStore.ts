@@ -87,7 +87,7 @@ export const createAuthSlice: StateCreator<
                     draft.permissionsSet = true
                     draft.isAuthProblem = false
                 }))
-            } finally {
+            } catch {
                 set(produce((draft: State) => { draft.permissionsSet = false }))
             }
 

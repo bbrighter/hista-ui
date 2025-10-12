@@ -14,8 +14,9 @@
     "tsc": "tsc",
     "knip": "knip",
     "prepare": "husky",
-    "dependencies:ci": "npx depcruise src  --include-only \"^src\" --output-type html > graph.html",
-    "dependencies:show": "npx depcruise --include-only \"^src\" --output-type dot src | dot -T svg > graph.svg"
+    "dependencies:ci": "npx depcruise src  --include-only \"^src\"",
+    "dependencies:table": "npx depcruise src  --include-only \"^src\" --output-type html > graph.html",
+    "dependencies:graph": "npx depcruise --include-only \"^src\" --output-type dot src | dot -T svg > graph.svg"
   },
   "engines": {
     "node": ">=22.0.0",

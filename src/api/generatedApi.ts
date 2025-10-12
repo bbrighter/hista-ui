@@ -32,8 +32,8 @@ const BROWSER = typeof globalThis === "object" && ("window" in globalThis);
  * Client is an API client for the hista-api-dpc2 Encore application.
  */
 export default class Client {
-    public readonly api: api.ServiceClient
     public readonly authentication: authentication.ServiceClient
+    public readonly hista: hista.ServiceClient
     public readonly users: users.ServiceClient
     private readonly options: ClientOptions
     private readonly target: string
@@ -49,8 +49,8 @@ export default class Client {
         this.target = target
         this.options = options ?? {}
         const base = new BaseClient(this.target, this.options)
-        this.api = new api.ServiceClient(base)
         this.authentication = new authentication.ServiceClient(base)
+        this.hista = new hista.ServiceClient(base)
         this.users = new users.ServiceClient(base)
     }
 
@@ -89,7 +89,70 @@ export interface ClientOptions {
     auth?: authentication.AuthParams | AuthDataGenerator
 }
 
-export namespace api {
+export namespace authentication {
+    export interface AuthParams {
+        Token: string
+    }
+
+    export interface LoginParams {
+        userName: string
+        password: string
+    }
+
+    export interface LoginResponse {
+        token: string
+    }
+
+    export interface UserListResponse {
+        users: UserResponse[]
+    }
+
+    export interface UserResponse {
+        name: string
+        id: string
+    }
+
+    export class ServiceClient {
+        private baseClient: BaseClient
+
+        constructor(baseClient: BaseClient) {
+            this.baseClient = baseClient
+            this.AddUserToProductInstance = this.AddUserToProductInstance.bind(this)
+            this.GetPermissions = this.GetPermissions.bind(this)
+            this.GetUsersForProductInstance = this.GetUsersForProductInstance.bind(this)
+            this.Login = this.Login.bind(this)
+            this.RemoveUserFromProductInstance = this.RemoveUserFromProductInstance.bind(this)
+        }
+
+        public async AddUserToProductInstance(userId: string, productInstanceId: string): Promise<void> {
+            await this.baseClient.callTypedAPI("POST", `/user/${encodeURIComponent(userId)}/product-instance/${encodeURIComponent(productInstanceId)}`)
+        }
+
+        public async GetPermissions(): Promise<entity.AuthData> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("GET", `/permissions`)
+            return await resp.json() as entity.AuthData
+        }
+
+        public async GetUsersForProductInstance(productInstanceId: string): Promise<UserListResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("GET", `/product-instance/${encodeURIComponent(productInstanceId)}/users`)
+            return await resp.json() as UserListResponse
+        }
+
+        public async Login(params: LoginParams): Promise<LoginResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("POST", `/login`, JSON.stringify(params))
+            return await resp.json() as LoginResponse
+        }
+
+        public async RemoveUserFromProductInstance(userId: string, productInstanceId: string): Promise<void> {
+            await this.baseClient.callTypedAPI("DELETE", `/user/${encodeURIComponent(userId)}/product-instance/${encodeURIComponent(productInstanceId)}`)
+        }
+    }
+}
+
+export namespace hista {
     export interface ConditionEventRequestParams {
         date: string
     }
@@ -323,12 +386,12 @@ export namespace api {
             // Convert our params into the objects we need for the request
             const query = makeRecord<string, string | string[]>({
                 "from_date": String(params.fromDate),
-                "i_ds": params.ids.map((v) => String(v)),
-                "to_date": String(params.toDate),
+                "i_ds":      params.ids.map((v) => String(v)),
+                "to_date":   String(params.toDate),
             })
 
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI("GET", `/piid/${encodeURIComponent(piid)}/statistics/ingredients`, undefined, { query })
+            const resp = await this.baseClient.callTypedAPI("GET", `/piid/${encodeURIComponent(piid)}/statistics/ingredients`, undefined, {query})
             return await resp.json() as entity.SymptomStatisticsResponse
         }
 
@@ -336,12 +399,12 @@ export namespace api {
             // Convert our params into the objects we need for the request
             const query = makeRecord<string, string | string[]>({
                 "from_date": String(params.fromDate),
-                "i_ds": params.ids.map((v) => String(v)),
-                "to_date": String(params.toDate),
+                "i_ds":      params.ids.map((v) => String(v)),
+                "to_date":   String(params.toDate),
             })
 
             // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI("GET", `/piid/${encodeURIComponent(piid)}/statistics/symptoms`, undefined, { query })
+            const resp = await this.baseClient.callTypedAPI("GET", `/piid/${encodeURIComponent(piid)}/statistics/symptoms`, undefined, {query})
             return await resp.json() as entity.FoodStatisticsResponse
         }
 
@@ -411,7 +474,7 @@ export namespace api {
                 condition: params.Condition,
             })
 
-            await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/foods/${encodeURIComponent(foodId)}/condition`, undefined, { query })
+            await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/foods/${encodeURIComponent(foodId)}/condition`, undefined, {query})
         }
 
         public async PatchHeadacheDate(piid: string, id: number, params: PatchHeadacheDateParams): Promise<void> {
@@ -498,69 +561,6 @@ export namespace api {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("POST", `/piid/${encodeURIComponent(piid)}/symptom-categories`, JSON.stringify(params))
             return await resp.json() as entity.IDResponse
-        }
-    }
-}
-
-export namespace authentication {
-    export interface AuthParams {
-        Token: string
-    }
-
-    export interface LoginParams {
-        userName: string
-        password: string
-    }
-
-    export interface LoginResponse {
-        token: string
-    }
-
-    export interface UserListResponse {
-        users: UserResponse[]
-    }
-
-    export interface UserResponse {
-        name: string
-        id: string
-    }
-
-    export class ServiceClient {
-        private baseClient: BaseClient
-
-        constructor(baseClient: BaseClient) {
-            this.baseClient = baseClient
-            this.AddUserToProductInstance = this.AddUserToProductInstance.bind(this)
-            this.GetPermissions = this.GetPermissions.bind(this)
-            this.GetUsersForProductInstance = this.GetUsersForProductInstance.bind(this)
-            this.Login = this.Login.bind(this)
-            this.RemoveUserFromProductInstance = this.RemoveUserFromProductInstance.bind(this)
-        }
-
-        public async AddUserToProductInstance(userId: string, productInstanceId: string): Promise<void> {
-            await this.baseClient.callTypedAPI("POST", `/user/${encodeURIComponent(userId)}/product-instance/${encodeURIComponent(productInstanceId)}`)
-        }
-
-        public async GetPermissions(): Promise<entity.AuthData> {
-            // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI("GET", `/permissions`)
-            return await resp.json() as entity.AuthData
-        }
-
-        public async GetUsersForProductInstance(productInstanceId: string): Promise<UserListResponse> {
-            // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI("GET", `/product-instance/${encodeURIComponent(productInstanceId)}/users`)
-            return await resp.json() as UserListResponse
-        }
-
-        public async Login(params: LoginParams): Promise<LoginResponse> {
-            // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI("POST", `/login`, JSON.stringify(params))
-            return await resp.json() as LoginResponse
-        }
-
-        public async RemoveUserFromProductInstance(userId: string, productInstanceId: string): Promise<void> {
-            await this.baseClient.callTypedAPI("DELETE", `/user/${encodeURIComponent(userId)}/product-instance/${encodeURIComponent(productInstanceId)}`)
         }
     }
 }
@@ -802,7 +802,7 @@ export namespace entity {
 function encodeQuery(parts: Record<string, string | string[]>): string {
     const pairs: string[] = []
     for (const key in parts) {
-        const val = (Array.isArray(parts[key]) ? parts[key] : [parts[key]]) as string[]
+        const val = (Array.isArray(parts[key]) ?  parts[key] : [parts[key]]) as string[]
         for (const v of val) {
             pairs.push(`${key}=${encodeURIComponent(v)}`)
         }
@@ -825,9 +825,9 @@ function makeRecord<K extends string | number | symbol, V>(record: Record<K, V |
 function encodeWebSocketHeaders(headers: Record<string, string>) {
     // url safe, no pad
     const base64encoded = btoa(JSON.stringify(headers))
-        .replaceAll("=", "")
-        .replaceAll("+", "-")
-        .replaceAll("/", "_");
+      .replaceAll("=", "")
+      .replaceAll("+", "-")
+      .replaceAll("/", "_");
     return "encore.dev.headers." + base64encoded;
 }
 
@@ -1003,9 +1003,9 @@ type CallParameters = Omit<RequestInit, "method" | "body" | "headers"> & {
 
 // AuthDataGenerator is a function that returns a new instance of the authentication data required by this API
 export type AuthDataGenerator = () =>
-    | authentication.AuthParams
-    | Promise<authentication.AuthParams | undefined>
-    | undefined;
+  | authentication.AuthParams
+  | Promise<authentication.AuthParams | undefined>
+  | undefined;
 
 // A fetcher is the prototype for the inbuilt Fetch function
 export type Fetcher = typeof fetch;
@@ -1085,10 +1085,10 @@ class BaseClient {
         // If we now have authentication data, add it to the request
         if (authData) {
             if (authData.query) {
-                query = { ...query, ...authData.query };
+                query = {...query, ...authData.query};
             }
             if (authData.headers) {
-                headers = { ...headers, ...authData.headers };
+                headers = {...headers, ...authData.headers};
             }
         }
 
@@ -1106,10 +1106,10 @@ class BaseClient {
         // If we now have authentication data, add it to the request
         if (authData) {
             if (authData.query) {
-                query = { ...query, ...authData.query };
+                query = {...query, ...authData.query};
             }
             if (authData.headers) {
-                headers = { ...headers, ...authData.headers };
+                headers = {...headers, ...authData.headers};
             }
         }
 
@@ -1127,10 +1127,10 @@ class BaseClient {
         // If we now have authentication data, add it to the request
         if (authData) {
             if (authData.query) {
-                query = { ...query, ...authData.query };
+                query = {...query, ...authData.query};
             }
             if (authData.headers) {
-                headers = { ...headers, ...authData.headers };
+                headers = {...headers, ...authData.headers};
             }
         }
 
@@ -1157,7 +1157,7 @@ class BaseClient {
         }
 
         // Merge our headers with any predefined headers
-        init.headers = { ...this.headers, ...init.headers, ...headers }
+        init.headers = {...this.headers, ...init.headers, ...headers}
 
         // Fetch auth data if there is any
         const authData = await this.getAuthData();
@@ -1165,16 +1165,16 @@ class BaseClient {
         // If we now have authentication data, add it to the request
         if (authData) {
             if (authData.query) {
-                query = { ...query, ...authData.query };
+                query = {...query, ...authData.query};
             }
             if (authData.headers) {
-                init.headers = { ...init.headers, ...authData.headers };
+                init.headers = {...init.headers, ...authData.headers};
             }
         }
 
         // Make the actual request
         const queryString = query ? '?' + encodeQuery(query) : ''
-        const response = await this.fetcher(this.baseURL + path + queryString, init)
+        const response = await this.fetcher(this.baseURL+path+queryString, init)
 
         // handle any error responses
         if (!response.ok) {
@@ -1220,8 +1220,8 @@ function isAPIErrorResponse(err: any): err is APIErrorResponse {
     return (
         err !== undefined && err !== null &&
         isErrCode(err.code) &&
-        typeof (err.message) === "string" &&
-        (err.details === undefined || err.details === null || typeof (err.details) === "object")
+        typeof(err.message) === "string" &&
+        (err.details === undefined || err.details === null || typeof(err.details) === "object")
     )
 }
 
@@ -1255,8 +1255,8 @@ export class APIError extends Error {
         // set error name as constructor name, make it not enumerable to keep native Error behavior
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new.target#new.target_in_constructors
         Object.defineProperty(this, 'name', {
-            value: 'APIError',
-            enumerable: false,
+            value:        'APIError',
+            enumerable:   false,
             configurable: true,
         })
 
