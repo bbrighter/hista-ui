@@ -1,4 +1,4 @@
-import { api, entity } from '../../api/generatedApi'
+import { entity, hista } from '../../api/generatedApi'
 import { mealConstants } from '../../constants'
 
 export interface RawDiary {
@@ -11,7 +11,7 @@ export interface RawDiary {
 
 type DiaryEntryType = 'Essen' | 'Symptom' | 'Notiz' | 'Pollen'
 
-export const respToRawDiary = (resp: api.DiaryResp): Array<RawDiary> => {
+export const respToRawDiary = (resp: hista.DiaryResp): Array<RawDiary> => {
     return resp.diaries.map(d => ({
         Date: new Date(d.date),
         What: d.content,

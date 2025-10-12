@@ -45,7 +45,7 @@ export const injectPiidGetter = (getter: () => string | null) => {
 }
 
 
-export const client: PiidInjectedClient<typeof baseClient.api> = new Proxy(baseClient.api, {
+export const client: PiidInjectedClient<typeof baseClient.hista> = new Proxy(baseClient.hista, {
     get(target, prop, receiver) {
         const orig = Reflect.get(target, prop, receiver)
 
@@ -54,7 +54,6 @@ export const client: PiidInjectedClient<typeof baseClient.api> = new Proxy(baseC
         }
 
         return (...args: any[]) => {
-            // const piid = useHista.getState().selectedPiid
             const piid = getPiid?.()
             return orig.call(target, piid, ...args)
         }

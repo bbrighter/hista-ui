@@ -2,7 +2,7 @@ import { produce } from 'immer';
 import { StateCreator } from 'zustand';
 
 import { client } from '../../api/api';
-import { api } from '../../api/generatedApi';
+import { hista } from '../../api/generatedApi';
 import { IngredientStore } from '../meal/ingredientStore';
 import { MealStore } from '../meal/mealStore';
 import { ConditionStore } from '../symptom/conditionStore';
@@ -47,7 +47,7 @@ export const createStatisticsSlice: StateCreator<
         }))
     },
     getFoodStatistics: async (fromDate: Date, toDate: Date, symptomIds: Array<number>): Promise<void> => {
-        const params: api.StatisticParams = {
+        const params: hista.StatisticParams = {
             fromDate: fromDate.toISOString(),
             toDate: toDate.toISOString(),
             ids: symptomIds,
@@ -58,7 +58,7 @@ export const createStatisticsSlice: StateCreator<
         }))
     },
     getSymptomStatistics: async (fromDate: Date, toDate: Date, ingredientIds: Array<number>): Promise<void> => {
-        const params: api.StatisticParams = {
+        const params: hista.StatisticParams = {
             fromDate: fromDate.toISOString(),
             toDate: toDate.toISOString(),
             ids: ingredientIds,

@@ -2,7 +2,7 @@ import { produce } from 'immer'
 import { StateCreator } from 'zustand'
 
 import { client } from '../../api/api'
-import { api, entity } from '../../api/generatedApi'
+import { entity, hista } from '../../api/generatedApi'
 import { FoodCondition, respToFood } from './food'
 import { IngredientStore } from './ingredientStore'
 import { Freshness, Meal, respToMeal, stringToFreshness } from './meal'
@@ -121,7 +121,7 @@ export const createMealSlice: StateCreator<
             const mealId = get().meal.id
             const condition = 'cooked'
             if (!mealId) return
-            const params: api.FoodParams = {
+            const params: hista.FoodParams = {
                 condition: condition,
                 ingredientName: ingredientName,
                 ingredientId: ingredientId,
@@ -145,7 +145,7 @@ export const createMealSlice: StateCreator<
         },
 
         patchFoodCondition: async (foodId: number, newCondition: FoodCondition) => {
-            const params: api.FoodConditionParams = { Condition: newCondition }
+            const params: hista.FoodConditionParams = { Condition: newCondition }
             const foodIndex = get().meal.foods.findIndex(f => f.id == foodId)
             await client.PatchFoodCondition(foodId, params)
             set(produce((draft: State) => {
