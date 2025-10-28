@@ -28,6 +28,7 @@ export const validHeadachePositions: HeadachePositions = [
     { value: 'front', label: 'Stirn' },
     { value: 'ear', label: 'Ohr' },
     { value: 'neck', label: 'Nacken' },
+    { value: 'eye', label: 'Auge' },
 ]
 
 export type HeadacheTypes = Array<ValueLabelPair>;
@@ -55,6 +56,7 @@ export const validHeadacheSymptoms: HeadacheSymptoms = [
     { value: 'physical activity', label: 'Verstärkt durch körperliche Aktivität' },
     { value: 'mind activity', label: 'Verstärkt durch geistige Aktivität' },
     { value: 'nausea', label: 'Übelkeit' },
+    { value: 'no physical activity', label: 'Keine körperliche Aktivität' },
 ];
 
 const respToHeadache = (resp: entity.HeadacheResponse): Headache => {

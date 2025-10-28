@@ -34,7 +34,6 @@ const BROWSER = typeof globalThis === "object" && ("window" in globalThis);
 export default class Client {
     public readonly authentication: authentication.ServiceClient
     public readonly hista: hista.ServiceClient
-    public readonly users: users.ServiceClient
     private readonly options: ClientOptions
     private readonly target: string
 
@@ -51,7 +50,6 @@ export default class Client {
         const base = new BaseClient(this.target, this.options)
         this.authentication = new authentication.ServiceClient(base)
         this.hista = new hista.ServiceClient(base)
-        this.users = new users.ServiceClient(base)
     }
 
     /**
@@ -561,26 +559,6 @@ export namespace hista {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("POST", `/piid/${encodeURIComponent(piid)}/symptom-categories`, JSON.stringify(params))
             return await resp.json() as entity.IDResponse
-        }
-    }
-}
-
-export namespace users {
-    export interface UserPasswordChangeParams {
-        newPassword: string
-        oldPassword: string
-    }
-
-    export class ServiceClient {
-        private baseClient: BaseClient
-
-        constructor(baseClient: BaseClient) {
-            this.baseClient = baseClient
-            this.PatchPassword = this.PatchPassword.bind(this)
-        }
-
-        public async PatchPassword(id: string, params: UserPasswordChangeParams): Promise<void> {
-            await this.baseClient.callTypedAPI("PATCH", `/user/${encodeURIComponent(id)}`, JSON.stringify(params))
         }
     }
 }
