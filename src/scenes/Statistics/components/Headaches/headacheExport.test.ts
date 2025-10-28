@@ -31,9 +31,9 @@ test('headache workbook', async () => {
         { column: 1, header: 'Zeit' },
         { column: 2, header: 'Schwere' },
         { column: 3, header: 'Position' },
-        { column: 12, header: 'Typen' },
-        { column: 16, header: 'Symptome' },
-        { column: 27, header: 'Beschreibung' },
+        { column: 13, header: 'Typen' },
+        { column: 17, header: 'Symptome' },
+        { column: 29, header: 'Beschreibung' },
     ]
     expectedColumns.forEach(col => {
         expect(sheet.getRow(1).getCell(col.column).value).toBe(col.header)
@@ -44,9 +44,9 @@ test('headache workbook', async () => {
         { column: 2, value: 3 },
         { column: 3, value: '✓' }, // Left
         { column: 4, value: null },
-        { column: 12, value: null },
-        { column: 16, value: '✓' },
-        { column: 27, value: 'desc' },
+        { column: 13, value: null },
+        { column: 17, value: '✓' },
+        { column: 29, value: 'desc' },
     ]
     expectedContent.forEach(con => {
         expect(sheet.getRow(3).getCell(con.column).value).toStrictEqual(con.value)
