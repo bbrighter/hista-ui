@@ -8,27 +8,32 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
 
       - name: Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 22
-          cache: "npm"
+          node-version-file: "package.json"
+          cache: "pnpm"
 
       - name: Get packages
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Knip
-        run: npm run knip
+        run: pnpm run knip
 
       - name: Dependencies
-        run: npm run dependencies:ci
+        run: pnpm run dependencies:ci
 
       - name: Test
-        run: npm test
+        run: pnpm test
         env:
           TZ: Europe/Berlin
