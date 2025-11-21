@@ -170,13 +170,12 @@ export namespace hista {
     }
 
     export interface FoodConditionParams {
-        Condition: string
+        condition: entity.FoodCondition
     }
 
     export interface FoodParams {
         ingredientName?: string
         ingredientId?: number
-        condition: entity.FoodCondition
     }
 
     export interface NoteParams {
@@ -467,12 +466,7 @@ export namespace hista {
         }
 
         public async PatchFoodCondition(piid: string, foodId: number, params: FoodConditionParams): Promise<void> {
-            // Convert our params into the objects we need for the request
-            const query = makeRecord<string, string | string[]>({
-                condition: params.Condition,
-            })
-
-            await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/foods/${encodeURIComponent(foodId)}/condition`, undefined, {query})
+            await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/foods/${encodeURIComponent(foodId)}/condition`, JSON.stringify(params))
         }
 
         public async PatchHeadacheDate(piid: string, id: number, params: PatchHeadacheDateParams): Promise<void> {
@@ -499,7 +493,7 @@ export namespace hista {
             await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/headaches/${encodeURIComponent(id)}/types`, JSON.stringify(params))
         }
 
-        public async PatchMeal(piid: string, id: number, params: entity.MealParams): Promise<void> {
+        public async PatchMeal(piid: string, id: number, params: entity.PatchMealParams): Promise<void> {
             await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/meals/${encodeURIComponent(id)}`, JSON.stringify(params))
         }
 
@@ -537,7 +531,7 @@ export namespace hista {
             return await resp.json() as entity.IDResponse
         }
 
-        public async PostMeal(piid: string, params: entity.MealParams): Promise<entity.MealResponse> {
+        public async PostMeal(piid: string, params: entity.PostMealParams): Promise<entity.MealResponse> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("POST", `/piid/${encodeURIComponent(piid)}/meals`, JSON.stringify(params))
             return await resp.json() as entity.MealResponse
@@ -660,13 +654,6 @@ export namespace entity {
         date: string
     }
 
-    export interface MealParams {
-        date?: string
-        freshness?: Freshness
-        stressLevel?: number
-        isAlone?: boolean
-    }
-
     export interface MealResponse {
         id: number
         date: string
@@ -688,6 +675,13 @@ export namespace entity {
 
     export interface NotesResp {
         notes: NoteResp[]
+    }
+
+    export interface PatchMealParams {
+        date?: string
+        freshness?: Freshness
+        stressLevel?: number
+        isAlone?: boolean
     }
 
     export interface PollenEventResponse {
@@ -712,6 +706,10 @@ export namespace entity {
     export interface PostConditionResponse {
         condition: ConditionResponse
         symptoms: SymptomCategoriesResponse
+    }
+
+    export interface PostMealParams {
+        date: string
     }
 
     export interface RawDiary {

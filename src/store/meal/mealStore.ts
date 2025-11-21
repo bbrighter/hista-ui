@@ -20,7 +20,7 @@ interface Actions {
     listMeals: () => Promise<void>
     postMeal: () => Promise<number | void>
     deleteMeal: (id: number) => Promise<void>
-    updateMeal: (params: entity.MealParams) => Promise<void>
+    updateMeal: (params: entity.PatchMealParams) => Promise<void>
     getMeal: (id: number) => Promise<void>
 
     // Foods
@@ -65,7 +65,7 @@ export const createMealSlice: StateCreator<
 
         },
         postMeal: async (): Promise<number | void> => {
-            const params: entity.MealParams = {
+            const params: entity.PostMealParams = {
                 date: new Date().toISOString(),
             }
             const resp = await client.PostMeal(params)
@@ -87,7 +87,7 @@ export const createMealSlice: StateCreator<
         },
 
         // Meal
-        updateMeal: async (params: entity.MealParams) => {
+        updateMeal: async (params: entity.PatchMealParams) => {
             const id = get().meal.id
             if (!id) return
             await client.PatchMeal(id, params)
@@ -119,10 +119,8 @@ export const createMealSlice: StateCreator<
         // Foods
         postFood: async (ingredientName?: string, ingredientId?: number) => {
             const mealId = get().meal.id
-            const condition = 'cooked'
             if (!mealId) return
             const params: hista.FoodParams = {
-                condition: condition,
                 ingredientName: ingredientName,
                 ingredientId: ingredientId,
             }
@@ -145,7 +143,7 @@ export const createMealSlice: StateCreator<
         },
 
         patchFoodCondition: async (foodId: number, newCondition: FoodCondition) => {
-            const params: hista.FoodConditionParams = { Condition: newCondition }
+            const params: hista.FoodConditionParams = { condition: newCondition }
             const foodIndex = get().meal.foods.findIndex(f => f.id == foodId)
             await client.PatchFoodCondition(foodId, params)
             set(produce((draft: State) => {
