@@ -81,9 +81,10 @@ export const createAuthSlice: StateCreator<
             try {
                 const resp = await authApi.GetPermissions()
                 const perms = toPermission(resp)
+                const relevantPiid = perms.find(p => p.apps['user-management']).piid // TODO: use a better app name in the backend and here
                 set(produce((draft: State) => {
                     draft.instances = perms
-                    draft.selectedPiid = perms[0].piid
+                    draft.selectedPiid = relevantPiid
                     draft.permissionsSet = true
                     draft.isAuthProblem = false
                 }))
