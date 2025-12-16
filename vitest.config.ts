@@ -5,7 +5,10 @@ export default defineConfig({
     test: {
         globals: true,
         environment: 'jsdom',
-        setupFiles: 'src/__tests__/setupTest.ts',
+        setupFiles: [
+            'vitest-localstorage-mock',
+            'src/__tests__/setupTest.ts',
+        ],
         server: {
             deps: {
                 inline: ['@mui/x-data-grid'],

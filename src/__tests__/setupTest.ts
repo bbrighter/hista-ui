@@ -17,6 +17,8 @@ beforeAll(() => {
     //     console.log('   Headers:', Object.fromEntries(request.headers.entries()))
     // })
 })
+
+
 beforeEach(() => {
     const store = useHista.getState()
     store.resetSymptoms()

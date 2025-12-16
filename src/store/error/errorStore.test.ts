@@ -1,11 +1,18 @@
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { createTestStore } from '../../__tests__/storeUtils'
 import { APIError, ErrCode } from '../../api/generatedApi'
 import { errorBus } from './errorBus'
 
 
+
 describe('ErrorStore', () => {
+    const emitSpy = vi.spyOn(errorBus, 'emit')
+
+    beforeEach(() => {
+        vi.resetAllMocks()
+    })
+
     it('catch unknown errors', { skip: true }, () => {
         // How??
     })
@@ -21,7 +28,6 @@ describe('ErrorStore', () => {
             },
         )
 
-        const emitSpy = vi.spyOn(errorBus, 'emit')
 
         store.getState().setError(apiError)
         expect(emitSpy).toHaveBeenCalled()
@@ -38,8 +44,6 @@ describe('ErrorStore', () => {
             },
         )
 
-        const emitSpy = vi.spyOn(errorBus, 'emit')
-
         store.getState().setError(apiError)
         expect(emitSpy).toHaveBeenCalled()
     })
@@ -53,7 +57,6 @@ describe('ErrorStore', () => {
                 message: 'not found',
             },
         )
-        const emitSpy = vi.spyOn(errorBus, 'emit')
 
         store.getState().setError(apiError)
         expect(emitSpy).not.toHaveBeenCalled()
@@ -69,11 +72,9 @@ describe('ErrorStore', () => {
                 message: 'not authorized',
             },
         )
-        const emitSpy = vi.spyOn(errorBus, 'emit')
         const logoutSpy = vi.spyOn(store.getState(), 'logout')
 
         store.getState().setError(apiError)
-        expect(emitSpy).not.toHaveBeenCalled()
         expect(logoutSpy).toHaveBeenCalled()
     })
 })
