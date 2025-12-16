@@ -22,6 +22,7 @@ export const validHeadachePositions: HeadachePositions = [
     { value: 'left', label: 'Links' },
     { value: 'right', label: 'Rechts' },
     { value: 'top', label: 'Oben' },
+    { value: 'front top', label: 'Vorne' },
     { value: 'back', label: 'Hinterkopf' },
     { value: 'side', label: 'Seite' },
     { value: 'temple', label: 'Schläfe' },
@@ -29,7 +30,6 @@ export const validHeadachePositions: HeadachePositions = [
     { value: 'ear', label: 'Ohr' },
     { value: 'neck', label: 'Nacken' },
     { value: 'eye', label: 'Auge' },
-    { value: 'front top', label: 'Vorne' },
 ]
 
 export type HeadacheTypes = Array<ValueLabelPair>;
