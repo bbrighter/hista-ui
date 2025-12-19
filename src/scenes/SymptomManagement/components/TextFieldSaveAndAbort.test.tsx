@@ -1,21 +1,24 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { act } from 'react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { act } from 'react'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import TextFieldSaveAndAbort from './TextFieldSaveAndAbort';
+import TextFieldSaveAndAbort from './TextFieldSaveAndAbort'
 
 describe('TextFieldSaveAndAbort', () => {
     const successFn = vi.fn().mockResolvedValue(undefined)
     const cancelFn = vi.fn()
 
     beforeEach(() => {
-        render(<TextFieldSaveAndAbort
-            label='label'
-            value='value'
-            isSaveable={(v) => v != 'value'}
-            onSave={successFn}
-            onCancel={cancelFn}
-            size={'small'} />)
+        render(
+            <TextFieldSaveAndAbort
+              label="label"
+              value="value"
+              isSaveable={v => v != 'value'}
+              onSave={successFn}
+              onCancel={cancelFn}
+              size="small"
+            />,
+        )
     })
 
     it('Renders', async () => {
@@ -23,7 +26,6 @@ describe('TextFieldSaveAndAbort', () => {
         expect(screen.getByDisplayValue('value')).toBeInTheDocument()
         expect(screen.getByTitle('Umbenennen speichern')).toBeDisabled()
         expect(screen.getByTitle('Umbenennen abbrechen')).toBeInTheDocument()
-
     })
 
     it('Editing and saving', async () => {
@@ -41,7 +43,6 @@ describe('TextFieldSaveAndAbort', () => {
         expect(successFn).toHaveBeenCalled()
     })
 
-
     it('Canceling', async () => {
         const cancelButton = screen.getByTitle('Umbenennen abbrechen')
         act(() => {
@@ -55,7 +56,6 @@ describe('TextFieldSaveAndAbort', () => {
 //     const onDelete = vi.fn().mockResolvedValue(undefined)
 //     const onSave = vi.fn().mockResolvedValue(undefined)
 //     const successfulFn = vi.fn().mockResolvedValue(undefined)
-
 
 //     it('Renders without deletion', async () => {
 //         render(<TextFieldSaveAndAbort2
@@ -105,7 +105,6 @@ describe('TextFieldSaveAndAbort', () => {
 //         fireEvent.change(textField, { target: { value: 'New Value' } })
 //         expect(textField).toHaveValue('New Value')
 
-
 //         const cancelButton = await screen.findByTitle('Umbenennen abbrechen')
 //         expect(cancelButton).toBeInTheDocument()
 //         expect(cancelButton).not.toBeDisabled()
@@ -113,7 +112,6 @@ describe('TextFieldSaveAndAbort', () => {
 //         expect(saveButton).not.toBeDisabled()
 //         fireEvent.click(saveButton)
 //         expect(onSave).toHaveBeenCalled()
-
 
 //         await waitFor(() => {
 //             expect(screen.queryByLabelText('Label')).not.toBeInTheDocument()

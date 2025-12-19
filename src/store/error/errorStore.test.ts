@@ -4,8 +4,6 @@ import { createTestStore } from '../../__tests__/storeUtils'
 import { APIError, ErrCode } from '../../api/generatedApi'
 import { errorBus } from './errorBus'
 
-
-
 describe('ErrorStore', () => {
     const emitSpy = vi.spyOn(errorBus, 'emit')
 
@@ -27,7 +25,6 @@ describe('ErrorStore', () => {
                 details: 'none',
             },
         )
-
 
         store.getState().setError(apiError)
         expect(emitSpy).toHaveBeenCalled()
@@ -60,21 +57,5 @@ describe('ErrorStore', () => {
 
         store.getState().setError(apiError)
         expect(emitSpy).not.toHaveBeenCalled()
-    })
-
-    it('logout when 401, but do not catch', () => {
-        const store = createTestStore()
-        store.setState({ logout: vi.fn() })
-        const apiError = new APIError(
-            401,
-            {
-                code: ErrCode.Unauthenticated,
-                message: 'not authorized',
-            },
-        )
-        const logoutSpy = vi.spyOn(store.getState(), 'logout')
-
-        store.getState().setError(apiError)
-        expect(logoutSpy).toHaveBeenCalled()
     })
 })

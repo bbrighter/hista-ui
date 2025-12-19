@@ -3,7 +3,6 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import useHista from '../store'
 
 describe('notesStore', () => {
-
     beforeEach(async () => {
         await useHista.getState().getNotes()
     })
@@ -26,12 +25,10 @@ describe('notesStore', () => {
         expect(note.date).toStrictEqual(new Date('2025-01-31T12:00:00Z'))
     })
 
-
     it('deleteNote', async () => {
         await useHista.getState().deleteNote(1)
         expect(useHista.getState().notes).toHaveLength(0)
     })
-
 
     it('patchNote', async () => {
         await useHista.getState().patchNote(1, '2022-01-01T00:00:00Z', 'changedText')

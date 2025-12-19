@@ -1,14 +1,14 @@
-import Container from '@mui/material/Container';
-import FormControl from '@mui/material/FormControl';
-import FormGroup from '@mui/material/FormGroup';
-import dayjs from 'dayjs';
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import Container from '@mui/material/Container'
+import FormControl from '@mui/material/FormControl'
+import FormGroup from '@mui/material/FormGroup'
+import dayjs from 'dayjs'
+import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
-import useHista from '../../store/store';
-import DateInput from '../components/DateInput';
-import AddCondition from './components/AddCondition';
-import ConditionList from './components/ConditionList';
+import useHista from '../../store/store'
+import DateInput from '../components/DateInput'
+import AddCondition from './components/AddCondition'
+import ConditionList from './components/ConditionList'
 
 export default function ConditionEvent() {
     const getConditionEvent = useHista(state => state.getConditionEvent)
@@ -16,7 +16,9 @@ export default function ConditionEvent() {
     const conditionEvent = useHista(state => state.conditionEvent)
     const params = useParams<{ eventId: string }>()
 
-    useEffect(() => { getConditionEvent(Number(params.eventId)) },
+    useEffect(() => {
+        getConditionEvent(Number(params.eventId))
+     },
         [getConditionEvent, params.eventId])
 
     const onChange = (v: dayjs.Dayjs | null) => {
@@ -28,9 +30,9 @@ export default function ConditionEvent() {
         <Container sx={{ padding: '2rem' }}>
             <FormGroup>
                 <DateInput
-                    date={conditionEvent.date}
-                    title="Symptome"
-                    onChange={onChange}
+                  date={conditionEvent.date}
+                  title="Symptome"
+                  onChange={onChange}
                 />
                 <FormControl>
                     <AddCondition />

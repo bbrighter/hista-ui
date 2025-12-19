@@ -10,7 +10,6 @@ import StatisticsDateInput from './Statistics/StatisticsDateInput'
 import SymptomEvaluation from './Statistics/SymptomEvaluation'
 import SymptomSelect from './Statistics/SymptomSelect'
 
-
 export default function Charts(props: {
     type: 'ingredient' | 'symptom'
 }) {
@@ -26,7 +25,8 @@ export default function Charts(props: {
     useEffect(() => {
         if (ids.length > 0) {
             getStatistics(fromDate, toDate, ids)
-        } else {
+        }
+        else {
             resetStatistics()
         }
     }, [fromDate, getStatistics, ids, resetStatistics, toDate])
@@ -44,31 +44,34 @@ export default function Charts(props: {
     }
 
     const handleSliderChange = (_: Event, newValue: number | number[]) => {
-        setSeverity(newValue as number[]);
+        setSeverity(newValue as number[])
     }
-
 
     return (
         <Grid container sx={{ mt: 2 }}>
             <StatisticsDateInput
-                fromDate={fromDate}
-                toDate={toDate}
-                handleFromDateChange={handleFromDateChange}
-                handleToDateChange={handleToDateChange}
+              fromDate={fromDate}
+              toDate={toDate}
+              handleFromDateChange={handleFromDateChange}
+              handleToDateChange={handleToDateChange}
             />
             {
-                props.type == 'ingredient' &&
-                <IngredientChart
-                    onIdChange={hanldeIdChange}
-                    onSliderChange={handleSliderChange}
-                    severity={severity}
-                />
+                props.type == 'ingredient'
+                && (
+                    <IngredientChart
+                      onIdChange={hanldeIdChange}
+                      onSliderChange={handleSliderChange}
+                      severity={severity}
+                    />
+                )
             }
             {
-                props.type == 'symptom' &&
-                <SymptomChart
-                    onIdChange={hanldeIdChange}
-                />
+                props.type == 'symptom'
+                && (
+                    <SymptomChart
+                      onIdChange={hanldeIdChange}
+                    />
+                )
             }
         </Grid>
     )
@@ -86,8 +89,9 @@ function IngredientChart(props: {
             </Grid>
             <Grid size={{ xs: 12 }}>
                 <SeverityFilter
-                    severity={props.severity}
-                    onChange={props.onSliderChange} />
+                  severity={props.severity}
+                  onChange={props.onSliderChange}
+                />
             </Grid>
             <IngredientEvalulation severityFilter={props.severity} />
         </Grid>
@@ -103,5 +107,6 @@ function SymptomChart(props: {
                 <SymptomSelect onChange={props.onIdChange} />
             </Grid>
             <SymptomEvaluation />
-        </>)
+        </>
+    )
 }

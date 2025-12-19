@@ -1,18 +1,17 @@
-import CloseIcon from '@mui/icons-material/Close';
-import CreateIcon from '@mui/icons-material/Create';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import Box from '@mui/material/Box';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { useState } from 'react';
+import CloseIcon from '@mui/icons-material/Close'
+import CreateIcon from '@mui/icons-material/Create'
+import DeleteIcon from '@mui/icons-material/Delete'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import Box from '@mui/material/Box'
+import ButtonGroup from '@mui/material/ButtonGroup'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
+import { useState } from 'react'
 
-import useHista from '../../../store/store';
-import { SymptomCategory } from '../../../store/symptom/symptom';
-import TextFieldSaveAndAbort from './TextFieldSaveAndAbort';
-
+import useHista from '../../../store/store'
+import { SymptomCategory } from '../../../store/symptom/symptom'
+import TextFieldSaveAndAbort from './TextFieldSaveAndAbort'
 
 export default function AccordionCategory(props: {
     category: SymptomCategory
@@ -46,69 +45,81 @@ export default function AccordionCategory(props: {
     }
 
     return (
-        <AccordionSummary expandIcon={<ExpandMoreIcon titleAccess='Ausklappen' />} component='div'>
+        <AccordionSummary expandIcon={<ExpandMoreIcon titleAccess="Ausklappen" />} component="div">
             {
-                mode == 'default' &&
-                <Box
-                    sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <Typography variant='h6' sx={{ pt: '12px', pb: '12px' }}>
-                        {props.category.categoryName} ({props.category.symptoms.length})
-                    </Typography>
-                    <ButtonGroup>
-                        <IconButton
-                            onClick={() => setMode('editing')}
-                            title='Kategorie umbenennen'
-                        >
-                            <CreateIcon />
-                        </IconButton>
-                        <IconButton
-                            onClick={() => setMode('deleting')}
-                            disabled={!isDeletable}
-                            color='error'
-                            title='Löschen'
-                        >
-                            <DeleteIcon />
-                        </IconButton>
-                    </ButtonGroup>
-                </Box>
+                mode == 'default'
+                && (
+                    <Box
+                      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}
+                      onClick={e => e.stopPropagation()}
+                    >
+                        <Typography variant="h6" sx={{ pt: '12px', pb: '12px' }}>
+                            {props.category.categoryName}
+                            {' '}
+(
+                            {props.category.symptoms.length}
+)
+                        </Typography>
+                        <ButtonGroup>
+                            <IconButton
+                              onClick={() => setMode('editing')}
+                              title="Kategorie umbenennen"
+                            >
+                                <CreateIcon />
+                            </IconButton>
+                            <IconButton
+                              onClick={() => setMode('deleting')}
+                              disabled={!isDeletable}
+                              color="error"
+                              title="Löschen"
+                            >
+                                <DeleteIcon />
+                            </IconButton>
+                        </ButtonGroup>
+                    </Box>
+                )
             }
             {
-                mode == 'editing' &&
-                <TextFieldSaveAndAbort
-                    label='Kategoriename'
-                    isSaveable={isSaveable}
-                    onCancel={onCancel}
-                    onSave={onSave}
-                    size='medium'
-                    value={props.category.categoryName}
-                />
+                mode == 'editing'
+                && (
+                    <TextFieldSaveAndAbort
+                      label="Kategoriename"
+                      isSaveable={isSaveable}
+                      onCancel={onCancel}
+                      onSave={onSave}
+                      size="medium"
+                      value={props.category.categoryName}
+                    />
+                )
             }
             {
-                mode == 'deleting' &&
-                <>
-                    <Typography variant='h6' sx={{ pt: '12px', pb: '12px' }}>
-                        {props.category.categoryName} wirklich löschen?
-                    </Typography>
-                    <ButtonGroup sx={{ pl: 2 }}>
-                        <IconButton
-                            loading={isLoading}
-                            onClick={onDelete}
-                            title='Löschen bestätigen'
-                        >
-                            <DeleteIcon />
-                        </IconButton>
-                        <IconButton
-                            onClick={onCancel}
-                            color='error'
-                            title='Löschen abbrechen'
-                        >
-                            <CloseIcon />
-                        </IconButton>
-                    </ButtonGroup>
-                </>
+                mode == 'deleting'
+                && (
+                    <>
+                        <Typography variant="h6" sx={{ pt: '12px', pb: '12px' }}>
+                            {props.category.categoryName}
+                            {' '}
+wirklich löschen?
+                        </Typography>
+                        <ButtonGroup sx={{ pl: 2 }}>
+                            <IconButton
+                              loading={isLoading}
+                              onClick={onDelete}
+                              title="Löschen bestätigen"
+                            >
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton
+                              onClick={onCancel}
+                              color="error"
+                              title="Löschen abbrechen"
+                            >
+                                <CloseIcon />
+                            </IconButton>
+                        </ButtonGroup>
+                    </>
+                )
             }
-        </AccordionSummary >
+        </AccordionSummary>
     )
 }

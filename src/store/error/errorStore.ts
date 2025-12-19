@@ -18,35 +18,28 @@ export const createErrorSlice: StateCreator<
     AuthStore & ErrorStore,
     [],
     [],
-    ErrorStore> = ((_, get) => ({
+    ErrorStore> = (_, get) => ({
         ...initialState,
 
         setError: (error: unknown) => {
             const appError = toAppError(error)
             const status = appError.status
             switch (appError.source) {
-                case 'api':
-                    switch (status) {
-                        case 401:
-                            get().logout()
-                            break
-                        case 400:
-                            if (appError.text == 'invalid uuid') {
-                                get().logout()
-                            } else {
-                                errorBus.emit('error', error)
-                            }
-                            break
-                        case 404:
-                            break
-                        case 500:
-                        default:
-                            errorBus.emit('error', error)
-                    }
-                    break
-                case 'router':
-                case 'unknown':
+            case 'api':
+                switch (status) {
+                case 400:
                     errorBus.emit('error', error)
+                    break
+                case 404:
+                    break
+                case 500:
+                default:
+                    errorBus.emit('error', error)
+                }
+                break
+            case 'router':
+            case 'unknown':
+                errorBus.emit('error', error)
             }
         },
-    }))
+    })

@@ -22,16 +22,16 @@ export const respToRawDiary = (resp: hista.DiaryResp): Array<RawDiary> => {
 
 const respTypeToType = (resp: string): DiaryEntryType => {
     switch (resp) {
-        case 'Food':
-            return 'Essen'
-        case 'Symptom':
-            return 'Symptom'
-        case 'Note':
-            return 'Notiz'
-        case 'Pollen':
-            return 'Pollen'
-        default:
-            throw ('invalid type: ' + resp)
+    case 'Food':
+        return 'Essen'
+    case 'Symptom':
+        return 'Symptom'
+    case 'Note':
+        return 'Notiz'
+    case 'Pollen':
+        return 'Pollen'
+    default:
+        throw ('invalid type: ' + resp)
     }
 }
 
@@ -40,16 +40,17 @@ const respToTypeAndSeverity = (resp: entity.RawDiary): { Type: DiaryEntryType, S
     let severity = ''
     if (type == 'Essen') {
         switch (resp.severity) {
-            case 'raw':
-                severity = mealConstants.RAW
-                break
-            case 'cooked':
-                severity = mealConstants.COOKED
-                break
-            default:
-                throw ('invalid severity: ' + resp.severity)
+        case 'raw':
+            severity = mealConstants.RAW
+            break
+        case 'cooked':
+            severity = mealConstants.COOKED
+            break
+        default:
+            throw ('invalid severity: ' + resp.severity)
         }
-    } else {
+    }
+    else {
         severity = resp.severity
     }
     return { Type: type, Severity: severity }

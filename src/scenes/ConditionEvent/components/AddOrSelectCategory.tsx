@@ -1,14 +1,14 @@
-import Alert from '@mui/material/Alert';
-import Autocomplete from '@mui/material/Autocomplete';
-import Box from '@mui/material/Box';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import React, { useState } from 'react';
+import Alert from '@mui/material/Alert'
+import Autocomplete from '@mui/material/Autocomplete'
+import Box from '@mui/material/Box'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import Modal from '@mui/material/Modal'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import React, { useState } from 'react'
 
-import useHista from '../../../store/store';
+import useHista from '../../../store/store'
 
 interface InputOption {
     id: number
@@ -38,7 +38,6 @@ export default function AddOrSelectCategory(props: {
         name: s.categoryName,
     }))
 
-
     const onChange = async (_e: React.SyntheticEvent, value: Option | null) => {
         if (value == null) return
         const catId = isNewOption(value) ? await postSymptomCategory(value) : value.id
@@ -51,11 +50,10 @@ export default function AddOrSelectCategory(props: {
         props.onClose()
     }
 
-
     return (
         <Modal
-            open={props.open}
-            onClose={props.onClose}
+          open={props.open}
+          onClose={props.onClose}
         >
             <Box sx={{
                 bgcolor: 'background.paper',
@@ -67,29 +65,37 @@ export default function AddOrSelectCategory(props: {
                 width: '50%',
                 padding: '2rem',
                 borderRadius: '5px',
-            }}>
-                <Typography sx={{ paddingBottom: '1rem' }}>Wähle eine Kategorie für <b>{props.symptomName}</b></Typography>
+            }}
+            >
+                <Typography sx={{ paddingBottom: '1rem' }}>
+Wähle eine Kategorie für
+                    <b>{props.symptomName}</b>
+                </Typography>
                 <Autocomplete
-                    freeSolo
-                    options={categories}
-                    onChange={onChange}
-                    getOptionLabel={o => isNewOption(o) ? o : o.name}
-                    renderInput={params => <TextField {...params} label={'Kategorie'} />}
-                    renderOption={(props, option) => {
+                  freeSolo
+                  options={categories}
+                  onChange={onChange}
+                  getOptionLabel={o => isNewOption(o) ? o : o.name}
+                  renderInput={params => <TextField {...params} label="Kategorie" />}
+                  renderOption={(props, option) => {
                         const value = isNewOption(option) ? option : option.name
                         const key = isNewOption(option) ? 0 : option.id
                         return (
                             <ListItem {...props} key={key}>
                                 <ListItemText primary={value} />
-                            </ListItem>)
+                            </ListItem>
+                        )
                     }}
                 />
-                {isError && <Alert
-                    sx={{ marginTop: '5px' }}
-                    severity="error"
-                    variant="filled"
-                >{'Da ist was schief gegangen! Probier\'s nochmal.'}
-                </Alert>}
+                {isError && (
+                    <Alert
+                      sx={{ marginTop: '5px' }}
+                      severity="error"
+                      variant="filled"
+                    >
+                        {'Da ist was schief gegangen! Probier\'s nochmal.'}
+                    </Alert>
+                )}
             </Box>
         </Modal>
     )

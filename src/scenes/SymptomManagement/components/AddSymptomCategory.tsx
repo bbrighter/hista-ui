@@ -1,12 +1,11 @@
+import AddIcon from '@mui/icons-material/Add'
+import Box from '@mui/material/Box'
+import Fab from '@mui/material/Fab'
+import Modal from '@mui/material/Modal'
+import { useState } from 'react'
 
-import AddIcon from '@mui/icons-material/Add';
-import Box from '@mui/material/Box';
-import Fab from '@mui/material/Fab';
-import Modal from '@mui/material/Modal';
-import { useState } from 'react';
-
-import useHista from '../../../store/store';
-import TextFieldSaveAndAbort from './TextFieldSaveAndAbort';
+import useHista from '../../../store/store'
+import TextFieldSaveAndAbort from './TextFieldSaveAndAbort'
 
 export default function AddSymptomCategory() {
     const [open, setOpen] = useState(false)
@@ -27,7 +26,6 @@ export default function AddSymptomCategory() {
         p: 4,
     }
 
-
     const onSave = async (v: string) => {
         await postSymptomCategory(v)
         closeModal()
@@ -36,26 +34,28 @@ export default function AddSymptomCategory() {
     return (
         <>
             <Modal
-                open={open}
-                onClose={closeModal}
+              open={open}
+              onClose={closeModal}
             >
                 <Box sx={style}>
                     <TextFieldSaveAndAbort
-                        label={'Kategoriename'}
-                        value=''
-                        isSaveable={isCategoryNameAvailable}
-                        onSave={onSave}
-                        size={'medium'}
-                        onCancel={closeModal}
+                      label="Kategoriename"
+                      value=""
+                      isSaveable={isCategoryNameAvailable}
+                      onSave={onSave}
+                      size="medium"
+                      onCancel={closeModal}
                     />
                 </Box>
             </Modal>
             <Fab
-                color='primary'
-                variant='extended'
-                onClick={() => setOpen(!open)}
+              color="primary"
+              variant="extended"
+              onClick={() => setOpen(!open)}
             >
-                <AddIcon /> Neue Kategorie
+                <AddIcon />
+                {' '}
+Neue Kategorie
             </Fab>
         </>
     )

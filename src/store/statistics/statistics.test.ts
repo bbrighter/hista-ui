@@ -1,8 +1,8 @@
-import { expect, test } from 'vitest';
+import { expect, test } from 'vitest'
 
-import { entity } from '../../api/generatedApi';
-import { Ingredients } from '../meal/ingredients';
-import { respToStatistics } from './statistics';
+import { entity } from '../../api/generatedApi'
+import { Ingredients } from '../meal/ingredients'
+import { respToStatistics } from './statistics'
 
 test('respToStatistics', () => {
     const resp: entity.FoodStatisticsResponse = {

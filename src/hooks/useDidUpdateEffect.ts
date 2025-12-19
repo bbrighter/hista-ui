@@ -1,18 +1,19 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useDidUpdateEffect(fn: () => void, inputs: Array<any>) {
-    const isMountingRef = useRef(false);
+    const isMountingRef = useRef(false)
 
     useEffect(() => {
-        isMountingRef.current = true;
-    }, []);
+        isMountingRef.current = true
+    }, [])
 
     useEffect(() => {
         if (!isMountingRef.current) {
-            return fn();
-        } else {
-            isMountingRef.current = false;
+            return fn()
         }
-    }, inputs);
+        else {
+            isMountingRef.current = false
+        }
+    }, inputs)
 }

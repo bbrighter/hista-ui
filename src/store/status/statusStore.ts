@@ -5,7 +5,6 @@ import { StateCreator } from 'zustand'
 import { client } from '../../api/api'
 import { PutStatusParams, respToStatus, respToStatuses, Statuses } from './status'
 
-
 interface State {
     statuses: Statuses
 }
@@ -28,7 +27,7 @@ export const createStatusSlice: StateCreator<
     StatusStore,
     [],
     [],
-    StatusStore> = ((set, get) => ({
+    StatusStore> = (set, get) => ({
         ...initialState,
         resetStatus: () => set(initialState),
         getStatuses: async () => {
@@ -71,4 +70,4 @@ export const createStatusSlice: StateCreator<
                 draft.statuses = get().statuses.filter(s => s.id != id)
             }))
         },
-    }))
+    })

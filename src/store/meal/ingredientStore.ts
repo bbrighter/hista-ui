@@ -26,14 +26,15 @@ export const createIngredientSlice: StateCreator<
     IngredientStore,
     [],
     [],
-    IngredientStore> = ((set, get) => ({
+    IngredientStore> = (set, get) => ({
         ...initialState,
 
         setIngredients: (ingredients) => {
             let useIngredients: Ingredients = []
             if (Array.isArray(ingredients)) {
                 useIngredients = ingredients
-            } else {
+            }
+            else {
                 useIngredients = respToIngredients(ingredients)
             }
             set(produce((draft: State) => {
@@ -51,5 +52,4 @@ export const createIngredientSlice: StateCreator<
             }
         },
 
-
-    }))
+    })

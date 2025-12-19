@@ -17,7 +17,6 @@ export enum Freshness {
     sameDay = 1,
 }
 
-
 export const stringToFreshness = (str: number): Freshness => {
     switch (str) {
     case 0:
@@ -42,4 +41,3 @@ export const respToMeal = (resp: entity.MealResponse): Meal => {
     }
     return meal
 }
-

@@ -1,9 +1,9 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router-dom'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import Start from './Start';
+import Start from './Start'
 
 const mockNavigate = vi.fn()
 vi.mock('react-router-dom', async () => {
@@ -32,7 +32,7 @@ describe('start page', () => {
             'Kopfweh',
         ]
         await waitFor(() => {
-            expectedTitles.forEach(t => {
+            expectedTitles.forEach((t) => {
                 expect(screen.getByText(t)).toBeInTheDocument()
             })
         })

@@ -1,6 +1,6 @@
-import { http, HttpResponse } from 'msw';
+import { http, HttpResponse } from 'msw'
 
-import { entity } from '../../api/generatedApi';
+import { entity } from '../../api/generatedApi'
 
 const ingredients = [
     { id: 1, name: 'ingredient1' },

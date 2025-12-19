@@ -1,9 +1,9 @@
-import RestaurantIcon from '@mui/icons-material/Restaurant';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
+import RestaurantIcon from '@mui/icons-material/Restaurant'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
 import { useState } from 'react'
 
-import { useAppNavigate } from '../../hooks/useNavigate';
+import { useAppNavigate } from '../../hooks/useNavigate'
 import useHista from '../../store/store'
 import MealList from './components/MealList'
 
@@ -24,11 +24,12 @@ export default function Meals() {
     return (
         <Container sx={{ padding: '2rem' }}>
             <Button
-                startIcon={<RestaurantIcon />}
-                variant='outlined'
-                onClick={onCreate}
-                loading={loading}
-            >Neue Mahlzeit
+              startIcon={<RestaurantIcon />}
+              variant="outlined"
+              onClick={onCreate}
+              loading={loading}
+            >
+Neue Mahlzeit
             </Button>
             <MealList />
         </Container>

@@ -1,18 +1,18 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
+import DeleteIcon from '@mui/icons-material/Delete'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
 
-import useHista from '../../../store/store';
-import Severity from './Severity';
+import useHista from '../../../store/store'
+import Severity from './Severity'
 
 export default function ConditionList() {
     const deleteCondition = useHista(state => state.deleteCondition)
     const conditions = useHista(state => state.conditionEvent.conditions)
     const categories = useHista(state => state.symptoms)
 
-    const conditionsAndCategories = conditions.map(con => {
+    const conditionsAndCategories = conditions.map((con) => {
         const name = categories.find(cat => cat.categoryId == con.symptom.categoryId)?.categoryName || ''
         return { ...con, categoryName: name }
     })
@@ -25,22 +25,27 @@ export default function ConditionList() {
     return (
         <List>
             {conditionsAndCategories.map(con => (
-                <ListItem key={con.id} secondaryAction={
-                    <IconButton
-                        onClick={() => onDelete(con.id)}
-                        title='Löschen'
-                    >
-                        <DeleteIcon />
-                    </IconButton>
-                } >
+                <ListItem
+                  key={con.id}
+                  secondaryAction={(
+                        <IconButton
+                          onClick={() => onDelete(con.id)}
+                          title="Löschen"
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                    )}
+                >
                     <ListItemText
-                        primary={con.symptom.name}
-                        secondary={con.categoryName} />
+                      primary={con.symptom.name}
+                      secondary={con.categoryName}
+                    />
                     <Severity
-                        conditionId={con.id}
-                        severity={con.severity}
+                      conditionId={con.id}
+                      severity={con.severity}
                     />
                 </ListItem>
             ))}
-        </List>)
+        </List>
+    )
 }

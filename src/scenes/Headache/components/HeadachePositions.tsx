@@ -1,8 +1,6 @@
-
 import { validHeadachePositions } from '../../../store/headaches/headaches'
 import useHista from '../../../store/store'
 import HeadacheInputs, { ValueLabelPair } from './Tags'
-
 
 export default function HeadachePositionsButtons() {
     const positions = useHista(state => state.headache.positions)
@@ -14,11 +12,11 @@ export default function HeadachePositionsButtons() {
 
     return (
         <HeadacheInputs
-            label="Wo?"
-            options={validHeadachePositions}
-            values={positions}
-            onAdd={onAdd}
-            onRemove={onRemove}
+          label="Wo?"
+          options={validHeadachePositions}
+          values={positions}
+          onAdd={onAdd}
+          onRemove={onRemove}
         />
     )
 }

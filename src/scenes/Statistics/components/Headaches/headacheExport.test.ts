@@ -1,8 +1,8 @@
-import { Workbook } from 'exceljs';
-import { expect, test } from 'vitest';
+import { Workbook } from 'exceljs'
+import { expect, test } from 'vitest'
 
-import { Headache } from '../../../../store/headaches/headaches';
-import { buildHeadacheWorkbook } from './headacheExport';
+import { Headache } from '../../../../store/headaches/headaches'
+import { buildHeadacheWorkbook } from './headacheExport'
 
 test('headache workbook', async () => {
     const headaches: Array<Headache> = [
@@ -22,9 +22,9 @@ test('headache workbook', async () => {
 
     const book = buildHeadacheWorkbook(headaches)
 
-    const buffer = await book.xlsx.writeBuffer();
-    const newBook = new Workbook();
-    await newBook.xlsx.load(buffer);
+    const buffer = await book.xlsx.writeBuffer()
+    const newBook = new Workbook()
+    await newBook.xlsx.load(buffer)
 
     const sheet = newBook.getWorksheet('Kopfschmerz')
     const expectedColumns = [
@@ -35,7 +35,7 @@ test('headache workbook', async () => {
         { column: 18, header: 'Symptome' },
         { column: 30, header: 'Beschreibung' },
     ]
-    expectedColumns.forEach(col => {
+    expectedColumns.forEach((col) => {
         expect(sheet.getRow(1).getCell(col.column).value).toBe(col.header)
     })
 
@@ -48,7 +48,7 @@ test('headache workbook', async () => {
         { column: 17, value: '✓' },
         { column: 30, value: 'desc' },
     ]
-    expectedContent.forEach(con => {
+    expectedContent.forEach((con) => {
         expect(sheet.getRow(3).getCell(con.column).value).toStrictEqual(con.value)
     })
 })

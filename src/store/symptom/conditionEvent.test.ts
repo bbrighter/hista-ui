@@ -1,7 +1,7 @@
-import { expect, test } from 'vitest';
+import { expect, test } from 'vitest'
 
-import { entity } from '../../api/generatedApi';
-import { respToConditionEvent } from './conditionEvent';
+import { entity } from '../../api/generatedApi'
+import { respToConditionEvent } from './conditionEvent'
 
 test('respToConditionEvent', () => {
     const resp: entity.ConditionEventResponse = {

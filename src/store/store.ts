@@ -15,17 +15,17 @@ import { ConditionStore, createConditionSlice } from './symptom/conditionStore'
 import { createSymptomSlice, SymptomStore } from './symptom/symptomStore'
 
 const useHista = create<
-    AuthStore &
-    ErrorStore &
-    MealStore &
-    IngredientStore &
-    ConditionStore &
-    SymptomStore &
-    StatisticsStore &
-    NotesStore &
-    PollenStore &
-    StatusStore &
-    HeadacheStore
+  AuthStore
+  & ErrorStore
+  & MealStore
+  & IngredientStore
+  & ConditionStore
+  & SymptomStore
+  & StatisticsStore
+  & NotesStore
+  & PollenStore
+  & StatusStore
+  & HeadacheStore
 >((...a) => {
     const store = {
         ...createMealSlice(...a),

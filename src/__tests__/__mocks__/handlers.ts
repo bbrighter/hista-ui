@@ -7,10 +7,8 @@ import { pollenHandlers } from './pollenHandlers'
 import { statusHandlers } from './statusHandler'
 import { conditionEventHandlers, conditionHandlers, symptomHandlers } from './symptomHandlers'
 
-
 const baseUrl = 'http://localhost:4444'
 const baseUrlWithPiid = `${baseUrl}/piid/:piid`
-
 
 const handlers = [
     ...symptomHandlers(baseUrlWithPiid),

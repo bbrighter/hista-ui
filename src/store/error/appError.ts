@@ -46,5 +46,4 @@ export const toAppError = (error: unknown): AppError => {
         text: 'Unbekannter Fehler',
         details: JSON.stringify(error),
     }
-
 }

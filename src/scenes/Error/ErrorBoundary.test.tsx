@@ -1,11 +1,10 @@
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router-dom'
+import { describe, expect, it, vi } from 'vitest'
 
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
-import { describe, expect, it, vi } from 'vitest';
-
-import { APIError, ErrCode } from '../../api/generatedApi';
-import { ErrorFallback } from './ErrorFallback';
+import { APIError, ErrCode } from '../../api/generatedApi'
+import { ErrorFallback } from './ErrorFallback'
 
 const mockNavigate = vi.fn()
 vi.mock('react-router-dom', async () => {
@@ -17,7 +16,6 @@ vi.mock('react-router-dom', async () => {
 })
 
 describe('error fallback', () => {
-
     it('rendered for api error', async () => {
         const error = new APIError(400, { code: ErrCode.InvalidArgument, message: 'message', details: 'details' })
         const resetErrorBoundary = vi.fn()

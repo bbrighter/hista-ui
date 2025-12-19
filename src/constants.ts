@@ -1,8 +1,7 @@
 export const mealConstants = {
     RAW: 'Roh',
     COOKED: 'Gar',
-} as const;
-
+} as const
 
 const noPiidRoutes = {
     homepage: '/',
@@ -37,7 +36,7 @@ function mapValues<T extends Record<string, string>>(
 ): { [K in keyof T]: string } {
     return Object.fromEntries(
         Object.entries(obj).map(([key, value]) => [key, fn(value, key as keyof T)]),
-    ) as { [K in keyof T]: string };
+    ) as { [K in keyof T]: string }
 }
 
 export const appRoutes = {
@@ -52,5 +51,5 @@ export function buildPath(
     return Object.entries(params).reduce(
         (path, [key, value]) => path.replace(`:${key}`, encodeURIComponent(String(value))),
         template,
-    );
+    )
 }

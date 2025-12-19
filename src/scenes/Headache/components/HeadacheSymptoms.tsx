@@ -11,12 +11,11 @@ export default function HeadacheSymptomsButtons() {
 
     return (
         <HeadacheInputs
-            label="Weitere Symptome"
-            values={symptoms}
-            options={validHeadacheSymptoms}
-            onAdd={onAdd}
-            onRemove={onRemove}
+          label="Weitere Symptome"
+          values={symptoms}
+          options={validHeadacheSymptoms}
+          onAdd={onAdd}
+          onRemove={onRemove}
         />
     )
 }
-

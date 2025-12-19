@@ -1,11 +1,9 @@
-import dayjs from 'dayjs';
-import { describe, expect, it } from 'vitest';
+import dayjs from 'dayjs'
+import { describe, expect, it } from 'vitest'
 
-import useHista from '../store';
-
+import useHista from '../store'
 
 describe('statusStore', () => {
-
     it('getStatuses', async () => {
         await useHista.getState().getStatuses()
         const statuses = useHista.getState().statuses
@@ -47,7 +45,6 @@ describe('statusStore', () => {
         expect(status).toBeDefined()
         expect(status.morningFitness).toBe(1)
         expect(status.morningSleep).toBe(4)
-
     })
 
     it('deleteStatus', async () => {

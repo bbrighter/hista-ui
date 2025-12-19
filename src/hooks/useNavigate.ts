@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
-import { appRoutes, buildPath } from '../constants';
-import useHista from '../store/store';
+import { appRoutes, buildPath } from '../constants'
+import useHista from '../store/store'
 
 export const useAppNavigate = () => {
     const navigate = useNavigate()
@@ -34,6 +34,4 @@ export const useAppNavigate = () => {
             manageSymptoms: () => navigateWithPiid(appRoutes.manageSymptoms),
         },
     }
-
-
 }

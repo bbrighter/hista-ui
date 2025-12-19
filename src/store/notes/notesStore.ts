@@ -11,10 +11,10 @@ interface State {
 }
 
 interface Actions {
-    getNotes: () => Promise<void>,
-    postNote: () => Promise<number | undefined>,
-    getNote: (id: number) => Promise<void>,
-    deleteNote: (id: number) => Promise<void>,
+    getNotes: () => Promise<void>
+    postNote: () => Promise<number | undefined>
+    getNote: (id: number) => Promise<void>
+    deleteNote: (id: number) => Promise<void>
     patchNote: (id: number, date?: string, text?: string) => Promise<void>
 }
 
@@ -29,7 +29,7 @@ export const createNotesSlice: StateCreator<
     NotesStore,
     [],
     [],
-    NotesStore> = ((set, get) => ({
+    NotesStore> = (set, get) => ({
         ...initialState,
 
         getNotes: async () => {
@@ -80,4 +80,3 @@ export const createNotesSlice: StateCreator<
             }))
         },
     })
-    )

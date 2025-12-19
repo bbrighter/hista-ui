@@ -18,21 +18,21 @@ interface State {
 interface Actions {
     resetConditionEvents: () => void
     // ConditionEvents
-    getConditionEvents: () => Promise<void>,
-    postConditionEvent: () => Promise<number | void>,
+    getConditionEvents: () => Promise<void>
+    postConditionEvent: () => Promise<number | void>
 
     // ConditionEvent
-    getConditionEvent: (eventId: number) => Promise<void>,
-    deleteConditionEvent: (eventId: number) => Promise<void>,
-    setConditionEventDate: (date: Date | dayjs.Dayjs) => Promise<void>,
+    getConditionEvent: (eventId: number) => Promise<void>
+    deleteConditionEvent: (eventId: number) => Promise<void>
+    setConditionEventDate: (date: Date | dayjs.Dayjs) => Promise<void>
 
     // Conditions
-    postSymptomCategory: (name: string) => Promise<number>,
-    postCondition: (symptomCategoryId: number, symptomId: number | undefined, symptomName: string | undefined) => Promise<void>,
+    postSymptomCategory: (name: string) => Promise<number>
+    postCondition: (symptomCategoryId: number, symptomId: number | undefined, symptomName: string | undefined) => Promise<void>
 
     // Condition
-    patchCondition: (conditionId: number, severity: number) => Promise<void>,
-    deleteCondition: (conditionId: number) => Promise<void>,
+    patchCondition: (conditionId: number, severity: number) => Promise<void>
+    deleteCondition: (conditionId: number) => Promise<void>
 }
 
 export interface ConditionStore extends State, Actions { }
@@ -47,7 +47,7 @@ export const createConditionSlice: StateCreator<
     ConditionStore & SymptomStore,
     [],
     [],
-    ConditionStore> = ((set, get) => ({
+    ConditionStore> = (set, get) => ({
         ...initialState,
 
         resetConditionEvents: () => set(initialState),
@@ -62,18 +62,18 @@ export const createConditionSlice: StateCreator<
                     draft.conditionEventsAreLoaded = true
                 }))
             }
-
         },
         postConditionEvent: async () => {
             const resp = await client.CreateConditionEvent()
             set(produce((draft: State) => {
                 const event: ConditionEvent = respToConditionEvent(resp)
                 const index = draft.conditionEvents.findIndex(
-                    (e) => new Date(event.date) > new Date(e.date),
+                    e => new Date(event.date) > new Date(e.date),
                 )
                 if (index === -1) {
                     draft.conditionEvents.push(event)
-                } else {
+                }
+                else {
                     draft.conditionEvents.splice(index, 0, event)
                 }
             }))
@@ -106,7 +106,6 @@ export const createConditionSlice: StateCreator<
                 draft.conditionEvents[index].date = dateDate
             }))
         },
-
 
         // Conditions
         postCondition: async (symptomCategoryId: number, symptomId?: number, symptomName?: string) => {
@@ -146,8 +145,7 @@ export const createConditionSlice: StateCreator<
             }))
         },
 
-    }))
-
+    })
 
 interface Items {
     id: number

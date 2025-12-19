@@ -1,11 +1,11 @@
-import Box from '@mui/material/Box';
-import Slider from '@mui/material/Slider';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import { JSX, useEffect, useState } from 'react';
+import Box from '@mui/material/Box'
+import Slider from '@mui/material/Slider'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+import { JSX, useEffect, useState } from 'react'
 
-import useDebounce from '../../hooks/useDebounce';
-import { useDidUpdateEffect } from '../../hooks/useDidUpdateEffect';
+import useDebounce from '../../hooks/useDebounce'
+import { useDidUpdateEffect } from '../../hooks/useDidUpdateEffect'
 
 export default function DebouncedSlider(props: {
     initialValue: number
@@ -33,22 +33,21 @@ export default function DebouncedSlider(props: {
         props.onChange(debouncedSliderValue)
     }, [debouncedSliderValue])
 
-
     return (
         <Box sx={{ width: '100%' }}>
             <Typography gutterBottom>{props.label}</Typography>
-            <Stack spacing={3} direction='row' alignItems='center'>
+            <Stack spacing={3} direction="row" alignItems="center">
                 {props.icon}
                 {props.iconMapping ? props.iconMapping(value) : <></>}
                 <Slider
-                    marks
-                    value={value}
-                    onChange={handleSliderChange}
-                    max={props.max || 5}
-                    min={props.min || 0}
-                    valueLabelDisplay='auto'
-                    color={props.muiColorMapping ? props.muiColorMapping(value) : 'primary'}
-                    sx={{
+                  marks
+                  value={value}
+                  onChange={handleSliderChange}
+                  max={props.max || 5}
+                  min={props.min || 0}
+                  valueLabelDisplay="auto"
+                  color={props.muiColorMapping ? props.muiColorMapping(value) : 'primary'}
+                  sx={{
                         '& .MuiSlider-thumb': {
                             backgroundColor: props.colorMapping ? props.colorMapping(value) : 'primary',
                         },

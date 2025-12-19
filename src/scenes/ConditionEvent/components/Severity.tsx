@@ -26,12 +26,12 @@ export default function Severity(props: {
 
     return (
         <Slider
-            sx={{ maxWidth: '50%', marginRight: '30px' }}
-            min={1}
-            max={5}
-            value={severity}
-            onChange={onChangeSeverity}
-            color={colorFromSeverity(severity)}
+          sx={{ maxWidth: '50%', marginRight: '30px' }}
+          min={1}
+          max={5}
+          value={severity}
+          onChange={onChangeSeverity}
+          color={colorFromSeverity(severity)}
         />
     )
 }

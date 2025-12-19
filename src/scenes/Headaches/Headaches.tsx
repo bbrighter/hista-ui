@@ -1,13 +1,12 @@
-import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
+import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 
 import useHista from '../../store/store'
 import OverviewList from '../components/OverviewList'
-import { getColor } from '../Headache/components/colorMapping';
-
+import { getColor } from '../Headache/components/colorMapping'
 
 export default function Headaches() {
     const navigate = useNavigate()
@@ -33,19 +32,20 @@ export default function Headaches() {
     return (
         <Container sx={{ padding: '2rem' }}>
             <Button
-                startIcon={<FaceRetouchingNaturalIcon />}
-                variant='outlined'
-                onClick={onCreate}
-                loading={loading}
-            >Neuer Kopfschmerz
+              startIcon={<FaceRetouchingNaturalIcon />}
+              variant="outlined"
+              onClick={onCreate}
+              loading={loading}
+            >
+Neuer Kopfschmerz
             </Button>
             <OverviewList
-                getData={getHeadaches}
-                items={headaches}
-                onClick={onClick}
-                onDelete={deleteHeadache}
-                showSeverity
-                severityColorMapping={getColor}
+              getData={getHeadaches}
+              items={headaches}
+              onClick={onClick}
+              onDelete={deleteHeadache}
+              showSeverity
+              severityColorMapping={getColor}
             />
         </Container>
 

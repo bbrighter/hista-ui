@@ -14,8 +14,8 @@ export type KPIGridValues = Array<{
 }>
 
 export default function KPIGrid(props: {
-    values: KPIGridValues,
-    headers: string[],
+    values: KPIGridValues
+    headers: string[]
 }) {
     const [isRelative, setIsRelative] = useState(true)
 
@@ -36,7 +36,9 @@ export default function KPIGrid(props: {
         let cmp = 0
         for (let i = 0; i < len; i++) {
             const diff = b.entries[len - 1 - i] - a.entries[len - 1 - i]
-            if (diff > 0) { cmp = diff }
+            if (diff > 0) {
+                cmp = diff
+             }
             else { continue }
         }
         return cmp
@@ -45,20 +47,21 @@ export default function KPIGrid(props: {
     return (
         <Grid>
             <GridSettings
-                onToggleChange={() => setIsRelative(!isRelative)}
-                showRelative={isRelative}
+              onToggleChange={() => setIsRelative(!isRelative)}
+              showRelative={isRelative}
             />
             <Grid container spacing={1}>
                 <KPIHeaderRow headers={['', ...props.headers]} />
-                {values.map(v => {
-                    return (<KPIRow
-                        entries={v.entries}
-                        label={v.label}
-                        maxValue={maxValue}
-                        showPercent={isRelative}
-                        key={v.label + v.subline}
-                        subline={v.subline}
-                    />
+                {values.map((v) => {
+                    return (
+                        <KPIRow
+                          entries={v.entries}
+                          label={v.label}
+                          maxValue={maxValue}
+                          showPercent={isRelative}
+                          key={v.label + v.subline}
+                          subline={v.subline}
+                        />
                     )
                 })}
             </Grid>
@@ -89,16 +92,17 @@ function KPIRow(props: {
     return (
         <>
             <KPIHeaderCell
-                label={props.label}
-                subline={props.subline}
+              label={props.label}
+              subline={props.subline}
             />
             {
                 props.entries.map((entry, i) => (
                     <KPIValueCell
-                        key={i}
-                        value={entry}
-                        max={props.showPercent ? 100 : props.maxValue}
-                        relative={props.showPercent} />
+                      key={i}
+                      value={entry}
+                      max={props.showPercent ? 100 : props.maxValue}
+                      relative={props.showPercent}
+                    />
                 ))
             }
         </>
@@ -121,13 +125,13 @@ function KPIHeaderCell(props: {
     return (
         <Grid size={{ xs: xs }}>
             <Paper
-                elevation={10}
-                sx={CellStyle}
+              elevation={10}
+              sx={CellStyle}
             >
                 <Typography noWrap>{props.label}</Typography>
                 <Typography variant="caption">{props.subline}</Typography>
-            </Paper >
-        </Grid >
+            </Paper>
+        </Grid>
     )
 }
 
@@ -146,19 +150,24 @@ function KPIValueCell(props: {
 
         if (currentValue == 0) {
             backgroundColor = undefined
-        } else if (currentValue < step) {
+        }
+        else if (currentValue < step) {
             backgroundColor = '#007f4e'
             textcolor = 'black'
-        } else if (currentValue < step * 2) {
+        }
+        else if (currentValue < step * 2) {
             backgroundColor = '#72b043'
             textcolor = 'black'
-        } else if (currentValue < step * 3) {
+        }
+        else if (currentValue < step * 3) {
             backgroundColor = '#f8cc1b'
             textcolor = 'black'
-        } else if (currentValue < step * 4) {
+        }
+        else if (currentValue < step * 4) {
             backgroundColor = '#f37324'
             textcolor = 'black'
-        } else {
+        }
+        else {
             backgroundColor = '#e12729'
             textcolor = 'black'
         }
@@ -168,29 +177,28 @@ function KPIValueCell(props: {
     return (
         <Grid size={{ xs: xs }}>
             <Paper
-                elevation={1}
-                sx={{ ...CellStyle, backgroundColor: backgroundColor }}
+              elevation={1}
+              sx={{ ...CellStyle, backgroundColor: backgroundColor }}
             >
                 <Typography color={textcolor}>
-                    {props.value}{props.relative ? '%' : ''}
+                    {props.value}
+                    {props.relative ? '%' : ''}
                 </Typography>
-            </Paper >
-        </Grid >
+            </Paper>
+        </Grid>
     )
 }
-
 
 function GridSettings(props: {
     showRelative: boolean
     onToggleChange: (event: React.MouseEvent, value: boolean) => void
 }) {
-
     return (
         <ToggleButtonGroup
-            sx={{ mt: 2, mb: 2 }}
-            value={props.showRelative}
-            onChange={props.onToggleChange}
-            exclusive
+          sx={{ mt: 2, mb: 2 }}
+          value={props.showRelative}
+          onChange={props.onToggleChange}
+          exclusive
         >
             <ToggleButton value={true}>Relativ</ToggleButton>
             <ToggleButton value={false}>Absolut</ToggleButton>

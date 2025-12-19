@@ -1,17 +1,17 @@
+import { Login } from '@bbrighter/auth-module/login'
 import { JSX, lazy, LazyExoticComponent, Suspense } from 'react'
-import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundary } from 'react-error-boundary'
 import { createBrowserRouter, RouteObject } from 'react-router-dom'
 
-import RequireAuth from './authentication/RequireAuth';
+import AppProvider from './AppProvider'
 import { appRoutes } from './constants'
-import { ErrorFallback } from './scenes/Error/ErrorFallback';
-import Login from './scenes/Login';
-import Start from './scenes/Start';
-import { ErrorBridge } from './store/error/ErrorBridge';
+import { ErrorFallback } from './scenes/Error/ErrorFallback'
+import Start from './scenes/Start'
+import { ErrorBridge } from './store/error/ErrorBridge'
 
 type RawRoute = {
     path: string
-    element: LazyExoticComponent<() => JSX.Element>,
+    element: LazyExoticComponent<() => JSX.Element>
     name: string
 }
 
@@ -98,40 +98,59 @@ const withSuspense = (Component: LazyExoticComponent<() => JSX.Element>) => {
     )
 }
 
-
 const childRoutes: Array<RouteObject> = rawRoutes.map(r => ({
     path: r.path,
     name: r.name,
-    element:
+    element: (
         <ErrorBoundary
-            FallbackComponent={ErrorFallback}
+          FallbackComponent={ErrorFallback}
         >
             <ErrorBridge />
             {withSuspense(r.element)}
-        </ErrorBoundary>,
+        </ErrorBoundary>
+    ),
 }))
 
 const routes: Array<RouteObject> = [
     {
-        path: appRoutes.login,
-        element: <Login />,
-    },
-    {
         path: '',
-        element: <RequireAuth />,
+        element: <AppProvider />,
         children: [
+            {
+                path: appRoutes.login,
+                element: <Login />,
+            },
+            {
+                path: '*',
+                element: <Start />,
+            },
             ...childRoutes,
         ],
-        loader: () => null, // Needed, otherwise React router thinks it's just a style route (or something like this)
     },
-    {
-        path: '*',
-        element: <RequireAuth />,
-        children: [{
-            path: '*',
-            element: <Start />,
-        }],
-    },
+    // {
+    //     path: appRoutes.login,
+    //     element: <Login />,
+    // },
+    // {
+    //     path: '*',
+    //     element: <Login />,
+    // },
+    // {
+    //     path: '',
+    //     element: <AppProvider />,
+    //     children: [
+    //         ...childRoutes,
+    //     ],
+    //     loader: () => null, // Needed, otherwise React router thinks it's just a style route (or something like this)
+    // },
+    // {
+    //     path: '*',
+    //     element: <AppProvider />,
+    //     children: [{
+    //         path: '*',
+    //         element: <Start />,
+    //     }],
+    // },
 ]
 
 export default createBrowserRouter(routes)

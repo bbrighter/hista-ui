@@ -1,13 +1,13 @@
-import 'dayjs/locale/de';
+import 'dayjs/locale/de'
 
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
-import dayjs from 'dayjs';
-import { useState } from 'react';
+import dayjs from 'dayjs'
+import { useState } from 'react'
 
-import useDebounce from '../../hooks/useDebounce';
+import useDebounce from '../../hooks/useDebounce'
 import { useDidUpdateEffect } from '../../hooks/useDidUpdateEffect'
 
 export default function DateInput(props: {
@@ -33,19 +33,23 @@ export default function DateInput(props: {
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
-            {hideTime && <DatePicker
-                sx={{ width: '99%' }}
-                label={props.title}
-                value={inputValue}
-                onChange={handleInputChange}
-            />}
-            {!hideTime &&
-                <DateTimePicker
+            {hideTime && (
+                <DatePicker
+                  sx={{ width: '99%' }}
+                  label={props.title}
+                  value={inputValue}
+                  onChange={handleInputChange}
+                />
+            )}
+            {!hideTime
+              && (
+                  <DateTimePicker
                     sx={{ width: '99%' }}
                     label={props.title}
                     value={inputValue}
                     onChange={handleInputChange}
-                />}
+                  />
+              )}
         </LocalizationProvider>
     )
 }

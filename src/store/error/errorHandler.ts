@@ -1,35 +1,27 @@
-import { AuthStore } from '../auth/authStore';
-import { toAppError } from './appError';
-import { errorBus } from './errorBus';
+import { AuthStore } from '../auth/authStore'
+import { toAppError } from './appError'
+import { errorBus } from './errorBus'
 
 const errorHandler = (error: unknown, store: AuthStore) => {
     const appError = toAppError(error)
     const status = appError.status
     switch (appError.source) {
-        case 'api':
-            switch (status) {
-                case 401:
-                    store.logout()
-                    break
-                case 400:
-                    if (appError.text == 'invalid uuid') {
-                        store.logout()
-                    } else {
-                        errorBus.emit('error', error)
-                    }
-                    break
-                case 404:
-                    break
-                case 500:
-                default:
-                    errorBus.emit('error', error)
-            }
-            break
-        case 'router':
-        case 'unknown':
+    case 'api':
+        switch (status) {
+        case 400:
             errorBus.emit('error', error)
+            break
+        case 404:
+            break
+        case 500:
+        default:
+            errorBus.emit('error', error)
+        }
+        break
+    case 'router':
+    case 'unknown':
+        errorBus.emit('error', error)
     }
-
 }
 
 export function wrapActionsWithErrorHandler<T extends Record<string, unknown>>(
@@ -49,14 +41,16 @@ export function wrapActionsWithErrorHandler<T extends Record<string, unknown>>(
                         })
                     }
                     return result
-                } catch (error) {
-                    errorHandler(error, store);
                 }
-            };
-        } else {
-            wrapped[key] = value;
+                catch (error) {
+                    errorHandler(error, store)
+                }
+            }
+        }
+        else {
+            wrapped[key] = value
         }
     }
 
-    return wrapped as T;
+    return wrapped as T
 }

@@ -1,8 +1,8 @@
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
 
-import Status from './Status';
+import Status from './Status'
 
 describe('Status.tsx', async () => {
     const getStatusCard = (dateString: string): HTMLElement => (screen.getByText(dateString).closest('.MuiPaper-root') as HTMLElement)
@@ -39,8 +39,6 @@ describe('Status.tsx', async () => {
         expect(screen.getAllByText('Morgens')).toHaveLength(3)
         expect(await screen.findByText('31.03.2024')).toBeInTheDocument()
     })
-
-
 
     it('Edit', async () => {
         render(<Status />)

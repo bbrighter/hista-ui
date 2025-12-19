@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Client, { ClientOptions, Environment, Local } from './generatedApi';
-
+import Client, { ClientOptions, Environment, Local } from './generatedApi'
 
 const getStageURL = (): string => {
     const hostname = new URL(window.location.href).hostname
     if (hostname.includes('hista-ui-git')) {
         return Environment('staging')
-    } else {
+    }
+    else {
         return Environment('prod')
     }
 }
@@ -17,18 +17,13 @@ const baseUrl = import.meta.env.MODE === 'test'
         ? getStageURL()
         : Local
 
-
 const options: ClientOptions = {
     fetcher: (input: RequestInfo | URL, init?: RequestInit) => fetch(input, { ...init }),
     auth: () => ({ Token: window.localStorage.getItem('token') || '' }),
 }
 
-
 const baseClient = new Client(baseUrl, options)
 export const authApi = baseClient.authentication
-
-
-
 
 type DropFirstArg<F> = F extends (first: any, ...rest: infer R) => infer Ret
     ? (...args: R) => Ret
@@ -38,12 +33,10 @@ type PiidInjectedClient<T> = {
     [K in keyof T]: DropFirstArg<T[K]>
 }
 
-
 let getPiid: (() => string | null) | null = null
 export const injectPiidGetter = (getter: () => string | null) => {
     getPiid = getter
 }
-
 
 export const client: PiidInjectedClient<typeof baseClient.hista> = new Proxy(baseClient.hista, {
     get(target, prop, receiver) {

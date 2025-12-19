@@ -15,7 +15,7 @@ interface State {
 }
 
 interface Actions {
-    resetMeals: () => void,
+    resetMeals: () => void
     // Meals
     listMeals: () => Promise<void>
     postMeal: () => Promise<number | void>
@@ -48,7 +48,7 @@ export const createMealSlice: StateCreator<
     MealStore & IngredientStore,
     [],
     [],
-    MealStore> = ((set, get) => ({
+    MealStore> = (set, get) => ({
         ...initialState,
 
         resetMeals: () => set(initialState),
@@ -62,7 +62,6 @@ export const createMealSlice: StateCreator<
                     draft.mealsAreLoaded = true
                 }))
             }
-
         },
         postMeal: async (): Promise<number | void> => {
             const params: entity.PostMealParams = {
@@ -138,7 +137,6 @@ export const createMealSlice: StateCreator<
             get().setIngredients(resp)
             set(produce((draft: State) => {
                 draft.meal.foods = removeItemById(foodId, get().meal.foods)
-
             }))
         },
 
@@ -150,8 +148,7 @@ export const createMealSlice: StateCreator<
                 draft.meal.foods[foodIndex].condition = newCondition
             }))
         },
-    }))
-
+    })
 
 interface Items {
     id: number

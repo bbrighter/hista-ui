@@ -7,9 +7,9 @@ type Permission = {
     apps: { [key: string]: boolean }
 }
 
-export const toPermission = (resp: entity.AuthData): Permissions => {
-    return resp.instances.map(i => ({
-        piid: i.piid,
-        apps: i.appMapping,
-    }))
+export type Instance = {
+    id: string
+    productId: string
+    productName: string
+    url: string
 }

@@ -1,8 +1,8 @@
-import { data, isRouteErrorResponse } from 'react-router-dom';
-import { describe, expect, it } from 'vitest';
+import { data, isRouteErrorResponse } from 'react-router-dom'
+import { describe, expect, it } from 'vitest'
 
-import { APIError, ErrCode } from '../../api/generatedApi';
-import { toAppError } from './appError';
+import { APIError, ErrCode } from '../../api/generatedApi'
+import { toAppError } from './appError'
 
 describe('errors are transformed into app errors', () => {
     it('Route error', { skip: true }, () => {

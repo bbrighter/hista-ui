@@ -1,13 +1,12 @@
-import SickIcon from '@mui/icons-material/Sick';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Container from '@mui/material/Container';
-import { useState } from 'react';
+import SickIcon from '@mui/icons-material/Sick'
+import Button from '@mui/material/Button'
+import ButtonGroup from '@mui/material/ButtonGroup'
+import Container from '@mui/material/Container'
+import { useState } from 'react'
 
-import { useAppNavigate } from '../../hooks/useNavigate';
+import { useAppNavigate } from '../../hooks/useNavigate'
 import useHista from '../../store/store'
 import EventList from './components/EventList'
-
 
 export default function ConditionEvents() {
     const postConditionEvent = useHista(state => state.postConditionEvent)
@@ -29,12 +28,12 @@ export default function ConditionEvents() {
 
     return (
         <Container sx={{ paddingTop: '2rem' }}>
-            <ButtonGroup variant='outlined'>
+            <ButtonGroup variant="outlined">
                 <Button
-                    variant='contained'
-                    startIcon={<SickIcon />}
-                    onClick={onClickAddSymptom}
-                    loading={loading}
+                  variant="contained"
+                  startIcon={<SickIcon />}
+                  onClick={onClickAddSymptom}
+                  loading={loading}
                 >
                     Neues Symptom
                 </Button>

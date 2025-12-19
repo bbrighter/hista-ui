@@ -1,12 +1,12 @@
-import Autocomplete, { AutocompleteChangeReason } from '@mui/material/Autocomplete';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import TextField from '@mui/material/TextField';
-import { FilterOptionsState } from '@mui/material/useAutocomplete';
-import { useEffect, useState } from 'react';
+import Autocomplete, { AutocompleteChangeReason } from '@mui/material/Autocomplete'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import TextField from '@mui/material/TextField'
+import { FilterOptionsState } from '@mui/material/useAutocomplete'
+import { useEffect, useState } from 'react'
 
-import useHista from '../../../store/store';
-import AddOrSelectCategory from './AddOrSelectCategory';
+import useHista from '../../../store/store'
+import AddOrSelectCategory from './AddOrSelectCategory'
 
 interface SymptomOption {
     categoryId: number
@@ -46,7 +46,8 @@ export default function AddCondition() {
         if (isNewOption(v) && (reason == 'selectOption' || reason == 'createOption')) {
             setOpen(true)
             setValue(v)
-        } else if (!isNewOption(v) && reason == 'selectOption') {
+        }
+        else if (!isNewOption(v) && reason == 'selectOption') {
             await postConditionById(v.categoryId, v.symptomId, undefined)
             setInputValue('')
         }
@@ -54,7 +55,7 @@ export default function AddCondition() {
 
     const filterOptions = (options: Array<Option>, params: FilterOptionsState<Option>) => {
         const { inputValue } = params
-        const filtered = options.filter(o => {
+        const filtered = options.filter((o) => {
             if (!isNewOption(o)) {
                 return o.categoryName.toLowerCase().includes(inputValue.toLowerCase()) || o.symptomName.toLowerCase().includes(inputValue.toLowerCase())
             }
@@ -73,35 +74,37 @@ export default function AddCondition() {
 
     return (
         <>
-            <Autocomplete sx={{ paddingTop: '20px' }}
-                freeSolo
-                inputValue={inputValue}
-                onInputChange={(_e, v) => setInputValue(v)}
-                value={value}
-                onChange={onChange}
-                options={options}
-                getOptionLabel={s => typeof (s) == 'string' ? s : s.symptomName}
-                selectOnFocus
-                clearOnBlur
-                filterOptions={filterOptions}
-                renderOption={(props, option) => {
+            <Autocomplete
+              sx={{ paddingTop: '20px' }}
+              freeSolo
+              inputValue={inputValue}
+              onInputChange={(_e, v) => setInputValue(v)}
+              value={value}
+              onChange={onChange}
+              options={options}
+              getOptionLabel={s => typeof (s) == 'string' ? s : s.symptomName}
+              selectOnFocus
+              clearOnBlur
+              filterOptions={filterOptions}
+              renderOption={(props, option) => {
                     const key = isNewOption(option) ? 0 : option.symptomId
                     const primary = isNewOption(option) ? option : option.symptomName
                     const secondary = isNewOption(option) ? 'hinzufügen' : option.categoryName
-                    return (<ListItem {...props} key={key}>
-                        <ListItemText
-                            primary={primary}
-                            secondary={secondary}
-                        />
-                    </ListItem>
+                    return (
+                        <ListItem {...props} key={key}>
+                            <ListItemText
+                              primary={primary}
+                              secondary={secondary}
+                            />
+                        </ListItem>
                     )
                 }}
-                renderInput={params => (<TextField {...params} label={'Symptom'} />)}
+              renderInput={params => (<TextField {...params} label="Symptom" />)}
             />
             <AddOrSelectCategory
-                open={open}
-                symptomName={isNewOption(value) ? value : value?.symptomName || ''}
-                onClose={onCloseModal}
+              open={open}
+              symptomName={isNewOption(value) ? value : value?.symptomName || ''}
+              onClose={onCloseModal}
             />
         </>
     )

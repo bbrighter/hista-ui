@@ -1,10 +1,10 @@
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
-import useHista from '../../store/store';
-import Headache from './Headache';
+import useHista from '../../store/store'
+import Headache from './Headache'
 
 vi.mock('../../store/store', { spy: true })
 
@@ -28,11 +28,13 @@ describe('A headache can be edited and displayed', () => {
 
     it('Change severity', async () => {
         const patchHeadacheSeverity = vi.spyOn(useHista.getState(), 'patchHeadacheSeverity')
-        render(<MemoryRouter initialEntries={['/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1']}>
-            <Routes>
-                <Route path="/:piid/headaches/:headacheId" element={<Headache />} />
-            </Routes>
-        </MemoryRouter>)
+        render(
+            <MemoryRouter initialEntries={['/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1']}>
+                <Routes>
+                    <Route path="/:piid/headaches/:headacheId" element={<Headache />} />
+                </Routes>
+            </MemoryRouter>,
+        )
 
         const symptom = await screen.findByText('Schwere')
         const listItem = symptom.closest('div')
@@ -45,16 +47,17 @@ describe('A headache can be edited and displayed', () => {
         await waitFor(() => {
             expect(patchHeadacheSeverity).toHaveBeenCalledOnce()
         })
-
     })
 
     it('Change position', async () => {
         const patchHeadachePositions = vi.spyOn(useHista.getState(), 'patchHeadachePositions')
-        render(<MemoryRouter initialEntries={['/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1']}>
-            <Routes>
-                <Route path="/:piid/headaches/:headacheId" element={<Headache />} />
-            </Routes>
-        </MemoryRouter>)
+        render(
+            <MemoryRouter initialEntries={['/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1']}>
+                <Routes>
+                    <Route path="/:piid/headaches/:headacheId" element={<Headache />} />
+                </Routes>
+            </MemoryRouter>,
+        )
 
         const expectedTags = [
             { name: 'Links', active: true },
@@ -68,7 +71,7 @@ describe('A headache can be edited and displayed', () => {
             { name: 'Nacken', active: false },
         ]
         await waitFor(() => {
-            expectedTags.forEach(t => {
+            expectedTags.forEach((t) => {
                 expect(getTagByText(t.name)).toBeInTheDocument()
                 expect(isTagActive(t.name)).toBe(t.active)
             })
@@ -87,11 +90,13 @@ describe('A headache can be edited and displayed', () => {
 
     it('Change type', async () => {
         const patchHeadacheTypes = vi.spyOn(useHista.getState(), 'patchHeadacheTypes')
-        render(<MemoryRouter initialEntries={['/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1']}>
-            <Routes>
-                <Route path="/:piid/headaches/:headacheId" element={<Headache />} />
-            </Routes>
-        </MemoryRouter>)
+        render(
+            <MemoryRouter initialEntries={['/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1']}>
+                <Routes>
+                    <Route path="/:piid/headaches/:headacheId" element={<Headache />} />
+                </Routes>
+            </MemoryRouter>,
+        )
 
         const expectedTags = [
             { name: 'Pulsierend-pochend', active: false },
@@ -99,7 +104,7 @@ describe('A headache can be edited and displayed', () => {
             { name: 'Stechend', active: true },
         ]
         await waitFor(() => {
-            expectedTags.forEach(t => {
+            expectedTags.forEach((t) => {
                 expect(getTagByText(t.name)).toBeInTheDocument()
                 expect(isTagActive(t.name)).toBe(t.active)
             })
@@ -113,11 +118,13 @@ describe('A headache can be edited and displayed', () => {
 
     it('Change symptoms', async () => {
         const patchHeadacheSymptoms = vi.spyOn(useHista.getState(), 'patchHeadacheSymptoms')
-        render(<MemoryRouter initialEntries={['/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1']}>
-            <Routes>
-                <Route path="/:piid/headaches/:headacheId" element={<Headache />} />
-            </Routes>
-        </MemoryRouter>)
+        render(
+            <MemoryRouter initialEntries={['/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1']}>
+                <Routes>
+                    <Route path="/:piid/headaches/:headacheId" element={<Headache />} />
+                </Routes>
+            </MemoryRouter>,
+        )
 
         await waitFor(() => {
             expect(isTagActive('Übelkeit')).toBeTruthy()
@@ -132,16 +139,17 @@ describe('A headache can be edited and displayed', () => {
         await userEvent.click(nauseaTag)
         expect(isTagActive('Übelkeit')).toBeFalsy()
         expect(patchHeadacheSymptoms).toHaveBeenCalledTimes(2)
-
     })
 
     it('Change description', async () => {
         // const patchHeadacheDescription = vi.spyOn(useHista.getState(), 'patchHeadacheDescription')
-        render(<MemoryRouter initialEntries={['/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1']}>
-            <Routes>
-                <Route path="/:piid/headaches/:headacheId" element={<Headache />} />
-            </Routes>
-        </MemoryRouter>)
+        render(
+            <MemoryRouter initialEntries={['/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1']}>
+                <Routes>
+                    <Route path="/:piid/headaches/:headacheId" element={<Headache />} />
+                </Routes>
+            </MemoryRouter>,
+        )
 
         const description = await screen.findByText('description')
         expect(description).toBeInTheDocument()
@@ -152,6 +160,5 @@ describe('A headache can be edited and displayed', () => {
         // await waitFor(() => {
         //     expect(patchHeadacheDescription).toHaveBeenCalled()
         // }, { timeout: 5000 })
-
     })
 })

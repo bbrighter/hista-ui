@@ -1,4 +1,3 @@
-
 import { validHeadacheTypes } from '../../../store/headaches/headaches'
 import useHista from '../../../store/store'
 import HeadacheInputs, { ValueLabelPair } from './Tags'
@@ -12,11 +11,11 @@ export default function HeadacheTypesButtons() {
 
     return (
         <HeadacheInputs
-            label="Art"
-            options={validHeadacheTypes}
-            values={types}
-            onAdd={onAdd}
-            onRemove={onRemove}
+          label="Art"
+          options={validHeadacheTypes}
+          values={types}
+          onAdd={onAdd}
+          onRemove={onRemove}
         />
     )
 }

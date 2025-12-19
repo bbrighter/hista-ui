@@ -2,14 +2,11 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import useHista from '../store'
 
-
 describe('symptomStore', () => {
-
     beforeEach(async () => {
         expect(useHista.getState().symptomsAreLoaded).toBeFalsy()
         await useHista.getState().getSymptoms()
     })
-
 
     it('getSymptoms', async () => {
         const store = useHista.getState()

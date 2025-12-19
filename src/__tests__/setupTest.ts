@@ -1,11 +1,11 @@
-import * as matchers from '@testing-library/jest-dom/matchers';
+import * as matchers from '@testing-library/jest-dom/matchers'
 import { setupServer } from 'msw/node'
-import { afterAll, afterEach, beforeAll, beforeEach, expect } from 'vitest';
+import { afterAll, afterEach, beforeAll, beforeEach, expect } from 'vitest'
 
-import useHista from '../store/store';
-import handlers from './__mocks__/handlers';
+import useHista from '../store/store'
+import handlers from './__mocks__/handlers'
 
-expect.extend(matchers);
+expect.extend(matchers)
 
 export const server = setupServer(...handlers)
 
@@ -18,7 +18,6 @@ beforeAll(() => {
     // })
 })
 
-
 beforeEach(() => {
     const store = useHista.getState()
     store.resetSymptoms()
@@ -28,7 +27,6 @@ beforeEach(() => {
     store.resetPollens()
     store.resetStatistics()
     store.resetStatus()
-    store.logout()
     store.setPiid('7b3047c2-d56d-4942-abc4-39eb85e785f2')
     window.localStorage.setItem('token', 'test-token')
 })

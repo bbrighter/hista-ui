@@ -11,7 +11,7 @@ interface State {
     isHeadacheLoaded: boolean
 }
 interface Actions {
-    resetHeadaches: () => void,
+    resetHeadaches: () => void
 
     getHeadaches(): Promise<Array<Headache>>
     getHeadache(id: number): Promise<void>
@@ -38,7 +38,7 @@ export const createHeadacheSlice: StateCreator<
     HeadacheStore,
     [],
     [],
-    HeadacheStore> = ((set, get) => ({
+    HeadacheStore> = (set, get) => ({
         ...initialState,
 
         resetHeadaches: () => set(initialState),
@@ -135,8 +135,7 @@ export const createHeadacheSlice: StateCreator<
                 draft.headache.description = description
             }))
         },
-    }))
-
+    })
 
 const equalPositions = (a: ValueLabelPair[], b: ValueLabelPair[]) =>
     a.length === b.length && a.every((p, i) => p.value === b[i].value)

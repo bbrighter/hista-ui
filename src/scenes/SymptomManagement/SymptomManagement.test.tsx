@@ -5,7 +5,6 @@ import { describe, expect, it } from 'vitest'
 
 import SymptomManagement from './SymptomManagement'
 
-
 const findButtonWithinCategory = (categoryName: string, title: string): HTMLElement => {
     const categoryHeading = screen.getByText(categoryName)
     const accordionSummary = categoryHeading.closest('h3')
@@ -44,7 +43,6 @@ describe('SymptomManagement', () => {
 
         await userEvent.click(getExpandIcon('cat (2)'))
         expect(screen.queryByText('symptom1')).not.toBeInTheDocument()
-
     })
 
     it('renaming category can be canceled', async () => {
@@ -62,15 +60,15 @@ describe('SymptomManagement', () => {
         const cancelButton = screen.getByTitle('Umbenennen abbrechen')
         await userEvent.click(cancelButton)
         getRenameButton('cat (2)')
-
-
     })
 
     it('renaming category can be saved', async () => {
         render(<SymptomManagement />)
 
         let renameButton: HTMLElement
-        await waitFor(() => { renameButton = getRenameButton('cat (2)') })
+        await waitFor(() => {
+            renameButton = getRenameButton('cat (2)')
+         })
         await userEvent.click(renameButton)
 
         const textField = screen.getByLabelText('Kategoriename')
@@ -85,13 +83,9 @@ describe('SymptomManagement', () => {
         expect(textField).toHaveValue('new cat')
         expect(saveButton).not.toBeDisabled()
 
-
         await userEvent.click(saveButton)
 
-
         getRenameButton('new cat (2)')
-
-
     })
 
     it('deleting category', async () => {
@@ -112,4 +106,3 @@ describe('SymptomManagement', () => {
         expect(screen.queryByText('cat with no symptoms (0)')).not.toBeInTheDocument()
     })
 })
-

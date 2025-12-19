@@ -1,14 +1,14 @@
-import { produce } from 'immer';
-import { StateCreator } from 'zustand';
+import { produce } from 'immer'
+import { StateCreator } from 'zustand'
 
-import { client } from '../../api/api';
-import { hista } from '../../api/generatedApi';
-import { IngredientStore } from '../meal/ingredientStore';
-import { MealStore } from '../meal/mealStore';
-import { ConditionStore } from '../symptom/conditionStore';
-import { SymptomStore } from '../symptom/symptomStore';
-import { RawDiary, respToRawDiary } from './diary';
-import { FoodStatistics, respToStatistics, respToSymptomStatistics, SymptomStatistics } from './statistics';
+import { client } from '../../api/api'
+import { hista } from '../../api/generatedApi'
+import { IngredientStore } from '../meal/ingredientStore'
+import { MealStore } from '../meal/mealStore'
+import { ConditionStore } from '../symptom/conditionStore'
+import { SymptomStore } from '../symptom/symptomStore'
+import { RawDiary, respToRawDiary } from './diary'
+import { FoodStatistics, respToStatistics, respToSymptomStatistics, SymptomStatistics } from './statistics'
 
 interface State {
     diaryEntries: Array<RawDiary>
@@ -17,10 +17,10 @@ interface State {
 }
 
 interface Actions {
-    getDiaryEntries: () => Promise<void>,
-    getFoodStatistics: (fromDate: Date, toDate: Date, symptomIds: Array<number>) => Promise<void>,
-    getSymptomStatistics: (fromDate: Date, toDate: Date, ingredientIds: Array<number>) => Promise<void>,
-    resetStatistics: () => void,
+    getDiaryEntries: () => Promise<void>
+    getFoodStatistics: (fromDate: Date, toDate: Date, symptomIds: Array<number>) => Promise<void>
+    getSymptomStatistics: (fromDate: Date, toDate: Date, ingredientIds: Array<number>) => Promise<void>
+    resetStatistics: () => void
 }
 
 export interface StatisticsStore extends State, Actions { }
@@ -37,7 +37,7 @@ export const createStatisticsSlice: StateCreator<
     [],
     [],
     StatisticsStore
-> = ((set, get) => ({
+> = (set, get) => ({
     ...initialState,
 
     getDiaryEntries: async (): Promise<void> => {
@@ -71,4 +71,4 @@ export const createStatisticsSlice: StateCreator<
     resetStatistics: () => {
         set(initialState)
     },
-}))
+})

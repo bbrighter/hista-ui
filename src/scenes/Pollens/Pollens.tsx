@@ -9,8 +9,6 @@ import useHista from '../../store/store'
 import PollenHeader from './components/PollenHeader'
 import PollenRow from './components/PollenRow'
 
-
-
 export default function PollenView() {
     const getPollens = useHista(state => state.getPollens)
     const pollens = useHista(state => state.pollens)
@@ -28,20 +26,19 @@ export default function PollenView() {
             <Divider />
             <List>
                 {isLoading
-                    ?
-                    Array.from({ length: 10 }).map((_, i) => (
+                    ? Array.from({ length: 10 }).map((_, i) => (
                         <Skeleton
-                            key={i}
-                            variant="rectangular"
-                            width={'calc(max(20%, 100px) + 8 * max(10%, 20px))'}
-                            height={'1.5rem'}
-                            sx={{ marginTop: 2 }}
-                        />))
-                    :
-                    pollens.map((pollen, i) =>
+                          key={i}
+                          variant="rectangular"
+                          width="calc(max(20%, 100px) + 8 * max(10%, 20px))"
+                          height="1.5rem"
+                          sx={{ marginTop: 2 }}
+                        />
+                    ))
+                    : pollens.map((pollen, i) =>
                         <PollenRow key={i} pollen={pollen} />,
                     )}
             </List>
-        </Container >
+        </Container>
     )
 }
