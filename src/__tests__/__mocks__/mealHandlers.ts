@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw'
 
-import { entity } from '../../api/generatedApi'
+import { entity, hista } from '../../api/generatedApi'
 
 const ingredients = [
     { id: 1, name: 'ingredient1' },
@@ -31,6 +31,26 @@ const ingredientHandlers = (baseUrl: string) => ([
 const foodHandlers = (baseUrl: string) => ([
     http.delete(baseUrl + '/foods/:id', () => (HttpResponse.json({ ingredients: [ingredients[1]] } as entity.IngredientsResponse))),
     http.patch(baseUrl + '/foods/:id/condition', () => (HttpResponse.json({}))),
+    http.post(baseUrl + '/meal/:id/foods', async ({ request }) => {
+        const body = await request.json() as { ingredientName: string } | { ingredientId: number }
+        if ('ingredientName' in body) {
+            const name = body.ingredientName
+            return HttpResponse.json(
+            { food:
+            { id: 1, ingredient: { id: 3, name: name }, foodCondition: 'raw' },
+            ingredients:
+            { ingredients: [{ id: 3, name: name }, ...ingredients] },
+             } as hista.PostFoodResponse)
+        }
+        const name = ingredients.find(i => i.id == body.ingredientId).name
+        return HttpResponse.json(
+            { food:
+            { id: 1, ingredient: { id: body.ingredientId, name: name }, foodCondition: 'raw' },
+            ingredients:
+            { ingredients: ingredients },
+             } as hista.PostFoodResponse)
+}),
+
 ])
 
 export { foodHandlers, ingredientHandlers, mealHandlers }

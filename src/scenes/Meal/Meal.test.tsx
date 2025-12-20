@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 
+import useHista from '../../store/store'
 import Meal from './Meal'
 
 describe('test meals list', () => {
@@ -123,11 +124,34 @@ describe('test meals list', () => {
 
     })
 
-    it('add food with new ingredient', { skip: true }, async () => {
+    it('add food with new ingredient', async () => {
+        render(<MemoryRouter><Meal /></MemoryRouter>)
 
+        const ingredientInput = await screen.findByLabelText('Zutaten')
+        expect(ingredientInput).toBeInTheDocument()
+
+        await userEvent.type(ingredientInput, 'new ingredient {enter}')
+        await screen.findByText('new ingredient')
+
+        await waitFor(() => {
+            const ingredients = useHista.getState().ingredients
+            expect(ingredients).toHaveLength(3)
+        })
     })
 
-    it('add food with existing ingredient', { skip: true }, async () => {
+    it('add food with existing ingredient', async () => {
+        render(<MemoryRouter><Meal /></MemoryRouter>)
 
+        const ingredientInput = await screen.findByLabelText('Zutaten')
+        expect(ingredientInput).toBeInTheDocument()
+
+        await userEvent.type(ingredientInput, 'ingredient2')
+        await userEvent.keyboard('{ArrowDown}{Enter}')
+
+        await waitFor(() => {
+            expect(screen.queryAllByText('ingredient2')).toHaveLength(2)
+            const ingredients = useHista.getState().ingredients
+            expect(ingredients).toHaveLength(2)
+        })
     })
 })
