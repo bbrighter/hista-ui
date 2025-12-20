@@ -1,13 +1,13 @@
-import NoteIcon from '@mui/icons-material/Note';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import { useMemo, useState } from 'react';
+import NoteIcon from '@mui/icons-material/Note'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
+import { useMemo, useState } from 'react'
 
-import { useAppNavigate } from '../../hooks/useNavigate';
-import useHista from '../../store/store';
-import OverviewList from '../components/OverviewList';
-import NoteSearch from './components/NoteSearch';
+import { useAppNavigate } from '../../hooks/useNavigate'
+import useHista from '../../store/store'
+import OverviewList from '../components/OverviewList'
+import NoteSearch from './components/NoteSearch'
 
 export default function Notes() {
     const getNotes = useHista(state => state.getNotes)
@@ -23,7 +23,7 @@ export default function Notes() {
         const filterResults = notes.filter(note =>
             note.text.toLowerCase().includes(searchValue.toLowerCase()),
         )
-        const items = filterResults.map(r => {
+        const items = filterResults.map((r) => {
             const maxTextLength = 25
             const shortText = r.text.length < maxTextLength
                 ? r.text
@@ -36,7 +36,6 @@ export default function Notes() {
         })
         return items
     }, [searchValue, notes])
-
 
     const onClick = (id: number) => navigate.to.noteDetails(id)
 
@@ -58,25 +57,25 @@ export default function Notes() {
     return (
         <Container sx={{ padding: '2rem' }}>
             <Button
-                variant="outlined"
-                onClick={onCreate}
-                loading={loading}
-                startIcon={<NoteIcon />}
+              variant="outlined"
+              onClick={onCreate}
+              loading={loading}
+              startIcon={<NoteIcon />}
             >
                 Neue Notiz
             </Button>
             <Box>
                 <NoteSearch
-                    searchValue={searchValue}
-                    onClear={() => setSearchValue('')}
-                    onChange={handleSearchChange}
+                  searchValue={searchValue}
+                  onClear={() => setSearchValue('')}
+                  onChange={handleSearchChange}
                 />
             </Box>
             <OverviewList
-                getData={getNotes}
-                items={filteredNotes}
-                onClick={onClick}
-                onDelete={onDelete}
+              getData={getNotes}
+              items={filteredNotes}
+              onClick={onClick}
+              onDelete={onDelete}
             />
         </Container>
     )

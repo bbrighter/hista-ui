@@ -18,7 +18,6 @@ const categories = {
     ],
 }
 
-
 const symptomHandlers = (baseUrl: string) => ([
     http.get(baseUrl + '/symptoms', () => (HttpResponse.json(categories))),
     http.patch(baseUrl + '/symptom-categories/:id', () => (HttpResponse.json({}))),

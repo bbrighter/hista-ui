@@ -1,3 +1,3 @@
-import ConditionEvents from './ConditionEvents';
+import ConditionEvents from './ConditionEvents'
 
 export default ConditionEvents

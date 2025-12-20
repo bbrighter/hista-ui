@@ -1,7 +1,7 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest'
 
-import { hista } from '../../api/generatedApi';
-import { respToRawDiary } from './diary';
+import { hista } from '../../api/generatedApi'
+import { respToRawDiary } from './diary'
 
 describe('RawDiary', () => {
     it('respToRawDiary', () => {

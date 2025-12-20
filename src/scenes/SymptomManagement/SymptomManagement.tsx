@@ -1,10 +1,9 @@
-import Container from '@mui/material/Container';
+import Container from '@mui/material/Container'
 import { useEffect } from 'react'
 
 import useHista from '../../store/store'
-import AddSymptomCategory from './components/AddSymptomCategory';
-import SymptomCategoryAccordion from './components/SymptomCategoryAccordion';
-
+import AddSymptomCategory from './components/AddSymptomCategory'
+import SymptomCategoryAccordion from './components/SymptomCategoryAccordion'
 
 export default function SymptomManagement() {
     const getSymptoms = useHista(state => state.getSymptoms)
@@ -17,7 +16,7 @@ export default function SymptomManagement() {
     return (
         <Container>
             <ul>
-                {symptoms.map((symptom) => (
+                {symptoms.map(symptom => (
                     <SymptomCategoryAccordion key={symptom.categoryId} symptom={symptom} />
                 ))}
             </ul>

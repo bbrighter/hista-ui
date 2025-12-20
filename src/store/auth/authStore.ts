@@ -1,96 +1,70 @@
 import { produce } from 'immer'
 import { StateCreator } from 'zustand'
 
-import { authApi } from '../../api/api'
-import { ErrCode, isAPIError } from '../../api/generatedApi'
-import { Permissions, toPermission } from './permissions';
-
+import { Instance } from './instance'
+import { User } from './users'
 
 interface State {
+    instances: Array<Instance>
     token: string
-    selectedPiid: string | null
-    instances: Permissions
-    permissionsSet: boolean | 'running'
-    isLoggedIn: boolean
-    isAuthProblem: boolean
+    piid: string | null
+    userName: string
+    users: Array<User>
 }
 
 interface Actions {
-    logout: () => void
-    login: (password: string, userName: string) => Promise<boolean>
-    getPermissions: () => Promise<void>
     setPiid: (piid: string) => void
+    setInstances: (instances: Array<Instance>) => Promise<void>
+    setToken: (token: string) => void
+    setUserName: (name: string) => void
+    setUsers: (users: Array<User>) => void
 }
 
 export interface AuthStore extends State, Actions { }
 
 const initialState: State = {
-    token: window.localStorage.getItem('token') || '',
-    selectedPiid: null,
     instances: [],
-    permissionsSet: false,
-    isLoggedIn: false,
-    isAuthProblem: false,
+    token: window.localStorage.getItem('token') || '',
+    piid: null,
+    userName: '',
+    users: [],
 }
 
 export const createAuthSlice: StateCreator<
     AuthStore,
     [],
     [],
-    AuthStore> = ((set, get) => ({
+    AuthStore> = set => ({
         ...initialState,
 
         setPiid(piid: string) {
             set(produce((draft: State) => {
-                draft.selectedPiid = piid
+                draft.piid = piid
             }))
         },
 
-        logout() {
-            window.localStorage.removeItem('token')
-            set((produce((draft: State) => {
-                draft.isAuthProblem = true
-            })))
+        setToken(token: string) {
+            window.localStorage.setItem('token', token)
+            set(produce((draft: State) => {
+                draft.token = token
+            }))
         },
 
-        login: async (password: string, userName: string): Promise<boolean> => {
-            try {
-                const resp = await authApi.Login({ password: password, userName: userName })
-                set(produce((draft: State) => {
-                    draft.isAuthProblem = false
-                    draft.token = resp.token
-                }))
-                window.localStorage.setItem('token', resp.token)
-                return true
-            } catch (err: unknown) {
-                if (isAPIError(err)) {
-                    if (err.code == ErrCode.Unauthenticated || err.code == ErrCode.NotFound) {
-                        get().logout()
-                        return false
-                    } else {
-                        get().logout()
-                        return false
-                    }
-                }
-            }
+        setUserName: (name: string) => {
+            set(produce((draft: State) => {
+                draft.userName = name
+            }))
         },
 
-        getPermissions: async () => {
-            if (get().permissionsSet) return
-            set(produce((draft: State) => { draft.permissionsSet = 'running' }))
-            try {
-                const resp = await authApi.GetPermissions()
-                const perms = toPermission(resp)
-                const relevantPiid = perms.find(p => p.apps['user-management']).piid // TODO: use a better app name in the backend and here
-                set(produce((draft: State) => {
-                    draft.instances = perms
-                    draft.selectedPiid = relevantPiid
-                    draft.permissionsSet = true
-                    draft.isAuthProblem = false
-                }))
-            } catch {
-                set(produce((draft: State) => { draft.permissionsSet = false }))
-            }
-
+        setUsers: (users: Array<User>) => {
+            set(produce((draft: State) => {
+                draft.users = users
+            }))
         },
-    }))
+
+        setInstances: async (instances: Array<Instance>) => {
+            set(produce((draft: State) => {
+                draft.instances = instances
+            }))
+        },
+    })

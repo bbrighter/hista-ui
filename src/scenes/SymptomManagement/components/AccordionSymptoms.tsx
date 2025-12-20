@@ -1,7 +1,7 @@
-import CloseIcon from '@mui/icons-material/Close';
-import CreateIcon from '@mui/icons-material/Create';
-import SaveIcon from '@mui/icons-material/Save';
-import SwapVertIcon from '@mui/icons-material/SwapVert';
+import CloseIcon from '@mui/icons-material/Close'
+import CreateIcon from '@mui/icons-material/Create'
+import SaveIcon from '@mui/icons-material/Save'
+import SwapVertIcon from '@mui/icons-material/SwapVert'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import Box from '@mui/material/Box'
 import ButtonGroup from '@mui/material/ButtonGroup'
@@ -19,22 +19,23 @@ import useHista from '../../../store/store'
 import { Symptom, SymptomCategory } from '../../../store/symptom/symptom'
 import TextFieldSaveAndAbort from './TextFieldSaveAndAbort'
 
-
 export default function AccordionSymptoms(props: {
     category: SymptomCategory
 }) {
     return (
         <AccordionDetails>
             <List>
-                {Array.isArray(props.category.symptoms) ?
-                    props.category.symptoms.map(s => (
+                {Array.isArray(props.category.symptoms)
+                    ? props.category.symptoms.map(s => (
                         <SymptomAccordionEntry
-                            key={s.id}
-                            symptom={s}
+                          key={s.id}
+                          symptom={s}
                         />
-                    )) : null}
+                    ))
+                    : null}
             </List>
-        </AccordionDetails>)
+        </AccordionDetails>
+    )
 }
 
 function SymptomAccordionEntry(props: {
@@ -70,84 +71,87 @@ function SymptomAccordionEntry(props: {
 
     return (
         <ListItem>
-            {mode == 'default' &&
-                <Box
+            {mode == 'default'
+              && (
+                  <Box
                     sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', mt: '3px' }}
-                    onClick={(e) => e.stopPropagation()}
-                >
-                    <Typography variant='body1'>
-                        {props.symptom.name}
-                    </Typography>
-                    <ButtonGroup>
-                        <IconButton
-                            title='Umbenennen'
+                    onClick={e => e.stopPropagation()}
+                  >
+                      <Typography variant="body1">
+                          {props.symptom.name}
+                      </Typography>
+                      <ButtonGroup>
+                          <IconButton
+                            title="Umbenennen"
                             onClick={() => setMode('editing')}
-                        >
-                            <CreateIcon />
-                        </IconButton>
-                        <IconButton
+                          >
+                              <CreateIcon />
+                          </IconButton>
+                          <IconButton
                             onClick={() => setMode('swapping')}
-                            title='Tauschen'
-                        >
-                            <SwapVertIcon />
-                        </IconButton>
-                    </ButtonGroup>
-                </Box>
-            }
-            {mode == 'editing' &&
-                <TextFieldSaveAndAbort
-                    label='Symptomname'
+                            title="Tauschen"
+                          >
+                              <SwapVertIcon />
+                          </IconButton>
+                      </ButtonGroup>
+                  </Box>
+              )}
+            {mode == 'editing'
+              && (
+                  <TextFieldSaveAndAbort
+                    label="Symptomname"
                     value={props.symptom.name}
                     onSave={onSave}
-                    isSaveable={(v) => isSymptomNameAvailable(v, props.symptom.categoryId)}
-                    size='small'
+                    isSaveable={v => isSymptomNameAvailable(v, props.symptom.categoryId)}
+                    size="small"
                     onCancel={onCancel}
-                />
-            }
-            {mode == 'swapping' &&
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                    <Typography variant='body1'>
-                        {props.symptom.name}
-                    </Typography>
-                    <Box sx={{ display: 'flex' }}>
-                        <FormControl>
-                            <InputLabel>Zielkategorie</InputLabel>
-                            <Select
-                                label={'Zielkategorie'}
+                  />
+              )}
+            {mode == 'swapping'
+              && (
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                      <Typography variant="body1">
+                          {props.symptom.name}
+                      </Typography>
+                      <Box sx={{ display: 'flex' }}>
+                          <FormControl>
+                              <InputLabel>Zielkategorie</InputLabel>
+                              <Select
+                                label="Zielkategorie"
                                 value={targetCategoryId}
                                 onChange={onSwap}
-                            >
-                                {categories.map(c => (
-                                    <MenuItem
+                              >
+                                  {categories.map(c => (
+                                      <MenuItem
                                         key={c.categoryId}
                                         value={c.categoryId}
-                                    >{c.categoryName}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <ButtonGroup sx={{ pl: 2, pt: 1 }}>
-                            <IconButton
+                                      >
+                                          {c.categoryName}
+                                      </MenuItem>
+                                  ))}
+                              </Select>
+                          </FormControl>
+                          <ButtonGroup sx={{ pl: 2, pt: 1 }}>
+                              <IconButton
                                 loading={isLoading}
                                 onClick={onSwapConfirm}
-                                color='success'
-                                title='Tauschen bestätigen'
+                                color="success"
+                                title="Tauschen bestätigen"
                                 disabled={targetCategoryId === props.symptom.categoryId}
-                            >
-                                <SaveIcon />
-                            </IconButton>
-                            <IconButton
+                              >
+                                  <SaveIcon />
+                              </IconButton>
+                              <IconButton
                                 onClick={onCancel}
-                                color='error'
-                                title='Tauschen abbrechen'
-                            >
-                                <CloseIcon />
-                            </IconButton>
-                        </ButtonGroup>
-                    </Box>
-                </Box>
-
-            }
-        </ListItem >
+                                color="error"
+                                title="Tauschen abbrechen"
+                              >
+                                  <CloseIcon />
+                              </IconButton>
+                          </ButtonGroup>
+                      </Box>
+                  </Box>
+              )}
+        </ListItem>
     )
 }

@@ -1,11 +1,11 @@
-import Autocomplete from '@mui/material/Autocomplete';
-import Checkbox from '@mui/material/Checkbox';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import TextField from '@mui/material/TextField';
-import { SyntheticEvent, useEffect, useState } from 'react';
+import Autocomplete from '@mui/material/Autocomplete'
+import Checkbox from '@mui/material/Checkbox'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import TextField from '@mui/material/TextField'
+import { SyntheticEvent, useEffect, useState } from 'react'
 
-import useHista from '../../../../store/store';
+import useHista from '../../../../store/store'
 
 interface Option {
     id: number
@@ -42,22 +42,22 @@ export default function IngredientSelect(props: {
 
     return (
         <Autocomplete
-            sx={{ mt: 2 }}
-            multiple
-            limitTags={4}
-            disableCloseOnSelect
-            options={options}
-            getOptionLabel={option => option.name}
-            isOptionEqualToValue={(option, value) => option.id == value.id}
-            renderInput={(params) => (
+          sx={{ mt: 2 }}
+          multiple
+          limitTags={4}
+          disableCloseOnSelect
+          options={options}
+          getOptionLabel={option => option.name}
+          isOptionEqualToValue={(option, value) => option.id == value.id}
+          renderInput={params => (
                 <TextField
-                    {...params}
-                    label="Essen"
+                  {...params}
+                  label="Essen"
                 />
             )}
-            value={values}
-            onChange={handleChange}
-            renderOption={(props, options, { selected }) => (
+          value={values}
+          onChange={handleChange}
+          renderOption={(props, options, { selected }) => (
                 <ListItem {...props}>
                     <Checkbox checked={selected} />
                     <ListItemText primary={options.name} />

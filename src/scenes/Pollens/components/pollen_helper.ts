@@ -16,7 +16,7 @@ export const POLLEN_TYPES = [
     { key: 'graeser', label: 'Gräser', icon: GraeserIcon },
     { key: 'hasel', label: 'Hasel', icon: HaselIcon },
     { key: 'roggen', label: 'Roggen', icon: RoggenIcon },
-] as const;
+] as const
 
 export const FIRST_COLUMN_WIDTH = 'max(20%, 100px)' as const
 

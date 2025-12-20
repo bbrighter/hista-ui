@@ -2,15 +2,12 @@ import { beforeEach, describe, expect, it } from 'vitest'
 
 import useHista from '../store'
 
-
 describe('mealStore', () => {
-
     beforeEach(async () => {
         expect(useHista.getState().mealsAreLoaded).toBeFalsy()
         await useHista.getState().listMeals()
         await useHista.getState().getMeal(1)
     })
-
 
     it('getMeals', async () => {
         const store = useHista.getState()
@@ -109,7 +106,6 @@ describe('mealStore', () => {
     //     expect(store.getState().ingredients.find(i => i.id === 10)).toBeDefined()
     //     expect(store.getState().ingredients.find(i => i.id === 9)).toBeDefined()
     // })
-
 
     // it('deleteFood', async () => {
     //     store.setState({ ...store.getState(), meal: testMeal })

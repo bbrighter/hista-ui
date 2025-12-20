@@ -13,12 +13,11 @@ export interface FoodStatistics {
     count: number
 }
 
-
 export const respToStatistics = (
     resp: entity.FoodStatisticsResponse,
     ingredients: Ingredients,
 ): Array<FoodStatistics> => {
-    const statistics = resp.statistics.map(r => {
+    const statistics = resp.statistics.map((r) => {
         const statistics: FoodStatistics = {
             ingredientId: r.ingredientId,
             foodCondition: r.foodCondition == 'raw' ? mealConstants.RAW : mealConstants.COOKED,
@@ -48,7 +47,7 @@ export const respToSymptomStatistics = (
     resp: entity.SymptomStatisticsResponse,
     symptoms: SymptomCategories,
 ): Array<SymptomStatistics> => {
-    const statistics = resp.statistics.map(r => {
+    const statistics = resp.statistics.map((r) => {
         const statistics: SymptomStatistics = {
             symptomId: r.symptomId,
             severity: r.severity,
@@ -68,7 +67,8 @@ const getSymptomNameById = (cats: SymptomCategories, id: number): string | undef
     const symptoms = cats.find(cat => cat.symptoms.find(sym => sym.id == id))?.symptoms
     if (symptoms) {
         return symptoms.find(sym => sym.id == id)?.name
-    } else {
+    }
+    else {
         return undefined
     }
 }

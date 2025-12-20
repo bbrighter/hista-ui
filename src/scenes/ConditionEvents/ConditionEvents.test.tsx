@@ -1,9 +1,9 @@
-import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
-import { beforeAll, describe, expect, it, vi } from 'vitest';
+import { render, screen, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router-dom'
+import { beforeAll, describe, expect, it, vi } from 'vitest'
 
-import ConditionEvents from './ConditionEvents';
+import ConditionEvents from './ConditionEvents'
 
 const findRowByDate = async (date: string): Promise<HTMLElement> => {
     return (await screen.findByText(new RegExp(date))).closest('li')

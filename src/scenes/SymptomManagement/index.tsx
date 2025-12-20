@@ -1,3 +1,3 @@
-import SymptomManagement from './SymptomManagement';
+import SymptomManagement from './SymptomManagement'
 
 export default SymptomManagement

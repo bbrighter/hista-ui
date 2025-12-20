@@ -1,4 +1,4 @@
-import { http,HttpResponse } from 'msw';
+import { http, HttpResponse } from 'msw'
 
 const noteHandlers = (baseUrl: string) => ([
     http.get(baseUrl + '/notes', () => (HttpResponse.json({
@@ -8,6 +8,5 @@ const noteHandlers = (baseUrl: string) => ([
     http.patch(baseUrl + '/notes/:id', () => (HttpResponse.json({}))),
     http.delete(baseUrl + '/notes/:id', () => (HttpResponse.json({}))),
 ])
-
 
 export { noteHandlers }

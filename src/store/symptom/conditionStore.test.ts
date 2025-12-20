@@ -3,7 +3,6 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import useHista from '../store'
 
 describe('conditionStore', () => {
-
     beforeEach(async () => {
         await useHista.getState().getConditionEvents()
         await useHista.getState().getConditionEvent(1)
@@ -52,6 +51,5 @@ describe('conditionStore', () => {
 
         const event = useHista.getState().conditionEvent
         expect(event.conditions).toHaveLength(2)
-
     })
 })

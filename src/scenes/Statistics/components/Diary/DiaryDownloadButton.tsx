@@ -1,8 +1,8 @@
-import DownloadIcon from '@mui/icons-material/Download';
-import Button from '@mui/material/Button';
+import DownloadIcon from '@mui/icons-material/Download'
+import Button from '@mui/material/Button'
 
-import useHista from '../../../../store/store';
-import { buildDiaryWorkbook } from './diaryExport';
+import useHista from '../../../../store/store'
+import { buildDiaryWorkbook } from './diaryExport'
 
 export default function DiaryDownloadButton() {
     const diaryEntries = useHista(state => state.diaryEntries)
@@ -23,10 +23,11 @@ export default function DiaryDownloadButton() {
 
     return (
         <Button
-            sx={{ marginTop: '1rem', marginBottom: '1rem' }}
-            startIcon={<DownloadIcon />}
-            variant="outlined"
-            onClick={onClick}>
+          sx={{ marginTop: '1rem', marginBottom: '1rem' }}
+          startIcon={<DownloadIcon />}
+          variant="outlined"
+          onClick={onClick}
+        >
             Ernährungstagebuch herunterladen
         </Button>
     )

@@ -1,8 +1,8 @@
-import { Workbook } from 'exceljs';
-import { expect, test } from 'vitest';
+import { Workbook } from 'exceljs'
+import { expect, test } from 'vitest'
 
-import { RawDiary } from '../../../../store/statistics/diary';
-import { buildDiaryWorkbook } from './diaryExport';
+import { RawDiary } from '../../../../store/statistics/diary'
+import { buildDiaryWorkbook } from './diaryExport'
 
 test('diary export', async () => {
     const diary: Array<RawDiary> = [
@@ -17,12 +17,11 @@ test('diary export', async () => {
 
     const book = buildDiaryWorkbook(diary)
 
+    const buffer = await book.xlsx.writeBuffer()
+    const newBook = new Workbook()
+    await newBook.xlsx.load(buffer)
 
-    const buffer = await book.xlsx.writeBuffer();
-    const newBook = new Workbook();
-    await newBook.xlsx.load(buffer);
-
-    const sheet = newBook.getWorksheet('Rohdaten');
+    const sheet = newBook.getWorksheet('Rohdaten')
 
     const expectedColumns = ['Typ', 'Datum', 'Schwere', 'Inhalt', 'Kategorie']
     expectedColumns.forEach((col, i) => {

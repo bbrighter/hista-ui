@@ -27,8 +27,8 @@ export default function SymptomEvaluation() {
     return (
         <Box sx={{ mt: 2, width: '100%' }}>
             <KPIGrid
-                headers={['< 1h', '< 24h', '< 72h']}
-                values={values}
+              headers={['< 1h', '< 24h', '< 72h']}
+              values={values}
             />
         </Box>
     )

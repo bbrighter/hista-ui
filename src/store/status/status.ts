@@ -26,7 +26,6 @@ export const respToStatus = (resp: entity.StatusResponse): Status => {
     }
 }
 
-
 export interface PutStatusParams {
     statusId: number
     date?: Dayjs

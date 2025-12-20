@@ -1,7 +1,7 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest'
 
-import { entity } from '../../api/generatedApi';
-import { respToSymptoms } from './symptom';
+import { entity } from '../../api/generatedApi'
+import { respToSymptoms } from './symptom'
 
 describe('symptom', () => {
     const resp: entity.SymptomCategoriesResponse = {

@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest'
 
 import useHista from '../store'
 
-
 describe('mealStore', () => {
     it('getIngredients', async () => {
         expect(useHista.getState().ingredientsAreLoaded).toBeFalsy()

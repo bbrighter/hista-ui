@@ -1,17 +1,17 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import CircularProgress from '@mui/material/CircularProgress';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import Typography from '@mui/material/Typography';
-import { useState } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete'
+import CircularProgress from '@mui/material/CircularProgress'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import ToggleButton from '@mui/material/ToggleButton'
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
+import Typography from '@mui/material/Typography'
+import { useState } from 'react'
 
-import { mealConstants } from '../../../constants';
-import { FoodCondition } from '../../../store/meal/food';
-import useHista from '../../../store/store';
+import { mealConstants } from '../../../constants'
+import { FoodCondition } from '../../../store/meal/food'
+import useHista from '../../../store/store'
 
 export default function FoodList() {
     const food = useHista(state => state.meal.foods)
@@ -36,39 +36,42 @@ export default function FoodList() {
     return (
         <List>
             {food.map(f => (
-                <ListItem key={f.id}
-                    secondaryAction={
+                <ListItem
+                  key={f.id}
+                  secondaryAction={(
                         <IconButton
-                            title='Löschen'
-                            onClick={() => onDelete(f.id)}
-                            loading={isDeleteLoading == f.id}
+                          title="Löschen"
+                          onClick={() => onDelete(f.id)}
+                          loading={isDeleteLoading == f.id}
                         >
                             <DeleteIcon />
                         </IconButton>
-
-                    }>
+                    )}
+                >
                     <ListItemText>
-                        <Typography noWrap >
+                        <Typography noWrap>
                             {f.ingredientName}
                         </Typography>
                     </ListItemText>
                     <ToggleButtonGroup
-                        sx={{ paddingRight: '10px', paddingLeft: '10px' }}
-                        size="small"
-                        exclusive
-                        value={f.condition}
-                        onChange={(_, v) => {
+                      sx={{ paddingRight: '10px', paddingLeft: '10px' }}
+                      size="small"
+                      exclusive
+                      value={f.condition}
+                      onChange={(_, v) => {
                             const val = v as FoodCondition
                             onChange(f.id, val)
-                        }}>
-                        <ToggleButton value='raw' sx={{ width: '3rem' }}>
+                        }}
+                    >
+                        <ToggleButton value="raw" sx={{ width: '3rem' }}>
                             {isPatchLoading?.id == f.id && isPatchLoading.cond == 'raw' ? <CircularProgress size={20} /> : mealConstants.RAW}
                         </ToggleButton>
-                        <ToggleButton value='cooked' sx={{ width: '3rem' }}>
+                        <ToggleButton value="cooked" sx={{ width: '3rem' }}>
                             {isPatchLoading?.id == f.id && isPatchLoading.cond == 'cooked' ? <CircularProgress size={20} /> : mealConstants.COOKED}
                         </ToggleButton>
                     </ToggleButtonGroup>
-                </ListItem>))}
+                </ListItem>
+            ))}
         </List>
     )
 }

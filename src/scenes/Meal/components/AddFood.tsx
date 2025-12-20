@@ -1,12 +1,12 @@
-import Autocomplete from '@mui/material/Autocomplete';
-import CircularProgress from '@mui/material/CircularProgress';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import TextField from '@mui/material/TextField';
-import { useEffect, useState } from 'react';
-import React from 'react';
+import Autocomplete from '@mui/material/Autocomplete'
+import CircularProgress from '@mui/material/CircularProgress'
+import ListItem from '@mui/material/ListItem'
+import ListItemText from '@mui/material/ListItemText'
+import TextField from '@mui/material/TextField'
+import { useEffect, useState } from 'react'
+import React from 'react'
 
-import useHista from '../../../store/store';
+import useHista from '../../../store/store'
 
 interface InputOption {
     id: number
@@ -31,7 +31,6 @@ export default function AddFood() {
     const [value, setValue] = useState<Option | null>(null)
     const [isLoading, setIsLoading] = useState(false)
 
-
     useEffect(() => {
         getIngredients()
     }, [getIngredients])
@@ -41,7 +40,8 @@ export default function AddFood() {
         let id: number | undefined = undefined
         if (isNewOption(value)) {
             name = value
-        } else {
+        }
+        else {
             id = value?.id
         }
         if (value != null) {
@@ -54,42 +54,41 @@ export default function AddFood() {
             },
             )
         }
-
-
     }, [postFood, value])
-
 
     const onChange = async (_e: React.SyntheticEvent, value: (Option | null)) => {
         if (value == null) return
         setValue(value)
-
     }
 
-    const onInputChange = (_e: React.SyntheticEvent, v: string) => { setInputValue(v) }
+    const onInputChange = (_e: React.SyntheticEvent, v: string) => {
+        setInputValue(v)
+     }
 
     return (
         <Autocomplete
-            sx={{ mt: '1rem' }}
-            options={options}
-            freeSolo
-            inputValue={inputValue}
-            value={value}
-            onInputChange={onInputChange}
-            onChange={onChange}
-            renderOption={(props, option) => {
+          sx={{ mt: '1rem' }}
+          options={options}
+          freeSolo
+          inputValue={inputValue}
+          value={value}
+          onInputChange={onInputChange}
+          onChange={onChange}
+          renderOption={(props, option) => {
                 const key = isNewOption(option) ? 0 : option.id
                 const label = isNewOption(option) ? option : option.name
                 return (
                     <ListItem {...props} key={key}>
                         <ListItemText primary={label} />
-                    </ListItem>)
+                    </ListItem>
+                )
             }}
-            getOptionLabel={opt => isNewOption(opt) ? opt : opt.name}
-            renderInput={params => (
+          getOptionLabel={opt => isNewOption(opt) ? opt : opt.name}
+          renderInput={params => (
                 <TextField
-                    {...params}
-                    label={'Zutaten'}
-                    InputProps={{
+                  {...params}
+                  label="Zutaten"
+                  InputProps={{
                         ...params.InputProps,
                         endAdornment: (
                             <React.Fragment>
@@ -98,7 +97,8 @@ export default function AddFood() {
                             </React.Fragment>
                         ),
                     }}
-                />)}
+                />
+            )}
         />
     )
 }

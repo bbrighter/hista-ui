@@ -1,10 +1,10 @@
-import Divider from '@mui/material/Divider';
-import TextField from '@mui/material/TextField';
-import { useEffect, useRef, useState } from 'react';
+import Divider from '@mui/material/Divider'
+import TextField from '@mui/material/TextField'
+import { useEffect, useRef, useState } from 'react'
 
-import useDebounce from '../../../hooks/useDebounce';
-import { useDidUpdateEffect } from '../../../hooks/useDidUpdateEffect';
-import useHista from '../../../store/store';
+import useDebounce from '../../../hooks/useDebounce'
+import { useDidUpdateEffect } from '../../../hooks/useDidUpdateEffect'
+import useHista from '../../../store/store'
 
 export default function HeadacheDescription() {
     const firstUpdate = useRef(true)
@@ -29,7 +29,6 @@ export default function HeadacheDescription() {
         patchDescription(debouncedValue).then(() => setIsDirty(false))
     }, [debouncedValue])
 
-
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTextInput(e.target.value)
         setIsDirty(true)
@@ -39,14 +38,14 @@ export default function HeadacheDescription() {
         <>
             <Divider sx={{ pt: 1 }} />
             <TextField
-                sx={{ mt: 2 }}
-                label="Zusätzliche Infos"
-                multiline
-                minRows={3}
-                value={textInput}
-                fullWidth
-                color={isDirty ? 'secondary' : 'primary'}
-                onChange={onChange}
+              sx={{ mt: 2 }}
+              label="Zusätzliche Infos"
+              multiline
+              minRows={3}
+              value={textInput}
+              fullWidth
+              color={isDirty ? 'secondary' : 'primary'}
+              onChange={onChange}
             />
         </>
     )

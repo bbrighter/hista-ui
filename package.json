@@ -10,11 +10,13 @@
     "build": "tsc && vite build",
     "lint": "eslint . && tsc",
     "lint:fix": "eslint . --fix && tsc",
+    "lint:debug": "pnpm dlx eslint --debug eslint.config.mjs",
     "test": "vitest",
     "test:nowatch": "vitest run",
     "tsc": "tsc",
     "knip": "knip",
     "prepare": "husky",
+    "install:local-package": "pnpm install ../auth-module/bbrighter-auth-module-0.1.1.tgz --no-cache",
     "dependencies:ci": "npx depcruise src  --include-only \"^src\"",
     "dependencies:table": "npx depcruise src  --include-only \"^src\" --output-type html > graph.html",
     "dependencies:graph": "npx depcruise --include-only \"^src\" --output-type dot src | dot -T svg > graph.svg"
@@ -24,6 +26,7 @@
     "pnpm": ">=10.0.0"
   },
   "dependencies": {
+    "@bbrighter/auth-module": "~1.3.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.6",

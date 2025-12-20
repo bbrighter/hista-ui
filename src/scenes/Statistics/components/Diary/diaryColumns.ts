@@ -1,6 +1,6 @@
-import { GridColDef, GridRowsProp } from '@mui/x-data-grid';
+import { GridColDef, GridRowsProp } from '@mui/x-data-grid'
 
-import { RawDiary } from '../../../../store/statistics/diary';
+import { RawDiary } from '../../../../store/statistics/diary'
 
 export const diaryGridColumns: Array<GridColDef> = [
     { field: 'type', headerName: 'Typ', flex: 1 },

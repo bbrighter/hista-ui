@@ -3,7 +3,6 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import useHista from '../store'
 
 describe('headache store', () => {
-
     beforeEach(async () => {
         expect(useHista.getState().isHeadacheLoaded).toBeFalsy()
         await useHista.getState().getHeadaches()

@@ -20,7 +20,6 @@ export default function Headache() {
     const patchSeverity = useHista(state => state.patchHeadacheSeverity)
     const patchDate = useHista(state => state.patchHeadacheDate)
 
-
     useEffect(() => {
         getHeadache(Number(params.headacheId))
     }, [params.headacheId])
@@ -37,18 +36,21 @@ export default function Headache() {
 
     const iconMapping = (value: number) => {
         return (
-            <Typography sx={{
-                borderRadius: '50%',
-                width: '2rem', height: '2rem',
-                backgroundColor: getColor(value), color: 'black',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '1.2rem',
-                fontWeight: 'bold',
-            }}
-                data-testid='slider-icon'
-            >{value}</Typography>
+            <Typography
+              sx={{
+                    borderRadius: '50%',
+                    width: '2rem', height: '2rem',
+                    backgroundColor: getColor(value), color: 'black',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.2rem',
+                    fontWeight: 'bold',
+                }}
+              data-testid="slider-icon"
+            >
+                {value}
+            </Typography>
 
         )
     }
@@ -56,17 +58,18 @@ export default function Headache() {
     return (
         <Container sx={{ padding: '2rem' }}>
             <DateInput
-                title={'Datum'}
-                date={headache.date}
-                onChange={onDateChange} />
+              title="Datum"
+              date={headache.date}
+              onChange={onDateChange}
+            />
             <DebouncedSlider
-                initialValue={headache.severity}
-                onChange={onSeverityChange}
-                label={'Schwere'}
-                min={0}
-                max={10}
-                colorMapping={getColor}
-                iconMapping={iconMapping}
+              initialValue={headache.severity}
+              onChange={onSeverityChange}
+              label="Schwere"
+              min={0}
+              max={10}
+              colorMapping={getColor}
+              iconMapping={iconMapping}
             />
             <HeadachePositionsButtons />
             <HeadacheTypesButtons />

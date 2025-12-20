@@ -1,17 +1,19 @@
-import { fireEvent, screen, waitFor, within } from '@testing-library/dom';
-import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { describe, expect, it } from 'vitest';
+import { fireEvent, screen, waitFor, within } from '@testing-library/dom'
+import { render } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { describe, expect, it } from 'vitest'
 
-import ConditionEvent from './ConditionEvent';
+import ConditionEvent from './ConditionEvent'
 
 const renderConditionEvent = () => {
-    render(<MemoryRouter initialEntries={['/condition-events/1']}>
-        <Routes>
-            <Route path="/condition-events/:id" element={<ConditionEvent />} />
-        </Routes>
-    </MemoryRouter>)
+    render(
+        <MemoryRouter initialEntries={['/condition-events/1']}>
+            <Routes>
+                <Route path="/condition-events/:id" element={<ConditionEvent />} />
+            </Routes>
+        </MemoryRouter>,
+    )
 }
 
 const getSlider = (symptomName: string): HTMLElement => {
@@ -53,14 +55,13 @@ describe('condition event is rendered and can be edited', () => {
         expect(sliderHasColor('symptom1', 'Error')).toBeTruthy()
     })
 
-    it('Delete symptom', { skip: true }, async () => {
+    it('Delete symptom', async () => {
         renderConditionEvent()
 
         const deleteButton = await screen.findByTitle('Löschen')
         expect(deleteButton).toBeInTheDocument()
         await userEvent.click(deleteButton)
         expect(screen.queryByTitle('Löschen')).not.toBeInTheDocument()
-
     })
 
     it('Add symptom', async () => {

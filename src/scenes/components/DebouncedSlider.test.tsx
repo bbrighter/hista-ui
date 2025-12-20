@@ -1,19 +1,21 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 
-import DebouncedSlider from './DebouncedSlider';
+import DebouncedSlider from './DebouncedSlider'
 
 describe('debounced slider', () => {
     const onChange = vi.fn()
     const debounceTimeMs = 50
 
     it('renders and change is possible', async () => {
-        render(<DebouncedSlider
-            initialValue={0}
-            onChange={onChange}
-            label='label'
-            debounceTimeMs={debounceTimeMs}
-        />)
+        render(
+            <DebouncedSlider
+              initialValue={0}
+              onChange={onChange}
+              label="label"
+              debounceTimeMs={debounceTimeMs}
+            />,
+        )
 
         expect(screen.getByText('label')).toBeInTheDocument()
         const slider = screen.getByRole('slider')
@@ -30,7 +32,5 @@ describe('debounced slider', () => {
         )
 
         expect(slider, 'Also have the value after debounce time').toHaveValue('1')
-
     })
-
 })

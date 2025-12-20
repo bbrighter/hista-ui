@@ -13,14 +13,14 @@ interface State {
 interface Actions {
     resetSymptoms: () => void
     setSymptoms: (s: SymptomCategories | entity.SymptomCategoriesResponse) => void
-    addSymptomCategory: (cId: number, name: string) => void,
-    getSymptoms: () => Promise<void>,
-    deleteCategory: (cId: number) => Promise<void>,
-    changeSymptomCategory: (symptomId: number, fromCategoryId: number, toCategoryId: number) => Promise<void>,
-    changeSymptomName: (symptomId: number, newName: string) => Promise<void>,
-    changeSymptomCategoryName: (categoryId: number, newName: string) => Promise<void>,
-    isCategoryNameAvailable: (categoryName: string) => boolean,
-    isSymptomNameAvailable: (symptomName: string, categoryId: number) => boolean,
+    addSymptomCategory: (cId: number, name: string) => void
+    getSymptoms: () => Promise<void>
+    deleteCategory: (cId: number) => Promise<void>
+    changeSymptomCategory: (symptomId: number, fromCategoryId: number, toCategoryId: number) => Promise<void>
+    changeSymptomName: (symptomId: number, newName: string) => Promise<void>
+    changeSymptomCategoryName: (categoryId: number, newName: string) => Promise<void>
+    isCategoryNameAvailable: (categoryName: string) => boolean
+    isSymptomNameAvailable: (symptomName: string, categoryId: number) => boolean
 }
 
 export interface SymptomStore extends State, Actions { }
@@ -34,7 +34,7 @@ export const createSymptomSlice: StateCreator<
     SymptomStore,
     [],
     [],
-    SymptomStore> = ((set, get) => ({
+    SymptomStore> = (set, get) => ({
         ...initialState,
 
         resetSymptoms: () => set(initialState),
@@ -42,7 +42,8 @@ export const createSymptomSlice: StateCreator<
             let symptoms: SymptomCategories = []
             if (Array.isArray(s)) {
                 symptoms = s
-            } else {
+            }
+            else {
                 symptoms = respToSymptoms(s)
             }
             set(produce((draft: State) => {
@@ -55,7 +56,6 @@ export const createSymptomSlice: StateCreator<
                 draft.symptoms.unshift({ categoryId: cId, categoryName: name, symptoms: [] })
             }))
         },
-
 
         getSymptoms: async () => {
             if (!get().symptomsAreLoaded || get().symptoms.length == 0) {
@@ -125,5 +125,4 @@ export const createSymptomSlice: StateCreator<
             return category.symptoms.find(s => s.name == symptomName.trim()) == undefined && symptomName.trim() !== ''
         },
 
-    }))
-
+    })

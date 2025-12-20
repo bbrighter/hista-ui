@@ -1,11 +1,11 @@
-import { Workbook } from 'exceljs';
+import { Workbook } from 'exceljs'
 
-import { RawDiary } from '../../../../store/statistics/diary';
-import { diaryGridColumns, diaryRows } from './diaryColumns';
+import { RawDiary } from '../../../../store/statistics/diary'
+import { diaryGridColumns, diaryRows } from './diaryColumns'
 
 export function buildDiaryWorkbook(diary: RawDiary[]): Workbook {
-    const book = new Workbook();
-    const sheet = book.addWorksheet('Rohdaten');
+    const book = new Workbook()
+    const sheet = book.addWorksheet('Rohdaten')
 
     sheet.columns = diaryGridColumns.map(c => ({
         key: c.field,
@@ -15,8 +15,7 @@ export function buildDiaryWorkbook(diary: RawDiary[]): Workbook {
     const data = diaryRows(diary)
     sheet.addRows([...data])
 
-
-    sheet.columns.forEach(col => {
+    sheet.columns.forEach((col) => {
         let maxLength = 0
         col.eachCell({ includeEmpty: true }, (cell) => {
             const v = cell.value ? cell.value.toString() : ''
@@ -26,6 +25,5 @@ export function buildDiaryWorkbook(diary: RawDiary[]): Workbook {
     })
     sheet.getColumn('date').numFmt = 'dd.mm.YYYY hh:mm'
 
-    return book;
+    return book
 }
-

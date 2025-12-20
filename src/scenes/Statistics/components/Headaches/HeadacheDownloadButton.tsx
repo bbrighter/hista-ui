@@ -1,10 +1,9 @@
-import Download from '@mui/icons-material/Download';
-import Button from '@mui/material/Button';
-import { useState } from 'react';
+import Download from '@mui/icons-material/Download'
+import Button from '@mui/material/Button'
+import { useState } from 'react'
 
-import useHista from '../../../../store/store';
-import { buildHeadacheWorkbook } from './headacheExport';
-
+import useHista from '../../../../store/store'
+import { buildHeadacheWorkbook } from './headacheExport'
 
 export default function DownloadButton() {
     const [loading, setLoading] = useState(false)
@@ -15,7 +14,6 @@ export default function DownloadButton() {
         setLoading(true)
         const headaches = await getHeadaches()
         const book = buildHeadacheWorkbook(headaches)
-
 
         const buffer = await book.xlsx.writeBuffer()
         const blob = new Blob([buffer], {
@@ -30,15 +28,13 @@ export default function DownloadButton() {
         setLoading(false)
     }
 
-
-
     return (
         <Button
-            sx={{ marginTop: '1rem', marginBottom: '1rem' }}
-            startIcon={<Download />}
-            onClick={onClick}
-            loading={loading}
-            variant='outlined'
+          sx={{ marginTop: '1rem', marginBottom: '1rem' }}
+          startIcon={<Download />}
+          onClick={onClick}
+          loading={loading}
+          variant="outlined"
         >
             Kopfschmerzen herunterladen
         </Button>

@@ -3,7 +3,6 @@ import { create } from 'zustand'
 import { injectPiidGetter } from '../api/api'
 import { AuthStore, createAuthSlice } from './auth/authStore'
 import { wrapActionsWithErrorHandler } from './error/errorHandler'
-import { createErrorSlice, ErrorStore } from './error/errorStore'
 import { createHeadacheSlice, HeadacheStore } from './headaches/headacheStore'
 import { createIngredientSlice, IngredientStore } from './meal/ingredientStore'
 import { createMealSlice, MealStore } from './meal/mealStore'
@@ -15,17 +14,16 @@ import { ConditionStore, createConditionSlice } from './symptom/conditionStore'
 import { createSymptomSlice, SymptomStore } from './symptom/symptomStore'
 
 const useHista = create<
-    AuthStore &
-    ErrorStore &
-    MealStore &
-    IngredientStore &
-    ConditionStore &
-    SymptomStore &
-    StatisticsStore &
-    NotesStore &
-    PollenStore &
-    StatusStore &
-    HeadacheStore
+  AuthStore
+  & MealStore
+  & IngredientStore
+  & ConditionStore
+  & SymptomStore
+  & StatisticsStore
+  & NotesStore
+  & PollenStore
+  & StatusStore
+  & HeadacheStore
 >((...a) => {
     const store = {
         ...createMealSlice(...a),
@@ -33,7 +31,6 @@ const useHista = create<
         ...createAuthSlice(...a),
         ...createConditionSlice(...a),
         ...createSymptomSlice(...a),
-        ...createErrorSlice(...a),
         ...createStatisticsSlice(...a),
         ...createNotesSlice(...a),
         ...createPollensSlice(...a),
@@ -43,6 +40,6 @@ const useHista = create<
     return wrapActionsWithErrorHandler(store, createAuthSlice(...a))
 })
 
-injectPiidGetter(() => useHista.getState().selectedPiid)
+injectPiidGetter(() => useHista.getState().piid)
 
 export default useHista

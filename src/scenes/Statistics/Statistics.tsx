@@ -1,11 +1,11 @@
-import Container from '@mui/material/Container';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-import { JSX, useState } from 'react';
+import Container from '@mui/material/Container'
+import Tab from '@mui/material/Tab'
+import Tabs from '@mui/material/Tabs'
+import { JSX, useState } from 'react'
 
-import Charts from './components/Charts';
-import Diary from './components/Diary';
-import HeadacheDiary from './components/HeadachesDiary';
+import Charts from './components/Charts'
+import Diary from './components/Diary'
+import HeadacheDiary from './components/HeadachesDiary'
 
 type TabValue = 0 | 1 | 2 | 3
 interface TabType {
@@ -22,8 +22,8 @@ export default function Statistics() {
     }
 
     const tabs: Array<TabType> = [
-        { label: 'Symptom', value: 0, child: <Charts type='symptom' /> },
-        { label: 'Essen', value: 1, child: <Charts type='ingredient' /> },
+        { label: 'Symptom', value: 0, child: <Charts type="symptom" /> },
+        { label: 'Essen', value: 1, child: <Charts type="ingredient" /> },
         { label: 'Ernährungstagebuch', value: 2, child: <Diary /> },
         { label: 'Kopfschmerzen', value: 3, child: <HeadacheDiary /> },
     ]
@@ -37,9 +37,9 @@ export default function Statistics() {
             </Tabs>
             {tabs.map(tab => (
                 <VisibleTab
-                    selectedTab={selectedTab}
-                    key={tab.value}
-                    value={tab.value}
+                  selectedTab={selectedTab}
+                  key={tab.value}
+                  value={tab.value}
                 >
                     {tab.child}
                 </VisibleTab>

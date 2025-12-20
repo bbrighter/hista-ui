@@ -1,9 +1,9 @@
-import { render, screen, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
-import { describe, expect, it, vi } from 'vitest';
+import { render, screen, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router-dom'
+import { describe, expect, it, vi } from 'vitest'
 
-import Headaches from './Headaches';
+import Headaches from './Headaches'
 
 const findRowByDate = async (date: string): Promise<HTMLElement> => {
     return (await screen.findByText(new RegExp(date))).closest('li')
@@ -39,7 +39,6 @@ describe('Headache management', () => {
         await userEvent.click(deleteButton)
         expect(screen.queryByText(new RegExp('01.01.2022'))).not.toBeInTheDocument()
     })
-
 
     it('Headache can be created', async () => {
         render(<MemoryRouter><Headaches /></MemoryRouter>)

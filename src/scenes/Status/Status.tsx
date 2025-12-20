@@ -8,7 +8,6 @@ import useHista from '../../store/store'
 import AddStatus from './components/AddStatus'
 import StatusCard from './components/StatusCard'
 
-
 export default function Status() {
     const getStatuses = useHista(state => state.getStatuses)
     const statuses = useHista(state => state.statuses)
@@ -23,22 +22,25 @@ export default function Status() {
         <Container sx={{ padding: '2rem' }}>
             <AddStatus disabled={isLoading} />
             <Grid container>
-                {isLoading ?
-                    <>
-                        {[{ id: 1, date: dayjs() }, { id: 2, date: dayjs() }, { id: 3, date: dayjs() }].map(s =>
-                        (
-                            <Skeleton key={s.id}><StatusCard status={s} /></Skeleton>
-                        ))}
-                    </>
+                {isLoading
+                    ? (
+                        <>
+                            {[{ id: 1, date: dayjs() }, { id: 2, date: dayjs() }, { id: 3, date: dayjs() }].map(s =>
+                                (
+                                    <Skeleton key={s.id}><StatusCard status={s} /></Skeleton>
+                                ))}
+                        </>
+                    )
 
-                    : <>{statuses.map(s => (
-                        <StatusCard key={s.id} status={s} />
+                    : (
+                        <>
+                            {statuses.map(s => (
+                                <StatusCard key={s.id} status={s} />
 
-                    ))
-                    }</>
-                }
+                            ))}
+                        </>
+                    )}
             </Grid>
-        </Container >
+        </Container>
     )
-
 }

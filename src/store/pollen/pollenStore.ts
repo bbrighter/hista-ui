@@ -1,8 +1,8 @@
-import { produce } from 'immer';
-import { StateCreator } from 'zustand';
+import { produce } from 'immer'
+import { StateCreator } from 'zustand'
 
-import { client } from '../../api/api';
-import { Pollens, respToPollens } from './pollen';
+import { client } from '../../api/api'
+import { Pollens, respToPollens } from './pollen'
 
 interface State {
     pollensAreLoaded: boolean
@@ -10,7 +10,7 @@ interface State {
 }
 
 interface Actions {
-    resetPollens: () => void,
+    resetPollens: () => void
 
     getPollens: () => Promise<void>
 }
@@ -26,7 +26,7 @@ export const createPollensSlice: StateCreator<
     PollenStore,
     [],
     [],
-    PollenStore> = ((set, get) => ({
+    PollenStore> = (set, get) => ({
         ...initialState,
 
         resetPollens: () => set(initialState),
@@ -39,4 +39,4 @@ export const createPollensSlice: StateCreator<
                 draft.pollensAreLoaded = true
             }))
         },
-    }))
+    })

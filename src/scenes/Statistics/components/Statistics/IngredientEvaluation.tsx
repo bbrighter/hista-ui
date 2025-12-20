@@ -5,7 +5,6 @@ import { SymptomStatistics } from '../../../../store/statistics/statistics'
 import useHista from '../../../../store/store'
 import KPIGrid, { KPIGridValues } from './KPIPanel'
 
-
 export default function IngredientEvalulation(props: {
     severityFilter: Array<number>
 }) {
@@ -15,7 +14,6 @@ export default function IngredientEvalulation(props: {
     useEffect(() => {
         getSymptoms()
     }, [getSymptoms])
-
 
     const filteredStatistics = statistics.filter(stat => stat.severity >= props.severityFilter[0] && stat.severity <= props.severityFilter[1])
 
@@ -42,7 +40,6 @@ export default function IngredientEvalulation(props: {
             result[symptomId].within24hours += within24hours
             result[symptomId].within72hours += within72hours
             result[symptomId].count = count
-
         })
         return Object.values(result)
     }
@@ -61,10 +58,9 @@ export default function IngredientEvalulation(props: {
     return (
         <Box sx={{ mt: 2, width: '100%' }}>
             <KPIGrid
-                headers={['< 1h', '< 24h', '< 72h']}
-                values={values}
+              headers={['< 1h', '< 24h', '< 72h']}
+              values={values}
             />
         </Box>
     )
 }
-

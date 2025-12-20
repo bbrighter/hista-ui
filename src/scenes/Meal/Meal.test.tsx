@@ -1,11 +1,10 @@
-import { render, screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { MemoryRouter } from 'react-router-dom';
-import { describe, expect, it } from 'vitest';
+import { render, screen, waitFor, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router-dom'
+import { describe, expect, it } from 'vitest'
 
-import Meal from './Meal';
-
-
+import useHista from '../../store/store'
+import Meal from './Meal'
 
 describe('test meals list', () => {
     const findSliderComponent = async (lbl: string, expectedColor: 'Primary' | 'Warning' | 'Error') => {
@@ -16,7 +15,7 @@ describe('test meals list', () => {
         const thumb = box!.querySelector('.MuiSlider-thumb')
         const svg = box!.querySelector('.MuiSvgIcon-root')
 
-        const colorRegex = new RegExp(`${expectedColor}`);
+        const colorRegex = new RegExp(`${expectedColor}`)
         expect(thumb.getAttribute('class')).toMatch(colorRegex)
         expect(svg.getAttribute('class')).toMatch(colorRegex)
     }
@@ -40,7 +39,6 @@ describe('test meals list', () => {
 
         expect(isButtonPressed({ title: 'Alleine' })).toBeTruthy()
         expect(isButtonPressed({ title: 'Zusammen' })).toBeFalsy()
-
 
         await findSliderComponent('Stress', 'Primary')
         await findSliderComponent('Frische', 'Error')
@@ -78,7 +76,6 @@ describe('test meals list', () => {
         expect(isButtonPressed({ text: 'Roh', parent: ingredient1Row })).toBeTruthy()
         expect(isButtonPressed({ text: 'Gar', parent: ingredient1Row })).toBeFalsy()
 
-
         // Set cooked
         const cookedButton = within(ingredient1Row)!.getByText('Gar')
         await userEvent.click(cookedButton)
@@ -90,7 +87,6 @@ describe('test meals list', () => {
         await userEvent.click(rawButton)
         expect(isButtonPressed({ text: 'Roh', parent: ingredient1Row })).toBeTruthy()
         expect(isButtonPressed({ text: 'Gar', parent: ingredient1Row })).toBeFalsy()
-
     })
 
     it('toggling alone/together', async () => {
@@ -128,12 +124,34 @@ describe('test meals list', () => {
 
     })
 
-    it('add food with new ingredient', { skip: true }, async () => {
+    it('add food with new ingredient', async () => {
+        render(<MemoryRouter><Meal /></MemoryRouter>)
 
+        const ingredientInput = await screen.findByLabelText('Zutaten')
+        expect(ingredientInput).toBeInTheDocument()
+
+        await userEvent.type(ingredientInput, 'new ingredient {enter}')
+        await screen.findByText('new ingredient')
+
+        await waitFor(() => {
+            const ingredients = useHista.getState().ingredients
+            expect(ingredients).toHaveLength(3)
+        })
     })
 
-    it('add food with existing ingredient', { skip: true }, async () => {
+    it('add food with existing ingredient', async () => {
+        render(<MemoryRouter><Meal /></MemoryRouter>)
 
+        const ingredientInput = await screen.findByLabelText('Zutaten')
+        expect(ingredientInput).toBeInTheDocument()
+
+        await userEvent.type(ingredientInput, 'ingredient2')
+        await userEvent.keyboard('{ArrowDown}{Enter}')
+
+        await waitFor(() => {
+            expect(screen.queryAllByText('ingredient2')).toHaveLength(2)
+            const ingredients = useHista.getState().ingredients
+            expect(ingredients).toHaveLength(2)
+        })
     })
-
 })

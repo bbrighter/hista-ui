@@ -17,5 +17,4 @@ export const respToFood = (resp: entity.FoodResponse): Food => {
         ingredientId: resp.ingredient.id,
         condition: condition,
     }
-
 }

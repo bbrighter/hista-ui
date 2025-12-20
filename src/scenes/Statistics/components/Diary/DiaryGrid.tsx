@@ -1,8 +1,7 @@
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid'
 
-import useHista from '../../../../store/store';
-import { diaryGridColumns, diaryRows } from './diaryColumns';
-
+import useHista from '../../../../store/store'
+import { diaryGridColumns, diaryRows } from './diaryColumns'
 
 export default function DiaryGrid() {
     const diary = useHista(state => state.diaryEntries)
@@ -12,9 +11,9 @@ export default function DiaryGrid() {
     return (
         <div style={{ display: 'flex', flexDirection: 'column', maxHeight: 1000 }}>
             <DataGrid
-                columns={diaryGridColumns}
-                rows={rows}
-                disableColumnMenu
+              columns={diaryGridColumns}
+              rows={rows}
+              disableColumnMenu
             />
         </div>
     )

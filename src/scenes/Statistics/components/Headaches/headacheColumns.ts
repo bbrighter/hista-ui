@@ -1,6 +1,6 @@
-import { GridColDef, GridColumnGroupingModel, GridRowsProp } from '@mui/x-data-grid';
+import { GridColDef, GridColumnGroupingModel, GridRowsProp } from '@mui/x-data-grid'
 
-import { Headache, validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from '../../../../store/headaches/headaches';
+import { Headache, validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from '../../../../store/headaches/headaches'
 
 export const headacheGridColumns: Array<GridColDef> = [
     { field: 'date', headerName: 'Zeit', type: 'dateTime' },
@@ -18,8 +18,8 @@ export const headacheColumnGroupingModel: GridColumnGroupingModel = [
 ]
 
 interface GroupedColumn {
-    sharedHeader: string;
-    columns: string[];
+    sharedHeader: string
+    columns: string[]
 }
 
 export const headacheExcelColumnGrouping: Array<GroupedColumn> = headacheGridColumns.reduce<Array<GroupedColumn>>((acc, v) => {
@@ -28,10 +28,12 @@ export const headacheExcelColumnGrouping: Array<GroupedColumn> = headacheGridCol
         const relevantAcc = acc.find(a => a.sharedHeader == existingGroup.headerName)
         if (relevantAcc) {
             relevantAcc.columns.push(v.headerName)
-        } else {
+        }
+        else {
             acc.push({ sharedHeader: existingGroup.headerName, columns: [v.headerName] })
         }
-    } else {
+    }
+    else {
         acc.push({ sharedHeader: '', columns: [v.headerName] })
     }
     return acc
