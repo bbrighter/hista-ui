@@ -1,6 +1,9 @@
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
+vi.mock('@mui/material/useMediaQuery', async () => ({ default: mocks.useMediaQuery }))
+
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { render, screen, waitFor, within } from '@testing-library/react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import Pollens from './Pollens'
 
@@ -33,21 +36,13 @@ const mocks = vi.hoisted(() => ({
     useMediaQuery: vi.fn(),
 }))
 
-vi.mock('@mui/material', async () => {
-    const actual = await vi.importActual('@mui/material')
-    return {
-        ...actual,
-        useMediaQuery: mocks.useMediaQuery,
-    }
-})
-
 describe('Everything is rendered', () => {
     const theme = createTheme()
     beforeEach(() => {
         mocks.useMediaQuery.mockReset()
     })
 
-    it('Grid is rendered on large screen', { skip: true }, async () => {
+    it('Grid is rendered on large screen', async () => {
         // For whatever strange reason, the media query is not set correctly
         mocks.useMediaQuery.mockReturnValue(true)
         render(<ThemeProvider theme={theme}><Pollens /></ThemeProvider>)

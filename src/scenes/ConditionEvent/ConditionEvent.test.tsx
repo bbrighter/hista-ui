@@ -55,7 +55,7 @@ describe('condition event is rendered and can be edited', () => {
         expect(sliderHasColor('symptom1', 'Error')).toBeTruthy()
     })
 
-    it('Delete symptom', { skip: true }, async () => {
+    it('Delete symptom', async () => {
         renderConditionEvent()
 
         const deleteButton = await screen.findByTitle('Löschen')

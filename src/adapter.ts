@@ -5,22 +5,20 @@ import { Location, NavigateFunction } from 'react-router-dom'
 import { authApi } from './api/api'
 import useHista from './store/store'
 
-const tuple = <T extends unknown[]>(...args: T): T => args
-
 export const useAuthStateAdapter = (navigate: NavigateFunction, location: Location): AuthStateAdapter => {
     const instances = useHista(state => state.instances)
     const setInstances = useHista(state => state.setInstances)
     const token = useHista(state => state.token)
     const setToken = useHista(state => state.setToken)
-    const name = useHista(state => state.userName)
-    const setName = useHista(state => state.setUserName)
+    const userName = useHista(state => state.userName)
+    const setUserName = useHista(state => state.setUserName)
 
     const useAuthApi = () => authApi
-    const useLocation = () => tuple(location.pathname + location.search, navigate)
-    const useProductInstances = () => tuple(instances, setInstances)
+    const useLocation = () => ({ location: location.pathname + location.search, navigate })
+    const useProductInstances = () => ({ instances, setInstances })
     const useProductKey = () => ProductKeys.HistaComplete
-    const useToken = () => tuple(token, setToken)
-    const useUserName = () => tuple(name, setName)
+    const useToken = () => ({ token, setToken })
+    const useUserName = () => ({ userName, setUserName })
 
     return {
         useAuthApi,
@@ -35,9 +33,9 @@ export const useAuthStateAdapter = (navigate: NavigateFunction, location: Locati
 export const useUserManagementAdapter = (): UserStateAdapter => {
     const users = useHista(state => state.users)
     const setUsers = useHista(state => state.setUsers)
-    const piid = useHista(state => state.selectedPiid)
+    const piid = useHista(state => state.piid)
 
-    const useUsers = () => tuple(users, setUsers)
+    const useUsers = () => ({ users, setUsers })
     const useApi = () => authApi
     const usePiid = () => piid
 

@@ -5,7 +5,7 @@ import useHista from '../store/store'
 
 export const useAppNavigate = () => {
     const navigate = useNavigate()
-    const piid = useHista(state => state.selectedPiid)
+    const piid = useHista(state => state.piid)
 
     const navigateWithPiid = (template: string, params: Record<string, number> = {}) => {
         if (!piid) {

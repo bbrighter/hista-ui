@@ -127,30 +127,6 @@ const routes: Array<RouteObject> = [
             ...childRoutes,
         ],
     },
-    // {
-    //     path: appRoutes.login,
-    //     element: <Login />,
-    // },
-    // {
-    //     path: '*',
-    //     element: <Login />,
-    // },
-    // {
-    //     path: '',
-    //     element: <AppProvider />,
-    //     children: [
-    //         ...childRoutes,
-    //     ],
-    //     loader: () => null, // Needed, otherwise React router thinks it's just a style route (or something like this)
-    // },
-    // {
-    //     path: '*',
-    //     element: <AppProvider />,
-    //     children: [{
-    //         path: '*',
-    //         element: <Start />,
-    //     }],
-    // },
 ]
 
 export default createBrowserRouter(routes)

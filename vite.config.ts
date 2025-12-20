@@ -1,3 +1,4 @@
+/// <reference types="vitest/config"/>
 import react from '@vitejs/plugin-react'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
@@ -16,6 +17,22 @@ export default defineConfig({
     build: {
         rollupOptions: {
             treeshake: true,
+        },
+    },
+    test: {
+        globals: true,
+        environment: 'jsdom',
+        setupFiles: [
+            'vitest-localstorage-mock',
+            'src/__tests__/setupTest.ts',
+        ],
+        server: {
+            deps: {
+                inline: ['@mui/x-data-grid'],
+            },
+        },
+        coverage: {
+            provider: 'v8',
         },
     },
 })
