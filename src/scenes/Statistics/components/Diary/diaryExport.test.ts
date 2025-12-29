@@ -1,4 +1,3 @@
-import { Workbook } from 'exceljs'
 import { expect, test } from 'vitest'
 
 import { RawDiary } from '../../../../store/statistics/diary'
@@ -17,18 +16,31 @@ test('diary export', async () => {
 
     const book = buildDiaryWorkbook(diary)
 
-    const buffer = await book.xlsx.writeBuffer()
-    const newBook = new Workbook()
-    await newBook.xlsx.load(buffer)
+    expect(book.Sheets['Tagebuch']).toBeDefined()
+    const sheet = book.Sheets['Tagebuch']
 
-    const sheet = newBook.getWorksheet('Rohdaten')
+    const expectedColumns = [
+        { cell: 'A1', value: 'Typ' },
+        { cell: 'B1', value: 'Datum' },
+        { cell: 'C1', value: 'Schwere' },
+        { cell: 'D1', value: 'Inhalt' },
+        { cell: 'E1', value: 'Kategorie' },
+    ]
+    expectedColumns.forEach(({ cell, value }) => {
+        expect(sheet[cell]['v']).toBe(value)
+    })
 
-    const expectedColumns = ['Typ', 'Datum', 'Schwere', 'Inhalt', 'Kategorie']
-    expectedColumns.forEach((col, i) => {
-        expect(sheet.getRow(1).getCell(i + 1).value).toBe(col)
+    const expectedContent = [
+        { cell: 'A2', value: 'Essen' },
+        { cell: 'B2', value: new Date(2024, 1, 1, 12, 0) },
+        { cell: 'C2', value: '3' },
+        { cell: 'D2', value: 'Nudeln' },
+        { cell: 'E2', value: 'Kategorie' },
+    ]
+    expectedContent.forEach(({ cell, value }) => {
+        expect(sheet[cell]['v']).toStrictEqual(value)
     })
-    const expectedContent = ['Essen', new Date(2024, 1, 1, 12, 0), '3', 'Nudeln', 'Kategorie']
-    expectedContent.forEach((con, i) => {
-        expect(sheet.getRow(2).getCell(i + 1).value).toStrictEqual(con)
-    })
+
+    const dateFormat = { cell: 'B2', format: 'dd.mm.yyyy hh:mm' }
+    expect(sheet[dateFormat.cell]['z']).toBe(dateFormat.format)
 })

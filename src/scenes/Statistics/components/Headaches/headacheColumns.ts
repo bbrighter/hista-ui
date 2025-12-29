@@ -17,45 +17,37 @@ export const headacheColumnGroupingModel: GridColumnGroupingModel = [
     { groupId: 'symptom', headerName: 'Symptome', children: validHeadacheSymptoms.map(v => ({ field: v.value })) },
 ]
 
-interface GroupedColumn {
-    sharedHeader: string
-    columns: string[]
-}
-
-export const headacheExcelColumnGrouping: Array<GroupedColumn> = headacheGridColumns.reduce<Array<GroupedColumn>>((acc, v) => {
-    const existingGroup = headacheColumnGroupingModel.find(g => g.children.some(c => 'field' in c && c.field == v.field))
-    if (existingGroup) {
-        const relevantAcc = acc.find(a => a.sharedHeader == existingGroup.headerName)
-        if (relevantAcc) {
-            relevantAcc.columns.push(v.headerName)
-        }
-        else {
-            acc.push({ sharedHeader: existingGroup.headerName, columns: [v.headerName] })
-        }
-    }
-    else {
-        acc.push({ sharedHeader: '', columns: [v.headerName] })
-    }
-    return acc
-}, [])
-
-export const headacheRows = (headaches: Array<Headache>): GridRowsProp => {
+export const headacheGridRows = (headaches: Array<Headache>): GridRowsProp => {
     return headaches.map((h, i) => ({
         id: i,
         date: h.date,
         severity: h.severity,
+        ...validHeadachePositions.reduce((acc, { value }) => {
+            acc[value] = h.positions.some(p => p.value == value) ? '✓' : null
+            return acc
+        }, {}),
+                ...validHeadacheTypes.reduce((acc, { value }) => {
+            acc[value] = h.types.some(p => p.value == value) ? '✓' : null
+            return acc
+        }, {}),
+                ...validHeadacheSymptoms.reduce((acc, { value }) => {
+            acc[value] = h.symptoms.some(p => p.value == value) ? '✓' : null
+            return acc
+        }, {}),
         description: h.description,
-        ...h.positions.reduce((acc, { value }) => {
-            acc[value] = '✓'
-            return acc
-        }, {}),
-        ...h.types.reduce((acc, { value }) => {
-            acc[value] = '✓'
-            return acc
-        }, {}),
-        ...h.symptoms.reduce((acc, { value }) => {
-            acc[value] = '✓'
-            return acc
-        }, {}),
     }))
+}
+
+export const excelHeaderColumns: string[][] = [
+  headacheGridColumns.map(col => (
+        headacheColumnGroupingModel.find(m =>
+            m.children.some(child => 'field' in child && child.field == col.field))?.headerName || ''),
+        ),
+        headacheGridColumns.map(c => c.headerName),
+]
+
+export const headacheExcelRows = (headaches: Array<Headache>) => {
+    const rows = headacheGridRows(headaches)
+    const rowsWithoutId = rows.map(({ id, ...rest }) => rest)
+    return rowsWithoutId.map(r => Object.values(r))
 }

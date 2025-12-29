@@ -6,7 +6,7 @@ import { errorBus } from './errorBus'
 export function ErrorBridge() {
     const { showBoundary } = useErrorBoundary()
     useEffect(() => {
-        const listener = (err: unknown) => showBoundary(err)
+        const listener = (err: Error) => showBoundary(err)
         errorBus.on('error', listener)
 
         return () => {
