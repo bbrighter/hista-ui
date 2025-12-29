@@ -16,6 +16,7 @@ export default function DownloadButton() {
         const headaches = await getHeadaches()
         const workbook = buildHeadacheWorkbook(headaches)
         writeFile(workbook, 'Kopfschmerz.xlsx')
+        setLoading(false)
     }
 
     return (
