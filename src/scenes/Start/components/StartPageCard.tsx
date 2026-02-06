@@ -13,7 +13,9 @@ import Typography from '@mui/material/Typography'
 
 import { useAppNavigate } from '../../../hooks/useNavigate'
 
-export default function StartPageCard({ type }: { type: keyof typeof CARD_CONFIG }) {
+export type CardType = keyof typeof CARD_CONFIG
+
+export default function StartPageCard({ type }: { type: CardType }) {
     const navigate = useAppNavigate()
     const { title, content, icon, onClick } = CARD_CONFIG[type](navigate)
     return (

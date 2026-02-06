@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-export const DATE_FORMATS = {
+const DATE_FORMATS = {
     default: 'DD.MM.YYYY',
     withTime: 'DD.MM.YYYY HH:mm',
 }

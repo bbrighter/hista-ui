@@ -21,7 +21,7 @@ describe('Status.tsx', async () => {
             expect(within(card).getByTitle('Löschen')).toBeInTheDocument()
             const morningPart = within(card).getByText('Morgens').closest('.MuiGrid-root') as HTMLElement
             expect(within(morningPart).getByRole('img', { name: 'Fitness' })).toBeInTheDocument()
-            expect(within(morningPart).getByRole('img', { name: 'Fitness' })).toHaveStyle({ color: 'rgb(255,255,0' })
+            expect(within(morningPart).getByRole('img', { name: 'Fitness' })).toHaveStyle({ color: 'rgb(255,255,0)' })
             expect(within(morningPart).getAllByRole('slider')).toHaveLength(2)
             expect(within(morningPart).getByRole('img', { name: 'Schlaf' })).toHaveStyle({ color: 'rgb(255,128,0)' })
             const eveningPart = within(card).getByText('Abends').closest('.MuiGrid-root') as HTMLElement

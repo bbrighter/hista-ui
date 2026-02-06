@@ -1,8 +1,17 @@
 import Grid from '@mui/material/Grid'
 
-import StartPageCard from './components/StartPageCard'
+import StartPageCard, { CardType } from './components/StartPageCard'
 
 export default function Start() {
+    const types: Array<CardType> = [
+        'status',
+        'meals',
+        'headaches',
+        'conditionEvents',
+        'notes',
+        'pollens',
+        'statistics',
+    ]
     return (
         <Grid
           justifyContent="center"
@@ -10,13 +19,7 @@ export default function Start() {
           spacing={2}
           sx={{ padding: '2rem' }}
         >
-            <StartPageCard type="meals" />
-            <StartPageCard type="conditionEvents" />
-            <StartPageCard type="statistics" />
-            <StartPageCard type="notes" />
-            <StartPageCard type="pollens" />
-            <StartPageCard type="status" />
-            <StartPageCard type="headaches" />
+            {types.map(t => (<StartPageCard type={t} />))}
         </Grid>
     )
 }
