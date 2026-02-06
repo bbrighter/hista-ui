@@ -63,10 +63,10 @@ export default function FoodList() {
                             onChange(f.id, val)
                         }}
                     >
-                        <ToggleButton value="raw" sx={{ width: '3rem' }}>
+                        <ToggleButton value="raw" sx={{ width: '3rem' }} disabled={f.condition == 'raw'}>
                             {isPatchLoading?.id == f.id && isPatchLoading.cond == 'raw' ? <CircularProgress size={20} /> : mealConstants.RAW}
                         </ToggleButton>
-                        <ToggleButton value="cooked" sx={{ width: '3rem' }}>
+                        <ToggleButton value="cooked" sx={{ width: '3rem' }} disabled={f.condition == 'cooked'}>
                             {isPatchLoading?.id == f.id && isPatchLoading.cond == 'cooked' ? <CircularProgress size={20} /> : mealConstants.COOKED}
                         </ToggleButton>
                     </ToggleButtonGroup>

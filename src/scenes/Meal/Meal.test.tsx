@@ -81,12 +81,14 @@ describe('test meals list', () => {
         await userEvent.click(cookedButton)
         expect(isButtonPressed({ text: 'Roh', parent: ingredient1Row })).toBeFalsy()
         expect(isButtonPressed({ text: 'Gar', parent: ingredient1Row })).toBeTruthy()
+        expect(cookedButton).toBeDisabled()
 
         // Set raw
         const rawButton = within(ingredient1Row)!.getByText('Roh')
         await userEvent.click(rawButton)
         expect(isButtonPressed({ text: 'Roh', parent: ingredient1Row })).toBeTruthy()
         expect(isButtonPressed({ text: 'Gar', parent: ingredient1Row })).toBeFalsy()
+        expect(rawButton).toBeDisabled()
     })
 
     it('toggling alone/together', async () => {
