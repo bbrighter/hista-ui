@@ -12,88 +12,88 @@ import React, { useEffect, useState } from 'react'
 import { formatDate } from '../../utils/formatDate'
 
 interface ListItemInterface {
-    id: number
-    date: Date
-    severity?: number
+  id: number
+  date: Date
+  severity?: number
 }
 
 export default function OverviewList(props: {
-    items: Array<ListItemInterface>
-    showSeverity?: boolean
-    onClick: (id: number) => void
-    onDelete: (id: number) => Promise<void>
-    getData: () => Promise<void | Array<unknown>>
-    severityColorMapping?: (severity: number) => string
+  items: Array<ListItemInterface>
+  showSeverity?: boolean
+  onClick: (id: number) => void
+  onDelete: (id: number) => Promise<void>
+  getData: () => Promise<void | Array<unknown>>
+  severityColorMapping?: (severity: number) => string
 }) {
-    const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-    useEffect(() => {
-        setLoading(true)
-        props.getData().finally(
-            () => setLoading(false),
-        )
-    }, [])
-
-    return (
-        <>
-            {loading && <CircularProgress sx={{ position: 'absolute', left: '50%', top: '50%' }} />}
-            <List>
-                {props.items.map(i => (
-                    <OverviewListItem
-                      key={i.id}
-                      date={i.date}
-                      onClick={() => props.onClick(i.id)}
-                      onDelete={() => props.onDelete(i.id)}
-                      showSeverity={props.showSeverity}
-                      severity={i.severity}
-                      severityColorMapping={props.severityColorMapping}
-                    />
-                ))}
-            </List>
-        </>
+  useEffect(() => {
+    setLoading(true)
+    props.getData().finally(
+      () => setLoading(false),
     )
+  }, [])
+
+  return (
+    <>
+      {loading && <CircularProgress sx={{ position: 'absolute', left: '50%', top: '50%' }} />}
+      <List>
+        {props.items.map(i => (
+          <OverviewListItem
+            key={i.id}
+            date={i.date}
+            onClick={() => props.onClick(i.id)}
+            onDelete={() => props.onDelete(i.id)}
+            showSeverity={props.showSeverity}
+            severity={i.severity}
+            severityColorMapping={props.severityColorMapping}
+          />
+        ))}
+      </List>
+    </>
+  )
 }
 
 function OverviewListItem(props: {
-    date: Date
-    secondary?: string
-    severity?: number
-    showSeverity: boolean
-    onClick: () => void
-    onDelete: (e: React.MouseEvent) => Promise<void>
-    severityColorMapping?: (severity: number) => string
+  date: Date
+  secondary?: string
+  severity?: number
+  showSeverity: boolean
+  onClick: () => void
+  onDelete: (e: React.MouseEvent) => Promise<void>
+  severityColorMapping?: (severity: number) => string
 }) {
-    const onDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        e.stopPropagation()
-        await props.onDelete(e)
-    }
+  const onDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    await props.onDelete(e)
+  }
 
-    return (
-        <StyledListItem
-          onClick={props.onClick}
-          secondaryAction={(
-                <IconButton onClick={onDelete} title="Löschen">
-                    <DeleteIcon />
-                </IconButton>
-            )}
-        >
-            <ListItemText
-              primary={formatDate(props.date, 'withTime')}
-              secondary={props.secondary}
+  return (
+    <StyledListItem
+      onClick={props.onClick}
+      secondaryAction={(
+        <IconButton onClick={onDelete} title="Löschen">
+          <DeleteIcon />
+        </IconButton>
+      )}
+    >
+      <ListItemText
+        primary={formatDate(props.date, 'withTime')}
+        secondary={props.secondary}
+      />
+      {props.showSeverity && props.severity !== undefined
+        && (
+          <ListItemIcon title="Schwere">
+            <CircleIcon
+              sx={{ color: props.severityColorMapping(props.severity) }}
+              data-testid="circle-icon"
             />
-            {props.showSeverity && props.severity !== undefined
-              && (
-                    <ListItemIcon title="Schwere">
-                        <CircleIcon
-                          sx={{ color: props.severityColorMapping(props.severity) }}
-                          data-testid="circle-icon"
-                        />
-                        {' '}
+            {' '}
 
-                    </ListItemIcon>
-                )}
-        </StyledListItem>
-    )
+          </ListItemIcon>
+        )}
+    </StyledListItem>
+  )
 }
 
 const StyledListItem = styled(ListItem)`

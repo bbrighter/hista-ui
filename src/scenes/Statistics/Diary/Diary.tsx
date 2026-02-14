@@ -1,20 +1,18 @@
 import Box from '@mui/material/Box'
 import { useEffect } from 'react'
 
-import useHista from '../../../store/store'
+import { statisticsService } from '../../../store'
 import { DiaryDownloadButton, DiaryGrid } from './components'
 
 export function Diary() {
-    const getDiaryEntries = useHista(state => state.getDiaryEntries)
+  useEffect(() => {
+    statisticsService.getDiaries()
+  }, [])
 
-    useEffect(() => {
-        getDiaryEntries()
-     }, [getDiaryEntries])
-
-    return (
-        <Box>
-            <DiaryDownloadButton />
-            <DiaryGrid />
-        </Box>
-    )
+  return (
+    <Box>
+      <DiaryDownloadButton />
+      <DiaryGrid />
+    </Box>
+  )
 }

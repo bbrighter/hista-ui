@@ -5,7 +5,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import dayjs from 'dayjs'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { RouterProvider, Routes } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
 
 import routes from './routes'
 

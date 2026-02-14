@@ -8,48 +8,48 @@ import IngredientSelect from './IngredientSelect'
 import SeverityFilter from './SeverityFilter'
 
 export const IngredientChart = ({
-    from, to,
+  from, to,
 }: {
-    from: Date
-    to: Date
+  from: Date
+  to: Date
 }) => {
-    const [id, setId] = useState<number>(0)
-    const [severity, setSeverity] = useState([1, 5])
-    const getSymptoms = useHista(state => state.getSymptoms)
-    const resetStatistics = useHista(state => state.resetStatistics)
-    useEffect(() => {
-        getSymptoms()
-    })
+  const [id, setId] = useState<number>(0)
+  const [severity, setSeverity] = useState([1, 5])
+  const getSymptoms = useHista(state => state.getSymptoms)
+  const resetStatistics = useHista(state => state.resetStatistics)
+  useEffect(() => {
+    getSymptoms()
+  })
 
-    useEffect(() => {
-        if (id == 0) {
-            resetStatistics()
-        }
-        else {
-        statisticsService.getMealStatistics(from, to, id)
-}
-    }, [from, to, id])
-
-    const hanldeIdChange = (id: number) => {
-        setId(id)
+  useEffect(() => {
+    if (id == 0) {
+      resetStatistics()
     }
-
-    const handleSliderChange = (_: Event, newValue: number | number[]) => {
-        setSeverity(newValue as number[])
+    else {
+      statisticsService.getMealStatistics(from, to, id)
     }
+  }, [from, to, id])
 
-    return (
-        <Grid container size={12}>
-            <Grid size={{ xs: 12 }}>
-                <IngredientSelect onChange={hanldeIdChange} />
-            </Grid>
-            <Grid size={{ xs: 12 }}>
-                <SeverityFilter
-                  severity={severity}
-                  onChange={handleSliderChange}
-                />
-            </Grid>
-            <IngredientBarChart severityFilter={severity} />
-        </Grid>
-    )
+  const hanldeIdChange = (id: number) => {
+    setId(id)
+  }
+
+  const handleSliderChange = (_: Event, newValue: number | number[]) => {
+    setSeverity(newValue as number[])
+  }
+
+  return (
+    <Grid container size={12}>
+      <Grid size={{ xs: 12 }}>
+        <IngredientSelect onChange={hanldeIdChange} />
+      </Grid>
+      <Grid size={{ xs: 12 }}>
+        <SeverityFilter
+          severity={severity}
+          onChange={handleSliderChange}
+        />
+      </Grid>
+      <IngredientBarChart severityFilter={severity} />
+    </Grid>
+  )
 }

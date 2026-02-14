@@ -6,33 +6,33 @@ import svgr from 'vite-plugin-svgr'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [
-        react(),
-        svgr(),
-        visualizer({
-            filename: 'bundle-stats.html',
-            open: true,
-        }),
+  plugins: [
+    react(),
+    svgr(),
+    visualizer({
+      filename: 'bundle-stats.html',
+      open: true,
+    }),
+  ],
+  build: {
+    rollupOptions: {
+      treeshake: true,
+    },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: [
+      'vitest-localstorage-mock',
+      'src/__tests__/setupTest.ts',
     ],
-    build: {
-        rollupOptions: {
-            treeshake: true,
-        },
+    server: {
+      deps: {
+        inline: ['@mui/x-data-grid'],
+      },
     },
-    test: {
-        globals: true,
-        environment: 'jsdom',
-        setupFiles: [
-            'vitest-localstorage-mock',
-            'src/__tests__/setupTest.ts',
-        ],
-        server: {
-            deps: {
-                inline: ['@mui/x-data-grid'],
-            },
-        },
-        coverage: {
-            provider: 'v8',
-        },
+    coverage: {
+      provider: 'v8',
     },
+  },
 })

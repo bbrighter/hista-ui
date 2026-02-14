@@ -10,35 +10,35 @@ import PollenHeader from './components/PollenHeader'
 import PollenRow from './components/PollenRow'
 
 export default function PollenView() {
-    const getPollens = useHista(state => state.getPollens)
-    const pollens = useHista(state => state.pollens)
+  const getPollens = useHista(state => state.getPollens)
+  const pollens = useHista(state => state.pollens)
 
-    const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-    useEffect(() => {
-        setIsLoading(true)
-        getPollens().finally(() => setIsLoading(false))
-    }, [getPollens])
+  useEffect(() => {
+    setIsLoading(true)
+    getPollens().finally(() => setIsLoading(false))
+  }, [getPollens])
 
-    return (
-        <Container sx={{ padding: 2 }}>
-            <PollenHeader />
-            <Divider />
-            <List>
-                {isLoading
-                    ? Array.from({ length: 10 }).map((_, i) => (
-                        <Skeleton
-                          key={i}
-                          variant="rectangular"
-                          width="calc(max(20%, 100px) + 8 * max(10%, 20px))"
-                          height="1.5rem"
-                          sx={{ marginTop: 2 }}
-                        />
-                    ))
-                    : pollens.map((pollen, i) =>
-                        <PollenRow key={i} pollen={pollen} />,
-                    )}
-            </List>
-        </Container>
-    )
+  return (
+    <Container sx={{ padding: 2 }}>
+      <PollenHeader />
+      <Divider />
+      <List>
+        {isLoading
+          ? Array.from({ length: 10 }).map((_, i) => (
+              <Skeleton
+                key={i}
+                variant="rectangular"
+                width="calc(max(20%, 100px) + 8 * max(10%, 20px))"
+                height="1.5rem"
+                sx={{ marginTop: 2 }}
+              />
+            ))
+          : pollens.map((pollen, i) =>
+              <PollenRow key={i} pollen={pollen} />,
+            )}
+      </List>
+    </Container>
+  )
 }

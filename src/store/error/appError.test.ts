@@ -5,37 +5,37 @@ import { APIError, ErrCode } from '../../api/generatedApi'
 import { toAppError } from './appError'
 
 describe('errors are transformed into app errors', () => {
-    it('Route error', { skip: true }, () => {
-        // How to create a route error?
-        const error = data(
-            { content: 'content' },
-            { status: 500, statusText: 'internal' },
-        )
-        expect(isRouteErrorResponse(error)).toBeTruthy()
+  it('Route error', { skip: true }, () => {
+    // How to create a route error?
+    const error = data(
+      { content: 'content' },
+      { status: 500, statusText: 'internal' },
+    )
+    expect(isRouteErrorResponse(error)).toBeTruthy()
 
-        const appError = toAppError(error)
-        expect(appError.source).toBe('router')
-    })
+    const appError = toAppError(error)
+    expect(appError.source).toBe('router')
+  })
 
-    it('API error', () => {
-        const error = new APIError(500, { code: ErrCode.Internal, message: 'message' })
+  it('API error', () => {
+    const error = new APIError(500, { code: ErrCode.Internal, message: 'message' })
 
-        const appError = toAppError(error)
-        expect(appError.source).toBe('api')
-        expect(appError.status).toBe(500)
-        expect(appError.text).toBe('message')
-    })
+    const appError = toAppError(error)
+    expect(appError.source).toBe('api')
+    expect(appError.status).toBe(500)
+    expect(appError.text).toBe('message')
+  })
 
-    it('other errors', () => {
-        const error = new Error('message')
+  it('other errors', () => {
+    const error = new Error('message')
 
-        const appError = toAppError(error)
-        expect(appError.source).toBe('unknown')
-        expect(appError.text).toBe('Error')
-        expect(appError.stack).toContain('Error: message')
-    })
+    const appError = toAppError(error)
+    expect(appError.source).toBe('unknown')
+    expect(appError.text).toBe('Error')
+    expect(appError.stack).toContain('Error: message')
+  })
 
-    it('anything else', { skip: true }, () => {
-        // How to test it?
-    })
+  it('anything else', { skip: true }, () => {
+    // How to test it?
+  })
 })

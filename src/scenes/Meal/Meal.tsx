@@ -11,23 +11,23 @@ import FoodList from './components/FoodList'
 import MealSettings from './components/MealSettings'
 
 export default function Meal() {
-    const getMeal = useHista(state => state.getMeal)
-    const isLoading = useHista(state => state.meal.isLoading)
-    const params = useParams<{ mealId: string }>()
+  const getMeal = useHista(state => state.getMeal)
+  const isLoading = useHista(state => state.meal.isLoading)
+  const params = useParams<{ mealId: string }>()
 
-    useEffect(() => {
-        getMeal(Number(params.mealId))
-    }, [])
+  useEffect(() => {
+    getMeal(Number(params.mealId))
+  }, [])
 
-    return (
-        <Container sx={{ padding: '2rem' }}>
-            <FormGroup>
-                <MealSettings />
-                <FormControl>
-                    <AddFood />
-                </FormControl>
-            </FormGroup>
-            {isLoading ? <Skeleton variant="rectangular" height="3rem" /> : <FoodList />}
-        </Container>
-    )
+  return (
+    <Container sx={{ padding: '2rem' }}>
+      <FormGroup>
+        <MealSettings />
+        <FormControl>
+          <AddFood />
+        </FormControl>
+      </FormGroup>
+      {isLoading ? <Skeleton variant="rectangular" height="3rem" /> : <FoodList />}
+    </Container>
+  )
 }

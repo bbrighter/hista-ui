@@ -11,45 +11,45 @@ import useDebounce from '../../hooks/useDebounce'
 import { useDidUpdateEffect } from '../../hooks/useDidUpdateEffect'
 
 export default function DateInput(props: {
-    title: string
-    date: Date
-    onChange: ((value: dayjs.Dayjs | null) => void)
-    hideTime?: boolean
+  title: string
+  date: Date
+  onChange: ((value: dayjs.Dayjs | null) => void)
+  hideTime?: boolean
 }) {
-    const initialValue = dayjs(props.date)
-    const [inputValue, setInputValue] = useState(initialValue)
-    const debouncedInputValue = useDebounce(inputValue, 500)
+  const initialValue = dayjs(props.date)
+  const [inputValue, setInputValue] = useState(initialValue)
+  const debouncedInputValue = useDebounce(inputValue, 500)
 
-    useDidUpdateEffect(() => {
-        props.onChange(debouncedInputValue)
-    }, [debouncedInputValue])
+  useDidUpdateEffect(() => {
+    props.onChange(debouncedInputValue)
+  }, [debouncedInputValue])
 
-    const handleInputChange = (value: dayjs.Dayjs | null) => {
-        if (value != null) {
-            setInputValue(value)
-        }
+  const handleInputChange = (value: dayjs.Dayjs | null) => {
+    if (value != null) {
+      setInputValue(value)
     }
-    const hideTime = !!props.hideTime
+  }
+  const hideTime = !!props.hideTime
 
-    return (
-        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
-            {hideTime && (
-                <DatePicker
-                  sx={{ width: '99%' }}
-                  label={props.title}
-                  value={inputValue}
-                  onChange={handleInputChange}
-                />
-            )}
-            {!hideTime
-              && (
-                  <DateTimePicker
-                    sx={{ width: '99%' }}
-                    label={props.title}
-                    value={inputValue}
-                    onChange={handleInputChange}
-                  />
-              )}
-        </LocalizationProvider>
-    )
+  return (
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+      {hideTime && (
+        <DatePicker
+          sx={{ width: '99%' }}
+          label={props.title}
+          value={inputValue}
+          onChange={handleInputChange}
+        />
+      )}
+      {!hideTime
+        && (
+          <DateTimePicker
+            sx={{ width: '99%' }}
+            label={props.title}
+            value={inputValue}
+            onChange={handleInputChange}
+          />
+        )}
+    </LocalizationProvider>
+  )
 }

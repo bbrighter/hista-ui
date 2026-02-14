@@ -5,12 +5,12 @@ import AccordionCategory from './AccordionCategory'
 import AccordionSymptoms from './AccordionSymptoms'
 
 export default function SymptomCategoryAccordion(props: {
-    symptom: SymptomCategory
+  symptom: SymptomCategory
 }) {
-    return (
-        <Accordion key={props.symptom.categoryId} slotProps={{ transition: { unmountOnExit: true } }}>
-            <AccordionCategory category={props.symptom} />
-            <AccordionSymptoms category={props.symptom} />
-        </Accordion>
-    )
+  return (
+    <Accordion key={props.symptom.categoryId} slotProps={{ transition: { unmountOnExit: true } }}>
+      <AccordionCategory category={props.symptom} />
+      <AccordionSymptoms category={props.symptom} />
+    </Accordion>
+  )
 }

@@ -5,15 +5,15 @@ import useHista from '../../../store/store'
 import { HeadacheDownloadButton, HeadacheGrid } from './components'
 
 export function HeadacheDiary() {
-    const getHeadaches = useHista(state => state.getHeadaches)
-    useEffect(() => {
-        getHeadaches()
-     }, [getHeadaches])
+  const getHeadaches = useHista(state => state.getHeadaches)
+  useEffect(() => {
+    getHeadaches()
+  }, [])
 
-    return (
-        <Box>
-            <HeadacheDownloadButton />
-            <HeadacheGrid />
-        </Box>
-    )
+  return (
+    <Box>
+      <HeadacheDownloadButton />
+      <HeadacheGrid />
+    </Box>
+  )
 }
