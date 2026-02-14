@@ -8,78 +8,46 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default defineConfig([
-    jseslint.configs.recommended,
-    tseslint.configs.recommended,
-    stylistic.configs.recommended,
-    reactCompiler.configs.recommended,
-    {
-        files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
-        languageOptions: {
-            globals: globals.browser,
-        },
-        plugins: {
-            'react': pluginReact,
-            'simple-import-sort': simpleImportSort,
-        },
-        rules: {
-            'quotes': ['error', 'single'],
-            'comma-dangle': ['error', 'always-multiline'],
-            'object-curly-spacing': ['error', 'always'],
-            'no-console': 'warn',
-            'react/react-in-jsx-scope': 'off',
-            'react/prop-types': 'off',
-            'simple-import-sort/imports': 'warn',
-            'simple-import-sort/exports': 'error',
-            'indent': 'off',
-            '@stylistic/indent': 'off',
-               '@typescript-eslint/no-unused-vars': 'off',
-            },
-    }],
+  {
+    ignores: ['dist/', 'false/', '/node_modules'],
+  },
+  jseslint.configs.recommended,
+  tseslint.configs.recommended,
+  stylistic.configs.recommended,
+  reactCompiler.configs.recommended,
+  {
+    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+    languageOptions: {
+      globals: globals.browser,
+    },
+    plugins: {
+      'react': pluginReact,
+      'simple-import-sort': simpleImportSort,
+    },
+    rules: {
+      'quotes': ['error', 'single'],
+      'comma-dangle': ['error', 'always-multiline'],
+      'object-curly-spacing': ['error', 'always'],
+      'no-console': 'warn',
+      'react/react-in-jsx-scope': 'off',
+      'react/prop-types': 'off',
+      'simple-import-sort/imports': 'warn',
+      'simple-import-sort/exports': 'error',
+      'indent': 'off',
+      '@stylistic/indent': 'off',
+          '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        args: 'all',
+        argsIgnorePattern: '^_',
+        caughtErrors: 'all',
+        caughtErrorsIgnorePattern: '^_',
+        destructuredArrayIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        ignoreRestSiblings: true,
+      },
+    ],
+      'no-unused-vars': 'off',
+    },
+  }],
 )
-
-// export default [
-//     jseslint.configs.recommended,
-//     {
-//         files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
-//     },
-//     {
-//         languageOptions:
-//             { globals: globals.browser },
-//     },
-//     {
-//         ignores: [
-//             'node_modules/',
-//             'dist/',
-//             'src/api/generatedApi.ts',
-//         ],
-//     },
-//     {
-//         plugins: {
-//             'react': pluginReact,
-//             '@stylistic': stylistic,
-//             'simple-import-sort': simpleImportSort,
-//             'react-compiler': reactCompiler,
-//         },
-//     },
-//     {
-//         settings: {
-//             react: {
-//                 version: 'detect',
-//             },
-//         },
-//     },
-//     {
-//         rules: {
-//             'quotes': ['error', 'single'],
-//             'comma-dangle': ['error', 'always-multiline'],
-//             'object-curly-spacing': ['error', 'always'],
-//             'no-console': 'warn',
-//             'react/react-in-jsx-scope': 'off',
-//             'react/prop-types': 'off',
-//             'simple-import-sort/imports': 'warn',
-//             'simple-import-sort/exports': 'error',
-//         },
-//     },
-//     ...tseslint.configs.recommended,
-
-// ];

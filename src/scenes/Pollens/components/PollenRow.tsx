@@ -7,25 +7,25 @@ import { Pollen } from '../../../store/pollen/pollen'
 import { FIRST_COLUMN_WIDTH, intensityToColor, POLLEN_TYPES } from './pollen_helper'
 
 export default function PollenRow(props: {
-    pollen: Pollen
+  pollen: Pollen
 }) {
-    return (
-        <ListItem>
-            <Paper sx={{ width: FIRST_COLUMN_WIDTH }}><Typography>{props.pollen.date.toLocaleDateString('de-DE')}</Typography></Paper>
-            {POLLEN_TYPES.map(({ key }) => (
-                <StyledPollen
-                  intensity={props.pollen[key].intensity}
-                  key={key}
-                  data-testid={`pollen-cell-${key}`}
-                />
-            ),
-            )}
-        </ListItem>
-    )
+  return (
+    <ListItem>
+      <Paper sx={{ width: FIRST_COLUMN_WIDTH }}><Typography>{props.pollen.date.toLocaleDateString('de-DE')}</Typography></Paper>
+      {POLLEN_TYPES.map(({ key }) => (
+        <StyledPollen
+          intensity={props.pollen[key].intensity}
+          key={key}
+          data-testid={`pollen-cell-${key}`}
+        />
+      ),
+      )}
+    </ListItem>
+  )
 }
 
 type StyledPollenProps = {
-    intensity: number
+  intensity: number
 }
 
 const StyledPollen = styled.span<StyledPollenProps>`

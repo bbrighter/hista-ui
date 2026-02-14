@@ -5,51 +5,51 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import TextFieldSaveAndAbort from './TextFieldSaveAndAbort'
 
 describe('TextFieldSaveAndAbort', () => {
-    const successFn = vi.fn().mockResolvedValue(undefined)
-    const cancelFn = vi.fn()
+  const successFn = vi.fn().mockResolvedValue(undefined)
+  const cancelFn = vi.fn()
 
-    beforeEach(() => {
-        render(
-            <TextFieldSaveAndAbort
-              label="label"
-              value="value"
-              isSaveable={v => v != 'value'}
-              onSave={successFn}
-              onCancel={cancelFn}
-              size="small"
-            />,
-        )
+  beforeEach(() => {
+    render(
+      <TextFieldSaveAndAbort
+        label="label"
+        value="value"
+        isSaveable={v => v != 'value'}
+        onSave={successFn}
+        onCancel={cancelFn}
+        size="small"
+      />,
+    )
+  })
+
+  it('Renders', async () => {
+    expect(await screen.findByLabelText('label')).toBeInTheDocument()
+    expect(screen.getByDisplayValue('value')).toBeInTheDocument()
+    expect(screen.getByTitle('Umbenennen speichern')).toBeDisabled()
+    expect(screen.getByTitle('Umbenennen abbrechen')).toBeInTheDocument()
+  })
+
+  it('Editing and saving', async () => {
+    const textInput = await screen.findByLabelText('label')
+
+    act(() => {
+      fireEvent.change(textInput, { target: { value: 'new value' } })
     })
-
-    it('Renders', async () => {
-        expect(await screen.findByLabelText('label')).toBeInTheDocument()
-        expect(screen.getByDisplayValue('value')).toBeInTheDocument()
-        expect(screen.getByTitle('Umbenennen speichern')).toBeDisabled()
-        expect(screen.getByTitle('Umbenennen abbrechen')).toBeInTheDocument()
+    expect(await screen.findByDisplayValue('new value')).toBeInTheDocument()
+    const saveButton = screen.getByTitle('Umbenennen speichern')
+    expect(saveButton).not.toBeDisabled()
+    await act(async () => {
+      fireEvent.click(saveButton)
     })
+    expect(successFn).toHaveBeenCalled()
+  })
 
-    it('Editing and saving', async () => {
-        const textInput = await screen.findByLabelText('label')
-
-        act(() => {
-            fireEvent.change(textInput, { target: { value: 'new value' } })
-        })
-        expect(await screen.findByDisplayValue('new value')).toBeInTheDocument()
-        const saveButton = screen.getByTitle('Umbenennen speichern')
-        expect(saveButton).not.toBeDisabled()
-        await act(async () => {
-            fireEvent.click(saveButton)
-        })
-        expect(successFn).toHaveBeenCalled()
+  it('Canceling', async () => {
+    const cancelButton = screen.getByTitle('Umbenennen abbrechen')
+    act(() => {
+      fireEvent.click(cancelButton)
     })
-
-    it('Canceling', async () => {
-        const cancelButton = screen.getByTitle('Umbenennen abbrechen')
-        act(() => {
-            fireEvent.click(cancelButton)
-        })
-        expect(cancelFn).toHaveBeenCalled()
-    })
+    expect(cancelFn).toHaveBeenCalled()
+  })
 })
 
 // describe('TextFieldSaveAndAbort', () => {

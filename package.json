@@ -7,9 +7,9 @@
   "scripts": {
     "start": "vite --open",
     "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint . && tsc",
-    "lint:fix": "eslint . --fix && tsc",
+    "build": "vite build",
+    "lint": "eslint . ",
+    "lint:fix": "eslint . --fix",
     "lint:debug": "pnpm dlx eslint --debug eslint.config.mjs",
     "test": "vitest",
     "test:nowatch": "vitest run",

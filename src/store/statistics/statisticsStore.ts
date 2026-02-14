@@ -1,35 +1,32 @@
 import { produce } from 'immer'
 import { StateCreator } from 'zustand'
 
-import { client } from '../../api/api'
-import { hista } from '../../api/generatedApi'
 import { IngredientStore } from '../meal/ingredientStore'
 import { MealStore } from '../meal/mealStore'
 import { ConditionStore } from '../symptom/conditionStore'
 import { SymptomStore } from '../symptom/symptomStore'
-import { SymptomStatistics } from '../types'
-import { RawDiary, respToRawDiary } from './diary'
+import { SymptomStatistics as Statistics } from '../types'
+import { RawDiary } from '../types/diary.types'
 
 interface State {
-    diaryEntries: Array<RawDiary>
-    symptomStatistics: SymptomStatistics
-    mealCount: number
+  diaryEntries: Array<RawDiary>
+  statistics: Statistics
+  mealCount: number
 }
 
 interface Actions {
-    getDiaryEntries: () => Promise<void>
-    setMealCount: (count: number) => void
-    setSymptomStatistics: (stats: SymptomStatistics) => void
-    resetStatistics: () => void
+  setDiaryEntries: (diaries: Array<RawDiary>) => void
+  setMealCount: (count: number) => void
+  setSymptomStatistics: (stats: Statistics) => void
+  resetStatistics: () => void
 }
 
 export interface StatisticsStore extends State, Actions { }
 
 const initialState: State = {
-    diaryEntries: [],
-    mealCount: 0,
-    symptomStatistics: [],
-
+  diaryEntries: [],
+  mealCount: 0,
+  statistics: [],
 }
 
 export const createStatisticsSlice: StateCreator<
@@ -37,26 +34,24 @@ export const createStatisticsSlice: StateCreator<
     [],
     [],
     StatisticsStore
-> = (set, get) => ({
-    ...initialState,
-
-    getDiaryEntries: async (): Promise<void> => {
-        const resp = await client.GetDiary()
-        set(produce((draft: State) => {
-            draft.diaryEntries = respToRawDiary(resp)
-        }))
-    },
-    setMealCount: (count: number) => {
-        set(produce((draft: State) => {
-            draft.mealCount = count
-        }))
-    },
-    setSymptomStatistics: (stats: SymptomStatistics) => {
-        set((produce((draft: State) => {
-            draft.symptomStatistics = stats
-        })))
-    },
-    resetStatistics: () => {
-        set(initialState)
-    },
+> = set => ({
+  ...initialState,
+  setDiaryEntries: (diaries: Array<RawDiary>) => {
+    set(produce((draft: State) => {
+      draft.diaryEntries = diaries
+    }))
+  },
+  setMealCount: (count: number) => {
+    set(produce((draft: State) => {
+      draft.mealCount = count
+    }))
+  },
+  setSymptomStatistics: (stats: Statistics) => {
+    set((produce((draft: State) => {
+      draft.statistics = stats
+    })))
+  },
+  resetStatistics: () => {
+    set(initialState)
+  },
 })

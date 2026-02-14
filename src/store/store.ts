@@ -25,19 +25,19 @@ const useHista = create<
   & StatusStore
   & HeadacheStore
 >((...a) => {
-    const store = {
-        ...createMealSlice(...a),
-        ...createIngredientSlice(...a),
-        ...createAuthSlice(...a),
-        ...createConditionSlice(...a),
-        ...createSymptomSlice(...a),
-        ...createStatisticsSlice(...a),
-        ...createNotesSlice(...a),
-        ...createPollensSlice(...a),
-        ...createStatusSlice(...a),
-        ...createHeadacheSlice(...a),
-    }
-    return wrapActionsWithErrorHandler(store, createAuthSlice(...a))
+  const store = {
+    ...createMealSlice(...a),
+    ...createIngredientSlice(...a),
+    ...createAuthSlice(...a),
+    ...createConditionSlice(...a),
+    ...createSymptomSlice(...a),
+    ...createStatisticsSlice(...a),
+    ...createNotesSlice(...a),
+    ...createPollensSlice(...a),
+    ...createStatusSlice(...a),
+    ...createHeadacheSlice(...a),
+  }
+  return wrapActionsWithErrorHandler(store, createAuthSlice(...a))
 })
 
 injectPiidGetter(() => useHista.getState().piid)

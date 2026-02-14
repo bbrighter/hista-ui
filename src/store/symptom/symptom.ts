@@ -1,39 +1,39 @@
 import { entity } from '../../api/generatedApi'
 
 export interface Symptom {
-    id: number
-    name: string
-    categoryId: number
+  id: number
+  name: string
+  categoryId: number
 }
 
 export interface SymptomCategory {
-    categoryId: number
-    categoryName: string
-    symptoms: Array<Symptom>
+  categoryId: number
+  categoryName: string
+  symptoms: Array<Symptom>
 }
 
 export type SymptomCategories = Array<SymptomCategory>
 
 export function respToSymptoms(resp: entity.SymptomCategoriesResponse): SymptomCategories {
-    return resp.Categories.map(c => (
-        {
-            categoryId: c.id,
-            categoryName: c.name,
-            symptoms: c.symptoms.map(s => ({
-                id: s.id,
-                name: s.name,
-                categoryId: s.categoryId,
-            })),
-        }
-    ),
+  return resp.Categories.map(c => (
+    {
+      categoryId: c.id,
+      categoryName: c.name,
+      symptoms: c.symptoms.map(s => ({
+        id: s.id,
+        name: s.name,
+        categoryId: s.categoryId,
+      })),
+    }
+  ),
 
-    )
+  )
 }
 
 export function respToSymptom(resp: entity.SymptomResponse): Symptom {
-    return {
-        id: resp.id,
-        categoryId: resp.categoryId,
-        name: resp.name,
-    }
+  return {
+    id: resp.id,
+    categoryId: resp.categoryId,
+    name: resp.name,
+  }
 }
