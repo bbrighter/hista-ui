@@ -9,6 +9,7 @@ export default function IngredientSelect({ onChange }: {
 }) {
     const getIngredients = useHista(state => state.getIngredients)
     const ingredients = useHista(state => state.ingredients)
+    const sortedIngredients = [...ingredients].sort((a, b) => a.name.localeCompare(b.name))
     const [value, setValue] = useState(0)
 
     useEffect(() => {
@@ -30,7 +31,7 @@ export default function IngredientSelect({ onChange }: {
           onChange={handleChange}
         >
             <MenuItem key="" value={0}>-</MenuItem>
-            {ingredients.map(i =>
+            {sortedIngredients.map(i =>
                 (<MenuItem key={i.id} value={i.id}>{i.name}</MenuItem>),
             )}
         </Select>
