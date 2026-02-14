@@ -3,9 +3,9 @@ import Grid from '@mui/material/Grid'
 import Icon from '@mui/material/Icon'
 import Slider from '@mui/material/Slider'
 
-import { colorFromSeverity } from '../../../../store/symptom/condition'
+import { colorFromSeverity } from '../../../../../store/symptom/condition'
 
-export default function SeverityFilter(props: {
+export default function SeverityFilter({ severity, onChange }: {
     severity: Array<number>
     onChange: ((event: Event, value: number | Array<number>, activeThumb: number) => void)
 }) {
@@ -21,9 +21,9 @@ export default function SeverityFilter(props: {
                   max={5}
                   min={1}
                   step={1}
-                  value={props.severity}
-                  color={colorFromSeverity(props.severity)}
-                  onChange={props.onChange}
+                  value={severity}
+                  color={colorFromSeverity(severity)}
+                  onChange={onChange}
                   marks={true}
                 />
             </Grid>

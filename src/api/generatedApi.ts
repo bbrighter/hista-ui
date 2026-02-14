@@ -184,6 +184,12 @@ export namespace hista {
         ingredientId?: number
     }
 
+    export interface MealStatisticsParams {
+        id: number
+        fromDate: string
+        toDate: string
+    }
+
     export interface NoteParams {
         date?: string
         text?: string
@@ -250,12 +256,6 @@ export namespace hista {
         name: string
     }
 
-    export interface StatisticParams {
-        ids: number[]
-        fromDate: string
-        toDate: string
-    }
-
     export class ServiceClient {
         private baseClient: BaseClient
 
@@ -275,8 +275,7 @@ export namespace hista {
             this.GetFoods = this.GetFoods.bind(this)
             this.GetHeadache = this.GetHeadache.bind(this)
             this.GetMeal = this.GetMeal.bind(this)
-            this.GetStatisticsByIngredientsIds = this.GetStatisticsByIngredientsIds.bind(this)
-            this.GetStatisticsBySymptomIds = this.GetStatisticsBySymptomIds.bind(this)
+            this.GetStatisticsByIngredientId = this.GetStatisticsByIngredientId.bind(this)
             this.ListConditionEvents = this.ListConditionEvents.bind(this)
             this.ListHeadaches = this.ListHeadaches.bind(this)
             this.ListIngredients = this.ListIngredients.bind(this)
@@ -385,30 +384,17 @@ export namespace hista {
             return await resp.json() as entity.MealResponse
         }
 
-        public async GetStatisticsByIngredientsIds(piid: string, params: StatisticParams): Promise<entity.SymptomStatisticsResponse> {
+        public async GetStatisticsByIngredientId(piid: string, params: MealStatisticsParams): Promise<entity.SymptomStatisticsResponse> {
             // Convert our params into the objects we need for the request
             const query = makeRecord<string, string | string[]>({
                 "from_date": String(params.fromDate),
-                "i_ds":      params.ids.map((v) => String(v)),
+                id:          String(params.id),
                 "to_date":   String(params.toDate),
             })
 
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/piid/${encodeURIComponent(piid)}/statistics/ingredients`, undefined, {query})
             return await resp.json() as entity.SymptomStatisticsResponse
-        }
-
-        public async GetStatisticsBySymptomIds(piid: string, params: StatisticParams): Promise<entity.FoodStatisticsResponse> {
-            // Convert our params into the objects we need for the request
-            const query = makeRecord<string, string | string[]>({
-                "from_date": String(params.fromDate),
-                "i_ds":      params.ids.map((v) => String(v)),
-                "to_date":   String(params.toDate),
-            })
-
-            // Now make the actual call to the API
-            const resp = await this.baseClient.callTypedAPI("GET", `/piid/${encodeURIComponent(piid)}/statistics/symptoms`, undefined, {query})
-            return await resp.json() as entity.FoodStatisticsResponse
         }
 
         public async ListConditionEvents(piid: string): Promise<entity.ConditionEventsResponse> {
@@ -607,10 +593,6 @@ export namespace entity {
         foodCondition: FoodCondition
     }
 
-    export interface FoodStatisticsResponse {
-        statistics: StatisticsByFood[]
-    }
-
     export interface FoodsResponse {
         foods: FoodResponse[]
     }
@@ -737,16 +719,6 @@ export namespace entity {
         hours72: number
         hours24: number
         hours1: number
-        count: number
-    }
-
-    export interface StatisticsByFood {
-        ingredientId: number
-        foodCondition: string
-        hours72: number
-        hours24: number
-        hours1: number
-        count: number
     }
 
     export interface StatusResponse {
@@ -778,6 +750,7 @@ export namespace entity {
     }
 
     export interface SymptomStatisticsResponse {
+        count: number
         statistics: StatisticBySymptom[]
     }
 }

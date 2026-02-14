@@ -5,7 +5,7 @@ import useHista from '../../../store/store'
 import HeadacheDownloadButton from './Headaches/HeadacheDownloadButton'
 import HeadacheGrid from './Headaches/HeadacheGrid'
 
-export default function HeadacheDiary() {
+export function HeadacheDiary() {
     const getHeadaches = useHista(state => state.getHeadaches)
     useEffect(() => {
         getHeadaches()
