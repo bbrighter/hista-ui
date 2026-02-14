@@ -18,7 +18,6 @@ describe('statisticsStore - SKIPPED! Better use component tests!', () => {
     it('resetStatistics', () => {
         useHista.getState().resetStatistics()
 
-        expect(useHista.getState().foodStatistics).toHaveLength(0)
         expect(useHista.getState().symptomStatistics).toHaveLength(0)
     })
 })

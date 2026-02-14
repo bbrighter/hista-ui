@@ -7,19 +7,19 @@ import { IngredientStore } from '../meal/ingredientStore'
 import { MealStore } from '../meal/mealStore'
 import { ConditionStore } from '../symptom/conditionStore'
 import { SymptomStore } from '../symptom/symptomStore'
+import { SymptomStatistics } from '../types'
 import { RawDiary, respToRawDiary } from './diary'
-import { FoodStatistics, respToStatistics, respToSymptomStatistics, SymptomStatistics } from './statistics'
 
 interface State {
     diaryEntries: Array<RawDiary>
-    foodStatistics: Array<FoodStatistics>
-    symptomStatistics: Array<SymptomStatistics>
+    symptomStatistics: SymptomStatistics
+    mealCount: number
 }
 
 interface Actions {
     getDiaryEntries: () => Promise<void>
-    getFoodStatistics: (fromDate: Date, toDate: Date, symptomIds: Array<number>) => Promise<void>
-    getSymptomStatistics: (fromDate: Date, toDate: Date, ingredientIds: Array<number>) => Promise<void>
+    setMealCount: (count: number) => void
+    setSymptomStatistics: (stats: SymptomStatistics) => void
     resetStatistics: () => void
 }
 
@@ -27,7 +27,7 @@ export interface StatisticsStore extends State, Actions { }
 
 const initialState: State = {
     diaryEntries: [],
-    foodStatistics: [],
+    mealCount: 0,
     symptomStatistics: [],
 
 }
@@ -46,27 +46,15 @@ export const createStatisticsSlice: StateCreator<
             draft.diaryEntries = respToRawDiary(resp)
         }))
     },
-    getFoodStatistics: async (fromDate: Date, toDate: Date, symptomIds: Array<number>): Promise<void> => {
-        const params: hista.StatisticParams = {
-            fromDate: fromDate.toISOString(),
-            toDate: toDate.toISOString(),
-            ids: symptomIds,
-        }
-        const resp = await client.GetStatisticsBySymptomIds(params)
+    setMealCount: (count: number) => {
         set(produce((draft: State) => {
-            draft.foodStatistics = respToStatistics(resp, get().ingredients)
+            draft.mealCount = count
         }))
     },
-    getSymptomStatistics: async (fromDate: Date, toDate: Date, ingredientIds: Array<number>): Promise<void> => {
-        const params: hista.StatisticParams = {
-            fromDate: fromDate.toISOString(),
-            toDate: toDate.toISOString(),
-            ids: ingredientIds,
-        }
-        const resp = await client.GetStatisticsByIngredientsIds(params)
-        set(produce((draft: State) => {
-            draft.symptomStatistics = respToSymptomStatistics(resp, get().symptoms)
-        }))
+    setSymptomStatistics: (stats: SymptomStatistics) => {
+        set((produce((draft: State) => {
+            draft.symptomStatistics = stats
+        })))
     },
     resetStatistics: () => {
         set(initialState)

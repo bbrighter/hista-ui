@@ -1,9 +1,9 @@
 import Grid from '@mui/material/Grid'
 import dayjs from 'dayjs'
 
-import DateInput from '../../../components/DateInput'
+import DateInput from '../../../../components/DateInput'
 
-export default function StatisticsDateInput(props: {
+export function StatisticsDateInput(props: {
     fromDate: Date
     toDate: Date
     handleFromDateChange: (value: dayjs.Dayjs | null) => void

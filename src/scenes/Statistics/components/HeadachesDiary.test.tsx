@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import HeadacheDiary from './HeadachesDiary'
+import { HeadacheDiary } from './HeadachesDiary'
 
 describe('headache grid is rendered and headaches can be downloaded', () => {
     it('everything is rendered', async () => {
