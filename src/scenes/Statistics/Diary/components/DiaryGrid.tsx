@@ -3,7 +3,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import useHista from '../../../../store/store'
 import { diaryGridColumns, diaryRows } from './diaryColumns'
 
-export default function DiaryGrid() {
+export function DiaryGrid() {
     const diary = useHista(state => state.diaryEntries)
 
     const rows = diaryRows(diary)

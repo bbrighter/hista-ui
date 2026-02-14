@@ -2,24 +2,23 @@ import { produce } from 'immer'
 import { StateCreator } from 'zustand'
 
 import { client } from '../../api/api'
-import { hista } from '../../api/generatedApi'
 import { IngredientStore } from '../meal/ingredientStore'
 import { MealStore } from '../meal/mealStore'
 import { ConditionStore } from '../symptom/conditionStore'
 import { SymptomStore } from '../symptom/symptomStore'
-import { SymptomStatistics } from '../types'
+import { SymptomStatistics as Statistics } from '../types'
 import { RawDiary, respToRawDiary } from './diary'
 
 interface State {
     diaryEntries: Array<RawDiary>
-    symptomStatistics: SymptomStatistics
+    statistics: Statistics
     mealCount: number
 }
 
 interface Actions {
     getDiaryEntries: () => Promise<void>
     setMealCount: (count: number) => void
-    setSymptomStatistics: (stats: SymptomStatistics) => void
+    setSymptomStatistics: (stats: Statistics) => void
     resetStatistics: () => void
 }
 
@@ -28,7 +27,7 @@ export interface StatisticsStore extends State, Actions { }
 const initialState: State = {
     diaryEntries: [],
     mealCount: 0,
-    symptomStatistics: [],
+    statistics: [],
 
 }
 
@@ -51,9 +50,9 @@ export const createStatisticsSlice: StateCreator<
             draft.mealCount = count
         }))
     },
-    setSymptomStatistics: (stats: SymptomStatistics) => {
+    setSymptomStatistics: (stats: Statistics) => {
         set((produce((draft: State) => {
-            draft.symptomStatistics = stats
+            draft.statistics = stats
         })))
     },
     resetStatistics: () => {

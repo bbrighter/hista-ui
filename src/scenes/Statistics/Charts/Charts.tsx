@@ -2,7 +2,6 @@ import Grid from '@mui/material/Grid'
 import dayjs from 'dayjs'
 import { useState } from 'react'
 
-import useHista from '../../../../store/store'
 import { IngredientChart, StatisticsDateInput } from './components'
 
 export function Charts() {

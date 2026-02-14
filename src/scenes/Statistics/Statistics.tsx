@@ -3,7 +3,9 @@ import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 import { JSX, useState } from 'react'
 
-import { Charts, Diary, HeadacheDiary } from './components'
+import { Charts } from './Charts'
+import { Diary } from './Diary'
+import { HeadacheDiary } from './Headaches'
 
 type TabValue = 0 | 1 | 2 | 3
 interface TabType {

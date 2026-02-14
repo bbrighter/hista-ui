@@ -2,8 +2,7 @@ import Box from '@mui/material/Box'
 import { useEffect } from 'react'
 
 import useHista from '../../../store/store'
-import HeadacheDownloadButton from './Headaches/HeadacheDownloadButton'
-import HeadacheGrid from './Headaches/HeadacheGrid'
+import { HeadacheDownloadButton, HeadacheGrid } from './components'
 
 export function HeadacheDiary() {
     const getHeadaches = useHista(state => state.getHeadaches)

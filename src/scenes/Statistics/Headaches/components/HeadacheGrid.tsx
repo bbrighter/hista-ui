@@ -3,7 +3,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import useHista from '../../../../store/store'
 import { headacheColumnGroupingModel, headacheGridColumns, headacheGridRows } from './headacheColumns'
 
-export default function HeadacheGrid() {
+export function HeadacheGrid() {
     const headaches = useHista(state => state.headaches)
     const rows = headacheGridRows(headaches)
 

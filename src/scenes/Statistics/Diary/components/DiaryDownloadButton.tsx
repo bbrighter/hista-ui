@@ -5,7 +5,7 @@ import { writeFile } from 'xlsx'
 import useHista from '../../../../store/store'
 import { buildDiaryWorkbook } from './diaryExport'
 
-export default function DiaryDownloadButton() {
+export function DiaryDownloadButton() {
     const diaryEntries = useHista(state => state.diaryEntries)
     const onClick = async () => {
         const workbook = buildDiaryWorkbook(diaryEntries)

@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid'
 import Icon from '@mui/material/Icon'
 import Slider from '@mui/material/Slider'
 
-import { colorFromSeverity } from '../../../../../store/symptom/condition'
+import { colorFromSeverity } from '../../../../store/symptom/condition'
 
 export default function SeverityFilter({ severity, onChange }: {
     severity: Array<number>
@@ -25,6 +25,7 @@ export default function SeverityFilter({ severity, onChange }: {
                   color={colorFromSeverity(severity)}
                   onChange={onChange}
                   marks={true}
+                  data-testid="severityFilter"
                 />
             </Grid>
         </Grid>

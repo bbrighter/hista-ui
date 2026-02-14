@@ -6,7 +6,7 @@ import { writeFile } from 'xlsx'
 import useHista from '../../../../store/store'
 import { buildHeadacheWorkbook } from './headacheExport'
 
-export default function DownloadButton() {
+export function HeadacheDownloadButton() {
     const [loading, setLoading] = useState(false)
 
     const getHeadaches = useHista(state => state.getHeadaches)

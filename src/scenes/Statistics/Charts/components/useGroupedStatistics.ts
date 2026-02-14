@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
-import { useSymptomStatisticsWithNames } from '../../../../../store'
-import useHista from '../../../../../store/store'
+import { useSymptomStatisticsWithNames } from '../../../../store'
+import useHista from '../../../../store/store'
 
 const useGroupedStatistics = (severityFilter: Array<number>) => {
     const statistics = useSymptomStatisticsWithNames()
@@ -40,6 +40,5 @@ export const useBarChartStatistics = (severityFilter: Array<number>) => {
         hours72: s.within72hours,
         hours24: s.within24hours,
         hours1: s.within1hour,
-        name: s.symptomName,
     })), [statistics])
 }

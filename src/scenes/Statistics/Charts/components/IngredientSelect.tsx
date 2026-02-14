@@ -2,7 +2,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { useEffect, useState } from 'react'
 
-import useHista from '../../../../../store/store'
+import useHista from '../../../../store/store'
 
 export default function IngredientSelect({ onChange }: {
     onChange: (id: number) => void
@@ -29,6 +29,7 @@ export default function IngredientSelect({ onChange }: {
           sx={{ width: '10rem' }}
           value={value}
           onChange={handleChange}
+          data-testid="ingredientSelect"
         >
             <MenuItem key="" value={0}>-</MenuItem>
             {sortedIngredients.map(i =>
