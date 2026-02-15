@@ -1,9 +1,7 @@
 import { produce } from 'immer'
 import { StateCreator } from 'zustand'
 
-import { client } from '../../api/api'
-import { entity } from '../../api/generatedApi'
-import { Ingredients, respToIngredients } from './ingredients'
+import { Ingredients } from './../types'
 
 interface State {
   ingredients: Ingredients
@@ -11,8 +9,8 @@ interface State {
 }
 
 interface Actions {
-  setIngredients: (ingredients: Ingredients | entity.IngredientsResponse) => void
-  getIngredients: () => Promise<void>
+  setIngredientsAreLoaded: () => void
+  setIngredients: (ingredients: Ingredients) => void
 }
 
 export interface IngredientStore extends State, Actions { }
@@ -26,30 +24,18 @@ export const createIngredientSlice: StateCreator<
   IngredientStore,
   [],
   [],
-  IngredientStore> = (set, get) => ({
+  IngredientStore> = set => ({
   ...initialState,
 
-  setIngredients: (ingredients) => {
-    let useIngredients: Ingredients = []
-    if (Array.isArray(ingredients)) {
-      useIngredients = ingredients
-    }
-    else {
-      useIngredients = respToIngredients(ingredients)
-    }
+  setIngredientsAreLoaded: () => {
     set(produce((draft: State) => {
-      draft.ingredients = useIngredients
+      draft.ingredientsAreLoaded = true
+    },
+    ))
+  },
+  setIngredients: (ingredients) => {
+    set(produce((draft: State) => {
+      draft.ingredients = ingredients
     }))
   },
-  // Ingredients
-  getIngredients: async () => {
-    if (!get().ingredientsAreLoaded || get().ingredients.length == 0) {
-      const resp = await client.ListIngredients()
-      set(produce((draft: State) => {
-        draft.ingredients = respToIngredients(resp)
-        draft.ingredientsAreLoaded = true
-      }))
-    }
-  },
-
 })

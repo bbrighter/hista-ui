@@ -17,7 +17,7 @@ import { useState } from 'react'
 
 import useHista from '../../../store/store'
 import { Symptom, SymptomCategory } from '../../../store/symptom/symptom'
-import TextFieldSaveAndAbort from './TextFieldSaveAndAbort'
+import TextFieldSaveAndAbort from '../../components/TextFieldSaveAndAbort'
 
 export default function AccordionSymptoms(props: {
   category: SymptomCategory
@@ -27,11 +27,11 @@ export default function AccordionSymptoms(props: {
       <List>
         {Array.isArray(props.category.symptoms)
           ? props.category.symptoms.map(s => (
-              <SymptomAccordionEntry
-                key={s.id}
-                symptom={s}
-              />
-            ))
+            <SymptomAccordionEntry
+              key={s.id}
+              symptom={s}
+            />
+          ))
           : null}
       </List>
     </AccordionDetails>

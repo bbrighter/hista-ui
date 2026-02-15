@@ -12,16 +12,16 @@ import routes from './routes'
 dayjs.locale('de')
 
 const darkTheme = createTheme({
-    palette: {
-        mode: 'dark',
-    },
+  palette: {
+    mode: 'dark',
+  },
 })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-        <ThemeProvider theme={darkTheme}>
-            <CssBaseline />
-            <RouterProvider router={routes} />
-        </ThemeProvider>
-    </React.StrictMode>,
+  <React.StrictMode>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <RouterProvider router={routes} />
+    </ThemeProvider>
+  </React.StrictMode>,
 )

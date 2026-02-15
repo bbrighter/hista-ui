@@ -5,7 +5,7 @@ import Modal from '@mui/material/Modal'
 import { useState } from 'react'
 
 import useHista from '../../../store/store'
-import TextFieldSaveAndAbort from './TextFieldSaveAndAbort'
+import TextFieldSaveAndAbort from '../../components/TextFieldSaveAndAbort'
 
 export default function AddSymptomCategory() {
   const [open, setOpen] = useState(false)

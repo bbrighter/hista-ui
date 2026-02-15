@@ -11,7 +11,7 @@ import { useState } from 'react'
 
 import useHista from '../../../store/store'
 import { SymptomCategory } from '../../../store/symptom/symptom'
-import TextFieldSaveAndAbort from './TextFieldSaveAndAbort'
+import TextFieldSaveAndAbort from '../../components/TextFieldSaveAndAbort'
 
 export default function AccordionCategory(props: {
   category: SymptomCategory

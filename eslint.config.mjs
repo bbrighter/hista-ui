@@ -1,11 +1,12 @@
-import jseslint from '@eslint/js'
-import stylistic from '@stylistic/eslint-plugin'
-import { defineConfig } from 'eslint/config'
-import pluginReact from 'eslint-plugin-react'
-import reactCompiler from 'eslint-plugin-react-compiler'
-import simpleImportSort from 'eslint-plugin-simple-import-sort'
-import globals from 'globals'
-import tseslint from 'typescript-eslint'
+import jseslint from '@eslint/js';
+import stylistic from '@stylistic/eslint-plugin';
+import { defineConfig } from 'eslint/config';
+import prettierConfig from 'eslint-config-prettier';
+import pluginReact from 'eslint-plugin-react';
+import reactCompiler from 'eslint-plugin-react-compiler';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
 export default defineConfig([
   {
@@ -15,17 +16,19 @@ export default defineConfig([
   tseslint.configs.recommended,
   stylistic.configs.recommended,
   reactCompiler.configs.recommended,
+  prettierConfig,
+
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     languageOptions: {
       globals: globals.browser,
     },
     plugins: {
-      'react': pluginReact,
+      react: pluginReact,
       'simple-import-sort': simpleImportSort,
     },
     rules: {
-      'quotes': ['error', 'single'],
+      quotes: ['error', 'single'],
       'comma-dangle': ['error', 'always-multiline'],
       'object-curly-spacing': ['error', 'always'],
       'no-console': 'warn',
@@ -33,21 +36,22 @@ export default defineConfig([
       'react/prop-types': 'off',
       'simple-import-sort/imports': 'warn',
       'simple-import-sort/exports': 'error',
-      'indent': 'off',
-      '@stylistic/indent': 'off',
-          '@typescript-eslint/no-unused-vars': [
-      'error',
-      {
-        args: 'all',
-        argsIgnorePattern: '^_',
-        caughtErrors: 'all',
-        caughtErrorsIgnorePattern: '^_',
-        destructuredArrayIgnorePattern: '^_',
-        varsIgnorePattern: '^_',
-        ignoreRestSiblings: true,
-      },
-    ],
+      indent: 'off',
+      '@stylistic/indent': ['warn', 2],
+      '@stylistic/jsx-indent-props': ['warn', 2],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          args: 'all',
+          argsIgnorePattern: '^_',
+          caughtErrors: 'all',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
       'no-unused-vars': 'off',
     },
-  }],
-)
+  },
+]);

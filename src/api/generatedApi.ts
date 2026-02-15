@@ -223,6 +223,10 @@ export namespace hista {
         types: entity.HeadacheTypes
     }
 
+    export interface PatchIngredientParams {
+        name: string
+    }
+
     export interface PatchSeverityRequestParams {
         severity: entity.Severity
     }
@@ -261,11 +265,13 @@ export namespace hista {
 
         constructor(baseClient: BaseClient) {
             this.baseClient = baseClient
+            this.ArchiveIngredient = this.ArchiveIngredient.bind(this)
             this.CreateConditionEvent = this.CreateConditionEvent.bind(this)
             this.DeleteCondition = this.DeleteCondition.bind(this)
             this.DeleteConditionEvent = this.DeleteConditionEvent.bind(this)
             this.DeleteFood = this.DeleteFood.bind(this)
             this.DeleteHeadache = this.DeleteHeadache.bind(this)
+            this.DeleteIngredient = this.DeleteIngredient.bind(this)
             this.DeleteMeal = this.DeleteMeal.bind(this)
             this.DeleteNote = this.DeleteNote.bind(this)
             this.DeleteStatus = this.DeleteStatus.bind(this)
@@ -294,6 +300,7 @@ export namespace hista {
             this.PatchHeadacheSeverity = this.PatchHeadacheSeverity.bind(this)
             this.PatchHeadacheSymptoms = this.PatchHeadacheSymptoms.bind(this)
             this.PatchHeadacheTypes = this.PatchHeadacheTypes.bind(this)
+            this.PatchIngredient = this.PatchIngredient.bind(this)
             this.PatchMeal = this.PatchMeal.bind(this)
             this.PatchNote = this.PatchNote.bind(this)
             this.PatchStatus = this.PatchStatus.bind(this)
@@ -306,6 +313,10 @@ export namespace hista {
             this.PostNote = this.PostNote.bind(this)
             this.PostStatus = this.PostStatus.bind(this)
             this.PostSymptomCategory = this.PostSymptomCategory.bind(this)
+        }
+
+        public async ArchiveIngredient(piid: string, id: number): Promise<void> {
+            await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/ingredients/${encodeURIComponent(id)}/archive`)
         }
 
         public async CreateConditionEvent(piid: string): Promise<entity.ConditionEventResponse> {
@@ -334,6 +345,10 @@ export namespace hista {
 
         public async DeleteHeadache(piid: string, id: number): Promise<void> {
             await this.baseClient.callTypedAPI("DELETE", `/piid/${encodeURIComponent(piid)}/headaches/${encodeURIComponent(id)}`)
+        }
+
+        public async DeleteIngredient(piid: string, id: number): Promise<void> {
+            await this.baseClient.callTypedAPI("DELETE", `/piid/${encodeURIComponent(piid)}/ingredients/${encodeURIComponent(id)}`)
         }
 
         public async DeleteMeal(piid: string, id: number): Promise<entity.IngredientsResponse> {
@@ -485,6 +500,10 @@ export namespace hista {
             await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/headaches/${encodeURIComponent(id)}/types`, JSON.stringify(params))
         }
 
+        public async PatchIngredient(piid: string, id: number, params: PatchIngredientParams): Promise<void> {
+            await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/ingredients/${encodeURIComponent(id)}`, JSON.stringify(params))
+        }
+
         public async PatchMeal(piid: string, id: number, params: entity.PatchMealParams): Promise<void> {
             await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/meals/${encodeURIComponent(id)}`, JSON.stringify(params))
         }
@@ -634,6 +653,7 @@ export namespace entity {
     export interface IngredientResponse {
         id: number
         name: string
+        isArchived: boolean
     }
 
     export interface IngredientsResponse {

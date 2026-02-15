@@ -27,17 +27,17 @@ export default function PollenView() {
       <List>
         {isLoading
           ? Array.from({ length: 10 }).map((_, i) => (
-              <Skeleton
-                key={i}
-                variant="rectangular"
-                width="calc(max(20%, 100px) + 8 * max(10%, 20px))"
-                height="1.5rem"
-                sx={{ marginTop: 2 }}
-              />
-            ))
+            <Skeleton
+              key={i}
+              variant="rectangular"
+              width="calc(max(20%, 100px) + 8 * max(10%, 20px))"
+              height="1.5rem"
+              sx={{ marginTop: 2 }}
+            />
+          ))
           : pollens.map((pollen, i) =>
-              <PollenRow key={i} pollen={pollen} />,
-            )}
+            <PollenRow key={i} pollen={pollen} />,
+          )}
       </List>
     </Container>
   )

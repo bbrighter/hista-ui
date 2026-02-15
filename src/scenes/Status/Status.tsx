@@ -24,22 +24,22 @@ export default function Status() {
       <Grid container>
         {isLoading
           ? (
-              <>
-                {[{ id: 1, date: dayjs() }, { id: 2, date: dayjs() }, { id: 3, date: dayjs() }].map(s =>
-                  (
-                    <Skeleton key={s.id}><StatusCard status={s} /></Skeleton>
-                  ))}
-              </>
-            )
+            <>
+              {[{ id: 1, date: dayjs() }, { id: 2, date: dayjs() }, { id: 3, date: dayjs() }].map(s =>
+                (
+                  <Skeleton key={s.id}><StatusCard status={s} /></Skeleton>
+                ))}
+            </>
+          )
 
           : (
-              <>
-                {statuses.map(s => (
-                  <StatusCard key={s.id} status={s} />
+            <>
+              {statuses.map(s => (
+                <StatusCard key={s.id} status={s} />
 
-                ))}
-              </>
-            )}
+              ))}
+            </>
+          )}
       </Grid>
     </Container>
   )

@@ -3,8 +3,8 @@ import { http, HttpResponse } from 'msw'
 import { entity, hista } from '../../api/generatedApi'
 
 const ingredients = [
-  { id: 1, name: 'ingredient1' },
-  { id: 2, name: 'ingredient2' },
+  { id: 1, name: 'ingredient1', isArchived: false },
+  { id: 2, name: 'ingredient2', isArchived: false },
 ]
 
 const mealHandlers = (baseUrl: string) => ([
@@ -26,6 +26,9 @@ const mealHandlers = (baseUrl: string) => ([
 
 const ingredientHandlers = (baseUrl: string) => ([
   http.get(baseUrl + '/ingredients', () => (HttpResponse.json({ ingredients: ingredients }))),
+  http.delete(baseUrl + '/ingredients/:id', () => (HttpResponse.json({}))),
+  http.patch(baseUrl + '/ingredients/:id', () => (HttpResponse.json({}))),
+  http.patch(baseUrl + '/ingredients/:id/archive', () => (HttpResponse.json({}))),
 ])
 
 const foodHandlers = (baseUrl: string) => ([
@@ -36,18 +39,20 @@ const foodHandlers = (baseUrl: string) => ([
     if ('ingredientName' in body) {
       const name = body.ingredientName
       return HttpResponse.json(
-        { food:
-            { id: 1, ingredient: { id: 3, name: name }, foodCondition: 'raw' },
-        ingredients:
-            { ingredients: [{ id: 3, name: name }, ...ingredients] },
+        {
+          food:
+                        { id: 1, ingredient: { id: 3, name: name }, foodCondition: 'raw' },
+          ingredients:
+                        { ingredients: [{ id: 3, name: name }, ...ingredients] },
         } as hista.PostFoodResponse)
     }
     const name = ingredients.find(i => i.id == body.ingredientId).name
     return HttpResponse.json(
-      { food:
-            { id: 1, ingredient: { id: body.ingredientId, name: name }, foodCondition: 'raw' },
-      ingredients:
-            { ingredients: ingredients },
+      {
+        food:
+                    { id: 1, ingredient: { id: body.ingredientId, name: name }, foodCondition: 'raw' },
+        ingredients:
+                    { ingredients: ingredients },
       } as hista.PostFoodResponse)
   }),
 

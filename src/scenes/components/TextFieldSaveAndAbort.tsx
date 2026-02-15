@@ -37,6 +37,7 @@ export default function TextFieldSaveAndAbort(props: {
         value={value}
         onChange={e => setValue(e.target.value)}
         onClick={e => e.stopPropagation()}
+        data-testid='renameTextField'
       />
       <ButtonGroup sx={{ pl: 2, pt: 1 }}>
         <IconButton

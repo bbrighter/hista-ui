@@ -6,6 +6,8 @@ import TextField from '@mui/material/TextField'
 import { useEffect, useState } from 'react'
 import React from 'react'
 
+import { useNonArchivedIngredients } from '../../../store/selectors/ingredients.selectors'
+import { ingredientsService } from '../../../store/service/ingredients.service'
 import useHista from '../../../store/store'
 
 interface InputOption {
@@ -22,9 +24,8 @@ const isNewOption = (v: unknown): v is NewOption => {
 }
 
 export default function AddFood() {
-  const getIngredients = useHista(state => state.getIngredients)
   const postFood = useHista(state => state.postFood)
-  const ingredients = useHista(state => state.ingredients)
+  const ingredients = useNonArchivedIngredients()
   const options: Array<Option> = ingredients.map(ing => ({ name: ing.name, id: ing.id }))
 
   const [inputValue, setInputValue] = useState<string | undefined>('')
@@ -32,8 +33,8 @@ export default function AddFood() {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    getIngredients()
-  }, [getIngredients])
+    ingredientsService.getIngredients()
+  }, [])
 
   useEffect(() => {
     let name: string | undefined = undefined

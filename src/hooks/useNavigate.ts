@@ -32,6 +32,7 @@ export const useAppNavigate = () => {
       headaches: () => navigateWithPiid(appRoutes.headaches),
       headacheDetails: (headacheId: number) => navigateWithPiid(appRoutes.headacheDetails, { headacheId }),
       manageSymptoms: () => navigateWithPiid(appRoutes.manageSymptoms),
+      manageIngredients: () => navigateWithPiid(appRoutes.manageIngredients),
     },
   }
 }
