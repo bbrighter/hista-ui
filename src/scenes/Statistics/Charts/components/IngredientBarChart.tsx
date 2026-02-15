@@ -16,7 +16,7 @@ export const IngredientBarChart = ({ severityFilter }: { severityFilter: Array<n
         { dataKey: "hours1", label: "1 h", stack: "total", color: "rgb(180, 0, 0)" },
         { dataKey: "hours24", label: "24 h", stack: "total", color: "rgb(180, 102, 0)" },
         { dataKey: "hours72", label: "72 h", stack: "total", color: "rgb(168, 180, 0)" },
-        { dataKey: "total", label: "Gesamt", stack: "total", color: "rgb(120,120,120)" },
+        { dataKey: "total", label: "Ohne Symptome", stack: "total", color: "rgb(120,120,120)" },
       ]}
     />
   )
