@@ -24,6 +24,7 @@ const piidRoutes = {
     headaches: '/headaches',
     headacheDetails: '/headaches/:headacheId',
     manageSymptoms: '/manage-symptoms',
+    manageIngredients: '/manage-ingredients',
 }
 
 const addPiid = (route: string): string => {

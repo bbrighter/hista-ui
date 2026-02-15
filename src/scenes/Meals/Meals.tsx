@@ -1,5 +1,6 @@
 import RestaurantIcon from '@mui/icons-material/Restaurant'
 import Button from '@mui/material/Button'
+import ButtonGroup from '@mui/material/ButtonGroup'
 import Container from '@mui/material/Container'
 import { useState } from 'react'
 
@@ -21,16 +22,25 @@ export default function Meals() {
     }
   }
 
+  const onManageClick = () => {
+    navigate.to.manageIngredients()
+  }
+
   return (
     <Container sx={{ padding: '2rem' }}>
-      <Button
-        startIcon={<RestaurantIcon />}
-        variant="outlined"
-        onClick={onCreate}
-        loading={loading}
-      >
-        Neue Mahlzeit
-      </Button>
+      <ButtonGroup>
+        <Button
+          startIcon={<RestaurantIcon />}
+          variant="contained"
+          onClick={onCreate}
+          loading={loading}
+        >
+            Neue Mahlzeit
+        </Button>
+        <Button onClick={onManageClick}>
+            Zutaten verwalten
+        </Button>
+      </ButtonGroup>
       <MealList />
     </Container>
   )

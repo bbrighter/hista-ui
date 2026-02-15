@@ -1,55 +1,41 @@
 import { produce } from 'immer'
 import { StateCreator } from 'zustand'
 
-import { client } from '../../api/api'
-import { entity } from '../../api/generatedApi'
-import { Ingredients, respToIngredients } from './ingredients'
+import { Ingredients } from './../types'
 
 interface State {
-  ingredients: Ingredients
-  ingredientsAreLoaded: boolean
+    ingredients: Ingredients
+    ingredientsAreLoaded: boolean
 }
 
 interface Actions {
-  setIngredients: (ingredients: Ingredients | entity.IngredientsResponse) => void
-  getIngredients: () => Promise<void>
+    setIngredientsAreLoaded: () => void
+    setIngredients: (ingredients: Ingredients) => void
 }
 
 export interface IngredientStore extends State, Actions { }
 
 const initialState: State = {
-  ingredients: [],
-  ingredientsAreLoaded: false,
+    ingredients: [],
+    ingredientsAreLoaded: false,
 }
 
 export const createIngredientSlice: StateCreator<
-  IngredientStore,
-  [],
-  [],
-  IngredientStore> = (set, get) => ({
-  ...initialState,
+    IngredientStore,
+    [],
+    [],
+    IngredientStore> = set => ({
+        ...initialState,
 
-  setIngredients: (ingredients) => {
-    let useIngredients: Ingredients = []
-    if (Array.isArray(ingredients)) {
-      useIngredients = ingredients
-    }
-    else {
-      useIngredients = respToIngredients(ingredients)
-    }
-    set(produce((draft: State) => {
-      draft.ingredients = useIngredients
-    }))
-  },
-  // Ingredients
-  getIngredients: async () => {
-    if (!get().ingredientsAreLoaded || get().ingredients.length == 0) {
-      const resp = await client.ListIngredients()
-      set(produce((draft: State) => {
-        draft.ingredients = respToIngredients(resp)
-        draft.ingredientsAreLoaded = true
-      }))
-    }
-  },
-
-})
+        setIngredientsAreLoaded: () => {
+            set(produce((draft: State) => {
+                draft.ingredientsAreLoaded = true
+            },
+            ))
+        },
+        setIngredients: (ingredients) => {
+            set(produce((draft: State) => {
+                draft.ingredients = ingredients
+            }))
+        },
+    })

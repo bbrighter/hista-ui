@@ -3,6 +3,7 @@ import { StateCreator } from 'zustand'
 
 import { client } from '../../api/api'
 import { entity, hista } from '../../api/generatedApi'
+import { respToIngredients } from '../types'
 import { FoodCondition, respToFood } from './food'
 import { IngredientStore } from './ingredientStore'
 import { Freshness, Meal, respToMeal, stringToFreshness } from './meal'
@@ -82,7 +83,7 @@ export const createMealSlice: StateCreator<
     set(produce((draft: State) => {
       draft.meals = removeItemById(id, get().meals)
     }))
-    get().setIngredients(resp)
+    get().setIngredients(respToIngredients(resp))
   },
 
   // Meal
@@ -128,13 +129,13 @@ export const createMealSlice: StateCreator<
     set(produce((draft: State) => {
       draft.meal.foods.unshift(food)
     }))
-    get().setIngredients(resp.ingredients)
+    get().setIngredients(respToIngredients(resp.ingredients))
   },
 
   // Food
   deleteFood: async (foodId: number) => {
     const resp = await client.DeleteFood(foodId)
-    get().setIngredients(resp)
+    get().setIngredients(respToIngredients(resp))
     set(produce((draft: State) => {
       draft.meal.foods = removeItemById(foodId, get().meal.foods)
     }))

@@ -56,6 +56,11 @@ const rawRoutes: Array<RawRoute> = [
         element: lazy(() => import('./scenes/Meals')),
         name: 'Meals',
     },
+        {
+        path: appRoutes.manageIngredients,
+        element: lazy(() => import('./scenes/IngredientManagement')),
+        name: 'IngredientManagement',
+    },
     {
         path: appRoutes.mealDetails,
         element: lazy(() => import('./scenes/Meal')),

@@ -2,20 +2,18 @@ import MenuItem from '@mui/material/MenuItem'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { useEffect, useState } from 'react'
 
+import { ingredientsService } from '../../../../store/service/ingredients.service'
 import useHista from '../../../../store/store'
 
 export default function IngredientSelect({ onChange }: {
   onChange: (id: number) => void
 }) {
-  const getIngredients = useHista(state => state.getIngredients)
   const ingredients = useHista(state => state.ingredients)
   const sortedIngredients = [...ingredients].sort((a, b) => a.name.localeCompare(b.name))
   const [value, setValue] = useState(0)
 
   useEffect(() => {
-    if (ingredients.length == 0) {
-      getIngredients()
-    }
+    ingredientsService.getIngredients()
   }, [])
 
   const handleChange = (e: SelectChangeEvent<number>) => {
