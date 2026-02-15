@@ -65,5 +65,11 @@ describe("IngredientManagement", () => {
 
     expect(screen.queryByLabelText("Zutat")).not.toBeInTheDocument()
     expect(screen.getByText("ingredient1 new")).toBeInTheDocument()
+
+    await userEvent.click(editButton)
+    const newTextField = screen.getByLabelText("Zutat")
+    await userEvent.clear(newTextField)
+    await userEvent.type(newTextField, "ingredient2")
+    expect(saveButton).toBeDisabled()
   })
 })
