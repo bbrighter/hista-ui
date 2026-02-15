@@ -47,70 +47,70 @@ export default function MealSettings() {
         {meal.isLoading
           ? <Skeleton height="4rem" variant="rectangular" />
           : (
-              <DateInput
-                title="Mahlzeit"
-                date={meal.date}
-                onChange={e => setDate(e?.toISOString() || new Date().toISOString())}
-              />
-            )}
+            <DateInput
+              title="Mahlzeit"
+              date={meal.date}
+              onChange={e => setDate(e?.toISOString() || new Date().toISOString())}
+            />
+          )}
       </Grid>
       <Grid size={{ xs: 12 }}>
         {meal.isLoading
           ? <Skeleton height="3rem" variant="rectangular" />
           : (
-              <DebouncedSlider
-                key={meal.stressLevel}
-                label="Stress"
-                onChange={setStressLevel}
-                max={4}
-                min={0}
-                muiColorMapping={colorFromStressLevel}
-                initialValue={meal.stressLevel}
-                iconMapping={iconFromStressLevel}
-              />
-            )}
+            <DebouncedSlider
+              key={meal.stressLevel}
+              label="Stress"
+              onChange={setStressLevel}
+              max={4}
+              min={0}
+              muiColorMapping={colorFromStressLevel}
+              initialValue={meal.stressLevel}
+              iconMapping={iconFromStressLevel}
+            />
+          )}
       </Grid>
       <Grid size={{ xs: 8 }}>
         {meal.isLoading
           ? <Skeleton variant="rectangular" height="3rem" />
           : (
-              <DebouncedSlider
-                key={meal.freshness}
-                label="Frische"
-                onChange={setFreshness}
-                max={2}
-                min={0}
-                muiColorMapping={colorFromFreshness}
-                initialValue={meal.freshness}
-                iconMapping={iconFromFreshness}
-              />
-            )}
+            <DebouncedSlider
+              key={meal.freshness}
+              label="Frische"
+              onChange={setFreshness}
+              max={2}
+              min={0}
+              muiColorMapping={colorFromFreshness}
+              initialValue={meal.freshness}
+              iconMapping={iconFromFreshness}
+            />
+          )}
       </Grid>
       <Grid size={{ xs: 4 }} sx={{ textAlign: 'center' }}>
         {meal.isLoading
           ? <Skeleton variant="rectangular" height="3rem" />
           : (
-              <ToggleButtonGroup
-                exclusive
-                value={meal.isAlone}
-                onChange={handleToggleOptionChange}
+            <ToggleButtonGroup
+              exclusive
+              value={meal.isAlone}
+              onChange={handleToggleOptionChange}
+            >
+              <ToggleButton
+                sx={{ width: '3rem' }}
+                value={true}
+                title="Alleine"
               >
-                <ToggleButton
-                  sx={{ width: '3rem' }}
-                  value={true}
-                  title="Alleine"
-                >
-                  {isLoading == true ? <CircularProgress size={20} /> : <PersonIcon />}
-                </ToggleButton>
-                <ToggleButton
-                  value={false}
-                  sx={{ width: '3rem' }}
-                  title="Zusammen"
-                >
-                  {isLoading == false ? <CircularProgress size={20} /> : <PeopleIcon />}
-                </ToggleButton>
-              </ToggleButtonGroup>
-            )}
+                {isLoading == true ? <CircularProgress size={20} /> : <PersonIcon />}
+              </ToggleButton>
+              <ToggleButton
+                value={false}
+                sx={{ width: '3rem' }}
+                title="Zusammen"
+              >
+                {isLoading == false ? <CircularProgress size={20} /> : <PeopleIcon />}
+              </ToggleButton>
+            </ToggleButtonGroup>
+          )}
       </Grid>
     </Grid>
 

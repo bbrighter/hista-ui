@@ -62,6 +62,7 @@
     "@vitest/coverage-v8": "^4.0.18",
     "dependency-cruiser": "^17.3.7",
     "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-compiler": "19.1.0-rc.2",
     "eslint-plugin-simple-import-sort": "^12.1.1",

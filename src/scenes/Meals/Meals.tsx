@@ -35,10 +35,10 @@ export default function Meals() {
           onClick={onCreate}
           loading={loading}
         >
-            Neue Mahlzeit
+          Neue Mahlzeit
         </Button>
         <Button onClick={onManageClick}>
-            Zutaten verwalten
+          Zutaten verwalten
         </Button>
       </ButtonGroup>
       <MealList />

@@ -5,18 +5,18 @@ import IconButton from '@mui/material/IconButton'
 import { ingredientsService } from '../../../store/service/ingredients.service'
 
 export const ArchiveButton = ({ id, isArchived }: { id: number, isArchived: boolean }) => {
-    const onClick = () => {
-        ingredientsService.archive(id)
-    }
+  const onClick = () => {
+    ingredientsService.archive(id)
+  }
 
-    return (
+  return (
     <IconButton
       onClick={onClick}
       data-testid="archiveButton"
     >
-        {isArchived
+      {isArchived
         ? <UnarchiveIcon color="disabled" />
-            : <ArchiveIcon />}
+        : <ArchiveIcon />}
     </IconButton>
-    )
+  )
 }

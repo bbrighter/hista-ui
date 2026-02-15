@@ -27,11 +27,11 @@ export default function AccordionSymptoms(props: {
       <List>
         {Array.isArray(props.category.symptoms)
           ? props.category.symptoms.map(s => (
-              <SymptomAccordionEntry
-                key={s.id}
-                symptom={s}
-              />
-            ))
+            <SymptomAccordionEntry
+              key={s.id}
+              symptom={s}
+            />
+          ))
           : null}
       </List>
     </AccordionDetails>

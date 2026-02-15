@@ -7,23 +7,23 @@ import useHista from '../../store/store'
 import { IngredientListItem } from './IngredientListItem'
 
 export const IngredientManagement = () => {
-    const ingredients = useHista(state => state.ingredients)
-    const sortedIngredients = [...ingredients].sort((a, b) => a.name.localeCompare(b.name))
+  const ingredients = useHista(state => state.ingredients)
+  const sortedIngredients = [...ingredients].sort((a, b) => a.name.localeCompare(b.name))
 
-    useEffect(() => {
-        ingredientsService.getIngredients()
-    }, [])
+  useEffect(() => {
+    ingredientsService.getIngredients()
+  }, [])
 
-    return (
+  return (
     <Container>
-        <List>
-            {sortedIngredients.map(i => (
-                <IngredientListItem
-                  key={i.id}
-                  {...i}
-                />
-                ))}
-        </List>
+      <List>
+        {sortedIngredients.map(i => (
+          <IngredientListItem
+            key={i.id}
+            {...i}
+          />
+        ))}
+      </List>
     </Container>
-    )
+  )
 }

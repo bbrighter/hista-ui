@@ -2,15 +2,18 @@ import { ingredientsService } from '../../../store/service/ingredients.service'
 import TextFieldSaveAndAbort from '../../components/TextFieldSaveAndAbort'
 
 export const EditIngredientName = ({ id, name, onCancel }:
-    {
-        id: number
-        name: string
-        onCancel: () => void
+{
+  id: number
+  name: string
+  onCancel: () => void
 
-    }) => {
-    const onSave = (name: string) => ingredientsService.changeName(id, name)
+}) => {
+  const onSave = async (v: string) => {
+    await ingredientsService.changeName(id, v)
+    onCancel()
+  }
 
-    return (
+  return (
     <TextFieldSaveAndAbort
       label="Zutat"
       onCancel={onCancel}
@@ -19,5 +22,5 @@ export const EditIngredientName = ({ id, name, onCancel }:
       value={name}
       onSave={onSave}
     />
-    )
+  )
 }
