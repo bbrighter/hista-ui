@@ -1,5 +1,5 @@
-import { entity } from '../../api/generatedApi'
-import { Food, respToFood } from './food'
+import { entity } from "../../api/generatedApi"
+import { Food, respToFood } from "./food"
 
 export interface Meal {
   id?: number

@@ -1,9 +1,9 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it } from "vitest"
 
-import useHista from '../store'
+import useHista from "../store"
 
-describe('pollenStore', () => {
-  it('getPollens', async () => {
+describe("pollenStore", () => {
+  it("getPollens", async () => {
     expect(useHista.getState().pollensAreLoaded).toBeFalsy()
     await useHista.getState().getPollens()
     expect(useHista.getState().pollensAreLoaded).toBeTruthy()

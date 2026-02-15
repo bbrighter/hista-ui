@@ -1,4 +1,4 @@
-import useHista from '../store'
+import useHista from "../store"
 
 export const useNonArchivedIngredients = () => {
   const ingredients = useHista(state => state.ingredients)

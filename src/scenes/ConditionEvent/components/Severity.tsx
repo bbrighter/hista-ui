@@ -1,10 +1,10 @@
-import Slider from '@mui/material/Slider'
-import { useState } from 'react'
+import Slider from "@mui/material/Slider"
+import { useState } from "react"
 
-import useDebounce from '../../../hooks/useDebounce'
-import { useDidUpdateEffect } from '../../../hooks/useDidUpdateEffect'
-import useHista from '../../../store/store'
-import { colorFromSeverity } from '../../../store/symptom/condition'
+import useDebounce from "../../../hooks/useDebounce"
+import { useDidUpdateEffect } from "../../../hooks/useDidUpdateEffect"
+import useHista from "../../../store/store"
+import { colorFromSeverity } from "../../../store/symptom/condition"
 
 export default function Severity(props: {
   severity: number
@@ -19,14 +19,14 @@ export default function Severity(props: {
   }, [debouncedSeverity])
 
   const onChangeSeverity = (_event: unknown, value: number | number[]) => {
-    if (typeof (value) == 'number') {
+    if (typeof (value) == "number") {
       setSeverity(value)
     }
   }
 
   return (
     <Slider
-      sx={{ maxWidth: '50%', marginRight: '30px' }}
+      sx={{ maxWidth: "50%", marginRight: "30px" }}
       min={1}
       max={5}
       value={severity}

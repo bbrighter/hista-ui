@@ -1,11 +1,11 @@
-import Box from '@mui/material/Box'
-import Slider from '@mui/material/Slider'
-import Stack from '@mui/material/Stack'
-import Typography from '@mui/material/Typography'
-import { JSX, useEffect, useState } from 'react'
+import Box from "@mui/material/Box"
+import Slider from "@mui/material/Slider"
+import Stack from "@mui/material/Stack"
+import Typography from "@mui/material/Typography"
+import { JSX, useEffect, useState } from "react"
 
-import useDebounce from '../../hooks/useDebounce'
-import { useDidUpdateEffect } from '../../hooks/useDidUpdateEffect'
+import useDebounce from "../../hooks/useDebounce"
+import { useDidUpdateEffect } from "../../hooks/useDidUpdateEffect"
 
 export default function DebouncedSlider(props: {
   initialValue: number
@@ -13,7 +13,7 @@ export default function DebouncedSlider(props: {
   label: string
   min?: number
   max?: number
-  muiColorMapping?: (value: number) => 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'
+  muiColorMapping?: (value: number) => "primary" | "secondary" | "error" | "info" | "success" | "warning"
   colorMapping?: (value: number) => string
   icon?: JSX.Element
   iconMapping?: (value: number) => JSX.Element
@@ -34,7 +34,7 @@ export default function DebouncedSlider(props: {
   }, [debouncedSliderValue])
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: "100%" }}>
       <Typography gutterBottom>{props.label}</Typography>
       <Stack spacing={3} direction="row" alignItems="center">
         {props.icon}
@@ -46,13 +46,13 @@ export default function DebouncedSlider(props: {
           max={props.max || 5}
           min={props.min || 0}
           valueLabelDisplay="auto"
-          color={props.muiColorMapping ? props.muiColorMapping(value) : 'primary'}
+          color={props.muiColorMapping ? props.muiColorMapping(value) : "primary"}
           sx={{
-            '& .MuiSlider-thumb': {
-              backgroundColor: props.colorMapping ? props.colorMapping(value) : 'primary',
+            "& .MuiSlider-thumb": {
+              backgroundColor: props.colorMapping ? props.colorMapping(value) : "primary",
             },
-            '& .MuiSlider-track': {
-              backgroundColor: props.colorMapping ? props.colorMapping(value) : 'primary',
+            "& .MuiSlider-track": {
+              backgroundColor: props.colorMapping ? props.colorMapping(value) : "primary",
             },
           }}
         />

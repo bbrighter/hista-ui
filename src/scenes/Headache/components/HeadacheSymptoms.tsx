@@ -1,6 +1,6 @@
-import { validHeadacheSymptoms } from '../../../store/headaches/headaches'
-import useHista from '../../../store/store'
-import HeadacheInputs, { ValueLabelPair } from './Tags'
+import { validHeadacheSymptoms } from "../../../store/headaches/headaches"
+import useHista from "../../../store/store"
+import HeadacheInputs, { ValueLabelPair } from "./Tags"
 
 export default function HeadacheSymptomsButtons() {
   const symptoms = useHista(state => state.headache.symptoms)

@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom"
 
-import { appRoutes, buildPath } from '../constants'
-import useHista from '../store/store'
+import { appRoutes, buildPath } from "../constants"
+import useHista from "../store/store"
 
 export const useAppNavigate = () => {
   const navigate = useNavigate()
@@ -12,7 +12,7 @@ export const useAppNavigate = () => {
       return navigate(appRoutes.login, { replace: true })
     }
     const path = buildPath(template, params)
-    const piidPath = path.replace(':piid', piid)
+    const piidPath = path.replace(":piid", piid)
     return navigate(piidPath)
   }
 

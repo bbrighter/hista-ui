@@ -1,6 +1,6 @@
-import Chip from '@mui/material/Chip'
-import Divider from '@mui/material/Divider'
-import Typography from '@mui/material/Typography'
+import Chip from "@mui/material/Chip"
+import Divider from "@mui/material/Divider"
+import Typography from "@mui/material/Typography"
 
 export default function HeadacheInputs(props: {
   label: string
@@ -55,7 +55,7 @@ function HeadacheTag(props: {
     <Chip
       label={<Typography variant="body1">{props.value.label}</Typography>}
       onClick={handleClick}
-      color={props.active ? 'primary' : 'default'}
+      color={props.active ? "primary" : "default"}
       sx={{
         margin: 0.5,
         padding: 0.2,

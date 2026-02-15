@@ -1,14 +1,14 @@
-import Autocomplete from '@mui/material/Autocomplete'
-import CircularProgress from '@mui/material/CircularProgress'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
-import TextField from '@mui/material/TextField'
-import { useEffect, useState } from 'react'
-import React from 'react'
+import Autocomplete from "@mui/material/Autocomplete"
+import CircularProgress from "@mui/material/CircularProgress"
+import ListItem from "@mui/material/ListItem"
+import ListItemText from "@mui/material/ListItemText"
+import TextField from "@mui/material/TextField"
+import { useEffect, useState } from "react"
+import React from "react"
 
-import { useNonArchivedIngredients } from '../../../store/selectors/ingredients.selectors'
-import { ingredientsService } from '../../../store/service/ingredients.service'
-import useHista from '../../../store/store'
+import { useNonArchivedIngredients } from "../../../store/selectors/ingredients.selectors"
+import { ingredientsService } from "../../../store/service/ingredients.service"
+import useHista from "../../../store/store"
 
 interface InputOption {
   id: number
@@ -20,7 +20,7 @@ type NewOption = string
 type Option = InputOption | NewOption
 
 const isNewOption = (v: unknown): v is NewOption => {
-  return typeof (v) == 'string'
+  return typeof (v) == "string"
 }
 
 export default function AddFood() {
@@ -28,7 +28,7 @@ export default function AddFood() {
   const ingredients = useNonArchivedIngredients()
   const options: Array<Option> = ingredients.map(ing => ({ name: ing.name, id: ing.id }))
 
-  const [inputValue, setInputValue] = useState<string | undefined>('')
+  const [inputValue, setInputValue] = useState<string | undefined>("")
   const [value, setValue] = useState<Option | null>(null)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -49,7 +49,7 @@ export default function AddFood() {
       setIsLoading(true)
       postFood(name, id).then(() => {
         setValue(null)
-        setInputValue('')
+        setInputValue("")
       }).finally(() => {
         setIsLoading(false)
       },
@@ -68,7 +68,7 @@ export default function AddFood() {
 
   return (
     <Autocomplete
-      sx={{ mt: '1rem' }}
+      sx={{ mt: "1rem" }}
       options={options}
       freeSolo
       inputValue={inputValue}

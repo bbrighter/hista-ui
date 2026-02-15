@@ -1,17 +1,17 @@
-import DeleteIcon from '@mui/icons-material/Delete'
-import CircularProgress from '@mui/material/CircularProgress'
-import IconButton from '@mui/material/IconButton'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
-import ToggleButton from '@mui/material/ToggleButton'
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
-import Typography from '@mui/material/Typography'
-import { useState } from 'react'
+import DeleteIcon from "@mui/icons-material/Delete"
+import CircularProgress from "@mui/material/CircularProgress"
+import IconButton from "@mui/material/IconButton"
+import List from "@mui/material/List"
+import ListItem from "@mui/material/ListItem"
+import ListItemText from "@mui/material/ListItemText"
+import ToggleButton from "@mui/material/ToggleButton"
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
+import Typography from "@mui/material/Typography"
+import { useState } from "react"
 
-import { mealConstants } from '../../../constants'
-import { FoodCondition } from '../../../store/meal/food'
-import useHista from '../../../store/store'
+import { mealConstants } from "../../../constants"
+import { FoodCondition } from "../../../store/meal/food"
+import useHista from "../../../store/store"
 
 export default function FoodList() {
   const food = useHista(state => state.meal.foods)
@@ -54,7 +54,7 @@ export default function FoodList() {
             </Typography>
           </ListItemText>
           <ToggleButtonGroup
-            sx={{ paddingRight: '10px', paddingLeft: '10px' }}
+            sx={{ paddingRight: "10px", paddingLeft: "10px" }}
             size="small"
             exclusive
             value={f.condition}
@@ -63,11 +63,11 @@ export default function FoodList() {
               onChange(f.id, val)
             }}
           >
-            <ToggleButton value="raw" sx={{ width: '3rem' }} disabled={f.condition == 'raw'}>
-              {isPatchLoading?.id == f.id && isPatchLoading.cond == 'raw' ? <CircularProgress size={20} /> : mealConstants.RAW}
+            <ToggleButton value="raw" sx={{ width: "3rem" }} disabled={f.condition == "raw"}>
+              {isPatchLoading?.id == f.id && isPatchLoading.cond == "raw" ? <CircularProgress size={20} /> : mealConstants.RAW}
             </ToggleButton>
-            <ToggleButton value="cooked" sx={{ width: '3rem' }} disabled={f.condition == 'cooked'}>
-              {isPatchLoading?.id == f.id && isPatchLoading.cond == 'cooked' ? <CircularProgress size={20} /> : mealConstants.COOKED}
+            <ToggleButton value="cooked" sx={{ width: "3rem" }} disabled={f.condition == "cooked"}>
+              {isPatchLoading?.id == f.id && isPatchLoading.cond == "cooked" ? <CircularProgress size={20} /> : mealConstants.COOKED}
             </ToggleButton>
           </ToggleButtonGroup>
         </ListItem>

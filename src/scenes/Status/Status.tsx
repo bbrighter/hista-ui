@@ -1,12 +1,12 @@
-import Container from '@mui/material/Container'
-import Grid from '@mui/material/Grid'
-import Skeleton from '@mui/material/Skeleton'
-import dayjs from 'dayjs'
-import { useEffect, useState } from 'react'
+import Container from "@mui/material/Container"
+import Grid from "@mui/material/Grid"
+import Skeleton from "@mui/material/Skeleton"
+import dayjs from "dayjs"
+import { useEffect, useState } from "react"
 
-import useHista from '../../store/store'
-import AddStatus from './components/AddStatus'
-import StatusCard from './components/StatusCard'
+import useHista from "../../store/store"
+import AddStatus from "./components/AddStatus"
+import StatusCard from "./components/StatusCard"
 
 export default function Status() {
   const getStatuses = useHista(state => state.getStatuses)
@@ -19,7 +19,7 @@ export default function Status() {
   }, [])
 
   return (
-    <Container sx={{ padding: '2rem' }}>
+    <Container sx={{ padding: "2rem" }}>
       <AddStatus disabled={isLoading} />
       <Grid container>
         {isLoading

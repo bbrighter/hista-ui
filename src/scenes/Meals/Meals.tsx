@@ -1,12 +1,12 @@
-import RestaurantIcon from '@mui/icons-material/Restaurant'
-import Button from '@mui/material/Button'
-import ButtonGroup from '@mui/material/ButtonGroup'
-import Container from '@mui/material/Container'
-import { useState } from 'react'
+import RestaurantIcon from "@mui/icons-material/Restaurant"
+import Button from "@mui/material/Button"
+import ButtonGroup from "@mui/material/ButtonGroup"
+import Container from "@mui/material/Container"
+import { useState } from "react"
 
-import { useAppNavigate } from '../../hooks/useNavigate'
-import useHista from '../../store/store'
-import MealList from './components/MealList'
+import { useAppNavigate } from "../../hooks/useNavigate"
+import useHista from "../../store/store"
+import MealList from "./components/MealList"
 
 export default function Meals() {
   const navigate = useAppNavigate()
@@ -27,7 +27,7 @@ export default function Meals() {
   }
 
   return (
-    <Container sx={{ padding: '2rem' }}>
+    <Container sx={{ padding: "2rem" }}>
       <ButtonGroup>
         <Button
           startIcon={<RestaurantIcon />}

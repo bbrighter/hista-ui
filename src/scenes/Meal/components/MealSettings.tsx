@@ -1,22 +1,22 @@
-import LunchDiningIcon from '@mui/icons-material/LunchDining'
-import MoodIcon from '@mui/icons-material/Mood'
-import MoodBadIcon from '@mui/icons-material/MoodBad'
-import PeopleIcon from '@mui/icons-material/People'
-import PersonIcon from '@mui/icons-material/Person'
-import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied'
-import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral'
-import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied'
-import CircularProgress from '@mui/material/CircularProgress'
-import Grid from '@mui/material/Grid'
-import Skeleton from '@mui/material/Skeleton'
-import ToggleButton from '@mui/material/ToggleButton'
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
-import { JSX, useState } from 'react'
+import LunchDiningIcon from "@mui/icons-material/LunchDining"
+import MoodIcon from "@mui/icons-material/Mood"
+import MoodBadIcon from "@mui/icons-material/MoodBad"
+import PeopleIcon from "@mui/icons-material/People"
+import PersonIcon from "@mui/icons-material/Person"
+import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied"
+import SentimentNeutralIcon from "@mui/icons-material/SentimentNeutral"
+import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied"
+import CircularProgress from "@mui/material/CircularProgress"
+import Grid from "@mui/material/Grid"
+import Skeleton from "@mui/material/Skeleton"
+import ToggleButton from "@mui/material/ToggleButton"
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
+import { JSX, useState } from "react"
 
-import { Freshness } from '../../../store/meal/meal'
-import useHista from '../../../store/store'
-import DateInput from '../../components/DateInput'
-import DebouncedSlider from '../../components/DebouncedSlider'
+import { Freshness } from "../../../store/meal/meal"
+import useHista from "../../../store/store"
+import DateInput from "../../components/DateInput"
+import DebouncedSlider from "../../components/DebouncedSlider"
 
 export default function MealSettings() {
   const patchMeal = useHista(state => state.updateMeal)
@@ -86,7 +86,7 @@ export default function MealSettings() {
             />
           )}
       </Grid>
-      <Grid size={{ xs: 4 }} sx={{ textAlign: 'center' }}>
+      <Grid size={{ xs: 4 }} sx={{ textAlign: "center" }}>
         {meal.isLoading
           ? <Skeleton variant="rectangular" height="3rem" />
           : (
@@ -96,7 +96,7 @@ export default function MealSettings() {
               onChange={handleToggleOptionChange}
             >
               <ToggleButton
-                sx={{ width: '3rem' }}
+                sx={{ width: "3rem" }}
                 value={true}
                 title="Alleine"
               >
@@ -104,7 +104,7 @@ export default function MealSettings() {
               </ToggleButton>
               <ToggleButton
                 value={false}
-                sx={{ width: '3rem' }}
+                sx={{ width: "3rem" }}
                 title="Zusammen"
               >
                 {isLoading == false ? <CircularProgress size={20} /> : <PeopleIcon />}
@@ -120,15 +120,15 @@ export default function MealSettings() {
 const colorFromStressLevel = (stressLevel: number) => {
   switch (stressLevel) {
     case 0:
-      return 'success'
+      return "success"
     case 1:
-      return 'primary'
+      return "primary"
     case 2:
-      return 'secondary'
+      return "secondary"
     case 3:
-      return 'warning'
+      return "warning"
     default:
-      return 'error'
+      return "error"
   }
 }
 
@@ -150,11 +150,11 @@ const iconFromStressLevel = (stressLevel: number): JSX.Element => {
 const colorFromFreshness = (freshness: Freshness) => {
   switch (freshness) {
     case Freshness.fresh:
-      return 'success'
+      return "success"
     case Freshness.sameDay:
-      return 'primary'
+      return "primary"
     case Freshness.old:
-      return 'error'
+      return "error"
   }
 }
 

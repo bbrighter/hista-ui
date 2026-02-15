@@ -1,6 +1,6 @@
-import { utils, WorkBook } from 'xlsx'
+import { utils, WorkBook } from "xlsx"
 
-import useHista from '../../../../store/store'
+import useHista from "../../../../store/store"
 
 export const useBuildWorkBook = (): () => WorkBook => {
   const diary = useHista(state => state.diaryEntries)
@@ -17,10 +17,10 @@ export const useBuildWorkBook = (): () => WorkBook => {
     const cellAddress = { r: R, c: dateRange.s.c }
     const cellRef = utils.encode_cell(cellAddress)
     if (!worksheet[cellRef]) continue
-    worksheet[cellRef].z = 'dd.mm.yyyy hh:mm'
+    worksheet[cellRef].z = "dd.mm.yyyy hh:mm"
   }
   const workbook = utils.book_new()
-  utils.book_append_sheet(workbook, worksheet, 'Tagebuch')
+  utils.book_append_sheet(workbook, worksheet, "Tagebuch")
 
   return () => workbook
 }

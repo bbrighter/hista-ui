@@ -1,7 +1,7 @@
-import Grid from '@mui/material/Grid'
-import dayjs from 'dayjs'
+import Grid from "@mui/material/Grid"
+import dayjs from "dayjs"
 
-import DateInput from '../../../components/DateInput'
+import DateInput from "../../../components/DateInput"
 
 export function StatisticsDateInput(props: {
   fromDate: Date

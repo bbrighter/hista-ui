@@ -1,22 +1,22 @@
-import CloseIcon from '@mui/icons-material/Close'
-import CreateIcon from '@mui/icons-material/Create'
-import DeleteIcon from '@mui/icons-material/Delete'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import AccordionSummary from '@mui/material/AccordionSummary'
-import Box from '@mui/material/Box'
-import ButtonGroup from '@mui/material/ButtonGroup'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import { useState } from 'react'
+import CloseIcon from "@mui/icons-material/Close"
+import CreateIcon from "@mui/icons-material/Create"
+import DeleteIcon from "@mui/icons-material/Delete"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
+import AccordionSummary from "@mui/material/AccordionSummary"
+import Box from "@mui/material/Box"
+import ButtonGroup from "@mui/material/ButtonGroup"
+import IconButton from "@mui/material/IconButton"
+import Typography from "@mui/material/Typography"
+import { useState } from "react"
 
-import useHista from '../../../store/store'
-import { SymptomCategory } from '../../../store/symptom/symptom'
-import TextFieldSaveAndAbort from '../../components/TextFieldSaveAndAbort'
+import useHista from "../../../store/store"
+import { SymptomCategory } from "../../../store/symptom/symptom"
+import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
 
 export default function AccordionCategory(props: {
   category: SymptomCategory
 }) {
-  const [mode, setMode] = useState<'default' | 'editing' | 'deleting'>('default')
+  const [mode, setMode] = useState<"default" | "editing" | "deleting">("default")
   const [isLoading, setIsLoading] = useState(false)
   const categories = useHista(state => state.symptoms)
   const changeSymptomCategoryName = useHista(state => state.changeSymptomCategoryName)
@@ -28,7 +28,7 @@ export default function AccordionCategory(props: {
     setIsLoading(true)
     await changeSymptomCategoryName(props.category.categoryId, v)
     setIsLoading(false)
-    setMode('default')
+    setMode("default")
   }
 
   const onDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -36,39 +36,39 @@ export default function AccordionCategory(props: {
     setIsLoading(true)
     await deleteCategory(props.category.categoryId)
     setIsLoading(false)
-    setMode('default')
+    setMode("default")
   }
 
   const onCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
-    setMode('default')
+    setMode("default")
   }
 
   return (
     <AccordionSummary expandIcon={<ExpandMoreIcon titleAccess="Ausklappen" />} component="div">
       {
-        mode == 'default'
+        mode == "default"
         && (
           <Box
-            sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}
+            sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}
             onClick={e => e.stopPropagation()}
           >
-            <Typography variant="h6" sx={{ pt: '12px', pb: '12px' }}>
+            <Typography variant="h6" sx={{ pt: "12px", pb: "12px" }}>
               {props.category.categoryName}
-              {' '}
+              {" "}
               (
               {props.category.symptoms.length}
               )
             </Typography>
             <ButtonGroup>
               <IconButton
-                onClick={() => setMode('editing')}
+                onClick={() => setMode("editing")}
                 title="Kategorie umbenennen"
               >
                 <CreateIcon />
               </IconButton>
               <IconButton
-                onClick={() => setMode('deleting')}
+                onClick={() => setMode("deleting")}
                 disabled={!isDeletable}
                 color="error"
                 title="Löschen"
@@ -80,7 +80,7 @@ export default function AccordionCategory(props: {
         )
       }
       {
-        mode == 'editing'
+        mode == "editing"
         && (
           <TextFieldSaveAndAbort
             label="Kategoriename"
@@ -93,12 +93,12 @@ export default function AccordionCategory(props: {
         )
       }
       {
-        mode == 'deleting'
+        mode == "deleting"
         && (
           <>
-            <Typography variant="h6" sx={{ pt: '12px', pb: '12px' }}>
+            <Typography variant="h6" sx={{ pt: "12px", pb: "12px" }}>
               {props.category.categoryName}
-              {' '}
+              {" "}
               wirklich löschen?
             </Typography>
             <ButtonGroup sx={{ pl: 2 }}>

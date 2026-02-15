@@ -1,3 +1,3 @@
-import Pollens from './Pollens'
+import Pollens from "./Pollens"
 
 export default Pollens

@@ -1,9 +1,9 @@
-import Container from '@mui/material/Container'
-import { useEffect } from 'react'
+import Container from "@mui/material/Container"
+import { useEffect } from "react"
 
-import useHista from '../../store/store'
-import AddSymptomCategory from './components/AddSymptomCategory'
-import SymptomCategoryAccordion from './components/SymptomCategoryAccordion'
+import useHista from "../../store/store"
+import AddSymptomCategory from "./components/AddSymptomCategory"
+import SymptomCategoryAccordion from "./components/SymptomCategoryAccordion"
 
 export default function SymptomManagement() {
   const getSymptoms = useHista(state => state.getSymptoms)

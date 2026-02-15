@@ -1,28 +1,28 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from "vitest"
 
-import useHista from '../store'
+import useHista from "../store"
 
-describe('mealStore', () => {
+describe("mealStore", () => {
   beforeEach(async () => {
     expect(useHista.getState().mealsAreLoaded).toBeFalsy()
     await useHista.getState().listMeals()
     await useHista.getState().getMeal(1)
   })
 
-  it('getMeals', async () => {
+  it("getMeals", async () => {
     const store = useHista.getState()
     expect(store.meals).toHaveLength(1)
     expect(store.mealsAreLoaded).toBeTruthy()
   })
 
-  it('postMeal', async () => {
+  it("postMeal", async () => {
     const id = await useHista.getState().postMeal()
 
     expect(id).toBe(2)
     expect(useHista.getState().meals).toHaveLength(2)
   })
 
-  it('deleteMeal', async () => {
+  it("deleteMeal", async () => {
     await useHista.getState().deleteMeal(1)
 
     const store = useHista.getState()
@@ -30,7 +30,7 @@ describe('mealStore', () => {
     expect(store.ingredients).toHaveLength(1)
     const ingredient = store.ingredients[0]
     expect(ingredient.id).toBe(1)
-    expect(ingredient.name).toBe('ingredient1')
+    expect(ingredient.name).toBe("ingredient1")
   })
 
   // it('updateMeal', async () => {
@@ -66,26 +66,26 @@ describe('mealStore', () => {
   //     expect(store.getState().meal.stressLevel).toEqual(0)
   // })
 
-  it('getMeal', async () => {
+  it("getMeal", async () => {
     const store = useHista.getState()
     await store.getMeal(1)
 
     const meal = store.meal
     expect(meal).toBeDefined()
     expect(meal.id).toStrictEqual(1)
-    expect(meal.date).toStrictEqual(new Date('2024-01-01T00:00:00Z'))
+    expect(meal.date).toStrictEqual(new Date("2024-01-01T00:00:00Z"))
     expect(meal.stressLevel).toStrictEqual(1)
     expect(meal.freshness).toStrictEqual(2)
     expect(meal.isAlone).toBeTruthy()
     expect(meal.foods).toHaveLength(2)
     expect(meal.foods[0].id).toStrictEqual(10)
-    expect(meal.foods[0].condition).toStrictEqual('raw')
+    expect(meal.foods[0].condition).toStrictEqual("raw")
     expect(meal.foods[0].ingredientId).toStrictEqual(1)
-    expect(meal.foods[0].ingredientName).toStrictEqual('ingredient1')
+    expect(meal.foods[0].ingredientName).toStrictEqual("ingredient1")
     expect(meal.foods[1].id).toStrictEqual(20)
-    expect(meal.foods[1].condition).toStrictEqual('cooked')
+    expect(meal.foods[1].condition).toStrictEqual("cooked")
     expect(meal.foods[1].ingredientId).toStrictEqual(2)
-    expect(meal.foods[1].ingredientName).toStrictEqual('ingredient2')
+    expect(meal.foods[1].ingredientName).toStrictEqual("ingredient2")
   })
 
   // it('postFood', async () => {

@@ -1,14 +1,14 @@
-import Container from '@mui/material/Container'
-import FormGroup from '@mui/material/FormGroup'
-import TextField from '@mui/material/TextField'
-import dayjs from 'dayjs'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import Container from "@mui/material/Container"
+import FormGroup from "@mui/material/FormGroup"
+import TextField from "@mui/material/TextField"
+import dayjs from "dayjs"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 
-import useDebounce from '../../hooks/useDebounce'
-import { useDidUpdateEffect } from '../../hooks/useDidUpdateEffect'
-import useHista from '../../store/store'
-import DateInput from '../components/DateInput'
+import useDebounce from "../../hooks/useDebounce"
+import { useDidUpdateEffect } from "../../hooks/useDidUpdateEffect"
+import useHista from "../../store/store"
+import DateInput from "../components/DateInput"
 
 export default function Note() {
   const getNote = useHista(state => state.getNote)
@@ -44,7 +44,7 @@ export default function Note() {
   }
 
   return (
-    <Container sx={{ padding: '2rem' }}>
+    <Container sx={{ padding: "2rem" }}>
       <FormGroup>
         <DateInput
           title="Zeit"
@@ -52,14 +52,14 @@ export default function Note() {
           onChange={onDateChange}
         />
         <TextField
-          helperText={isUpToDate ? '' : 'Noch nicht gespeichert...'}
-          sx={{ marginTop: '1rem', height: '200px' }}
+          helperText={isUpToDate ? "" : "Noch nicht gespeichert..."}
+          sx={{ marginTop: "1rem", height: "200px" }}
           multiline
           value={textInput}
           onChange={onTextChange}
           label="Notiz"
           minRows={15}
-          color={isUpToDate ? 'primary' : 'secondary'}
+          color={isUpToDate ? "primary" : "secondary"}
         />
       </FormGroup>
     </Container>

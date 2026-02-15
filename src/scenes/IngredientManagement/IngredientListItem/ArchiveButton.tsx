@@ -1,8 +1,8 @@
-import ArchiveIcon from '@mui/icons-material/Archive'
-import UnarchiveIcon from '@mui/icons-material/Unarchive'
-import IconButton from '@mui/material/IconButton'
+import ArchiveIcon from "@mui/icons-material/Archive"
+import UnarchiveIcon from "@mui/icons-material/Unarchive"
+import IconButton from "@mui/material/IconButton"
 
-import { ingredientsService } from '../../../store/service/ingredients.service'
+import { ingredientsService } from "../../../store/service/ingredients.service"
 
 export const ArchiveButton = ({ id, isArchived }: { id: number, isArchived: boolean }) => {
   const onClick = () => {

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef } from "react"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function useDidUpdateEffect(fn: () => void, inputs: Array<any>) {

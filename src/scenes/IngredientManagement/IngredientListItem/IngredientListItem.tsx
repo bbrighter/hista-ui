@@ -1,12 +1,12 @@
-import EditIcon from '@mui/icons-material/Edit'
-import ButtonGroup from '@mui/material/ButtonGroup'
-import IconButton from '@mui/material/IconButton'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
-import { useState } from 'react'
+import EditIcon from "@mui/icons-material/Edit"
+import ButtonGroup from "@mui/material/ButtonGroup"
+import IconButton from "@mui/material/IconButton"
+import ListItem from "@mui/material/ListItem"
+import ListItemText from "@mui/material/ListItemText"
+import { useState } from "react"
 
-import { ArchiveButton } from './ArchiveButton'
-import { EditIngredientName } from './EditIngredientName'
+import { ArchiveButton } from "./ArchiveButton"
+import { EditIngredientName } from "./EditIngredientName"
 
 export const IngredientListItem = ({ name, id, isArchived }: { name: string, id: number, isArchived: boolean }) => {
   const [isEditing, setIsEditing] = useState(false)

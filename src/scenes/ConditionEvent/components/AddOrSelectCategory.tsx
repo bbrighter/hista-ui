@@ -1,14 +1,14 @@
-import Alert from '@mui/material/Alert'
-import Autocomplete from '@mui/material/Autocomplete'
-import Box from '@mui/material/Box'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
-import Modal from '@mui/material/Modal'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
-import React, { useState } from 'react'
+import Alert from "@mui/material/Alert"
+import Autocomplete from "@mui/material/Autocomplete"
+import Box from "@mui/material/Box"
+import ListItem from "@mui/material/ListItem"
+import ListItemText from "@mui/material/ListItemText"
+import Modal from "@mui/material/Modal"
+import TextField from "@mui/material/TextField"
+import Typography from "@mui/material/Typography"
+import React, { useState } from "react"
 
-import useHista from '../../../store/store'
+import useHista from "../../../store/store"
 
 interface InputOption {
   id: number
@@ -20,7 +20,7 @@ type NewOption = string
 type Option = InputOption | NewOption
 
 const isNewOption = (v: unknown): v is NewOption => {
-  return typeof (v) == 'string'
+  return typeof (v) == "string"
 }
 
 export default function AddOrSelectCategory(props: {
@@ -56,18 +56,18 @@ export default function AddOrSelectCategory(props: {
       onClose={props.onClose}
     >
       <Box sx={{
-        bgcolor: 'background.paper',
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        minWidth: '350px',
-        width: '50%',
-        padding: '2rem',
-        borderRadius: '5px',
+        bgcolor: "background.paper",
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        minWidth: "350px",
+        width: "50%",
+        padding: "2rem",
+        borderRadius: "5px",
       }}
       >
-        <Typography sx={{ paddingBottom: '1rem' }}>
+        <Typography sx={{ paddingBottom: "1rem" }}>
           Wähle eine Kategorie für
           <b>{props.symptomName}</b>
         </Typography>
@@ -89,11 +89,11 @@ export default function AddOrSelectCategory(props: {
         />
         {isError && (
           <Alert
-            sx={{ marginTop: '5px' }}
+            sx={{ marginTop: "5px" }}
             severity="error"
             variant="filled"
           >
-            {'Da ist was schief gegangen! Probier\'s nochmal.'}
+            Da ist was schief gegangen! Probier's nochmal.
           </Alert>
         )}
       </Box>

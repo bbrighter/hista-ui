@@ -1,9 +1,9 @@
-import { AuthStateAdapter, ProductKeys } from '@bbrighter/auth-module/auth'
-import { UserStateAdapter } from '@bbrighter/auth-module/users'
-import { Location, NavigateFunction } from 'react-router-dom'
+import { AuthStateAdapter, ProductKeys } from "@bbrighter/auth-module/auth"
+import { UserStateAdapter } from "@bbrighter/auth-module/users"
+import { Location, NavigateFunction } from "react-router-dom"
 
-import { authApi } from './api/api'
-import useHista from './store/store'
+import { authApi } from "./api/api"
+import useHista from "./store/store"
 
 export const useAuthStateAdapter = (navigate: NavigateFunction, location: Location): AuthStateAdapter => {
   const instances = useHista(state => state.instances)

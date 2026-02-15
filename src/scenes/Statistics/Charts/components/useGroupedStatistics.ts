@@ -1,7 +1,7 @@
-import { useMemo } from 'react'
+import { useMemo } from "react"
 
-import { useSymptomStatisticsWithNames } from '../../../../store'
-import useHista from '../../../../store/store'
+import { useSymptomStatisticsWithNames } from "../../../../store"
+import useHista from "../../../../store/store"
 
 const useGroupedStatistics = (severityFilter: Array<number>) => {
   const statistics = useSymptomStatisticsWithNames()

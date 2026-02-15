@@ -1,12 +1,12 @@
-import { produce } from 'immer'
-import { StateCreator } from 'zustand'
+import { produce } from "immer"
+import { StateCreator } from "zustand"
 
-import { IngredientStore } from '../meal/ingredientStore'
-import { MealStore } from '../meal/mealStore'
-import { ConditionStore } from '../symptom/conditionStore'
-import { SymptomStore } from '../symptom/symptomStore'
-import { SymptomStatistics as Statistics } from '../types'
-import { RawDiary } from '../types/diary.types'
+import { IngredientStore } from "../meal/ingredientStore"
+import { MealStore } from "../meal/mealStore"
+import { ConditionStore } from "../symptom/conditionStore"
+import { SymptomStore } from "../symptom/symptomStore"
+import { SymptomStatistics as Statistics } from "../types"
+import { RawDiary } from "../types/diary.types"
 
 interface State {
   diaryEntries: Array<RawDiary>

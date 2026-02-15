@@ -1,21 +1,21 @@
-import DarkMode from '@mui/icons-material/DarkMode'
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
-import HotelIcon from '@mui/icons-material/Hotel'
-import LightModeIcon from '@mui/icons-material/LightMode'
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import CardHeader from '@mui/material/CardHeader'
-import Grid from '@mui/material/Grid'
-import Slider from '@mui/material/Slider'
-import Stack from '@mui/material/Stack'
-import Typography from '@mui/material/Typography'
-import debounce from 'lodash.debounce'
-import { useRef, useState } from 'react'
+import DarkMode from "@mui/icons-material/DarkMode"
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter"
+import HotelIcon from "@mui/icons-material/Hotel"
+import LightModeIcon from "@mui/icons-material/LightMode"
+import Card from "@mui/material/Card"
+import CardActions from "@mui/material/CardActions"
+import CardContent from "@mui/material/CardContent"
+import CardHeader from "@mui/material/CardHeader"
+import Grid from "@mui/material/Grid"
+import Slider from "@mui/material/Slider"
+import Stack from "@mui/material/Stack"
+import Typography from "@mui/material/Typography"
+import debounce from "lodash.debounce"
+import { useRef, useState } from "react"
 
-import { useDidUpdateEffect } from '../../../hooks/useDidUpdateEffect'
-import { PutStatusParams, Status } from '../../../store/status/status'
-import useHista from '../../../store/store'
+import { useDidUpdateEffect } from "../../../hooks/useDidUpdateEffect"
+import { PutStatusParams, Status } from "../../../store/status/status"
+import useHista from "../../../store/store"
 
 export default function StatusCardContent(props: {
   status: Status
@@ -41,15 +41,15 @@ export default function StatusCardContent(props: {
   }, [morningFitness, morningSleep, eveningFitness])
 
   const colorMapping = (v: number | undefined): string => {
-    const colors = ['rgb(255, 0, 0)', 'rgb(255, 128, 0)', 'rgb(255, 255, 0)', 'rgb(99, 199, 0)', 'rgb(0, 131, 0)']
-    return v == undefined ? 'rgb(160, 160, 160)' : colors[v - 1]
+    const colors = ["rgb(255, 0, 0)", "rgb(255, 128, 0)", "rgb(255, 255, 0)", "rgb(99, 199, 0)", "rgb(0, 131, 0)"]
+    return v == undefined ? "rgb(160, 160, 160)" : colors[v - 1]
   }
 
   const SleepIcon = () => {
-    return <HotelIcon sx={{ margin: '4px', color: colorMapping(morningSleep) }} titleAccess="Schlaf" />
+    return <HotelIcon sx={{ margin: "4px", color: colorMapping(morningSleep) }} titleAccess="Schlaf" />
   }
   const FitnessIcon = (props: { fitness?: number }) => {
-    return <FitnessCenterIcon sx={{ margin: '4px', color: colorMapping(props.fitness) }} titleAccess="Fitness" />
+    return <FitnessCenterIcon sx={{ margin: "4px", color: colorMapping(props.fitness) }} titleAccess="Fitness" />
   }
 
   return (
@@ -59,7 +59,7 @@ export default function StatusCardContent(props: {
           <CardHeader
             title={<Typography>Morgens</Typography>}
             avatar={<LightModeIcon />}
-            sx={{ padding: '8px' }}
+            sx={{ padding: "8px" }}
           />
           <CardContent>
             <CardActions>
@@ -99,7 +99,7 @@ export default function StatusCardContent(props: {
           <CardHeader
             title={<Typography>Abends</Typography>}
             avatar={<DarkMode />}
-            sx={{ padding: '8px' }}
+            sx={{ padding: "8px" }}
           />
           <CardContent>
             <CardActions>
