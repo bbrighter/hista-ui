@@ -1,12 +1,12 @@
-import Autocomplete, { AutocompleteChangeReason } from '@mui/material/Autocomplete'
-import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
-import TextField from '@mui/material/TextField'
-import { FilterOptionsState } from '@mui/material/useAutocomplete'
-import { useEffect, useState } from 'react'
+import Autocomplete, { AutocompleteChangeReason } from "@mui/material/Autocomplete"
+import ListItem from "@mui/material/ListItem"
+import ListItemText from "@mui/material/ListItemText"
+import TextField from "@mui/material/TextField"
+import { FilterOptionsState } from "@mui/material/useAutocomplete"
+import { useEffect, useState } from "react"
 
-import useHista from '../../../store/store'
-import AddOrSelectCategory from './AddOrSelectCategory'
+import useHista from "../../../store/store"
+import AddOrSelectCategory from "./AddOrSelectCategory"
 
 interface SymptomOption {
   categoryId: number
@@ -20,13 +20,13 @@ type NewOption = string
 type Option = SymptomOption | NewOption
 
 const isNewOption = (opt: unknown): opt is NewOption => {
-  return typeof (opt) == 'string'
+  return typeof (opt) == "string"
 }
 
 export default function AddCondition() {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState<Option | null>(null)
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState("")
   const getSymptoms = useHista(state => state.getSymptoms)
   const postConditionById = useHista(state => state.postCondition)
   const symptoms = useHista(state => state.symptoms)
@@ -43,13 +43,13 @@ export default function AddCondition() {
 
   const onChange = async (_e: React.SyntheticEvent, v: Option | null, reason: AutocompleteChangeReason) => {
     if (v == null) return
-    if (isNewOption(v) && (reason == 'selectOption' || reason == 'createOption')) {
+    if (isNewOption(v) && (reason == "selectOption" || reason == "createOption")) {
       setOpen(true)
       setValue(v)
     }
-    else if (!isNewOption(v) && reason == 'selectOption') {
+    else if (!isNewOption(v) && reason == "selectOption") {
       await postConditionById(v.categoryId, v.symptomId, undefined)
-      setInputValue('')
+      setInputValue("")
     }
   }
 
@@ -60,7 +60,7 @@ export default function AddCondition() {
         return o.categoryName.toLowerCase().includes(inputValue.toLowerCase()) || o.symptomName.toLowerCase().includes(inputValue.toLowerCase())
       }
     })
-    if (inputValue != '') {
+    if (inputValue != "") {
       filtered.push(inputValue)
     }
     return filtered
@@ -68,28 +68,28 @@ export default function AddCondition() {
 
   const onCloseModal = () => {
     setOpen(false)
-    setInputValue('')
+    setInputValue("")
     setValue(null)
   }
 
   return (
     <>
       <Autocomplete
-        sx={{ paddingTop: '20px' }}
+        sx={{ paddingTop: "20px" }}
         freeSolo
         inputValue={inputValue}
         onInputChange={(_e, v) => setInputValue(v)}
         value={value}
         onChange={onChange}
         options={options}
-        getOptionLabel={s => typeof (s) == 'string' ? s : s.symptomName}
+        getOptionLabel={s => typeof (s) == "string" ? s : s.symptomName}
         selectOnFocus
         clearOnBlur
         filterOptions={filterOptions}
         renderOption={(props, option) => {
           const key = isNewOption(option) ? 0 : option.symptomId
           const primary = isNewOption(option) ? option : option.symptomName
-          const secondary = isNewOption(option) ? 'hinzufügen' : option.categoryName
+          const secondary = isNewOption(option) ? "hinzufügen" : option.categoryName
           return (
             <ListItem {...props} key={key}>
               <ListItemText
@@ -103,7 +103,7 @@ export default function AddCondition() {
       />
       <AddOrSelectCategory
         open={open}
-        symptomName={isNewOption(value) ? value : value?.symptomName || ''}
+        symptomName={isNewOption(value) ? value : value?.symptomName || ""}
         onClose={onCloseModal}
       />
     </>

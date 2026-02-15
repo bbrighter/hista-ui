@@ -1,10 +1,10 @@
-import Container from '@mui/material/Container'
-import List from '@mui/material/List'
-import { useEffect } from 'react'
+import Container from "@mui/material/Container"
+import List from "@mui/material/List"
+import { useEffect } from "react"
 
-import { ingredientsService } from '../../store/service/ingredients.service'
-import useHista from '../../store/store'
-import { IngredientListItem } from './IngredientListItem'
+import { ingredientsService } from "../../store/service/ingredients.service"
+import useHista from "../../store/store"
+import { IngredientListItem } from "./IngredientListItem"
 
 export const IngredientManagement = () => {
   const ingredients = useHista(state => state.ingredients)

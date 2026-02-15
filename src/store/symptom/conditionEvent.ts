@@ -1,5 +1,5 @@
-import { entity } from '../../api/generatedApi'
-import { Symptom } from './symptom'
+import { entity } from "../../api/generatedApi"
+import { Symptom } from "./symptom"
 
 export interface ConditionEvent {
   id: number

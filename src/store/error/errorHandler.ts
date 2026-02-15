@@ -1,26 +1,26 @@
-import { AuthStore } from '../auth/authStore'
-import { toAppError } from './appError'
-import { errorBus } from './errorBus'
+import { AuthStore } from "../auth/authStore"
+import { toAppError } from "./appError"
+import { errorBus } from "./errorBus"
 
 const errorHandler = (error: unknown, _store: AuthStore) => {
   const appError = toAppError(error)
   const status = appError.status
   switch (appError.source) {
-    case 'api':
+    case "api":
       switch (status) {
         case 400:
-          errorBus.emit('error', error)
+          errorBus.emit("error", error)
           break
         case 404:
           break
         case 500:
         default:
-          errorBus.emit('error', error)
+          errorBus.emit("error", error)
       }
       break
-    case 'router':
-    case 'unknown':
-      errorBus.emit('error', error)
+    case "router":
+    case "unknown":
+      errorBus.emit("error", error)
   }
 }
 
@@ -31,7 +31,7 @@ export function wrapActionsWithErrorHandler<T extends Record<string, unknown>>(
   const wrapped = {}
 
   for (const [key, value] of Object.entries(actions)) {
-    if (typeof value === 'function') {
+    if (typeof value === "function") {
       wrapped[key] = (...args: unknown[]) => {
         try {
           const result = (value)(...args)

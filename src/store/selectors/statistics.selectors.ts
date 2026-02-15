@@ -1,4 +1,4 @@
-import useHista from '../store'
+import useHista from "../store"
 
 export const useSymptomStatisticsWithNames = () => {
   const statistics = useHista(state => state.statistics)

@@ -1,6 +1,6 @@
-import dayjs, { Dayjs } from 'dayjs'
+import dayjs, { Dayjs } from "dayjs"
 
-import { entity } from '../../api/generatedApi'
+import { entity } from "../../api/generatedApi"
 
 export type Statuses = Array<Status>
 

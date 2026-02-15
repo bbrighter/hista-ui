@@ -1,34 +1,34 @@
 export const mealConstants = {
-  RAW: 'Roh',
-  COOKED: 'Gar',
+  RAW: "Roh",
+  COOKED: "Gar",
 } as const
 
 const noPiidRoutes = {
-  homepage: '/',
-  error: '/error',
-  login: '/login',
+  homepage: "/",
+  error: "/error",
+  login: "/login",
 }
 
 const piidRoutes = {
-  homepagePiid: '/',
-  meals: '/meals',
-  mealDetails: '/meals/:mealId',
-  conditionEvents: '/condition-events/',
-  conditionEventDetails: '/condition-events/:eventId',
-  statistics: '/statistics',
-  notes: '/notes',
-  noteDetails: '/notes/:noteId',
-  pollens: '/pollens',
-  statuses: '/statuses',
-  statusDetails: '/statuses/:statusId',
-  headaches: '/headaches',
-  headacheDetails: '/headaches/:headacheId',
-  manageSymptoms: '/manage-symptoms',
-  manageIngredients: '/manage-ingredients',
+  homepagePiid: "/",
+  meals: "/meals",
+  mealDetails: "/meals/:mealId",
+  conditionEvents: "/condition-events/",
+  conditionEventDetails: "/condition-events/:eventId",
+  statistics: "/statistics",
+  notes: "/notes",
+  noteDetails: "/notes/:noteId",
+  pollens: "/pollens",
+  statuses: "/statuses",
+  statusDetails: "/statuses/:statusId",
+  headaches: "/headaches",
+  headacheDetails: "/headaches/:headacheId",
+  manageSymptoms: "/manage-symptoms",
+  manageIngredients: "/manage-ingredients",
 }
 
 const addPiid = (route: string): string => {
-  return '/:piid' + route
+  return "/:piid" + route
 }
 
 function mapValues<T extends Record<string, string>>(

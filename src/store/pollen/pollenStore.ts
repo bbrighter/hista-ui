@@ -1,8 +1,8 @@
-import { produce } from 'immer'
-import { StateCreator } from 'zustand'
+import { produce } from "immer"
+import { StateCreator } from "zustand"
 
-import { client } from '../../api/api'
-import { Pollens, respToPollens } from './pollen'
+import { client } from "../../api/api"
+import { Pollens, respToPollens } from "./pollen"
 
 interface State {
   pollensAreLoaded: boolean

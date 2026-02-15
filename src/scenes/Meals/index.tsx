@@ -1,3 +1,3 @@
-import Meals from './Meals'
+import Meals from "./Meals"
 
 export default Meals

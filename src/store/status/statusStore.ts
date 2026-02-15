@@ -1,9 +1,9 @@
-import { Dayjs } from 'dayjs'
-import { produce } from 'immer'
-import { StateCreator } from 'zustand'
+import { Dayjs } from "dayjs"
+import { produce } from "immer"
+import { StateCreator } from "zustand"
 
-import { client } from '../../api/api'
-import { PutStatusParams, respToStatus, respToStatuses, Statuses } from './status'
+import { client } from "../../api/api"
+import { PutStatusParams, respToStatus, respToStatuses, Statuses } from "./status"
 
 interface State {
   statuses: Statuses

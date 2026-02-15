@@ -1,13 +1,13 @@
-import NoteIcon from '@mui/icons-material/Note'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Container from '@mui/material/Container'
-import { useMemo, useState } from 'react'
+import NoteIcon from "@mui/icons-material/Note"
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
+import Container from "@mui/material/Container"
+import { useMemo, useState } from "react"
 
-import { useAppNavigate } from '../../hooks/useNavigate'
-import useHista from '../../store/store'
-import OverviewList from '../components/OverviewList'
-import NoteSearch from './components/NoteSearch'
+import { useAppNavigate } from "../../hooks/useNavigate"
+import useHista from "../../store/store"
+import OverviewList from "../components/OverviewList"
+import NoteSearch from "./components/NoteSearch"
 
 export default function Notes() {
   const getNotes = useHista(state => state.getNotes)
@@ -17,7 +17,7 @@ export default function Notes() {
   const navigate = useAppNavigate()
 
   const [loading, setLoading] = useState(false)
-  const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState("")
 
   const filteredNotes = useMemo(() => {
     const filterResults = notes.filter(note =>
@@ -27,7 +27,7 @@ export default function Notes() {
       const maxTextLength = 25
       const shortText = r.text.length < maxTextLength
         ? r.text
-        : r.text.substring(0, maxTextLength - 2) + '...'
+        : r.text.substring(0, maxTextLength - 2) + "..."
       return {
         id: r.id,
         date: r.date,
@@ -55,7 +55,7 @@ export default function Notes() {
   }
 
   return (
-    <Container sx={{ padding: '2rem' }}>
+    <Container sx={{ padding: "2rem" }}>
       <Button
         variant="outlined"
         onClick={onCreate}
@@ -67,7 +67,7 @@ export default function Notes() {
       <Box>
         <NoteSearch
           searchValue={searchValue}
-          onClear={() => setSearchValue('')}
+          onClear={() => setSearchValue("")}
           onChange={handleSearchChange}
         />
       </Box>

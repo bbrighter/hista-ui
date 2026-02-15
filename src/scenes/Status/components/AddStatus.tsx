@@ -1,12 +1,12 @@
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
-import Button from '@mui/material/Button'
-import ButtonGroup from '@mui/material/ButtonGroup'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import dayjs from 'dayjs'
-import { useState } from 'react'
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
+import Button from "@mui/material/Button"
+import ButtonGroup from "@mui/material/ButtonGroup"
+import Menu from "@mui/material/Menu"
+import MenuItem from "@mui/material/MenuItem"
+import dayjs from "dayjs"
+import { useState } from "react"
 
-import useHista from '../../../store/store'
+import useHista from "../../../store/store"
 
 export default function AddStatus(props: { disabled: boolean }) {
   const addStatus = useHista(state => state.addStatus)
@@ -16,12 +16,12 @@ export default function AddStatus(props: { disabled: boolean }) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const today = dayjs()
-  const yesterday = today.subtract(1, 'day')
-  const dayBeforeYesterday = today.subtract(2, 'day')
+  const yesterday = today.subtract(1, "day")
+  const dayBeforeYesterday = today.subtract(2, "day")
 
-  const todaysStatusExists = statuses.find(s => s.date.isSame(today, 'day')) != undefined
-  const yesterdaysStatusExists = statuses.find(s => s.date.isSame(yesterday, 'day')) != undefined
-  const dayBeforeYesterdaysStatusExists = statuses.find(s => s.date.isSame(dayBeforeYesterday, 'day')) != undefined
+  const todaysStatusExists = statuses.find(s => s.date.isSame(today, "day")) != undefined
+  const yesterdaysStatusExists = statuses.find(s => s.date.isSame(yesterday, "day")) != undefined
+  const dayBeforeYesterdaysStatusExists = statuses.find(s => s.date.isSame(dayBeforeYesterday, "day")) != undefined
 
   const handleClickToday = () => addStatus(today)
   const handleClickYesterday = () => {

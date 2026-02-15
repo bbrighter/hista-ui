@@ -1,1 +1,1 @@
-export * from './HeadachesDiary'
+export * from "./HeadachesDiary"

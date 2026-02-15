@@ -1,13 +1,13 @@
 /// <reference types="vite-plugin-svgr/client" />
-import Container from '@mui/material/Container'
-import Divider from '@mui/material/Divider'
-import List from '@mui/material/List'
-import Skeleton from '@mui/material/Skeleton'
-import { useEffect, useState } from 'react'
+import Container from "@mui/material/Container"
+import Divider from "@mui/material/Divider"
+import List from "@mui/material/List"
+import Skeleton from "@mui/material/Skeleton"
+import { useEffect, useState } from "react"
 
-import useHista from '../../store/store'
-import PollenHeader from './components/PollenHeader'
-import PollenRow from './components/PollenRow'
+import useHista from "../../store/store"
+import PollenHeader from "./components/PollenHeader"
+import PollenRow from "./components/PollenRow"
 
 export default function PollenView() {
   const getPollens = useHista(state => state.getPollens)

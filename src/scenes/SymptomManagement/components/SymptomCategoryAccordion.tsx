@@ -1,8 +1,8 @@
-import Accordion from '@mui/material/Accordion'
+import Accordion from "@mui/material/Accordion"
 
-import { SymptomCategory } from '../../../store/symptom/symptom'
-import AccordionCategory from './AccordionCategory'
-import AccordionSymptoms from './AccordionSymptoms'
+import { SymptomCategory } from "../../../store/symptom/symptom"
+import AccordionCategory from "./AccordionCategory"
+import AccordionSymptoms from "./AccordionSymptoms"
 
 export default function SymptomCategoryAccordion(props: {
   symptom: SymptomCategory

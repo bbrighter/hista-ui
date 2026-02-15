@@ -1,8 +1,8 @@
-import { utils, WorkBook } from 'xlsx'
+import { utils, WorkBook } from "xlsx"
 
-import { Headache } from '../../../../store/headaches/headaches'
-import useHista from '../../../../store/store'
-import { excelHeaderColumns, headacheExcelRows } from './headacheColumns'
+import { Headache } from "../../../../store/headaches/headaches"
+import useHista from "../../../../store/store"
+import { excelHeaderColumns, headacheExcelRows } from "./headacheColumns"
 
 export const buildHeadacheWorkbook = (headaches: Array<Headache>): WorkBook => {
   const data = headacheExcelRows(headaches)
@@ -13,15 +13,15 @@ export const buildHeadacheWorkbook = (headaches: Array<Headache>): WorkBook => {
     const cellAddress = { r: R, c: dateRange.s.c }
     const cellRef = utils.encode_cell(cellAddress)
     if (!worksheet[cellRef]) continue
-    worksheet[cellRef].z = 'dd.mm.yyyy hh:mm'
+    worksheet[cellRef].z = "dd.mm.yyyy hh:mm"
   }
-  worksheet['!merges'] = [
+  worksheet["!merges"] = [
     { s: { r: 0, c: 2 }, e: { r: 0, c: 12 } },
     { s: { r: 0, c: 13 }, e: { r: 0, c: 15 } },
     { s: { r: 0, c: 16 }, e: { r: 0, c: 28 } },
   ]
   const workbook = utils.book_new()
-  utils.book_append_sheet(workbook, worksheet, 'Kopfschmerz')
+  utils.book_append_sheet(workbook, worksheet, "Kopfschmerz")
   return workbook
 }
 
@@ -35,14 +35,14 @@ export const useBuildHeadacheWorkBook = (): () => WorkBook => {
     const cellAddress = { r: R, c: dateRange.s.c }
     const cellRef = utils.encode_cell(cellAddress)
     if (!worksheet[cellRef]) continue
-    worksheet[cellRef].z = 'dd.mm.yyyy hh:mm'
+    worksheet[cellRef].z = "dd.mm.yyyy hh:mm"
   }
-  worksheet['!merges'] = [
+  worksheet["!merges"] = [
     { s: { r: 0, c: 2 }, e: { r: 0, c: 12 } },
     { s: { r: 0, c: 13 }, e: { r: 0, c: 15 } },
     { s: { r: 0, c: 16 }, e: { r: 0, c: 28 } },
   ]
   const workbook = utils.book_new()
-  utils.book_append_sheet(workbook, worksheet, 'Kopfschmerz')
+  utils.book_append_sheet(workbook, worksheet, "Kopfschmerz")
   return () => workbook
 }

@@ -1,9 +1,9 @@
-import CloseIcon from '@mui/icons-material/Close'
-import SaveIcon from '@mui/icons-material/Save'
-import ButtonGroup from '@mui/material/ButtonGroup'
-import IconButton from '@mui/material/IconButton'
-import TextField from '@mui/material/TextField'
-import { useState } from 'react'
+import CloseIcon from "@mui/icons-material/Close"
+import SaveIcon from "@mui/icons-material/Save"
+import ButtonGroup from "@mui/material/ButtonGroup"
+import IconButton from "@mui/material/IconButton"
+import TextField from "@mui/material/TextField"
+import { useState } from "react"
 
 export default function TextFieldSaveAndAbort(props: {
   label: string
@@ -11,7 +11,7 @@ export default function TextFieldSaveAndAbort(props: {
   isSaveable: (value: string) => boolean
   onSave: (v: string) => Promise<void>
   onCancel: (e: React.MouseEvent) => void
-  size: 'small' | 'medium'
+  size: "small" | "medium"
 }) {
   const [value, setValue] = useState(props.value)
   const [isLoading, setIsLoading] = useState(false)

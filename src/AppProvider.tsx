@@ -1,11 +1,11 @@
-import { CustomAppBar } from '@bbrighter/auth-module/app-bar'
-import { AuthProvider, useAuth, useHandleUnauthorized } from '@bbrighter/auth-module/auth'
-import { UserManagementProvider } from '@bbrighter/auth-module/users'
-import { useEffect } from 'react'
-import { NavigateFunction, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { CustomAppBar } from "@bbrighter/auth-module/app-bar"
+import { AuthProvider, useAuth, useHandleUnauthorized } from "@bbrighter/auth-module/auth"
+import { UserManagementProvider } from "@bbrighter/auth-module/users"
+import { useEffect } from "react"
+import { NavigateFunction, Outlet, useLocation, useNavigate } from "react-router-dom"
 
-import { useAuthStateAdapter, useUserManagementAdapter } from './adapter'
-import useHista from './store/store'
+import { useAuthStateAdapter, useUserManagementAdapter } from "./adapter"
+import useHista from "./store/store"
 
 export default function AppProvider() {
   const navigate = useNavigate()

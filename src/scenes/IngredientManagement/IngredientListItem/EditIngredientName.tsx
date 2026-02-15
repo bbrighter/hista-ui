@@ -1,5 +1,6 @@
-import { ingredientsService } from '../../../store/service/ingredients.service'
-import TextFieldSaveAndAbort from '../../components/TextFieldSaveAndAbort'
+import { ingredientsService } from "../../../store/service/ingredients.service"
+import useHista from "../../../store/store"
+import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
 
 export const EditIngredientName = ({ id, name, onCancel }:
 {
@@ -8,16 +9,21 @@ export const EditIngredientName = ({ id, name, onCancel }:
   onCancel: () => void
 
 }) => {
+  const ingredients = useHista(state => state.ingredients)
   const onSave = async (v: string) => {
     await ingredientsService.changeName(id, v)
     onCancel()
+  }
+
+  const isSaveable = (v: string): boolean => {
+    return ingredients.every(i => i.name.trim().toLowerCase() != v.trim().toLowerCase())
   }
 
   return (
     <TextFieldSaveAndAbort
       label="Zutat"
       onCancel={onCancel}
-      isSaveable={() => true}
+      isSaveable={isSaveable}
       size="small"
       value={name}
       onSave={onSave}

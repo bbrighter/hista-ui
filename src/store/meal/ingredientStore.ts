@@ -1,7 +1,7 @@
-import { produce } from 'immer'
-import { StateCreator } from 'zustand'
+import { produce } from "immer"
+import { StateCreator } from "zustand"
 
-import { Ingredients } from './../types'
+import { Ingredients } from "./../types"
 
 interface State {
   ingredients: Ingredients

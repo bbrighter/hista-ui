@@ -1,3 +1,3 @@
-import Headache from './Headache'
+import Headache from "./Headache"
 
 export default Headache

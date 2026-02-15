@@ -1,8 +1,8 @@
-import { produce } from 'immer'
-import { StateCreator } from 'zustand'
+import { produce } from "immer"
+import { StateCreator } from "zustand"
 
-import { Instance } from './instance'
-import { User } from './users'
+import { Instance } from "./instance"
+import { User } from "./users"
 
 interface State {
   instances: Array<Instance>
@@ -24,9 +24,9 @@ export interface AuthStore extends State, Actions { }
 
 const initialState: State = {
   instances: [],
-  token: window.localStorage.getItem('token') || '',
+  token: window.localStorage.getItem("token") || "",
   piid: null,
-  userName: '',
+  userName: "",
   users: [],
 }
 
@@ -44,7 +44,7 @@ export const createAuthSlice: StateCreator<
   },
 
   setToken(token: string) {
-    window.localStorage.setItem('token', token)
+    window.localStorage.setItem("token", token)
     set(produce((draft: State) => {
       draft.token = token
     }))

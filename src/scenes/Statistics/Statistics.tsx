@@ -1,11 +1,11 @@
-import Container from '@mui/material/Container'
-import Tab from '@mui/material/Tab'
-import Tabs from '@mui/material/Tabs'
-import { JSX, useState } from 'react'
+import Container from "@mui/material/Container"
+import Tab from "@mui/material/Tab"
+import Tabs from "@mui/material/Tabs"
+import { JSX, useState } from "react"
 
-import { Charts } from './Charts'
-import { Diary } from './Diary'
-import { HeadacheDiary } from './Headaches'
+import { Charts } from "./Charts"
+import { Diary } from "./Diary"
+import { HeadacheDiary } from "./Headaches"
 
 type TabValue = 0 | 1 | 2 | 3
 interface TabType {
@@ -22,13 +22,13 @@ export default function Statistics() {
   }
 
   const tabs: Array<TabType> = [
-    { label: 'Essen', value: 1, child: <Charts /> },
-    { label: 'Ernährungstagebuch', value: 2, child: <Diary /> },
-    { label: 'Kopfschmerzen', value: 3, child: <HeadacheDiary /> },
+    { label: "Essen", value: 1, child: <Charts /> },
+    { label: "Ernährungstagebuch", value: 2, child: <Diary /> },
+    { label: "Kopfschmerzen", value: 3, child: <HeadacheDiary /> },
   ]
 
   return (
-    <Container sx={{ padding: '2rem' }}>
+    <Container sx={{ padding: "2rem" }}>
       <Tabs onChange={handleTabChange} value={selectedTab}>
         {tabs.map(tab => (
           <Tab key={tab.value} label={tab.label} value={tab.value} />

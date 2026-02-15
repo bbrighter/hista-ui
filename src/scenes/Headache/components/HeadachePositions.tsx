@@ -1,6 +1,6 @@
-import { validHeadachePositions } from '../../../store/headaches/headaches'
-import useHista from '../../../store/store'
-import HeadacheInputs, { ValueLabelPair } from './Tags'
+import { validHeadachePositions } from "../../../store/headaches/headaches"
+import useHista from "../../../store/store"
+import HeadacheInputs, { ValueLabelPair } from "./Tags"
 
 export default function HeadachePositionsButtons() {
   const positions = useHista(state => state.headache.positions)

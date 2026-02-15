@@ -1,12 +1,12 @@
-import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural'
-import Button from '@mui/material/Button'
-import Container from '@mui/material/Container'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import FaceRetouchingNaturalIcon from "@mui/icons-material/FaceRetouchingNatural"
+import Button from "@mui/material/Button"
+import Container from "@mui/material/Container"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
-import useHista from '../../store/store'
-import OverviewList from '../components/OverviewList'
-import { getColor } from '../Headache/components/colorMapping'
+import useHista from "../../store/store"
+import OverviewList from "../components/OverviewList"
+import { getColor } from "../Headache/components/colorMapping"
 
 export default function Headaches() {
   const navigate = useNavigate()
@@ -30,7 +30,7 @@ export default function Headaches() {
   }
 
   return (
-    <Container sx={{ padding: '2rem' }}>
+    <Container sx={{ padding: "2rem" }}>
       <Button
         startIcon={<FaceRetouchingNaturalIcon />}
         variant="outlined"

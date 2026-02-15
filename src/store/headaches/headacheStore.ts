@@ -1,9 +1,9 @@
-import { produce } from 'immer'
-import { StateCreator } from 'zustand'
+import { produce } from "immer"
+import { StateCreator } from "zustand"
 
-import { client } from '../../api/api'
-import { ValueLabelPair } from '../../scenes/Headache/components/Tags'
-import { Headache, HeadachePositions, HeadacheSymptoms, HeadacheTypes, respToHeadaches } from './headaches'
+import { client } from "../../api/api"
+import { ValueLabelPair } from "../../scenes/Headache/components/Tags"
+import { Headache, HeadachePositions, HeadacheSymptoms, HeadacheTypes, respToHeadaches } from "./headaches"
 
 interface State {
   headaches: Array<Headache>
@@ -30,7 +30,7 @@ export interface HeadacheStore extends State, Actions { }
 
 const initialState: State = {
   headaches: [],
-  headache: { id: 0, date: new Date(), positions: [], symptoms: [], types: [], severity: 0, description: '' },
+  headache: { id: 0, date: new Date(), positions: [], symptoms: [], types: [], severity: 0, description: "" },
   isHeadacheLoaded: false,
 }
 
@@ -76,7 +76,7 @@ export const createHeadacheSlice: StateCreator<
         positions: [],
         symptoms: [],
         types: [],
-        description: '',
+        description: "",
       })
     }))
     return resp.id

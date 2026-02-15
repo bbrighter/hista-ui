@@ -1,10 +1,10 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from "vitest"
 
-import useHista from '../../store'
-import { ingredientsService } from '../ingredients.service'
+import useHista from "../../store"
+import { ingredientsService } from "../ingredients.service"
 
-describe('ingredient list service', () => {
-  it('List ingredients', async () => {
+describe("ingredient list service", () => {
+  it("List ingredients", async () => {
     await ingredientsService.getIngredients()
 
     const { ingredients, ingredientsAreLoaded } = useHista.getState()
@@ -13,16 +13,16 @@ describe('ingredient list service', () => {
   })
 })
 
-describe('ingredients change service', () => {
+describe("ingredients change service", () => {
   beforeEach(() => {
     const { setIngredients } = useHista.getState()
     setIngredients([
-      { id: 1, isArchived: false, name: 'name 1' },
-      { id: 2, isArchived: false, name: 'name 2' },
+      { id: 1, isArchived: false, name: "name 1" },
+      { id: 2, isArchived: false, name: "name 2" },
     ])
   })
 
-  it('Delete ingredient', async () => {
+  it("Delete ingredient", async () => {
     await ingredientsService.deleteIngredient(1)
 
     const { ingredients } = useHista.getState()
@@ -30,14 +30,14 @@ describe('ingredients change service', () => {
     expect(ingredients[0].id).toBe(2)
   })
 
-  it('Rename ingredient', async () => {
-    await ingredientsService.changeName(1, 'new name')
+  it("Rename ingredient", async () => {
+    await ingredientsService.changeName(1, "new name")
 
     const { ingredients } = useHista.getState()
-    expect(ingredients.find(i => i.id == 1).name).toBe('new name')
+    expect(ingredients.find(i => i.id == 1).name).toBe("new name")
   })
 
-  it('Archive ingredient', async () => {
+  it("Archive ingredient", async () => {
     await ingredientsService.archive(1)
 
     const { ingredients } = useHista.getState()

@@ -1,6 +1,6 @@
-import { validHeadacheTypes } from '../../../store/headaches/headaches'
-import useHista from '../../../store/store'
-import HeadacheInputs, { ValueLabelPair } from './Tags'
+import { validHeadacheTypes } from "../../../store/headaches/headaches"
+import useHista from "../../../store/store"
+import HeadacheInputs, { ValueLabelPair } from "./Tags"
 
 export default function HeadacheTypesButtons() {
   const types = useHista(state => state.headache.types)

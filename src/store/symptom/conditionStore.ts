@@ -1,13 +1,13 @@
-import dayjs from 'dayjs'
-import { produce } from 'immer'
-import { StateCreator } from 'zustand'
+import dayjs from "dayjs"
+import { produce } from "immer"
+import { StateCreator } from "zustand"
 
-import { client } from '../../api/api'
-import { hista } from '../../api/generatedApi'
-import { respToCondition } from './condition'
-import { ConditionEvent, respToConditionEvent } from './conditionEvent'
-import { ConditionEvents, respToConditionEvents } from './conditionEvents'
-import { SymptomStore } from './symptomStore'
+import { client } from "../../api/api"
+import { hista } from "../../api/generatedApi"
+import { respToCondition } from "./condition"
+import { ConditionEvent, respToConditionEvent } from "./conditionEvent"
+import { ConditionEvents, respToConditionEvents } from "./conditionEvents"
+import { SymptomStore } from "./symptomStore"
 
 interface State {
   conditionEvents: ConditionEvents

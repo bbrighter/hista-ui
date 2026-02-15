@@ -1,15 +1,15 @@
-import styled from '@emotion/styled'
-import CircleIcon from '@mui/icons-material/Circle'
-import DeleteIcon from '@mui/icons-material/Delete'
-import CircularProgress from '@mui/material/CircularProgress'
-import IconButton from '@mui/material/IconButton'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import React, { useEffect, useState } from 'react'
+import styled from "@emotion/styled"
+import CircleIcon from "@mui/icons-material/Circle"
+import DeleteIcon from "@mui/icons-material/Delete"
+import CircularProgress from "@mui/material/CircularProgress"
+import IconButton from "@mui/material/IconButton"
+import List from "@mui/material/List"
+import ListItem from "@mui/material/ListItem"
+import ListItemIcon from "@mui/material/ListItemIcon"
+import ListItemText from "@mui/material/ListItemText"
+import React, { useEffect, useState } from "react"
 
-import { formatDate } from '../../utils/formatDate'
+import { formatDate } from "../../utils/formatDate"
 
 interface ListItemInterface {
   id: number
@@ -36,7 +36,7 @@ export default function OverviewList(props: {
 
   return (
     <>
-      {loading && <CircularProgress sx={{ position: 'absolute', left: '50%', top: '50%' }} />}
+      {loading && <CircularProgress sx={{ position: "absolute", left: "50%", top: "50%" }} />}
       <List>
         {props.items.map(i => (
           <OverviewListItem
@@ -78,7 +78,7 @@ function OverviewListItem(props: {
       )}
     >
       <ListItemText
-        primary={formatDate(props.date, 'withTime')}
+        primary={formatDate(props.date, "withTime")}
         secondary={props.secondary}
       />
       {props.showSeverity && props.severity !== undefined
@@ -88,7 +88,7 @@ function OverviewListItem(props: {
               sx={{ color: props.severityColorMapping(props.severity) }}
               data-testid="circle-icon"
             />
-            {' '}
+            {" "}
 
           </ListItemIcon>
         )}

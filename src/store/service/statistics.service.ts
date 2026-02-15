@@ -1,6 +1,6 @@
-import { client } from '../../api/api'
-import useHista from '../store'
-import { respToRawDiary, respToSymptomStatistics } from '../types'
+import { client } from "../../api/api"
+import useHista from "../store"
+import { respToRawDiary, respToSymptomStatistics } from "../types"
 
 export const statisticsService = {
   getMealStatistics: async (from: Date, to: Date, ingredientId: number | undefined) => {

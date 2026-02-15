@@ -1,17 +1,17 @@
-import { Typography } from '@mui/material'
-import Container from '@mui/material/Container'
-import { Dayjs } from 'dayjs'
-import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { Typography } from "@mui/material"
+import Container from "@mui/material/Container"
+import { Dayjs } from "dayjs"
+import { useEffect } from "react"
+import { useParams } from "react-router-dom"
 
-import useHista from '../../store/store'
-import DateInput from '../components/DateInput'
-import DebouncedSlider from '../components/DebouncedSlider'
-import { getColor } from './components/colorMapping'
-import HeadacheDescription from './components/HeadacheDescription'
-import HeadachePositionsButtons from './components/HeadachePositions'
-import HeadacheSymptomsButtons from './components/HeadacheSymptoms'
-import HeadacheTypesButtons from './components/HeadacheTypes'
+import useHista from "../../store/store"
+import DateInput from "../components/DateInput"
+import DebouncedSlider from "../components/DebouncedSlider"
+import { getColor } from "./components/colorMapping"
+import HeadacheDescription from "./components/HeadacheDescription"
+import HeadachePositionsButtons from "./components/HeadachePositions"
+import HeadacheSymptomsButtons from "./components/HeadacheSymptoms"
+import HeadacheTypesButtons from "./components/HeadacheTypes"
 
 export default function Headache() {
   const params = useParams<{ headacheId: string }>()
@@ -38,14 +38,14 @@ export default function Headache() {
     return (
       <Typography
         sx={{
-          borderRadius: '50%',
-          width: '2rem', height: '2rem',
-          backgroundColor: getColor(value), color: 'black',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '1.2rem',
-          fontWeight: 'bold',
+          borderRadius: "50%",
+          width: "2rem", height: "2rem",
+          backgroundColor: getColor(value), color: "black",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "1.2rem",
+          fontWeight: "bold",
         }}
         data-testid="slider-icon"
       >
@@ -56,7 +56,7 @@ export default function Headache() {
   }
 
   return (
-    <Container sx={{ padding: '2rem' }}>
+    <Container sx={{ padding: "2rem" }}>
       <DateInput
         title="Datum"
         date={headache.date}

@@ -1,6 +1,6 @@
-import { entity } from '../../api/generatedApi'
-import { MuiSliderColor } from '../../types'
-import { respToSymptom, Symptom } from './symptom'
+import { entity } from "../../api/generatedApi"
+import { MuiSliderColor } from "../../types"
+import { respToSymptom, Symptom } from "./symptom"
 
 interface Condition {
   id: number
@@ -20,10 +20,10 @@ export const colorFromSeverity = (severity: number | Array<number>): MuiSliderCo
     sev = Math.max(...severity)
   }
   switch (sev) {
-    case 1: return 'success'
-    case 2: return 'primary'
-    case 3: return 'secondary'
-    case 4: return 'warning'
-    case 5: return 'error'
+    case 1: return "success"
+    case 2: return "primary"
+    case 3: return "secondary"
+    case 4: return "warning"
+    case 5: return "error"
   }
 }

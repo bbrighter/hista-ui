@@ -1,9 +1,9 @@
-import { produce } from 'immer'
-import { StateCreator } from 'zustand'
+import { produce } from "immer"
+import { StateCreator } from "zustand"
 
-import { client } from '../../api/api'
-import { entity } from '../../api/generatedApi'
-import { respToSymptoms, SymptomCategories } from './symptom'
+import { client } from "../../api/api"
+import { entity } from "../../api/generatedApi"
+import { respToSymptoms, SymptomCategories } from "./symptom"
 
 interface State {
   symptoms: SymptomCategories
@@ -114,7 +114,7 @@ export const createSymptomSlice: StateCreator<
   },
 
   isCategoryNameAvailable: (categoryName: string) => {
-    return get().symptoms.find(c => c.categoryName == categoryName.trim()) == undefined && categoryName.trim() !== ''
+    return get().symptoms.find(c => c.categoryName == categoryName.trim()) == undefined && categoryName.trim() !== ""
   },
 
   isSymptomNameAvailable: (symptomName: string, categoryId: number) => {
@@ -122,7 +122,7 @@ export const createSymptomSlice: StateCreator<
     if (!category) {
       return false
     }
-    return category.symptoms.find(s => s.name == symptomName.trim()) == undefined && symptomName.trim() !== ''
+    return category.symptoms.find(s => s.name == symptomName.trim()) == undefined && symptomName.trim() !== ""
   },
 
 })

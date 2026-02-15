@@ -1,11 +1,11 @@
-import Grid from '@mui/material/Grid'
-import { useEffect, useState } from 'react'
+import Grid from "@mui/material/Grid"
+import { useEffect, useState } from "react"
 
-import { statisticsService } from '../../../../store'
-import useHista from '../../../../store/store'
-import { IngredientBarChart } from './IngredientBarChart'
-import IngredientSelect from './IngredientSelect'
-import SeverityFilter from './SeverityFilter'
+import { statisticsService } from "../../../../store"
+import useHista from "../../../../store/store"
+import { IngredientBarChart } from "./IngredientBarChart"
+import IngredientSelect from "./IngredientSelect"
+import SeverityFilter from "./SeverityFilter"
 
 export const IngredientChart = ({
   from, to,

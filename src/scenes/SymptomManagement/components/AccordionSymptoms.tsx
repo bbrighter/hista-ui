@@ -1,23 +1,23 @@
-import CloseIcon from '@mui/icons-material/Close'
-import CreateIcon from '@mui/icons-material/Create'
-import SaveIcon from '@mui/icons-material/Save'
-import SwapVertIcon from '@mui/icons-material/SwapVert'
-import AccordionDetails from '@mui/material/AccordionDetails'
-import Box from '@mui/material/Box'
-import ButtonGroup from '@mui/material/ButtonGroup'
-import FormControl from '@mui/material/FormControl'
-import IconButton from '@mui/material/IconButton'
-import InputLabel from '@mui/material/InputLabel'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import MenuItem from '@mui/material/MenuItem'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
-import Typography from '@mui/material/Typography'
-import { useState } from 'react'
+import CloseIcon from "@mui/icons-material/Close"
+import CreateIcon from "@mui/icons-material/Create"
+import SaveIcon from "@mui/icons-material/Save"
+import SwapVertIcon from "@mui/icons-material/SwapVert"
+import AccordionDetails from "@mui/material/AccordionDetails"
+import Box from "@mui/material/Box"
+import ButtonGroup from "@mui/material/ButtonGroup"
+import FormControl from "@mui/material/FormControl"
+import IconButton from "@mui/material/IconButton"
+import InputLabel from "@mui/material/InputLabel"
+import List from "@mui/material/List"
+import ListItem from "@mui/material/ListItem"
+import MenuItem from "@mui/material/MenuItem"
+import Select, { SelectChangeEvent } from "@mui/material/Select"
+import Typography from "@mui/material/Typography"
+import { useState } from "react"
 
-import useHista from '../../../store/store'
-import { Symptom, SymptomCategory } from '../../../store/symptom/symptom'
-import TextFieldSaveAndAbort from '../../components/TextFieldSaveAndAbort'
+import useHista from "../../../store/store"
+import { Symptom, SymptomCategory } from "../../../store/symptom/symptom"
+import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
 
 export default function AccordionSymptoms(props: {
   category: SymptomCategory
@@ -41,7 +41,7 @@ export default function AccordionSymptoms(props: {
 function SymptomAccordionEntry(props: {
   symptom: Symptom
 }) {
-  const [mode, setMode] = useState<'default' | 'editing' | 'swapping'>('default')
+  const [mode, setMode] = useState<"default" | "editing" | "swapping">("default")
   const [targetCategoryId, setTargetCategoryId] = useState<number>(props.symptom.categoryId)
   const [isLoading, setIsLoading] = useState(false)
   const categories = useHista(state => state.symptoms)
@@ -52,7 +52,7 @@ function SymptomAccordionEntry(props: {
 
   const onSave = async (v: string) => {
     await changeSymptomName(props.symptom.id, v)
-    setMode('default')
+    setMode("default")
   }
 
   const onSwap = (e: SelectChangeEvent<number>) => {
@@ -62,19 +62,19 @@ function SymptomAccordionEntry(props: {
     setIsLoading(true)
     await changeSymptomCategory(props.symptom.id, props.symptom.categoryId, targetCategoryId)
     setIsLoading(false)
-    setMode('default')
+    setMode("default")
   }
   const onCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
-    setMode('default')
+    setMode("default")
   }
 
   return (
     <ListItem>
-      {mode == 'default'
+      {mode == "default"
         && (
           <Box
-            sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', mt: '3px' }}
+            sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", mt: "3px" }}
             onClick={e => e.stopPropagation()}
           >
             <Typography variant="body1">
@@ -83,12 +83,12 @@ function SymptomAccordionEntry(props: {
             <ButtonGroup>
               <IconButton
                 title="Umbenennen"
-                onClick={() => setMode('editing')}
+                onClick={() => setMode("editing")}
               >
                 <CreateIcon />
               </IconButton>
               <IconButton
-                onClick={() => setMode('swapping')}
+                onClick={() => setMode("swapping")}
                 title="Tauschen"
               >
                 <SwapVertIcon />
@@ -96,7 +96,7 @@ function SymptomAccordionEntry(props: {
             </ButtonGroup>
           </Box>
         )}
-      {mode == 'editing'
+      {mode == "editing"
         && (
           <TextFieldSaveAndAbort
             label="Symptomname"
@@ -107,13 +107,13 @@ function SymptomAccordionEntry(props: {
             onCancel={onCancel}
           />
         )}
-      {mode == 'swapping'
+      {mode == "swapping"
         && (
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
             <Typography variant="body1">
               {props.symptom.name}
             </Typography>
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: "flex" }}>
               <FormControl>
                 <InputLabel>Zielkategorie</InputLabel>
                 <Select

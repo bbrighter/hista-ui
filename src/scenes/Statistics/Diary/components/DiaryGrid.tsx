@@ -1,12 +1,12 @@
-import { DataGrid } from '@mui/x-data-grid'
+import { DataGrid } from "@mui/x-data-grid"
 
-import { diaryGridColumns, useDiaryRows } from './diaryColumns'
+import { diaryGridColumns, useDiaryRows } from "./diaryColumns"
 
 export function DiaryGrid() {
   const rows = useDiaryRows()
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', maxHeight: 1000 }}>
+    <div style={{ display: "flex", flexDirection: "column", maxHeight: 1000 }}>
       <DataGrid
         columns={diaryGridColumns}
         rows={rows}

@@ -1,13 +1,13 @@
-import { produce } from 'immer'
-import { StateCreator } from 'zustand'
+import { produce } from "immer"
+import { StateCreator } from "zustand"
 
-import { client } from '../../api/api'
-import { entity, hista } from '../../api/generatedApi'
-import { respToIngredients } from '../types'
-import { FoodCondition, respToFood } from './food'
-import { IngredientStore } from './ingredientStore'
-import { Freshness, Meal, respToMeal, stringToFreshness } from './meal'
-import { Meals, MetaMeal, respToMetaMeals } from './meals'
+import { client } from "../../api/api"
+import { entity, hista } from "../../api/generatedApi"
+import { respToIngredients } from "../types"
+import { FoodCondition, respToFood } from "./food"
+import { IngredientStore } from "./ingredientStore"
+import { Freshness, Meal, respToMeal, stringToFreshness } from "./meal"
+import { Meals, MetaMeal, respToMetaMeals } from "./meals"
 
 interface State {
   meals: Meals

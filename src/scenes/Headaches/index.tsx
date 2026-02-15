@@ -1,3 +1,3 @@
-import Headaches from './Headaches'
+import Headaches from "./Headaches"
 
 export default Headaches
