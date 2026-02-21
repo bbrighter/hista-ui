@@ -1,8 +1,10 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { http, HttpResponse } from "msw";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 
+import { server } from "../../__tests__/setupTest";
 import { MedicineManagement } from "./MedicineManagement";
 
 const getMedicineRow = (name: string): HTMLElement => {
@@ -76,5 +78,15 @@ describe("Medicine Management", () => {
 
     await userEvent.click(saveButton)
     expect(getMedicineRow("new name")).toBeInTheDocument()
+  })
+
+  it("no data, show no pills", async () => {
+    server.use(http.get("http://localhost:4444/piid/:piid/medicines",() => HttpResponse.json({ medicines: [] })))
+
+    render(<MemoryRouter><MedicineManagement/></MemoryRouter>)
+
+    expect(await screen.findByRole("button", { name: "Medikament hinzufügen" })).toBeInTheDocument()    // expect(await screen.findByTestId("no-pills-image")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toBeInTheDocument()
+    
   })
 })
