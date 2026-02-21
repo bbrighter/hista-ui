@@ -4,18 +4,16 @@ import Skeleton from "@mui/material/Skeleton"
 import dayjs from "dayjs"
 import { useEffect, useState } from "react"
 
-import useHista from "../../store/store"
-import AddStatus from "./components/AddStatus"
-import StatusCard from "./components/StatusCard"
+import { statusService, useStatus } from "../../store"
+import { AddStatus, StatusCard } from "./components"
 
 export default function Status() {
-  const getStatuses = useHista(state => state.getStatuses)
-  const statuses = useHista(state => state.statuses)
+  const statuses = useStatus()
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     setIsLoading(true)
-    getStatuses().finally(() => setIsLoading(false))
+    statusService.getStatuses().finally(() => setIsLoading(false))
   }, [])
 
   return (

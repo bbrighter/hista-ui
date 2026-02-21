@@ -1,0 +1,45 @@
+import { renderHook } from "@testing-library/react";
+import dayjs from "dayjs";
+import { beforeEach, describe, expect, it, test } from "vitest";
+
+import useHista from "../../store";
+import { useStatus, useStatusExistsOnDay } from "../status.selectors";
+
+test("useStatus", () => {
+  const { setStatusList } = useHista.getState()
+  setStatusList([
+    { id: 10, date: dayjs() },
+    { id: 2, date: dayjs().add(1, "day") },
+    { id: 3, date: dayjs().add(-1, "day") },
+  ])
+
+  const { result } = renderHook(() => useStatus())
+  const statuses = result.current
+  expect(statuses).toHaveLength(3)
+  expect(statuses[0].id).toBe(2)
+  expect(statuses[1].id).toBe(10)
+  expect(statuses[2].id).toBe(3)
+})
+
+describe("useStatusExistsOnDay", () => {
+  const existingDay = dayjs()
+  beforeEach(() => {
+    const { setStatusList } = useHista.getState()
+    setStatusList([{ id: 10, date: existingDay }])
+  })
+
+  it("exists", () => {
+    const { result } = renderHook(() => useStatusExistsOnDay(existingDay))
+    expect(result.current).toBeTruthy()
+  })
+
+  it("does not exist", () => {
+    const otherDay = existingDay.add(5, "day")
+    
+    const { result } = renderHook(() => useStatusExistsOnDay(otherDay))
+    expect(result.current).toBeFalsy()
+  })
+
+  
+
+})

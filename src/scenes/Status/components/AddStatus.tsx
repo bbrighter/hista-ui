@@ -6,11 +6,9 @@ import MenuItem from "@mui/material/MenuItem"
 import dayjs from "dayjs"
 import { useState } from "react"
 
-import useHista from "../../../store/store"
+import { statusService, useStatusExistsOnDay } from "../../../store"
 
-export default function AddStatus(props: { disabled: boolean }) {
-  const addStatus = useHista(state => state.addStatus)
-  const statuses = useHista(state => state.statuses)
+export function AddStatus(props: { disabled: boolean }) {
 
   const [open, setOpen] = useState(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -19,17 +17,17 @@ export default function AddStatus(props: { disabled: boolean }) {
   const yesterday = today.subtract(1, "day")
   const dayBeforeYesterday = today.subtract(2, "day")
 
-  const todaysStatusExists = statuses.find(s => s.date.isSame(today, "day")) != undefined
-  const yesterdaysStatusExists = statuses.find(s => s.date.isSame(yesterday, "day")) != undefined
-  const dayBeforeYesterdaysStatusExists = statuses.find(s => s.date.isSame(dayBeforeYesterday, "day")) != undefined
+  const todaysStatusExists = useStatusExistsOnDay(today)
+  const yesterdaysStatusExists = useStatusExistsOnDay(yesterday)
+  const dayBeforeYesterdaysStatusExists = useStatusExistsOnDay(dayBeforeYesterday)
 
-  const handleClickToday = () => addStatus(today)
+  const handleClickToday = () => statusService.postStatus(today)
   const handleClickYesterday = () => {
-    addStatus(yesterday)
+    statusService.postStatus(yesterday)
     closeMenu()
   }
   const handleClickDayBeforeYesterday = () => {
-    addStatus(dayBeforeYesterday)
+    statusService.postStatus(dayBeforeYesterday)
     closeMenu()
   }
 
@@ -79,7 +77,6 @@ export default function AddStatus(props: { disabled: boolean }) {
         >
           Vorgestern
         </MenuItem>
-        {/* <MenuItem>Anderer Tag</MenuItem> */}
       </Menu>
     </>
   )
