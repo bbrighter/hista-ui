@@ -14,24 +14,23 @@ import debounce from "lodash.debounce"
 import { useRef, useState } from "react"
 
 import { useDidUpdateEffect } from "../../../hooks/useDidUpdateEffect"
-import { PutStatusParams, Status } from "../../../store/status/status"
-import useHista from "../../../store/store"
+import { PutStatusParams, Status, statusService } from "../../../store"
 
 export default function StatusCardContent(props: {
   status: Status
   expanded: boolean
 }) {
-  const updateStatus = useHista(state => state.updateStatus)
   const [morningFitness, setMorningFitness] = useState<number | undefined>(props.status.morningFitness)
   const [morningSleep, setMorningSleep] = useState<number | undefined>(props.status.morningSleep)
   const [eveningFitness, setEveningFitness] = useState<number | undefined>(props.status.eveningFitness)
 
   const debouncedUpdate = useRef(debounce(async (params) => {
-    await updateStatus(params)
+    await statusService.patchStatus(props.status.id, params)
   }, 1000)).current
 
   useDidUpdateEffect(() => {
     const params: PutStatusParams = {
+      date: props.status.date,
       statusId: props.status.id,
       morningFitness: morningFitness,
       eveningFitness: eveningFitness,

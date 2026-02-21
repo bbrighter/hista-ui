@@ -237,7 +237,7 @@ export namespace hista {
     }
 
     export interface PatchStatusParams {
-        date?: string
+        date: string
         morningFitness?: number
         morningSleep?: number
         eveningFitness?: number

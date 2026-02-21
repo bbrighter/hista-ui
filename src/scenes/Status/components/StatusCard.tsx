@@ -6,13 +6,11 @@ import { useTheme } from "@mui/material/styles"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import { useState } from "react"
 
-import { Status } from "../../../store/status/status"
-import useHista from "../../../store/store"
+import { Status, statusService } from "../../../store"
 import { formatDate } from "../../../utils/formatDate"
 import StatusCardContent from "./StatusCardContent"
 
-export default function StatusCard(props: { status: Status }) {
-  const deleteStatus = useHista(state => state.deleteStatus)
+export function StatusCard(props: { status: Status }) {
   const [expanded, setExpanded] = useState(false)
 
   const theme = useTheme()
@@ -29,7 +27,7 @@ export default function StatusCard(props: { status: Status }) {
     cardWidth = "30%"
   }
 
-  const handleDelete = () => deleteStatus(props.status.id)
+  const handleDelete = () => statusService.deleteStatus(props.status.id)
 
   return (
     <Card
