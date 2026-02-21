@@ -6,9 +6,9 @@ export default function Start() {
   const types: Array<CardType> = [
     "status",
     "meals",
-    "headaches",
-    "conditionEvents",
     "medicines",
+    "conditionEvents",
+    "headaches",
     "notes",
     "pollens",
     "statistics",
