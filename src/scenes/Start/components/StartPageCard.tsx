@@ -25,8 +25,8 @@ export default function StartPageCard({ type, highlight }: StartPageCardProps) {
   const navigate = useAppNavigate()
   const { title, content, icon: Icon, onClick } = CARD_CONFIG[type](navigate)
 
-  const fontHighlightColor = highlight ? "warning" : "inherit"
-  const borderColor = highlight ? "#ffa726" : "divider"
+  const fontHighlightColor = highlight ? "#5F43C2" : "inherit"
+  const borderColor = highlight ? "#5F43C2" : "divider"
 
 
   return (
@@ -45,7 +45,7 @@ export default function StartPageCard({ type, highlight }: StartPageCardProps) {
         onClick={(onClick)}
       >
         <CardHeader
-          avatar={<Icon color={fontHighlightColor}/>}
+          avatar={<Icon style={{ color: fontHighlightColor  }}/>}
           title={
             <Typography 
               color={fontHighlightColor}
