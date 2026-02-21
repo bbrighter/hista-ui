@@ -1,19 +1,19 @@
-import { Login } from "@bbrighter/auth-module/login"
-import { JSX, lazy, LazyExoticComponent, Suspense } from "react"
-import { ErrorBoundary } from "react-error-boundary"
-import { createBrowserRouter, RouteObject } from "react-router-dom"
+import { Login } from "@bbrighter/auth-module/login";
+import { JSX, lazy, LazyExoticComponent, Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import { createBrowserRouter, RouteObject } from "react-router-dom";
 
-import AppProvider from "./AppProvider"
-import { appRoutes } from "./constants"
-import { ErrorFallback } from "./scenes/Error/ErrorFallback"
-import Start from "./scenes/Start"
-import { ErrorBridge } from "./store/error/ErrorBridge"
+import AppProvider from "./AppProvider";
+import { appRoutes } from "./constants";
+import { ErrorFallback } from "./scenes/Error/ErrorFallback";
+import Start from "./scenes/Start";
+import { ErrorBridge } from "./store/error/ErrorBridge";
 
 type RawRoute = {
-  path: string
-  element: LazyExoticComponent<() => JSX.Element>
-  name: string
-}
+  path: string;
+  element: LazyExoticComponent<() => JSX.Element>;
+  name: string;
+};
 
 const rawRoutes: Array<RawRoute> = [
   {
@@ -91,30 +91,38 @@ const rawRoutes: Array<RawRoute> = [
     element: lazy(() => import("./scenes/Start")),
     name: "Start",
   },
-]
+  {
+    path: appRoutes.medicines,
+    element: lazy(() => import("./scenes/Medicines")),
+    name: "Medicines",
+  },
+  {
+    path: appRoutes.manageMedicines,
+    element: lazy(() => import("./scenes/MedicineManagement")),
+    name: "Medicine management",
+  },
+];
 
 const withSuspense = (Component: LazyExoticComponent<() => JSX.Element>) => {
-  const fallback = <div>Loading...</div>
+  const fallback = <div>Loading...</div>;
 
   return (
     <Suspense fallback={fallback}>
       <Component />
     </Suspense>
-  )
-}
+  );
+};
 
-const childRoutes: Array<RouteObject> = rawRoutes.map(r => ({
+const childRoutes: Array<RouteObject> = rawRoutes.map((r) => ({
   path: r.path,
   name: r.name,
   element: (
-    <ErrorBoundary
-      FallbackComponent={ErrorFallback}
-    >
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
       <ErrorBridge />
       {withSuspense(r.element)}
     </ErrorBoundary>
   ),
-}))
+}));
 
 const routes: Array<RouteObject> = [
   {
@@ -132,6 +140,6 @@ const routes: Array<RouteObject> = [
       ...childRoutes,
     ],
   },
-]
+];
 
-export default createBrowserRouter(routes)
+export default createBrowserRouter(routes);

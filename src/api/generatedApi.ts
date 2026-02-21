@@ -227,6 +227,11 @@ export namespace hista {
         name: string
     }
 
+    export interface PatchMedicineParams {
+        name?: string
+        archive?: boolean
+    }
+
     export interface PatchSeverityRequestParams {
         severity: entity.Severity
     }
@@ -256,6 +261,10 @@ export namespace hista {
         severity: entity.HeadacheSeverity
     }
 
+    export interface PostMedicineParams {
+        name: string
+    }
+
     export interface PostSymptomCategoryRequest {
         name: string
     }
@@ -267,12 +276,15 @@ export namespace hista {
             this.baseClient = baseClient
             this.ArchiveIngredient = this.ArchiveIngredient.bind(this)
             this.CreateConditionEvent = this.CreateConditionEvent.bind(this)
+            this.CreateMedicine = this.CreateMedicine.bind(this)
+            this.DecrementIntake = this.DecrementIntake.bind(this)
             this.DeleteCondition = this.DeleteCondition.bind(this)
             this.DeleteConditionEvent = this.DeleteConditionEvent.bind(this)
             this.DeleteFood = this.DeleteFood.bind(this)
             this.DeleteHeadache = this.DeleteHeadache.bind(this)
             this.DeleteIngredient = this.DeleteIngredient.bind(this)
             this.DeleteMeal = this.DeleteMeal.bind(this)
+            this.DeleteMedicine = this.DeleteMedicine.bind(this)
             this.DeleteNote = this.DeleteNote.bind(this)
             this.DeleteStatus = this.DeleteStatus.bind(this)
             this.DeleteSymptomCategory = this.DeleteSymptomCategory.bind(this)
@@ -282,10 +294,13 @@ export namespace hista {
             this.GetHeadache = this.GetHeadache.bind(this)
             this.GetMeal = this.GetMeal.bind(this)
             this.GetStatisticsByIngredientId = this.GetStatisticsByIngredientId.bind(this)
+            this.IncrementIntake = this.IncrementIntake.bind(this)
             this.ListConditionEvents = this.ListConditionEvents.bind(this)
             this.ListHeadaches = this.ListHeadaches.bind(this)
             this.ListIngredients = this.ListIngredients.bind(this)
+            this.ListIntakes = this.ListIntakes.bind(this)
             this.ListMeals = this.ListMeals.bind(this)
+            this.ListMedicines = this.ListMedicines.bind(this)
             this.ListNotes = this.ListNotes.bind(this)
             this.ListPollens = this.ListPollens.bind(this)
             this.ListStatus = this.ListStatus.bind(this)
@@ -302,6 +317,7 @@ export namespace hista {
             this.PatchHeadacheTypes = this.PatchHeadacheTypes.bind(this)
             this.PatchIngredient = this.PatchIngredient.bind(this)
             this.PatchMeal = this.PatchMeal.bind(this)
+            this.PatchMedicine = this.PatchMedicine.bind(this)
             this.PatchNote = this.PatchNote.bind(this)
             this.PatchStatus = this.PatchStatus.bind(this)
             this.PatchSymptomCategory = this.PatchSymptomCategory.bind(this)
@@ -323,6 +339,16 @@ export namespace hista {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("POST", `/piid/${encodeURIComponent(piid)}/condition-events`)
             return await resp.json() as entity.ConditionEventResponse
+        }
+
+        public async CreateMedicine(piid: string, params: PostMedicineParams): Promise<entity.IDResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("POST", `/piid/${encodeURIComponent(piid)}/medicines`, JSON.stringify(params))
+            return await resp.json() as entity.IDResponse
+        }
+
+        public async DecrementIntake(piid: string, medicineId: number): Promise<void> {
+            await this.baseClient.callTypedAPI("POST", `/piid/${encodeURIComponent(piid)}/intakes/medicines/${encodeURIComponent(medicineId)}/decrement`)
         }
 
         public async DeleteCondition(piid: string, conditionID: number): Promise<entity.SymptomCategoriesResponse> {
@@ -355,6 +381,10 @@ export namespace hista {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("DELETE", `/piid/${encodeURIComponent(piid)}/meals/${encodeURIComponent(id)}`)
             return await resp.json() as entity.IngredientsResponse
+        }
+
+        public async DeleteMedicine(piid: string, medicineId: number): Promise<void> {
+            await this.baseClient.callTypedAPI("DELETE", `/piid/${encodeURIComponent(piid)}/medicines/${encodeURIComponent(medicineId)}`)
         }
 
         public async DeleteNote(piid: string, noteId: number): Promise<void> {
@@ -412,6 +442,10 @@ export namespace hista {
             return await resp.json() as entity.SymptomStatisticsResponse
         }
 
+        public async IncrementIntake(piid: string, medicineId: number): Promise<void> {
+            await this.baseClient.callTypedAPI("POST", `/piid/${encodeURIComponent(piid)}/intakes/medicines/${encodeURIComponent(medicineId)}/increment`)
+        }
+
         public async ListConditionEvents(piid: string): Promise<entity.ConditionEventsResponse> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/piid/${encodeURIComponent(piid)}/condition-events`)
@@ -430,10 +464,22 @@ export namespace hista {
             return await resp.json() as entity.IngredientsResponse
         }
 
+        public async ListIntakes(piid: string): Promise<entity.IntakeResponseList> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("GET", `/piid/${encodeURIComponent(piid)}/intakes`)
+            return await resp.json() as entity.IntakeResponseList
+        }
+
         public async ListMeals(piid: string): Promise<entity.MealsResponse> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/piid/${encodeURIComponent(piid)}/meals`)
             return await resp.json() as entity.MealsResponse
+        }
+
+        public async ListMedicines(piid: string): Promise<entity.MedicineListResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("GET", `/piid/${encodeURIComponent(piid)}/medicines`)
+            return await resp.json() as entity.MedicineListResponse
         }
 
         public async ListNotes(piid: string): Promise<entity.NotesResp> {
@@ -506,6 +552,10 @@ export namespace hista {
 
         public async PatchMeal(piid: string, id: number, params: entity.PatchMealParams): Promise<void> {
             await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/meals/${encodeURIComponent(id)}`, JSON.stringify(params))
+        }
+
+        public async PatchMedicine(piid: string, medicineId: number, params: PatchMedicineParams): Promise<void> {
+            await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/medicines/${encodeURIComponent(medicineId)}`, JSON.stringify(params))
         }
 
         public async PatchNote(piid: string, noteId: number, params: NoteParams): Promise<void> {
@@ -660,6 +710,16 @@ export namespace entity {
         ingredients: IngredientResponse[]
     }
 
+    export interface IntakeResponse {
+        date: string
+        medicineId: number
+        count: number
+    }
+
+    export interface IntakeResponseList {
+        intakes: IntakeResponse[]
+    }
+
     export interface MealMetaResponse {
         id: number
         date: string
@@ -676,6 +736,16 @@ export namespace entity {
 
     export interface MealsResponse {
         meals: MealMetaResponse[]
+    }
+
+    export interface MedicineListResponse {
+        medicines: MedicineResponse[]
+    }
+
+    export interface MedicineResponse {
+        id: number
+        name: string
+        isArchived: boolean
     }
 
     export interface NoteResp {

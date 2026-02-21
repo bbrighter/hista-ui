@@ -52,6 +52,12 @@ export default defineConfig([
         },
       ],
       "no-unused-vars": "off",
+      "no-restricted-imports": [
+        "error",
+        {
+          "patterns": [{ "regex": "^@mui/[^/]+$" }],
+        },
+      ],
     },
   },
 ]);

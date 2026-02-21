@@ -1,15 +1,20 @@
-import { authHandlers } from "./authHandler"
-import { headacheHandlers } from "./headacheHandlers"
-import { foodHandlers, ingredientHandlers, mealHandlers } from "./mealHandlers"
-import { noteHandlers } from "./noteHandlers"
-import { permissionsHandler } from "./permissionsHandler"
-import { pollenHandlers } from "./pollenHandlers"
-import { getDiariesHandler, getStatisticsHandler } from "./statisticsHandler"
-import { statusHandlers } from "./statusHandler"
-import { conditionEventHandlers, conditionHandlers, symptomHandlers } from "./symptomHandlers"
+import { authHandlers } from "./authHandler";
+import { headacheHandlers } from "./headacheHandlers";
+import { foodHandlers, ingredientHandlers, mealHandlers } from "./mealHandlers";
+import { intakeHandlers, medicineHandlers } from "./medicineHandlers";
+import { noteHandlers } from "./noteHandlers";
+import { permissionsHandler } from "./permissionsHandler";
+import { pollenHandlers } from "./pollenHandlers";
+import { getDiariesHandler, getStatisticsHandler } from "./statisticsHandler";
+import { statusHandlers } from "./statusHandler";
+import {
+  conditionEventHandlers,
+  conditionHandlers,
+  symptomHandlers,
+} from "./symptomHandlers";
 
-const baseUrl = "http://localhost:4444"
-const baseUrlWithPiid = `${baseUrl}/piid/:piid`
+const baseUrl = "http://localhost:4444";
+const baseUrlWithPiid = `${baseUrl}/piid/:piid`;
 
 const handlers = [
   ...symptomHandlers(baseUrlWithPiid),
@@ -26,6 +31,8 @@ const handlers = [
   ...authHandlers(baseUrl),
   getStatisticsHandler(baseUrlWithPiid),
   getDiariesHandler(baseUrlWithPiid),
-]
+  ...medicineHandlers(baseUrlWithPiid),
+  ...intakeHandlers(baseUrlWithPiid),
+];
 
-export default handlers
+export default handlers;

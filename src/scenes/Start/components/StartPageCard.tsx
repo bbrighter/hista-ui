@@ -1,5 +1,6 @@
 import FaceRetouchingNaturalIcon from "@mui/icons-material/FaceRetouchingNatural"
 import ForestIcon from "@mui/icons-material/Forest"
+import MedicationIcon from "@mui/icons-material/Medication";
 import NoteIcon from "@mui/icons-material/Note"
 import QueryStatsIcon from "@mui/icons-material/QueryStats"
 import RestaurantIcon from "@mui/icons-material/Restaurant"
@@ -91,5 +92,11 @@ const CARD_CONFIG = {
     content: "Kopfschmerztagebuch",
     icon: <FaceRetouchingNaturalIcon />,
     onClick: navigate.to.headaches,
+  }),
+  medicines: (navigate: ReturnType<typeof useAppNavigate>) => ({
+    title: "Medikamente",
+    content: "Einnehmen und eintragen",
+    icon: <MedicationIcon/>,
+    onClick: navigate.to.medicine,
   }),
 } as const

@@ -1,4 +1,4 @@
-import { ingredientsService } from "../../../store/service/ingredients.service"
+import { ingredientsService } from "../../../store"
 import useHista from "../../../store/store"
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
 
@@ -16,7 +16,7 @@ export const EditIngredientName = ({ id, name, onCancel }:
   }
 
   const isSaveable = (v: string): boolean => {
-    return ingredients.every(i => i.name.trim().toLowerCase() != v.trim().toLowerCase())
+    return v.trim() != "" && ingredients.every(i => i.name.trim().toLowerCase() != v.trim().toLowerCase())
   }
 
   return (

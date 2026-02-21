@@ -2,7 +2,7 @@ import Container from "@mui/material/Container"
 import List from "@mui/material/List"
 import { useEffect } from "react"
 
-import { ingredientsService } from "../../store/service/ingredients.service"
+import { ingredientsService } from "../../store"
 import useHista from "../../store/store"
 import { IngredientListItem } from "./IngredientListItem"
 

@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box"
-import { DataGrid } from "@mui/x-data-grid"
+import { DataGrid } from "@mui/x-data-grid/DataGrid"
 
 import { headacheColumnGroupingModel, headacheGridColumns, useHeadacheGridRows } from "./headacheColumns"
 

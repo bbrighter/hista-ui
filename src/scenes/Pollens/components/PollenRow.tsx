@@ -1,6 +1,6 @@
 import styled from "@emotion/styled"
-import { Paper } from "@mui/material"
 import ListItem from "@mui/material/ListItem"
+import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 
 import { Pollen } from "../../../store/pollen/pollen"

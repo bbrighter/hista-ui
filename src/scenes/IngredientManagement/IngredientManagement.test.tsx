@@ -67,7 +67,7 @@ describe("IngredientManagement", () => {
     expect(screen.getByText("ingredient1 new")).toBeInTheDocument()
   })
 
-  it("Renaming only works for different names", async () => {
+  it("Renaming only works for different and non-empty names", async () => {
     render(<MemoryRouter><IngredientManagement /></MemoryRouter>)
 
     const editButton = await waitFor(() => getEditButton("ingredient1"))
@@ -76,6 +76,7 @@ describe("IngredientManagement", () => {
     await userEvent.click(editButton)
     const textField = screen.getByLabelText("Zutat")
     await userEvent.clear(textField)
+    expect(screen.getByTitle("Umbenennen speichern")).toBeDisabled()
     await userEvent.type(textField, "ingredient2")
     expect(screen.getByTitle("Umbenennen speichern")).toBeDisabled()
   })

@@ -6,8 +6,7 @@ import TextField from "@mui/material/TextField"
 import { useEffect, useState } from "react"
 import React from "react"
 
-import { useNonArchivedIngredients } from "../../../store/selectors/ingredients.selectors"
-import { ingredientsService } from "../../../store/service/ingredients.service"
+import { ingredientsService,useNonArchivedIngredients } from "../../../store"
 import useHista from "../../../store/store"
 
 interface InputOption {

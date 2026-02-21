@@ -1,4 +1,4 @@
-import { GridColDef, GridColumnGroupingModel, GridRowsProp } from "@mui/x-data-grid"
+import { GridColDef, GridColumnGroupingModel, GridRowsProp } from "@mui/x-data-grid/models"
 
 import { Headache, validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from "../../../../store/headaches/headaches"
 import useHista from "../../../../store/store"
