@@ -1,5 +1,5 @@
-import { Typography } from "@mui/material"
 import Container from "@mui/material/Container"
+import Typography from "@mui/material/Typography"
 import { Dayjs } from "dayjs"
 import { useEffect } from "react"
 import { useParams } from "react-router-dom"

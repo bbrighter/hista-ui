@@ -1,13 +1,13 @@
 export const mealConstants = {
   RAW: "Roh",
   COOKED: "Gar",
-} as const
+} as const;
 
 const noPiidRoutes = {
   homepage: "/",
   error: "/error",
   login: "/login",
-}
+};
 
 const piidRoutes = {
   homepagePiid: "/",
@@ -25,11 +25,13 @@ const piidRoutes = {
   headacheDetails: "/headaches/:headacheId",
   manageSymptoms: "/manage-symptoms",
   manageIngredients: "/manage-ingredients",
-}
+  medicines: "/medicines",
+  manageMedicines: "/manage-medicines",
+};
 
 const addPiid = (route: string): string => {
-  return "/:piid" + route
-}
+  return "/:piid" + route;
+};
 
 function mapValues<T extends Record<string, string>>(
   obj: T,
@@ -37,20 +39,21 @@ function mapValues<T extends Record<string, string>>(
 ): { [K in keyof T]: string } {
   return Object.fromEntries(
     Object.entries(obj).map(([key, value]) => [key, fn(value, key as keyof T)]),
-  ) as { [K in keyof T]: string }
+  ) as { [K in keyof T]: string };
 }
 
 export const appRoutes = {
   ...noPiidRoutes,
   ...mapValues(piidRoutes, addPiid),
-} as const
+} as const;
 
 export function buildPath(
   template: string,
   params: Record<string, string | number> = {},
 ): string {
   return Object.entries(params).reduce(
-    (path, [key, value]) => path.replace(`:${key}`, encodeURIComponent(String(value))),
+    (path, [key, value]) =>
+      path.replace(`:${key}`, encodeURIComponent(String(value))),
     template,
-  )
+  );
 }

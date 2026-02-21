@@ -2,7 +2,7 @@ import MenuItem from "@mui/material/MenuItem"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import { useEffect, useState } from "react"
 
-import { ingredientsService } from "../../../../store/service/ingredients.service"
+import { ingredientsService } from "../../../../store"
 import useHista from "../../../../store/store"
 
 export default function IngredientSelect({ onChange }: {

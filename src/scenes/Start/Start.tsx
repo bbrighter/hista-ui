@@ -8,6 +8,7 @@ export default function Start() {
     "meals",
     "headaches",
     "conditionEvents",
+    "medicines",
     "notes",
     "pollens",
     "statistics",
@@ -19,7 +20,7 @@ export default function Start() {
       spacing={2}
       sx={{ padding: "2rem" }}
     >
-      {types.map(t => (<StartPageCard type={t} />))}
+      {types.map(t => (<StartPageCard key={t} type={t} />))}
     </Grid>
   )
 }

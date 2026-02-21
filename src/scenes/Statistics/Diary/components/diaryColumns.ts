@@ -1,4 +1,4 @@
-import { GridColDef, GridRowsProp } from "@mui/x-data-grid"
+import { GridColDef, GridRowsProp } from "@mui/x-data-grid/models"
 
 import useHista from "../../../../store/store"
 

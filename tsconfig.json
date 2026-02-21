@@ -5,6 +5,7 @@
       "DOM",
       "DOM.Iterable"
     ],
+    "target": "es2015",
     "module": "esnext",
     "moduleResolution": "bundler",
     "skipLibCheck": true,
