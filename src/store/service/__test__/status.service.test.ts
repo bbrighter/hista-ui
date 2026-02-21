@@ -5,12 +5,14 @@ import useHista from "../../store";
 import { statusService } from "../status.service";
 
 describe("status service", () => {
+
   beforeEach( async () => {
     await statusService.getStatuses()
   })
+
   it("get", async () => {
 
-    const { statuses } = useHista.getState()
+    const { statuses, statusIsLoaded } = useHista.getState()
     expect(statuses).toHaveLength(2)
     expect(statuses).toContainEqual({ 
       id: 1, 
@@ -25,6 +27,7 @@ describe("status service", () => {
       morningFitness: 3, 
       morningSleep: 1, 
     })
+    expect(statusIsLoaded).toBeTruthy()
   })
 
   it("delete", async () => {
