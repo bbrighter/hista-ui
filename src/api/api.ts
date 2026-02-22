@@ -49,6 +49,7 @@ export const client: PiidInjectedClient<typeof baseClient.hista> = new Proxy(bas
 
     return (...args: any[]) => {
       const piid = getPiid?.()
+      if (!piid) return
       return orig.call(target, piid, ...args)
     }
   },

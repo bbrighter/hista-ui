@@ -7,8 +7,9 @@ import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 
+import { usePiidEffect } from "../../hooks/usePiidEffect"
 import { formatDate } from "../../utils/formatDate"
 
 interface ListItemInterface {
@@ -27,7 +28,7 @@ export default function OverviewList(props: {
 }) {
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
+  usePiidEffect(() => {
     setLoading(true)
     props.getData().finally(
       () => setLoading(false),

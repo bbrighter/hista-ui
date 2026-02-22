@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid"
 import dayjs from "dayjs"
-import { useEffect } from "react"
 
+import { usePiidEffect } from "../../hooks/usePiidEffect"
 import { statusService, useStatusExistsOnDay } from "../../store"
 import StartPageCard, { CardType } from "./components/StartPageCard"
 
@@ -17,7 +17,7 @@ export default function Start() {
     "statistics",
   ]
 
-  useEffect(() => {
+  usePiidEffect(() => {
     statusService.getStatuses()
   },[])
 

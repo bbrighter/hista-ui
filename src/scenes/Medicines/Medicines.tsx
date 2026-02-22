@@ -1,14 +1,14 @@
 import Container from "@mui/material/Container";
-import { useEffect } from "react";
 
+import { usePiidEffect } from "../../hooks/usePiidEffect";
 import { medicinesService } from "../../store";
 import { IntakeList, ManagementButton } from "./components";
 
 export const Medicines = () => {
-  useEffect(() => {
+  usePiidEffect(() => {
     medicinesService.getMedicines();
     medicinesService.listIntakes();
-  });
+  }, []);
 
   return (
     <Container sx={{ mt: "2rem" }}>

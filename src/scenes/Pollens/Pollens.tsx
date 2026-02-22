@@ -3,8 +3,9 @@ import Container from "@mui/material/Container"
 import Divider from "@mui/material/Divider"
 import List from "@mui/material/List"
 import Skeleton from "@mui/material/Skeleton"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
+import { usePiidEffect } from "../../hooks/usePiidEffect"
 import useHista from "../../store/store"
 import PollenHeader from "./components/PollenHeader"
 import PollenRow from "./components/PollenRow"
@@ -15,7 +16,7 @@ export default function PollenView() {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  useEffect(() => {
+  usePiidEffect(() => {
     setIsLoading(true)
     getPollens().finally(() => setIsLoading(false))
   }, [getPollens])
