@@ -1,12 +1,12 @@
+import { beforeEach } from "node:test"
+
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { MemoryRouter, Route, Routes } from "react-router-dom"
-import { beforeEach, describe, expect, it, vi } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 
 import useHista from "../../store/store"
 import Headache from "./Headache"
-
-vi.mock("../../store/store", { spy: true })
 
 const getTagByText = (text: string): HTMLElement => {
   const tagText = screen.getByText(text)
@@ -19,6 +19,11 @@ const isTagActive = (text: string): boolean => {
 }
 
 describe("A headache can be edited and displayed", () => {
+  const patchHeadacheSeverity = vi.spyOn(useHista.getState(), "patchHeadacheSeverity")
+  const patchHeadachePositions = vi.spyOn(useHista.getState(), "patchHeadachePositions")
+  const patchHeadacheTypes = vi.spyOn(useHista.getState(), "patchHeadacheTypes")
+  const patchHeadacheSymptoms = vi.spyOn(useHista.getState(), "patchHeadacheSymptoms")
+
   beforeEach(() => {
     vi.resetAllMocks()
   })
@@ -27,7 +32,6 @@ describe("A headache can be edited and displayed", () => {
   })
 
   it("Change severity", async () => {
-    const patchHeadacheSeverity = vi.spyOn(useHista.getState(), "patchHeadacheSeverity")
     render(
       <MemoryRouter initialEntries={["/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1"]}>
         <Routes>
@@ -50,7 +54,6 @@ describe("A headache can be edited and displayed", () => {
   })
 
   it("Change position", async () => {
-    const patchHeadachePositions = vi.spyOn(useHista.getState(), "patchHeadachePositions")
     render(
       <MemoryRouter initialEntries={["/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1"]}>
         <Routes>
@@ -89,7 +92,6 @@ describe("A headache can be edited and displayed", () => {
   })
 
   it("Change type", async () => {
-    const patchHeadacheTypes = vi.spyOn(useHista.getState(), "patchHeadacheTypes")
     render(
       <MemoryRouter initialEntries={["/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1"]}>
         <Routes>
@@ -117,7 +119,6 @@ describe("A headache can be edited and displayed", () => {
   })
 
   it("Change symptoms", async () => {
-    const patchHeadacheSymptoms = vi.spyOn(useHista.getState(), "patchHeadacheSymptoms")
     render(
       <MemoryRouter initialEntries={["/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1"]}>
         <Routes>
