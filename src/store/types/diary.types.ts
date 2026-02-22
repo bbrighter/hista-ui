@@ -9,7 +9,7 @@ export interface RawDiary {
   Category: string
 }
 
-type DiaryEntryType = "Essen" | "Symptom" | "Notiz" | "Pollen"
+type DiaryEntryType = "Essen" | "Symptom" | "Notiz" | "Pollen" | "Medikament"
 
 export const respToRawDiary = (resp: hista.DiaryResp): Array<RawDiary> => {
   return resp.diaries.map(d => ({
@@ -30,6 +30,8 @@ const respTypeToType = (resp: string): DiaryEntryType => {
       return "Notiz"
     case "Pollen":
       return "Pollen"
+    case "Intake":
+      return "Medikament"
     default:
       throw ("invalid type: " + resp)
   }
