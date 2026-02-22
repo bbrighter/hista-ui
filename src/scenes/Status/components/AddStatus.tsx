@@ -9,9 +9,8 @@ import { useState } from "react"
 import { statusService, useStatusExistsOnDay } from "../../../store"
 
 export function AddStatus(props: { disabled: boolean }) {
-
-  const [open, setOpen] = useState(false)
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
 
   const today = dayjs()
   const yesterday = today.subtract(1, "day")
@@ -32,12 +31,10 @@ export function AddStatus(props: { disabled: boolean }) {
   }
 
   const handleClickCalendar = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setOpen(true)
     setAnchorEl(event.currentTarget)
   }
 
   const closeMenu = () => {
-    setOpen(false)
     setAnchorEl(null)
   }
 
