@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { fetcher } from "./fetcher"
 import Client, { ClientOptions, Environment, Local } from "./generatedApi"
 
 const getStageURL = (): string => {
@@ -18,7 +19,7 @@ const baseUrl = import.meta.env.MODE === "test"
     : Local
 
 const options: ClientOptions = {
-  fetcher: (input: RequestInfo | URL, init?: RequestInit) => fetch(input, { ...init }),
+  fetcher: fetcher,
   auth: () => ({ Token: window.localStorage.getItem("token") || "" }),
 }
 
