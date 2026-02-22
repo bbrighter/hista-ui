@@ -1,7 +1,7 @@
 import Container from "@mui/material/Container"
 import List from "@mui/material/List"
-import { useEffect } from "react"
 
+import { usePiidEffect } from "../../hooks/usePiidEffect"
 import { ingredientsService } from "../../store"
 import useHista from "../../store/store"
 import { IngredientListItem } from "./IngredientListItem"
@@ -10,7 +10,7 @@ export const IngredientManagement = () => {
   const ingredients = useHista(state => state.ingredients)
   const sortedIngredients = [...ingredients].sort((a, b) => a.name.localeCompare(b.name))
 
-  useEffect(() => {
+  usePiidEffect(() => {
     ingredientsService.getIngredients()
   }, [])
 

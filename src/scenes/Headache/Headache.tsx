@@ -1,9 +1,9 @@
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
 import { Dayjs } from "dayjs"
-import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 
+import { usePiidEffect } from "../../hooks/usePiidEffect"
 import useHista from "../../store/store"
 import DateInput from "../components/DateInput"
 import DebouncedSlider from "../components/DebouncedSlider"
@@ -20,7 +20,7 @@ export default function Headache() {
   const patchSeverity = useHista(state => state.patchHeadacheSeverity)
   const patchDate = useHista(state => state.patchHeadacheDate)
 
-  useEffect(() => {
+  usePiidEffect(() => {
     getHeadache(Number(params.headacheId))
   }, [params.headacheId])
 

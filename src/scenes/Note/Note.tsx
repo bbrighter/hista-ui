@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom"
 
 import useDebounce from "../../hooks/useDebounce"
 import { useDidUpdateEffect } from "../../hooks/useDidUpdateEffect"
+import { usePiidEffect } from "../../hooks/usePiidEffect"
 import useHista from "../../store/store"
 import DateInput from "../components/DateInput"
 
@@ -19,7 +20,7 @@ export default function Note() {
   const debouncedInputValue = useDebounce(textInput, 1000)
   const [isUpToDate, setIsUpToDate] = useState(true)
 
-  useEffect(() => {
+  usePiidEffect(() => {
     getNote(Number(params.noteId))
   }, [params.noteId])
 

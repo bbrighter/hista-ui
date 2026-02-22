@@ -2,9 +2,9 @@ import Container from "@mui/material/Container"
 import FormControl from "@mui/material/FormControl"
 import FormGroup from "@mui/material/FormGroup"
 import dayjs from "dayjs"
-import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 
+import { usePiidEffect } from "../../hooks/usePiidEffect"
 import useHista from "../../store/store"
 import DateInput from "../components/DateInput"
 import AddCondition from "./components/AddCondition"
@@ -16,10 +16,10 @@ export default function ConditionEvent() {
   const conditionEvent = useHista(state => state.conditionEvent)
   const params = useParams<{ eventId: string }>()
 
-  useEffect(() => {
+  usePiidEffect(() => {
     getConditionEvent(Number(params.eventId))
   },
-  [getConditionEvent, params.eventId])
+  [params.eventId])
 
   const onChange = (v: dayjs.Dayjs | null) => {
     if (v === null) return

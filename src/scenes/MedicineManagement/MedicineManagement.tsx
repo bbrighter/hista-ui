@@ -1,11 +1,11 @@
 import Container from "@mui/material/Container";
-import { useEffect } from "react";
 
+import { usePiidEffect } from "../../hooks/usePiidEffect";
 import { medicinesService } from "../../store";
 import { AddMedicineButton, MedicineList } from "./components";
 
 export const MedicineManagement = () => {
-  useEffect(() => {
+  usePiidEffect(() => {
     medicinesService.getMedicines();
   }, []);
 
