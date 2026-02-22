@@ -22,7 +22,7 @@
     "dependencies:graph": "npx depcruise --include-only \"^src\" --output-type dot src | dot -T svg > graph.svg"
   },
   "engines": {
-    "node": ">=22.0.0",
+    "node": "24.x",
     "pnpm": ">=10.0.0"
   },
   "dependencies": {

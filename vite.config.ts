@@ -15,8 +15,14 @@ export default defineConfig({
     }),
   ],
   build: {
+    chunkSizeWarningLimit: 700,
     rollupOptions: {
       treeshake: true,
+      output: {
+        manualChunks: {
+          xlsx: ["xlsx"],
+        },
+      },
     },
   },
   test: {
