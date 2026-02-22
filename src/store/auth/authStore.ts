@@ -4,12 +4,13 @@ import { StateCreator } from "zustand"
 import { Instance } from "./instance"
 import { User } from "./users"
 
-interface State {
+type State =  {
   instances: Array<Instance>
   token: string
   piid: string | null
   userName: string
   users: Array<User>
+  instancesAreLoaded: boolean
 }
 
 interface Actions {
@@ -18,6 +19,7 @@ interface Actions {
   setToken: (token: string) => void
   setUserName: (name: string) => void
   setUsers: (users: Array<User>) => void
+  setInstancesLoaded: (isLoaded: boolean) => void
 }
 
 export interface AuthStore extends State, Actions { }
@@ -28,6 +30,7 @@ const initialState: State = {
   piid: null,
   userName: "",
   users: [],
+  instancesAreLoaded: false,
 }
 
 export const createAuthSlice: StateCreator<
@@ -65,6 +68,12 @@ export const createAuthSlice: StateCreator<
   setInstances: async (instances: Array<Instance>) => {
     set(produce((draft: State) => {
       draft.instances = instances
+    }))
+  },
+
+  setInstancesLoaded: (isLoaded: boolean) => {
+    set(produce((draft: State) => {
+      draft.instancesAreLoaded = isLoaded
     }))
   },
 })

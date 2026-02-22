@@ -12,10 +12,12 @@ export const useAuthStateAdapter = (navigate: NavigateFunction, location: Locati
   const setToken = useHista(state => state.setToken)
   const userName = useHista(state => state.userName)
   const setUserName = useHista(state => state.setUserName)
+  const isLoaded = useHista(state => state.instancesAreLoaded)
+  const setIsLoaded = useHista(state => state.setInstancesLoaded)
 
   const useAuthApi = () => authApi
   const useLocation = () => ({ location: location.pathname + location.search, navigate })
-  const useProductInstances = () => ({ instances, setInstances })
+  const useProductInstances = () => ({ instances, setInstances, isLoaded, setIsLoaded })
   const useProductKey = () => ProductKeys.HistaComplete
   const useToken = () => ({ token, setToken })
   const useUserName = () => ({ userName, setUserName })
