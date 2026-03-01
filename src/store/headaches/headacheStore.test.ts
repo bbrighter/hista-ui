@@ -1,5 +1,6 @@
-import { beforeEach, describe, expect, it } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 
+import { client } from "../../api/api"
 import useHista from "../store"
 
 describe("headache store", () => {
@@ -46,5 +47,40 @@ describe("headache store", () => {
     await useHista.getState().deleteHeadache(1)
 
     expect(useHista.getState().headaches).toHaveLength(0)
+  })
+
+
+})
+
+describe("Single headache actions", () => {
+  const spyPatchTypes = vi.spyOn(client, "PatchHeadacheTypes")
+  beforeEach(async () => {
+    await useHista.getState().getHeadache(1)
+  })
+
+  it("patch headhache date", async () => {
+    await useHista.getState().patchHeadacheDate(new Date(2024, 4, 15, 2, 30))
+    
+    const headhache = useHista.getState().headache
+    expect(headhache.date).toStrictEqual(new Date(2024, 4, 15, 2, 30))
+  })
+
+  it("patch headache position", async () => {
+    await useHista.getState().patchHeadachePositions([{ value: "left", label: "Links" }])
+
+    const headhache = useHista.getState().headache
+    expect(headhache.positions).toStrictEqual([{ value: "left", label: "Links" }])
+  })
+
+  it("patch headache position, no changes", async () => {
+    await useHista.getState().patchHeadachePositions([{ value: "left", label: "Links" }, { value: "right", label: "Rechts" }])
+
+    expect(spyPatchTypes).not.toHaveBeenCalled()
+  })
+
+  it("patch headache symptoms", async () => {
+    await useHista.getState().patchHeadacheSymptoms([{ value: "dizziniess", label: "Schwindel" }])
+
+    expect(useHista.getState().headache.symptoms).toStrictEqual([{ value: "dizziniess", label: "Schwindel" }])
   })
 })

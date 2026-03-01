@@ -85,8 +85,12 @@ describe("Medicine Management", () => {
 
     render(<MemoryRouter><MedicineManagement/></MemoryRouter>)
 
-    expect(await screen.findByRole("button", { name: "Medikament hinzufügen" })).toBeInTheDocument()    // expect(await screen.findByTestId("no-pills-image")).toBeInTheDocument()
+    expect(await screen.findByRole("button", { name: "Medikament hinzufügen" })).toBeInTheDocument()
     expect(screen.getByRole("img")).toBeInTheDocument()
     
+  })
+
+  it("Reorder", { skip: true },async () => {
+    // Skipped, because it probably needs to be an e2e test
   })
 })

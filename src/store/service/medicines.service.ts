@@ -15,8 +15,8 @@ export const medicinesService = {
 
     const { medicines, setMedicines } = useHista.getState();
     setMedicines([
-      ...medicines,
       { id: idResp.id, isArchived: false, name: name },
+      ...medicines,
     ]);
   },
 
@@ -35,6 +35,21 @@ export const medicinesService = {
 
     const { updateMedicine } = useHista.getState();
     updateMedicine(id, { name: name });
+  },
+
+  reorderMedicine: async (id: number,  prevId?: number, nextId?: number) => {
+    const { medicines, changeOrder } = useHista.getState()
+
+    await client.ReorderMedicine(id, { nextId: nextId, previousId: prevId })
+    let targetIndex: number
+    if (!nextId) {
+      targetIndex = medicines.length
+    }else  if (!prevId) {
+      targetIndex = 0
+    } else {
+      targetIndex = medicines.findIndex(m => m.id == nextId)
+    }
+    changeOrder(id, targetIndex)
   },
 
   listIntakes: async () => {

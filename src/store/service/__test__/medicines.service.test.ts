@@ -39,7 +39,52 @@ describe("medicines service", () => {
       isArchived: false,
       name: "new medicine",
     });
+    expect(medicines[0].id).toBe(3)
   });
+
+  describe("reorder medicine", () => {
+    beforeEach(() => {
+      const { setMedicines } = useHista.getState();
+      setMedicines([
+        { id: 1, isArchived: false, name: "Medicine 1" },
+        { id: 2, isArchived: false, name: "Medicine 2" },
+        { id: 3, isArchived: false, name: "Medicine 3" },
+      ]);
+    })
+    it("reorder to first", async () => {
+      await medicinesService.reorderMedicine(2, undefined, 1)
+
+      const { medicines } = useHista.getState();
+      expect(medicines[0].id).toBe(2)
+      expect(medicines[1].id).toBe(1)
+      expect(medicines[2].id).toBe(3)
+    })
+    it("reorder to last", async () => {
+      await medicinesService.reorderMedicine(2, 3)
+
+      const { medicines } = useHista.getState();
+      expect(medicines[0].id).toBe(1)
+      expect(medicines[1].id).toBe(3)
+      expect(medicines[2].id).toBe(2)
+    })
+    it("reorder", async () => {
+      await medicinesService.reorderMedicine(1, 2, 3)
+
+      const { medicines } = useHista.getState();
+      expect(medicines[0].id).toBe(2)
+      expect(medicines[1].id).toBe(1)
+      expect(medicines[2].id).toBe(3)
+    })
+    it("reorder with no effect", async () => {
+      await medicinesService.reorderMedicine(2, 1, 3)
+
+      const { medicines } = useHista.getState();
+      expect(medicines[0].id).toBe(1)
+      expect(medicines[1].id).toBe(2)
+      expect(medicines[2].id).toBe(3)
+    })
+  })
+
 
   it("archive medicine", async () => {
     await medicinesService.archiveMedicine(1);
@@ -122,3 +167,4 @@ describe("medicines service", () => {
     expect(intakes).toContainEqual({ medicineId: 1, count: 1, date: oldDate });
   });
 });
+

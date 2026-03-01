@@ -1,7 +1,7 @@
 import useHista from "../store"
 
 export const useMedicine = () => {
-  return [...useHista(state => state.medicines)].sort((a,b) => a.name.localeCompare(b.name))
+  return useHista(state => state.medicines)
 }
 
 const useNonArchivedMedicine = () => {

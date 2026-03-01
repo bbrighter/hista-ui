@@ -12,6 +12,7 @@ interface Actions {
   resetMedicines: () => void;
   setMedicines: (medicines: Array<Medicine>) => void;
   updateMedicine: (id: number, medicine: Partial<Medicine>) => void;
+  changeOrder: (id: number, targetIndex: number) => void;
   setIntakes: (intakes: Array<Intake>) => void;
   changeMedicineIntake: (id: number, date: Date, value: number) => void;
 }
@@ -50,6 +51,15 @@ export const createMedicineSlice: StateCreator<
         Object.assign(medicine, partial);
       }),
     );
+  },
+  changeOrder(id: number, targetIndex: number) {
+    set(produce((draft: State) => {
+      const medicineIndex = draft.medicines.findIndex(m => m.id == id)
+      const [medicine] = draft.medicines.splice(medicineIndex, 1)
+      const adjustedIndex = medicineIndex < targetIndex ? targetIndex - 1 : targetIndex
+      draft.medicines.splice(adjustedIndex, 0, medicine)
+    }))
+      
   },
   setIntakes: (intakes: Array<Intake>) => {
     set(
