@@ -17,7 +17,7 @@ const respToMedicine = (resp: entity.MedicineResponse): Medicine => {
 export const respToMedicineList = (
   resp: entity.MedicineListResponse,
 ): Array<Medicine> => {
-  return resp.medicines.map((m) => respToMedicine(m));
+  return resp.medicines.sort((a,b) => a.sortOrder - b.sortOrder).map((m) => respToMedicine(m));
 };
 
 export type Intake = {

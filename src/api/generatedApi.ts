@@ -190,6 +190,11 @@ export namespace hista {
         toDate: string
     }
 
+    export interface MoveMedicineParams {
+        previousId?: number
+        nextId?: number
+    }
+
     export interface NoteParams {
         date?: string
         text?: string
@@ -329,6 +334,7 @@ export namespace hista {
             this.PostNote = this.PostNote.bind(this)
             this.PostStatus = this.PostStatus.bind(this)
             this.PostSymptomCategory = this.PostSymptomCategory.bind(this)
+            this.ReorderMedicine = this.ReorderMedicine.bind(this)
         }
 
         public async ArchiveIngredient(piid: string, id: number): Promise<void> {
@@ -615,6 +621,10 @@ export namespace hista {
             const resp = await this.baseClient.callTypedAPI("POST", `/piid/${encodeURIComponent(piid)}/symptom-categories`, JSON.stringify(params))
             return await resp.json() as entity.IDResponse
         }
+
+        public async ReorderMedicine(piid: string, medicineId: number, params: MoveMedicineParams): Promise<void> {
+            await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/medicines/${encodeURIComponent(medicineId)}/reorder`, JSON.stringify(params))
+        }
     }
 }
 
@@ -746,6 +756,7 @@ export namespace entity {
         id: number
         name: string
         isArchived: boolean
+        sortOrder: number
     }
 
     export interface NoteResp {

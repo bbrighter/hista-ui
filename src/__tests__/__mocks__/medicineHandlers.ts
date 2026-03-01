@@ -6,13 +6,14 @@ export const medicineHandlers = (baseUrl: string) => [
   http.get(`${baseUrl}/medicines`, () =>
     HttpResponse.json({
       medicines: [
-        { id: 1, isArchived: false, name: "Medicine" },
-        { id: 2, isArchived: true, name: "Archived medicine" },
+        { id: 1, isArchived: false, name: "Medicine", sortOrder: 100 },
+        { id: 2, isArchived: true, name: "Archived medicine", sortOrder: 200 },
       ],
     } satisfies entity.MedicineListResponse),
   ),
   http.post(`${baseUrl}/medicines`, () => HttpResponse.json({ id: 3 })),
   http.patch(`${baseUrl}/medicines/:id`, () => HttpResponse.json({})),
+  http.patch(`${baseUrl}/medicines/:id/reorder`, () => HttpResponse.json({})),
 ];
 
 export const intakeHandlers = (baseUrl: string) => [
