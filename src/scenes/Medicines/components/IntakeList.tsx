@@ -37,6 +37,7 @@ export const IntakeList = () => {
                 name={i.name} 
                 count={i.count} 
                 isOld={true}
+                isArchived={i.archived}
               />
             ))}
           </List>
