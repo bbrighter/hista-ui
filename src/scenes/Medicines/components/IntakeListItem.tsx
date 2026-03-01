@@ -10,9 +10,10 @@ type IntakeListProp = {
   name: string
   count: number
   isOld?: boolean
+  isArchived?: boolean
 }
 
-export const IntakeListItem = ({ id, name, count, isOld }: IntakeListProp) => {
+export const IntakeListItem = ({ id, name, count, isOld, isArchived }: IntakeListProp) => {
   const decreaseIsDisabled = count == 0
 
   const onIncrease = () =>    medicinesService.incrementIntake(id)
@@ -33,7 +34,10 @@ export const IntakeListItem = ({ id, name, count, isOld }: IntakeListProp) => {
 
   return (
     <ListItem secondaryAction={secondaryAction   }>
-      <ListItemText primary={name} secondary={count}/> 
+      <ListItemText 
+        sx={isArchived ? { color: "gray" } : {}}
+        primary={name} 
+        secondary={count}/> 
     </ListItem>
   )
 }
