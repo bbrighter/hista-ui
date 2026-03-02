@@ -175,10 +175,6 @@ export namespace hista {
         diaries: entity.RawDiary[]
     }
 
-    export interface FoodConditionParams {
-        condition: entity.FoodCondition
-    }
-
     export interface FoodParams {
         ingredientName?: string
         ingredientId?: number
@@ -202,6 +198,14 @@ export namespace hista {
 
     export interface PatchCategoryNameParams {
         name: string
+    }
+
+    export interface PatchFoodAmountParams {
+        amount: number
+    }
+
+    export interface PatchFoodConditionParams {
+        condition: entity.FoodCondition
     }
 
     export interface PatchHeadacheDateParams {
@@ -313,6 +317,7 @@ export namespace hista {
             this.PatchCategoryName = this.PatchCategoryName.bind(this)
             this.PatchCondition = this.PatchCondition.bind(this)
             this.PatchDate = this.PatchDate.bind(this)
+            this.PatchFoodAmount = this.PatchFoodAmount.bind(this)
             this.PatchFoodCondition = this.PatchFoodCondition.bind(this)
             this.PatchHeadacheDate = this.PatchHeadacheDate.bind(this)
             this.PatchHeadacheDescription = this.PatchHeadacheDescription.bind(this)
@@ -524,7 +529,11 @@ export namespace hista {
             await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/condition-events/${encodeURIComponent(eventId)}`, JSON.stringify(params))
         }
 
-        public async PatchFoodCondition(piid: string, foodId: number, params: FoodConditionParams): Promise<void> {
+        public async PatchFoodAmount(piid: string, foodId: number, params: PatchFoodAmountParams): Promise<void> {
+            await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/foods/${encodeURIComponent(foodId)}/amount`, JSON.stringify(params))
+        }
+
+        public async PatchFoodCondition(piid: string, foodId: number, params: PatchFoodConditionParams): Promise<void> {
             await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/foods/${encodeURIComponent(foodId)}/condition`, JSON.stringify(params))
         }
 
@@ -670,6 +679,7 @@ export namespace entity {
         id: number
         ingredient: IngredientResponse
         foodCondition: FoodCondition
+        amount?: number
     }
 
     export interface FoodsResponse {

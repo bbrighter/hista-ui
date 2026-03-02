@@ -10,26 +10,24 @@ import Typography from "@mui/material/Typography"
 import { useState } from "react"
 
 import { mealConstants } from "../../../constants"
-import { FoodCondition } from "../../../store/meal/food"
+import { FoodCondition, mealService } from "../../../store"
 import useHista from "../../../store/store"
 
 export default function FoodList() {
   const food = useHista(state => state.meal.foods)
-  const patchFoodCondition = useHista(state => state.patchFoodCondition)
-  const deleteFood = useHista(state => state.deleteFood)
 
   const [isDeleteLoading, setIsDeleteLoading] = useState<number | undefined>()
   const [isPatchLoading, setIsPatchLoading] = useState<{ id: number, cond: FoodCondition } | undefined>()
 
   const onChange = async (foodId: number, value: FoodCondition) => {
     setIsPatchLoading({ id: foodId, cond: value })
-    await patchFoodCondition(foodId, value)
+    await mealService.patchFoodCondition(foodId, value)
     setIsPatchLoading(undefined)
   }
 
   const onDelete = async (foodId: number) => {
     setIsDeleteLoading(foodId)
-    await deleteFood(foodId)
+    await mealService.deleteFood(foodId)
     setIsDeleteLoading(undefined)
   }
 

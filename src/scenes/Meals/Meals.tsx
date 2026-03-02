@@ -5,17 +5,16 @@ import Container from "@mui/material/Container"
 import { useState } from "react"
 
 import { useAppNavigate } from "../../hooks/useNavigate"
-import useHista from "../../store/store"
+import { mealService } from "../../store"
 import MealList from "./components/MealList"
 
 export default function Meals() {
   const navigate = useAppNavigate()
-  const postMeal = useHista(state => state.postMeal)
   const [loading, setLoading] = useState(false)
 
   const onCreate = async () => {
     setLoading(true)
-    const id = await postMeal()
+    const id = await mealService.postMeal()
     setLoading(false)
     if (id) {
       navigate.to.mealDetail(id)
