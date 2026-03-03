@@ -20,7 +20,7 @@ export function FoodItem({ food }: {food: Food}) {
   const [isPatchLoading, setIsPatchLoading] = useState<{ id: number, cond: FoodCondition } | undefined>()
   const [amount, setAmount] = useState<number | null>(food.amount ?? null)
   const [isPatchAmountLoading, setIsPatchAmountLoading] = useState<number | undefined>()
-  const debouncedInputValue = useDebounce(amount, 500)
+  const debouncedInputValue = useDebounce(amount, 1000)
 
   const onConditionChange = async (foodId: number, value: FoodCondition) => {
     setIsPatchLoading({ id: foodId, cond: value })
@@ -59,6 +59,7 @@ export function FoodItem({ food }: {food: Food}) {
       key={food.id}
       secondaryAction={(
         <IconButton
+          size="small"
           title="Löschen"
           onClick={() => onDelete(food.id)}
           loading={isDeleteLoading == food.id}
@@ -74,7 +75,7 @@ export function FoodItem({ food }: {food: Food}) {
       </ListItemText>
       <Input 
         data-testid="amount-input"
-        sx={{ width: "100px" }}
+        sx={{ width: "60px" }}
         endAdornment={<InputAdornment position="end">g</InputAdornment>}
         inputMode="numeric"
         onKeyDown={(e) => {
