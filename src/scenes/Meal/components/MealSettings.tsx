@@ -18,7 +18,7 @@ import useHista from "../../../store/store"
 import DateInput from "../../components/DateInput"
 import DebouncedSlider from "../../components/DebouncedSlider"
 
-export default function MealSettings() {
+export function MealSettings() {
   const meal = useHista(state => state.meal)
 
   const setDate = (dateString: string) => mealService.patchMealDate(meal.id, dateString)

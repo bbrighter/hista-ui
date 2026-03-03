@@ -7,9 +7,7 @@ import { useParams } from "react-router-dom"
 import { usePiidEffect } from "../../hooks/usePiidEffect"
 import { mealService } from "../../store"
 import useHista from "../../store/store"
-import AddFood from "./components/AddFood"
-import FoodList from "./components/FoodList"
-import MealSettings from "./components/MealSettings"
+import { AddFood, FoodList, MealSettings } from "./components"
 
 export default function Meal() {
   const isLoading = useHista(state => state.meal.isLoading)

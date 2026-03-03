@@ -22,7 +22,7 @@ const isNewOption = (v: unknown): v is NewOption => {
   return typeof (v) == "string"
 }
 
-export default function AddFood() {
+export function AddFood() {
   const mealId = useHista(state => state.meal.id)
   const ingredients = useNonArchivedIngredients()
   const options: Array<Option> = ingredients.map(ing => ({ name: ing.name, id: ing.id }))
