@@ -75,7 +75,10 @@ export function FoodItem({ food }: {food: Food}) {
       </ListItemText>
       <Input 
         data-testid="amount-input"
-        sx={{ width: "60px" }}
+        sx={{ 
+          width: "60px",
+          backgroundColor: food.id == isPatchAmountLoading ? "#ffffff30" : "default", 
+        }}
         endAdornment={<InputAdornment position="end">g</InputAdornment>}
         inputMode="numeric"
         onKeyDown={(e) => {
@@ -94,7 +97,6 @@ export function FoodItem({ food }: {food: Food}) {
             e.preventDefault();
           }
         }}
-        disabled={isPatchAmountLoading === food.id}
         type="number"
         value={amount ?? ""}
         onChange={onAmountChange}
