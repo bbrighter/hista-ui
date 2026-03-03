@@ -1,5 +1,8 @@
 export * from "./diary.types"
+export * from "./food.types"
 export * from "./ingredients.types"
+export * from "./meal.types"
+export * from "./meals.types"
 export { type Medicine } from "./medicines.types"
 export * from "./statistics.types"
 export * from "./status.types"

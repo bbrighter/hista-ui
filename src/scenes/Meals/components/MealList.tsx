@@ -1,11 +1,10 @@
 import { useAppNavigate } from "../../../hooks/useNavigate"
+import { mealService } from "../../../store"
 import useHista from "../../../store/store"
 import OverviewList from "../../components/OverviewList"
 
 export default function MealList() {
-  const getMeals = useHista(state => state.listMeals)
   const meals = useHista(state => state.meals)
-  const deleteMeal = useHista(state => state.deleteMeal)
   const navigate = useAppNavigate()
 
   const onClick = (id: number) => {
@@ -13,7 +12,7 @@ export default function MealList() {
   }
 
   const onDelete = async (id: number) => {
-    await deleteMeal(id)
+    await mealService.deleteMeal(id)
   }
 
   return (
@@ -21,7 +20,7 @@ export default function MealList() {
       items={meals}
       onClick={onClick}
       onDelete={onDelete}
-      getData={getMeals}
+      getData={mealService.listMeals}
     />
   )
 }

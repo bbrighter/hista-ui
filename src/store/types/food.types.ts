@@ -5,6 +5,7 @@ export interface Food {
   ingredientName: string
   ingredientId: number
   condition: FoodCondition
+  amount?: number
 }
 
 export type FoodCondition = "raw" | "cooked"
@@ -16,5 +17,6 @@ export const respToFood = (resp: entity.FoodResponse): Food => {
     ingredientName: resp.ingredient.name,
     ingredientId: resp.ingredient.id,
     condition: condition,
+    amount: resp.amount,
   }
 }

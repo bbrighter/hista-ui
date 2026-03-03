@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField"
 import { useEffect, useState } from "react"
 import React from "react"
 
-import { ingredientsService,useNonArchivedIngredients } from "../../../store"
+import { ingredientsService,mealService,useNonArchivedIngredients } from "../../../store"
 import useHista from "../../../store/store"
 
 interface InputOption {
@@ -22,8 +22,8 @@ const isNewOption = (v: unknown): v is NewOption => {
   return typeof (v) == "string"
 }
 
-export default function AddFood() {
-  const postFood = useHista(state => state.postFood)
+export function AddFood() {
+  const mealId = useHista(state => state.meal.id)
   const ingredients = useNonArchivedIngredients()
   const options: Array<Option> = ingredients.map(ing => ({ name: ing.name, id: ing.id }))
 
@@ -35,30 +35,18 @@ export default function AddFood() {
     ingredientsService.getIngredients()
   }, [])
 
-  useEffect(() => {
-    let name: string | undefined = undefined
-    let id: number | undefined = undefined
-    if (isNewOption(value)) {
-      name = value
-    }
-    else {
-      id = value?.id
-    }
-    if (value != null) {
-      setIsLoading(true)
-      postFood(name, id).then(() => {
-        setValue(null)
-        setInputValue("")
-      }).finally(() => {
-        setIsLoading(false)
-      },
-      )
-    }
-  }, [postFood, value])
 
   const onChange = async (_e: React.SyntheticEvent, value: (Option | null)) => {
     if (value == null) return
     setValue(value)
+    setIsLoading(true)
+    if (isNewOption(value)) {
+      await mealService.postFoodByName(mealId, value)
+    } else {
+      await mealService.postFoodById(mealId, value.id)
+    }
+    setIsLoading(false)
+    setInputValue("")
   }
 
   const onInputChange = (_e: React.SyntheticEvent, v: string) => {

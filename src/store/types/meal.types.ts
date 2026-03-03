@@ -1,5 +1,5 @@
 import { entity } from "../../api/generatedApi"
-import { Food, respToFood } from "./food"
+import { Food, respToFood } from "./food.types"
 
 export interface Meal {
   id?: number
@@ -17,7 +17,7 @@ export enum Freshness {
   sameDay = 1,
 }
 
-export const stringToFreshness = (str: number): Freshness => {
+const stringToFreshness = (str: number): Freshness => {
   switch (str) {
     case 0:
       return Freshness.fresh

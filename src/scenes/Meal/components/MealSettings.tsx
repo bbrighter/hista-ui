@@ -13,19 +13,18 @@ import ToggleButton from "@mui/material/ToggleButton"
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
 import { JSX, useState } from "react"
 
-import { Freshness } from "../../../store/meal/meal"
+import { Freshness, mealService } from "../../../store"
 import useHista from "../../../store/store"
 import DateInput from "../../components/DateInput"
 import DebouncedSlider from "../../components/DebouncedSlider"
 
-export default function MealSettings() {
-  const patchMeal = useHista(state => state.updateMeal)
+export function MealSettings() {
   const meal = useHista(state => state.meal)
 
-  const setDate = (dateString: string) => patchMeal({ date: dateString })
-  const setStressLevel = (stressLevel: number) => patchMeal({ stressLevel: stressLevel })
-  const setFreshness = (freshness: Freshness) => patchMeal({ freshness: freshness })
-  const setAloneness = (isAlone: boolean) => patchMeal({ isAlone: isAlone })
+  const setDate = (dateString: string) => mealService.patchMealDate(meal.id, dateString)
+  const setStressLevel = (stressLevel: number) => mealService.patchMealStressLevel(meal.id, stressLevel)
+  const setFreshness = (freshness: Freshness) => mealService.patchMealFreshness(meal.id, freshness)
+  const setAloneness = (isAlone: boolean) => mealService.patchMealIsAlone(meal.id, isAlone)
 
   const [isLoading, setIsLoading] = useState<boolean | undefined>(undefined)
 

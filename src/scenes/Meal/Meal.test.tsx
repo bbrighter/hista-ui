@@ -156,4 +156,21 @@ describe("test meals list", () => {
       expect(ingredients).toHaveLength(2)
     })
   })
+
+  it("edit amount", async () => {
+    render(<MemoryRouter><Meal /></MemoryRouter>)
+
+    const row1 = await findIngredientRow("ingredient1")
+    const amountInput = within(row1).getByTestId("amount-input").querySelector("input")
+    expect(amountInput).toBeInTheDocument()
+    expect(amountInput).toHaveValue(100)
+
+    await userEvent.clear(amountInput)
+    await userEvent.type(amountInput, "10")
+    expect(amountInput).toHaveValue(10)
+
+    const row2 = await findIngredientRow("ingredient2")
+    const amountInputEmpty = within(row2).getByTestId("amount-input").querySelector("input")
+    expect(amountInputEmpty).toHaveValue(null)
+  })
 })
