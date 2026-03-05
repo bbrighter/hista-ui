@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@atlaskit/pragmatic-drag-and-drop": "^1.7.7",
+    "@base-ui/react": "^1.2.0",
     "@bbrighter/auth-module": "~2.0.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
@@ -43,6 +44,7 @@
     "react-dom": "^19.2.4",
     "react-error-boundary": "^6.1.1",
     "react-router-dom": "^7.13.0",
+    "react-swipeable-list": "^1.10.0",
     "vite-plugin-svgr": "^4.5.0",
     "vitest-localstorage-mock": "^0.1.2",
     "xlsx": "^0.18.5",
