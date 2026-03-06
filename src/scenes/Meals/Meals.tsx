@@ -36,7 +36,8 @@ export default function Meals() {
         >
           Neue Mahlzeit
         </Button>
-        <Button onClick={onManageClick}>
+        <Button 
+          onClick={onManageClick}>
           Zutaten verwalten
         </Button>
       </ButtonGroup>
