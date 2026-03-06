@@ -90,7 +90,7 @@ describe("single meal", () => {
   })
 
 
-  it.skip("patch food amount to undefined", async () => {
+  it("patch food amount to undefined", async () => {
     await mealService.patchFoodAmount(10, 0)
 
     const { meal } = useHista.getState()

@@ -1,5 +1,5 @@
 import { NumberFieldRootChangeEventDetails } from "@base-ui/react/number-field"
-import Chip from "@mui/material/Chip"
+import Button from "@mui/material/Button"
 import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
 import Typography from "@mui/material/Typography"
@@ -39,8 +39,8 @@ export function FoodItem({ food }: {food: Food}) {
   return (
     <SwipeableListItem 
       threshold={0.5}
-      trailingActions={swipeDeleteFood({ id: food.id })}
-      leadingActions={swipeToggleFoodCondition({ id: food.id, condition: food.condition })}
+      trailingActions={swipeDeleteFood(food)}
+      leadingActions={swipeToggleFoodCondition(food)}
     >
       <ListItem sx={{ pl: "8px", pr: "8px" }}>
         <ListItemText>
@@ -57,12 +57,16 @@ export function FoodItem({ food }: {food: Food}) {
           onValueChange={onAmountChange}       
           loading={isPatchAmountLoading == food.id}        
         />
-        <Chip 
+        <Button 
           data-testid="food-condition-chip"
-          sx={{ ml: "4px" }}
-          label={food.condition == "raw" ? mealConstants.RAW : mealConstants.COOKED}
-          color={food.condition == "raw" ? "default" : "warning"}
-        />
+          sx={{ ml: "4px", 
+            borderColor: (theme) => food.condition == "raw" ? theme.palette.primary.main : theme.palette.secondary.main , 
+            color: (theme) => theme.palette.grey[500],
+          }}
+          variant="outlined"
+        >
+          {food.condition == "raw" ? mealConstants.RAW : mealConstants.COOKED}
+        </Button>
       </ListItem>
     </SwipeableListItem>
   )

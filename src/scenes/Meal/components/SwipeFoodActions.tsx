@@ -3,14 +3,12 @@ import Button from "@mui/material/Button"
 import {  LeadingActions, SwipeAction, TrailingActions } from "react-swipeable-list"
 
 import { mealConstants } from "../../../constants"
-import { FoodCondition, mealService } from "../../../store"
+import { Food, mealService } from "../../../store"
 
-type ID = {id: number}
-
-export const swipeDeleteFood = ({ id }: ID) => {
+export const swipeDeleteFood = (food: Food) => {
 
   const onDelete = async () => {
-    await mealService.deleteFood(id)
+    await mealService.deleteFood(food.id)
   }
 
   return (  
@@ -20,6 +18,7 @@ export const swipeDeleteFood = ({ id }: ID) => {
         destructive
       >
         <Button
+          data-testid="delete-food-button"
           variant="contained"
           color="error"
           startIcon={<DeleteIcon />}
@@ -30,19 +29,20 @@ export const swipeDeleteFood = ({ id }: ID) => {
   )
 }
 
-export const swipeToggleFoodCondition = ({ id, condition }: ID & {condition: FoodCondition}) => {
-  const newCondition = condition == "cooked" ? "raw" : "cooked"
+export const swipeToggleFoodCondition = (food: Food) => {
+  const newCondition = food.condition == "cooked" ? "raw" : "cooked"
 
   const onSwipe = () => {
-    mealService.patchFoodCondition(id, newCondition)
+    mealService.patchFoodCondition(food.id, newCondition)
   }
 
   return (
     <LeadingActions>
       <SwipeAction onClick={onSwipe}>
         <Button 
+          data-testid="toggle-food-condition-button"
           variant="contained"
-          color={newCondition == "cooked" ? "warning" : "primary"}
+          color={newCondition == "cooked" ? "secondary" : "primary"}
         >
           {newCondition == "cooked" ? mealConstants.COOKED : mealConstants.RAW}
         </Button>

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
+import { render, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { MemoryRouter } from "react-router-dom"
 import { describe, expect, it } from "vitest"
@@ -55,44 +55,38 @@ describe("test meals list", () => {
     expect(screen.queryAllByTestId("number-input")).toHaveLength(2)
   })
 
-  it.skip("deleting food is possible",  async () => {
+  it("deleting food is possible",  async () => {
     render(<MemoryRouter><Meal /></MemoryRouter>)
 
-    const touchStartX = 100; // Start X position
-    const touchEndX = 0;    // End X position (swipe left)
+ 
+    expect(await findIngredientRow("ingredient1")).toBeInTheDocument()
+    const buttons = screen.queryAllByTestId("delete-food-button")
+    expect(buttons).toHaveLength(2)
 
-    const ingredient1Row = await findIngredientRow("ingredient1")
-    // fireEvent(ingredient1Row )
-    fireEvent.mouseDown(ingredient1Row )
-    fireEvent.mouseMove(ingredient1Row, { touchStartX: touchStartX - 50 })
-    fireEvent.mouseUp(ingredient1Row, { touchStartX: touchEndX })
-    // const deleteButton = within(ingredient1Row)!.getByTitle("Löschen")
-    // await userEvent.click(deleteButton)
+    await userEvent.click(buttons[0])
 
-    expect(screen.queryAllByTitle("Löschen")).toHaveLength(1)
     expect(screen.queryByText("ingredient1")).not.toBeInTheDocument()
   })
 
-  it.skip("toggling raw/cooked", async () => {
+  it("toggling raw/cooked", async () => {
     render(<MemoryRouter><Meal /></MemoryRouter>)
 
     const ingredient1Row = await findIngredientRow("ingredient1")
-    expect(isButtonPressed({ text: "Roh", parent: ingredient1Row })).toBeTruthy()
-    expect(isButtonPressed({ text: "Gar", parent: ingredient1Row })).toBeFalsy()
+    expect(within(ingredient1Row).queryByText("Roh")).toBeInTheDocument()
+    expect(within(ingredient1Row).queryByText("Gar")).not.toBeInTheDocument()
 
+    const buttons = screen.queryAllByTestId("toggle-food-condition-button")
+    expect(buttons).toHaveLength(2)
     // Set cooked
-    const cookedButton = within(ingredient1Row)!.getByText("Gar")
-    await userEvent.click(cookedButton)
-    expect(isButtonPressed({ text: "Roh", parent: ingredient1Row })).toBeFalsy()
-    expect(isButtonPressed({ text: "Gar", parent: ingredient1Row })).toBeTruthy()
-    expect(cookedButton).toBeDisabled()
+    const button = buttons[0]
+    await userEvent.click(button)
+    expect(within(ingredient1Row).queryByText("Roh")).not.toBeInTheDocument()
+    expect(within(ingredient1Row).queryByText("Gar")).toBeInTheDocument()
 
     // Set raw
-    const rawButton = within(ingredient1Row)!.getByText("Roh")
-    await userEvent.click(rawButton)
-    expect(isButtonPressed({ text: "Roh", parent: ingredient1Row })).toBeTruthy()
-    expect(isButtonPressed({ text: "Gar", parent: ingredient1Row })).toBeFalsy()
-    expect(rawButton).toBeDisabled()
+    await userEvent.click(button)
+    expect(within(ingredient1Row).queryByText("Roh")).toBeInTheDocument()
+    expect(within(ingredient1Row).queryByText("Gar")).not.toBeInTheDocument()
   })
 
   it("toggling alone/together", async () => {
