@@ -1,4 +1,5 @@
 import "dayjs/locale/de"
+import "./main.css"
 
 import CssBaseline from "@mui/material/CssBaseline"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
