@@ -1,0 +1,3 @@
+input, textarea, select {
+  font-size: 17px !important; /* Try to trick iOS + Safari to not zoom in */
+}
