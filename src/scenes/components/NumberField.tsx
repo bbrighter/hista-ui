@@ -79,6 +79,7 @@ export default function NumberField({
         id={id}
         render={(props, state) => (
           <Input
+            sx={{ fontSize: "16px" }}
             data-testid="number-input"
             inputRef={props.ref}
             value={state.inputValue}

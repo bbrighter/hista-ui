@@ -49,7 +49,7 @@ export function FoodItem({ food }: {food: Food}) {
           </Typography>
         </ListItemText>
         <NumberField
-          sx={{ width: "50px", fontSize: "16px" }}
+          sx={{ width: "50px" }}
           size="small"
           unit="g"
           min={0}
