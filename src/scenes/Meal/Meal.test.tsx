@@ -1,4 +1,4 @@
-import { render, screen, waitFor, within } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { MemoryRouter } from "react-router-dom"
 import { describe, expect, it } from "vitest"
@@ -170,14 +170,15 @@ describe("test meals list", () => {
     expect(amountInput).toBeInTheDocument()
     expect(amountInput).toHaveValue(100)
 
-    await userEvent.clear(amountInput)
-    await userEvent.type(amountInput, "10")
+    // await userEvent.clear(amountInput)
+    // await userEvent.type(amountInput, "10") // Does not work since it's a number input
+    fireEvent.change(amountInput, { target: { value: "" } })
+    fireEvent.change(amountInput, { target: { value: "10" } })
     expect(amountInput).toHaveValue(10)
 
-    // TODO: Test fails for some reason if the following is run!
-    // const row2 = await findIngredientRow("ingredient2")
-    // const amountInputEmpty = within(row2).getByTestId("number-input").querySelector("input")
-    // expect(amountInputEmpty).toBeInTheDocument()
-    // expect(amountInputEmpty).toHaveValue(null)
+    const row2 = await findIngredientRow("ingredient2")
+    const amountInputEmpty = within(row2).getByTestId("number-input").querySelector("input")
+    expect(amountInputEmpty).toBeInTheDocument()
+    expect(amountInputEmpty).toHaveValue(null)
   })
 })
