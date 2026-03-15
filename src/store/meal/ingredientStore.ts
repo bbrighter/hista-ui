@@ -1,7 +1,7 @@
 import { produce } from "immer"
 import { StateCreator } from "zustand"
 
-import { Ingredients } from "./../types"
+import { Ingredient, Ingredients } from "./../types"
 
 interface State {
   ingredients: Ingredients
@@ -11,6 +11,7 @@ interface State {
 interface Actions {
   setIngredientsAreLoaded: () => void
   setIngredients: (ingredients: Ingredients) => void
+  updateIngredient: (id: number, update: Partial<Ingredient>) => void
 }
 
 export interface IngredientStore extends State, Actions { }
@@ -36,6 +37,14 @@ export const createIngredientSlice: StateCreator<
   setIngredients: (ingredients) => {
     set(produce((draft: State) => {
       draft.ingredients = ingredients
+    }))
+  },
+  updateIngredient: (id: number, update: Partial<Ingredient>) => {
+    set(produce((draft: State) => {
+      const index = draft.ingredients.findIndex(ing => ing.id === id)
+      if (index !== -1) {
+        draft.ingredients[index] = { ...draft.ingredients[index], ...update }
+      }
     }))
   },
 })

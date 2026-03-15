@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom"
 import { usePiidEffect } from "../../hooks/usePiidEffect"
 import { mealService } from "../../store"
 import useHista from "../../store/store"
-import { AddFood, FoodList, MealSettings } from "./components"
+import { AddFood, FoodList, MealNutritionResult, MealSettings } from "./components"
 
 export default function Meal() {
   const isLoading = useHista(state => state.meal.isLoading)
@@ -19,6 +19,7 @@ export default function Meal() {
 
   return (
     <Container sx={{ padding: "2rem" }}>
+      <MealNutritionResult/>
       <FormGroup>
         <MealSettings />
         <FormControl>

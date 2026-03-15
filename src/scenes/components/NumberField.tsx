@@ -38,18 +38,15 @@ export default function NumberField({
   }
 
   const defaultSx: SxProps<Theme> = {
-    // FormControl
     "& .MuiFormControl-root": {
-      minHeight: size === "small" ? "32px" : "36px",
-      height: size === "small" ? "32px" : "36px",
+      minHeight: size === "small" ? "32px" : "42px",
+      height: size === "small" ? "32px" : "42px",
+      padding: size == "small" ? "0px" : "6px",
+      margin: size === "small" ? "0px": "6xpx",
     },
-    // Input
-    "& .MuiInput-root": {
-      height: size === "small" ? "32px" : "36px",
-      mt: 0, 
-      mb: 0,
-      mr: "4px",
-      ml: "4px",
+    "& .MuiInput-input": {
+      py: size === "small" ? "0px" : "6px",
+      my: size === "small" ? "0px": "6xpx",
     },
   };
 
@@ -79,7 +76,6 @@ export default function NumberField({
         id={id}
         render={(props, state) => (
           <Input
-            sx={{ fontSize: "16px" }}
             data-testid="number-input"
             inputRef={props.ref}
             value={state.inputValue}

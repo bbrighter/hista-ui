@@ -5,10 +5,12 @@ import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
 import { useState } from "react"
 
+import { Nutrition } from "../../../store"
 import { ArchiveButton } from "./ArchiveButton"
 import { EditIngredientName } from "./EditIngredientName"
+import { EditNutritionButton } from "./EditNutritionButton"
 
-export const IngredientListItem = ({ name, id, isArchived }: { name: string, id: number, isArchived: boolean }) => {
+export const IngredientListItem = ({ name, id, isArchived, nutrition }: { name: string, id: number, isArchived: boolean, nutrition?: Nutrition }) => {
   const [isEditing, setIsEditing] = useState(false)
 
   const onEdit = () => setIsEditing(!isEditing)
@@ -19,12 +21,16 @@ export const IngredientListItem = ({ name, id, isArchived }: { name: string, id:
         <IconButton onClick={onEdit} data-testid="editButton">
           <EditIcon />
         </IconButton>
+        <EditNutritionButton id={id} nutrition={nutrition}/>
         <ArchiveButton id={id} isArchived={isArchived} />
       </ButtonGroup>
     )}
     >
       {isEditing && <EditIngredientName id={id} name={name} onCancel={() => setIsEditing(false)} />}
-      {!isEditing && <ListItemText primary={name} />}
+      {!isEditing && <ListItemText 
+        primary={name} 
+        secondary={nutrition ? `F: ${nutrition.fat} | K: ${nutrition.carbohydrate} | B: ${nutrition.fiber} | E: ${nutrition.protein}` : undefined}
+      />}
     </ListItem>
   )
 }

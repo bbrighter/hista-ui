@@ -1,6 +1,6 @@
 import { client } from "../../api/api";
 import useHista from "../store";
-import { respToIngredients } from "../types";
+import { Nutrition, respToIngredients } from "../types";
 
 export const ingredientsService = {
   getIngredients: async () => {
@@ -41,4 +41,19 @@ export const ingredientsService = {
       }),
     );
   },
+
+  updateNutrition: async (id: number, nutrition: Nutrition) => {
+    const { updateIngredient } = useHista.getState()
+
+    await client.PatchIngredient(id, { nutrition: {
+      carbohydrate: nutrition.carbohydrate,
+      fat: nutrition.fat,
+      fiber: nutrition.fiber,
+      protein: nutrition.protein,
+    } })
+
+    updateIngredient(id, { nutrition: nutrition })
+  },
+
+
 };

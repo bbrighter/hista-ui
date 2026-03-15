@@ -233,7 +233,9 @@ export namespace hista {
     }
 
     export interface PatchIngredientParams {
-        name: string
+        name?: string | null
+        nutrition?: entity.PatchNutritionParams | null
+        archived?: boolean | null
     }
 
     export interface PatchMedicineParams {
@@ -342,6 +344,9 @@ export namespace hista {
             this.ReorderMedicine = this.ReorderMedicine.bind(this)
         }
 
+        /**
+         * Deprecated: use normal PATCH endpoint with archived property
+         */
         public async ArchiveIngredient(piid: string, id: number): Promise<void> {
             await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/ingredients/${encodeURIComponent(id)}/archive`)
         }
@@ -724,6 +729,7 @@ export namespace entity {
         id: number
         name: string
         isArchived: boolean
+        nutrition?: NutritionResp
     }
 
     export interface IngredientsResponse {
@@ -779,11 +785,25 @@ export namespace entity {
         notes: NoteResp[]
     }
 
+    export interface NutritionResp {
+        protein: number
+        carbohydrate: number
+        fat: number
+        fiber: number
+    }
+
     export interface PatchMealParams {
         date?: string
         freshness?: Freshness
         stressLevel?: number
         isAlone?: boolean
+    }
+
+    export interface PatchNutritionParams {
+        protein: number
+        carbohydrate: number
+        fat: number
+        fiber: number
     }
 
     export interface PollenEventResponse {
