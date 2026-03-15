@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
+import { render, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { MemoryRouter } from "react-router-dom"
 import { describe, expect, it } from "vitest"
@@ -108,11 +108,9 @@ describe("IngredientManagement", () => {
     await userEvent.click(nutritionButton)
     const fatInput = within(modal).getByLabelText("Fett")
     expect(fatInput).toBeInTheDocument()
-    // await userEvent.clear(fatInput) // Does not work since it's a number input
-    fireEvent.change(fatInput, { target: { value: "" } })
+    await userEvent.clear(fatInput) // Does not work since it's a number input
     expect(saveButton).toBeDisabled()
-    // await userEvent.type(fatInput, "33")
-    fireEvent.change(fatInput, { target: { value: 33 } })
+    await userEvent.type(fatInput, "33")
     await userEvent.click(saveButton)
     expect(modal).not.toBeVisible()
     expect(screen.getByText(/F: 33/)).toBeInTheDocument()

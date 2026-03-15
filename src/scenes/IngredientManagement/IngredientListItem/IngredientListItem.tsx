@@ -15,6 +15,13 @@ export const IngredientListItem = ({ name, id, isArchived, nutrition }: { name: 
 
   const onEdit = () => setIsEditing(!isEditing)
 
+  const nutritions = [
+    { label: "F", value: nutrition?.fat },
+    { label: "K", value: nutrition?.carbohydrate },
+    { label: "B", value: nutrition?.fiber },
+    { label: "E", value: nutrition?.protein },
+  ]
+
   return (
     <ListItem secondaryAction={(
       <ButtonGroup>
@@ -29,7 +36,7 @@ export const IngredientListItem = ({ name, id, isArchived, nutrition }: { name: 
       {isEditing && <EditIngredientName id={id} name={name} onCancel={() => setIsEditing(false)} />}
       {!isEditing && <ListItemText 
         primary={name} 
-        secondary={nutrition ? `F: ${nutrition.fat} | K: ${nutrition.carbohydrate} | B: ${nutrition.fiber} | E: ${nutrition.protein}` : undefined}
+        secondary={nutrition ? nutritions.map(n => `${n.label}: ${n.value.toLocaleString("de-DE")}`).join(" | ") :undefined }
       />}
     </ListItem>
   )

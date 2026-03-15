@@ -171,7 +171,7 @@ describe("test meals list", () => {
     expect(amountInput).toHaveValue(100)
 
     // await userEvent.clear(amountInput)
-    // await userEvent.type(amountInput, "10") // Does not work since it's a number input
+    // await userEvent.type(amountInput, "10")
     fireEvent.change(amountInput, { target: { value: "" } })
     fireEvent.change(amountInput, { target: { value: "10" } })
     expect(amountInput).toHaveValue(10)

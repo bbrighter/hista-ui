@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton"
 import { useState } from "react";
 
 import { ingredientsService, Nutrition } from "../../../store";
-import NumberField from "../../components/NumberField";
+import { NumberDecimalInput } from "../../components/NumberDecimalInput";
 
 export const EditNutritionButton = ({ id, nutrition }: {id: number, nutrition?: Nutrition}) => {
   const [open, setOpen] = useState(false)
@@ -18,7 +18,7 @@ export const EditNutritionButton = ({ id, nutrition }: {id: number, nutrition?: 
 
   const [carbohydrate, setCarbohydrate] = useState(nutrition?.carbohydrate)
   const [protein, setProtein] = useState(nutrition?.protein)
-  const [fat, setFat] = useState(nutrition?.fat)
+  const [fat, setFat] = useState<null | number>(nutrition?.fat || null)
   const [fiber, setFiber] = useState(nutrition?.fiber)
 
   const canBeSaved = 
@@ -34,6 +34,13 @@ export const EditNutritionButton = ({ id, nutrition }: {id: number, nutrition?: 
     setLoading(false)
     setOpen(false)
   }
+
+  const nutritions = [
+    { value: fat, onChange: setFat, label: "Fett" },
+    { value: carbohydrate, onChange: setCarbohydrate, label: "Kohlenhydrate" },
+    { value: fiber, onChange: setFiber, label: "Ballaststoffe" },
+    { value: protein, onChange: setProtein, label: "Eiweiß" },
+  ]
 
   return (
     <>
@@ -54,21 +61,17 @@ export const EditNutritionButton = ({ id, nutrition }: {id: number, nutrition?: 
             component="form"
             sx={{ display: "flex", flexDirection: "column", gap: 3 }}
           >
-            <NumberField label="Fett" unit="g" 
-              value={fat}
-              onValueChange={setFat}/>
-            <NumberField label="Kohlenhydrate" unit="g" 
-              value={carbohydrate}
-              onValueChange={setCarbohydrate}
-            />
-            <NumberField label="Ballaststoffe" unit="g" 
-              value={fiber}
-              onValueChange={setFiber}
-            />
-            <NumberField label="Eiweiß" unit="g" 
-              value={protein}
-              onValueChange={setProtein}
-            />  
+            {nutritions.map(n => (
+              <NumberDecimalInput 
+                key={n.label}
+                value={n.value}
+                onValueChange={n.onChange}
+                variant="standard"
+                label={n.label}
+                unit="g"
+                min={0}
+              />
+            ))}
           </Box>
         </DialogContent>
         <DialogActions>
@@ -84,3 +87,4 @@ export const EditNutritionButton = ({ id, nutrition }: {id: number, nutrition?: 
     </>
   )
 }
+
