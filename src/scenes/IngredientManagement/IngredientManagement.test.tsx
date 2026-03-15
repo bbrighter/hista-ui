@@ -18,12 +18,17 @@ const getEditButton = (ingredient: string): HTMLElement => {
   return within(getIngredientRow(ingredient)).getByTestId("editButton")
 }
 
+const getNutritionButton = (ingredient: string): HTMLElement => {
+  return within(getIngredientRow(ingredient)).getByTestId("editNutritionButton")
+}
+
 describe("IngredientManagement", () => {
   it("Everthing renders", async () => {
     render(<MemoryRouter><IngredientManagement /></MemoryRouter>)
 
     const row1 = await waitFor(() => getIngredientRow("ingredient1"))
     expect(row1).toBeInTheDocument()
+    expect(row1).toHaveTextContent("F: 5 | K: 20 | B: 0 | E: 3")
 
     const archiveButton = getArchiveButton("ingredient1")
     expect(archiveButton).toBeInTheDocument()
@@ -79,5 +84,35 @@ describe("IngredientManagement", () => {
     expect(screen.getByTitle("Umbenennen speichern")).toBeDisabled()
     await userEvent.type(textField, "ingredient2")
     expect(screen.getByTitle("Umbenennen speichern")).toBeDisabled()
+  })
+
+  it("Manage nutrition", async () => {
+    render(<MemoryRouter><IngredientManagement /></MemoryRouter>)
+
+    const nutritionButton = await waitFor(() => getNutritionButton("ingredient1"))
+    expect(screen.getByText("F: 5 | K: 20 | B: 0 | E: 3")).toBeInTheDocument()
+    expect(nutritionButton).toBeInTheDocument()
+
+    await userEvent.click(nutritionButton)
+    const modal = screen.getByRole("dialog")
+    expect(modal).toBeInTheDocument()
+    expect(modal).toHaveTextContent("Nährwerte pro 100 g")
+    const saveButton = within(modal).getByRole("button", { name: "Speichern" })
+    expect(saveButton).not.toBeDisabled()
+    const cancelButton = within(modal).getByRole("button", { name: "Abbrechen" })
+    expect(cancelButton).toBeInTheDocument()
+
+    await userEvent.click(cancelButton)
+    expect(modal).not.toBeVisible()
+
+    await userEvent.click(nutritionButton)
+    const fatInput = within(modal).getByLabelText("Fett")
+    expect(fatInput).toBeInTheDocument()
+    await userEvent.clear(fatInput)
+    expect(saveButton).toBeDisabled()
+    await userEvent.type(fatInput, "33")
+    await userEvent.click(saveButton)
+    expect(modal).not.toBeVisible()
+    expect(screen.getByText(/F: 33/)).toBeInTheDocument()
   })
 })

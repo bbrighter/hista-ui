@@ -20,15 +20,15 @@ test("useTotalNutrition", () => {
       { id: 3, condition: "cooked", ingredientId: 3, ingredientName: "name 3" },
     ] })
   setIngredients([
-    { id: 1, name: "name 1", isArchived: false, nutrition: { carbohydrate: 100, fat: 50, fiber: 10, protein: 5 } },
+    { id: 1, name: "name 1", isArchived: false, nutrition: { carbohydrate: 25, fat: 3, fiber: 10, protein: 5 } },
     { id: 2, name: "name 2", isArchived: false },
     { id: 3, name: "name 3", isArchived: false, nutrition: { carbohydrate: 10, fat: 10, fiber: 10, protein: 10 } },
   ])
 
   const { result } = renderHook(() => useTotalMealNutrition())
-  expect(result.current.carbohydrate).toBe(10000)
-  expect(result.current.fat).toBe(5000)
-  expect(result.current.fiber).toBe(1000)
-  expect(result.current.protein).toBe(500)
+  expect(result.current.carbohydrate).toBe(25)
+  expect(result.current.fat).toBe(3)
+  expect(result.current.fiber).toBe(10)
+  expect(result.current.protein).toBe(5)
 
 })

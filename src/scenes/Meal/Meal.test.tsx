@@ -53,6 +53,13 @@ describe("test meals list", () => {
     expect(within(condition2).getByText("Gar")).toBeInTheDocument()
 
     expect(screen.queryAllByTestId("number-input")).toHaveLength(2)
+
+    const kpis = screen.getByTestId("nutrition-kpis")
+    expect(kpis).toBeInTheDocument()
+    expect(kpis).toHaveTextContent(/Fett\s*5 g/)
+    expect(kpis).toHaveTextContent(/Kohlenhydrate\s*20 g/)
+    expect(kpis).toHaveTextContent(/Ballaststoffe\s*0 g/)
+    expect(kpis).toHaveTextContent(/Eiweiß\s*3 g/)
   })
 
   it("deleting food is possible",  async () => {

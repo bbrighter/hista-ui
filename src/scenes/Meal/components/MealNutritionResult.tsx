@@ -15,10 +15,11 @@ export const MealNutritionResult = () => {
     { label: "Eiweiß", value: nutrition.protein },
   ]
 
-
-
   return (
-    <Paper sx={{ px: "0.5rem", py: "0.25rem", mb: "1rem" }} >
+    <Paper 
+      data-testid="nutrition-kpis"
+      sx={{ px: "0.5rem", py: "0.25rem", mb: "1rem" }} 
+    >
       <Grid container columnGap={2} direction="row" justifyContent="center">
         {indicators.map((i) => (
           <Grid key={i.label} size={{ xs: 4, md: 2 }}>

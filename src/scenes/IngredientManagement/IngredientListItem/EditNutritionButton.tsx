@@ -37,7 +37,11 @@ export const EditNutritionButton = ({ id, nutrition }: {id: number, nutrition?: 
 
   return (
     <>
-      <IconButton onClick={() => setOpen(true)}>
+      <IconButton 
+        title="Nährwerte"
+        onClick={() => setOpen(true)}
+        data-testid="editNutritionButton"
+      >
         <ScienceIcon/>
       </IconButton>
       <Dialog 

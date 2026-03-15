@@ -3,9 +3,9 @@ import { http, HttpResponse } from "msw"
 import { entity, hista } from "../../api/generatedApi"
 
 const ingredients = [
-  { id: 1, name: "ingredient1", isArchived: false },
+  { id: 1, name: "ingredient1", isArchived: false, nutrition: { carbohydrate: 20, fat: 5, fiber: 0, protein: 3 } },
   { id: 2, name: "ingredient2", isArchived: false },
-]
+] satisfies Array<entity.IngredientResponse>
 
 const mealHandlers = (baseUrl: string) => ([
   http.get(baseUrl + "/meals", () => (HttpResponse.json({ meals: [{ id: 1, date: "2024-01-01T00:00:00Z" }] }))),
