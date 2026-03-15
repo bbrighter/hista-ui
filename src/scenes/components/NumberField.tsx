@@ -46,7 +46,7 @@ export default function NumberField({
     },
     "& .MuiInput-input": {
       py: size === "small" ? "0px" : "6px",
-      my: size === "small" ? "0px": "6xpx",
+      my: size === "small" ? "0px": "6px",
     },
   };
 
@@ -64,7 +64,6 @@ export default function NumberField({
           required={state.required}
           error={error}
           variant="standard"
-
         >
           {props.children}
         </FormControl>
@@ -85,7 +84,10 @@ export default function NumberField({
             onKeyDown={props.onKeyDown}
             onFocus={props.onFocus}
             slotProps={{
-              input: props,
+              input: {
+                ...props,
+                type: "number",
+              },
             }}
             endAdornment={
               <Typography 
