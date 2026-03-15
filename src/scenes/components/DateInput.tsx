@@ -39,6 +39,7 @@ export default function DateInput(props: {
           label={props.title}
           value={inputValue}
           onChange={handleInputChange}
+
         />
       )}
       {!hideTime
@@ -48,6 +49,11 @@ export default function DateInput(props: {
             label={props.title}
             value={inputValue}
             onChange={handleInputChange}
+            // slotProps={{ 
+            //   actionBar: {
+            //     actions: ["today"],
+            //   },
+            // }}
           />
         )}
     </LocalizationProvider>

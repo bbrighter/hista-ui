@@ -1,4 +1,4 @@
-import { render, screen, waitFor, within } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { MemoryRouter } from "react-router-dom"
 import { describe, expect, it } from "vitest"
@@ -53,6 +53,13 @@ describe("test meals list", () => {
     expect(within(condition2).getByText("Gar")).toBeInTheDocument()
 
     expect(screen.queryAllByTestId("number-input")).toHaveLength(2)
+
+    const kpis = screen.getByTestId("nutrition-kpis")
+    expect(kpis).toBeInTheDocument()
+    expect(kpis).toHaveTextContent(/Fett\s*5 g/)
+    expect(kpis).toHaveTextContent(/Kohlenhydrate\s*20 g/)
+    expect(kpis).toHaveTextContent(/Ballaststoffe\s*0 g/)
+    expect(kpis).toHaveTextContent(/Eiweiß\s*3 g/)
   })
 
   it("deleting food is possible",  async () => {
@@ -161,14 +168,17 @@ describe("test meals list", () => {
     const row1 = await findIngredientRow("ingredient1")
     const amountInput = within(row1).getByTestId("number-input").querySelector("input")
     expect(amountInput).toBeInTheDocument()
-    expect(amountInput).toHaveValue("100")
+    expect(amountInput).toHaveValue(100)
 
-    await userEvent.clear(amountInput)
-    await userEvent.type(amountInput, "10")
-    expect(amountInput).toHaveValue("10")
+    // await userEvent.clear(amountInput)
+    // await userEvent.type(amountInput, "10") // Does not work since it's a number input
+    fireEvent.change(amountInput, { target: { value: "" } })
+    fireEvent.change(amountInput, { target: { value: "10" } })
+    expect(amountInput).toHaveValue(10)
 
     const row2 = await findIngredientRow("ingredient2")
     const amountInputEmpty = within(row2).getByTestId("number-input").querySelector("input")
-    expect(amountInputEmpty).toHaveValue("")
+    expect(amountInputEmpty).toBeInTheDocument()
+    expect(amountInputEmpty).toHaveValue(null)
   })
 })

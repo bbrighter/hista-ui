@@ -43,4 +43,16 @@ describe("ingredients change service", () => {
     const { ingredients } = useHista.getState()
     expect(ingredients.find(i => i.id == 1).isArchived).toBeTruthy()
   })
+
+  it("Update nutrition", async () => {
+    await ingredientsService.updateNutrition(1, { carbohydrate: 100, fat: 50, fiber: 10, protein: 0 })
+
+    const { ingredients } = useHista.getState()
+    const ingredient = ingredients.find(i => i.id == 1)
+    expect(ingredient.nutrition.carbohydrate).toBe(100)
+    expect(ingredient.nutrition.fat).toBe(50)
+    expect(ingredient.nutrition.fiber).toBe(10)
+    expect(ingredient.nutrition.protein).toBe(0)
+  },
+  )
 })
