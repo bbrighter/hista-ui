@@ -127,8 +127,12 @@ describe("test meals list", () => {
 
   })
 
-  it("date changes", { skip: true }, async () => {
+  it("date changes", async () => {
+    render(<MemoryRouter><Meal/></MemoryRouter>)
 
+    const dateInput = await screen.findByLabelText("Mahlzeit", { selector: "input" })
+    expect(dateInput).toBeInTheDocument()
+    // Todo: Test interactivity!
   })
 
   it("add food with new ingredient", async () => {

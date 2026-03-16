@@ -27,16 +27,16 @@ describe("notes component", () => {
     const search = await screen.findByTitle("Suche")
     expect(search).toBeInTheDocument()
     await userEvent.type(search, "text")
-    expect(screen.queryByTitle("Löschen")).toBeInTheDocument()
+    expect(screen.queryByTestId("delete-button")).toBeInTheDocument()
 
     await userEvent.type(search, "blabla")
-    expect(screen.queryByTitle("Löschen")).not.toBeInTheDocument()
+    expect(screen.queryByTestId("delete-button")).not.toBeInTheDocument()
   })
 
   it("Deletion works", async () => {
     render(<MemoryRouter><Notes /></MemoryRouter>)
 
-    const deleteButton = await screen.findByTitle("Löschen")
+    const deleteButton = await screen.findByTestId("delete-button")
     await userEvent.click(deleteButton)
     expect(screen.queryByTitle("Löschen")).not.toBeInTheDocument()
   })

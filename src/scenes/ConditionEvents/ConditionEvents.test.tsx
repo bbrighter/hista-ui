@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { MemoryRouter } from "react-router-dom"
 import { beforeAll, describe, expect, it, vi } from "vitest"
@@ -33,13 +33,22 @@ describe("Manage condition events", () => {
   it("Event can be deleted", async () => {
     render(<MemoryRouter><ConditionEvents /></MemoryRouter>)
 
-    const row = await findRowByDate("01.01.2024")
-    const deleteButton = within(row).getByTitle("Löschen")
+    const deleteButton = await screen.findByTestId("delete-button")
     expect(deleteButton).toBeInTheDocument()
 
     await userEvent.click(deleteButton)
     expect(screen.queryByText(new RegExp("01.01.2024"))).not.toBeInTheDocument()
   })
+
+  //   it("Event can be set to now", async () => {
+  //     render(<MemoryRouter><ConditionEvents /></MemoryRouter>)
+
+  //     const setNowButton = await screen.findByTestId("set-now-button")
+  //     expect(setNowButton).toBeInTheDocument()
+
+  //     await userEvent.click(setNowButton)
+  //     expect(screen.getByText(new Date().toLocaleDateString("de-DE"))).toBeInTheDocument()
+  //   })
 
   it("Event can be created", async () => {
     render(<MemoryRouter><ConditionEvents /></MemoryRouter>)

@@ -33,13 +33,10 @@ export const ingredientsService = {
   },
 
   archive: async (id: number) => {
-    const { setIngredients, ingredients } = useHista.getState();
-    await client.ArchiveIngredient(id);
-    setIngredients(
-      ingredients.map((i) => {
-        return i.id == id ? { ...i, isArchived: !i.isArchived } : i;
-      }),
-    );
+    const { updateIngredient, ingredients } = useHista.getState();
+    const isCurrentlyArchived = ingredients.find(i => i.id == id).isArchived
+    await client.PatchIngredient(id, { archived: !isCurrentlyArchived })
+    updateIngredient(id, { isArchived: !isCurrentlyArchived })
   },
 
   updateNutrition: async (id: number, nutrition: Nutrition) => {

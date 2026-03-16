@@ -7,6 +7,7 @@ describe("OverviewList", () => {
   const onClick = vi.fn()
   const onDelete = vi.fn().mockResolvedValue(undefined)
   const getData = vi.fn().mockResolvedValue([])
+  const onSetNow = vi.fn().mockResolvedValue(undefined)
   const items = [
     { id: 1, date: new Date("2025/04/20 12:00"), severity: 3 },
   ]
@@ -21,15 +22,14 @@ describe("OverviewList", () => {
       />,
     )
 
-    await waitFor(() => {
-      const listItem = screen.getByText("20.04.2025 12:00")
-      expect(listItem).toBeInTheDocument()
-      fireEvent.click(listItem)
-      expect(onClick).toHaveBeenCalled()
-      const deleteIcon = screen.getByTitle("Löschen")
-      fireEvent.click(deleteIcon)
-      expect(onDelete).toHaveBeenCalled()
-    })
+    const listItem = await screen.findByText("20.04.2025 12:00")
+    expect(listItem).toBeInTheDocument()
+    fireEvent.click(listItem)
+    await waitFor(() => expect(onClick).toHaveBeenCalled())
+    const deleteButton = screen.getByTestId("delete-button")
+    expect(deleteButton).toBeInTheDocument()
+    fireEvent.click(deleteButton)
+    await waitFor(() => expect(onDelete).toHaveBeenCalled())
   })
 
   it("Severity is shown", async () => {
@@ -49,5 +49,22 @@ describe("OverviewList", () => {
       expect(severity).toBeInTheDocument()
       expect(severity).toHaveStyle({ color: "rgb(255,0,0)" })
     })
+  })
+
+  it("Optional setNow is possible", async () => {
+    render(
+      <OverviewList
+        items={items}
+        onClick={onClick}
+        onDelete={onDelete}
+        getData={getData}
+        onSetNow={onSetNow}
+      />,
+    )
+
+    const setNowButton = await screen.findByTestId("set-now-button")
+    expect(setNowButton).toBeInTheDocument()
+    fireEvent.click(setNowButton)
+    await waitFor(() => expect(onSetNow).toHaveBeenCalled())
   })
 })
