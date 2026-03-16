@@ -33,7 +33,8 @@ describe("Headache management", () => {
     render(<MemoryRouter><Headaches /></MemoryRouter>)
 
     const row = await findRowByDate("01.01.2022")
-    const deleteButton = within(row).getByTitle("Löschen")
+    expect(row).toBeInTheDocument()
+    const deleteButton = screen.getByTestId("delete-button")
     expect(deleteButton).toBeInTheDocument()
 
     await userEvent.click(deleteButton)

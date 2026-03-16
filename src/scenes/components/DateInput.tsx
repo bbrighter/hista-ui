@@ -32,7 +32,13 @@ export default function DateInput(props: {
   const hideTime = !!props.hideTime
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+    <LocalizationProvider 
+      dateAdapter={AdapterDayjs} 
+      adapterLocale="de"
+      localeText={{
+        todayButtonLabel: "Jetzt",
+      }}
+    >
       {hideTime && (
         <DatePicker
           sx={{ width: "99%" }}
@@ -49,11 +55,11 @@ export default function DateInput(props: {
             label={props.title}
             value={inputValue}
             onChange={handleInputChange}
-            // slotProps={{ 
-            //   actionBar: {
-            //     actions: ["today"],
-            //   },
-            // }}
+            slotProps={{ 
+              actionBar: {
+                actions: ["today"],
+              },
+            }}
           />
         )}
     </LocalizationProvider>

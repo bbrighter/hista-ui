@@ -15,12 +15,17 @@ export default function MealList() {
     await mealService.deleteMeal(id)
   }
 
+  const onSetNow = async (id: number) => {
+    await mealService.patchMealDate(id, new Date().toISOString())
+  }
+
   return (
     <OverviewList
       items={meals}
       onClick={onClick}
       onDelete={onDelete}
       getData={mealService.listMeals}
+      onSetNow={onSetNow}
     />
   )
 }

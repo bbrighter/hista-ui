@@ -6,14 +6,16 @@ import { describe, expect, it } from "vitest"
 import Meals from "./Meals"
 
 describe("test meals list", () => {
-  const findDeleteButton = () => screen.findByTitle("Löschen")
-
+  const findDeleteButton = () => screen.findByTestId("delete-button")
+  const findSetNowButton = () => screen.findByTestId("set-now-button")
+  
   it("everything is rendered", async () => {
     render(<MemoryRouter><Meals /></MemoryRouter>)
 
     expect(await screen.findByText("Neue Mahlzeit")).toBeInTheDocument()
     expect(await screen.findByText("01.01.2024 01:00")).toBeInTheDocument()
     expect(await findDeleteButton()).toBeInTheDocument()
+    expect(await findSetNowButton()).toBeInTheDocument()
   })
 
   it("deletion works", async () => {
@@ -23,6 +25,15 @@ describe("test meals list", () => {
     await userEvent.click(deleteButton)
 
     expect(screen.queryByText("01.01.2024 01:00")).not.toBeInTheDocument()
+  })
+
+  it("set date to now",async () => {
+    render(<MemoryRouter><Meals /></MemoryRouter>)
+
+    const setNowButton = await findSetNowButton()
+    await userEvent.click(setNowButton)
+
+    // TODO: Mock date and test result
   })
 
   it("navigation to managament", async () => {

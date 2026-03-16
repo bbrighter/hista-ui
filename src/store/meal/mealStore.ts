@@ -78,6 +78,8 @@ export const createMealSlice: StateCreator<
   updateMeal: (partial: Partial<Meal>) =>
     set(produce((draft: State) => {
       Object.assign(draft.meal, partial)
+      const idx = draft.meals.findIndex(m => m.id === draft.meal.id)
+      if (idx !== -1) Object.assign(draft.meals[idx], partial)
     })),
 
   addFood: (food: Food) =>

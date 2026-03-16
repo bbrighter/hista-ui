@@ -28,7 +28,6 @@ const ingredientHandlers = (baseUrl: string) => ([
   http.get(baseUrl + "/ingredients", () => (HttpResponse.json({ ingredients: ingredients }))),
   http.delete(baseUrl + "/ingredients/:id", () => (HttpResponse.json({}))),
   http.patch(baseUrl + "/ingredients/:id", () => (HttpResponse.json({}))),
-  http.patch(baseUrl + "/ingredients/:id/archive", () => (HttpResponse.json({}))),
 ])
 
 const foodHandlers = (baseUrl: string) => ([

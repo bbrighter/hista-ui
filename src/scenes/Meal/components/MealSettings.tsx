@@ -49,7 +49,7 @@ export function MealSettings() {
             <DateInput
               title="Mahlzeit"
               date={meal.date}
-              onChange={e => setDate(e?.toISOString() || new Date().toISOString())}
+              onChange={e => setDate(e?.toISOString() || new Date().toISOString())}          
             />
           )}
       </Grid>
