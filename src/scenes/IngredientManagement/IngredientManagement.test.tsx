@@ -46,6 +46,9 @@ describe("IngredientManagement", () => {
 
     await userEvent.click(archiveButton)
     expect(within(archiveButton).getByTestId("UnarchiveIcon")).toBeInTheDocument()
+
+    expect(getEditButton("ingredient1")).toBeDisabled()
+    expect(getNutritionButton("ingredient1")).toBeDisabled()
   })
 
   it("Rename", async () => {
@@ -92,6 +95,7 @@ describe("IngredientManagement", () => {
     const nutritionButton = await waitFor(() => getNutritionButton("ingredient1"))
     expect(screen.getByText("F: 5 | K: 20 | B: 0 | E: 3")).toBeInTheDocument()
     expect(nutritionButton).toBeInTheDocument()
+    expect(nutritionButton).toHaveClass("MuiIconButton-colorSuccess")
 
     await userEvent.click(nutritionButton)
     const modal = screen.getByRole("dialog")
@@ -108,11 +112,16 @@ describe("IngredientManagement", () => {
     await userEvent.click(nutritionButton)
     const fatInput = within(modal).getByLabelText("Fett")
     expect(fatInput).toBeInTheDocument()
-    await userEvent.clear(fatInput) // Does not work since it's a number input
+    await userEvent.clear(fatInput) 
     expect(saveButton).toBeDisabled()
     await userEvent.type(fatInput, "33")
     await userEvent.click(saveButton)
     expect(modal).not.toBeVisible()
     expect(screen.getByText(/F: 33/)).toBeInTheDocument()
+
+
+    const nutrition2Button = getNutritionButton("ingredient2")
+    expect(nutrition2Button).toBeInTheDocument()
+    expect(nutrition2Button).not.toHaveClass("MuiIconButton-colorSuccess")
   })
 })

@@ -25,10 +25,10 @@ export const IngredientListItem = ({ name, id, isArchived, nutrition }: { name: 
   return (
     <ListItem secondaryAction={(
       <ButtonGroup>
-        <IconButton onClick={onEdit} data-testid="editButton">
+        <IconButton onClick={onEdit} data-testid="editButton" disabled={isArchived}>
           <EditIcon />
         </IconButton>
-        <EditNutritionButton id={id} nutrition={nutrition}/>
+        <EditNutritionButton ingredientId={id} nutrition={nutrition} disabled={isArchived}/>
         <ArchiveButton id={id} isArchived={isArchived} />
       </ButtonGroup>
     )}
@@ -37,6 +37,7 @@ export const IngredientListItem = ({ name, id, isArchived, nutrition }: { name: 
       {!isEditing && <ListItemText 
         primary={name} 
         secondary={nutrition ? nutritions.map(n => `${n.label}: ${n.value.toLocaleString("de-DE")}`).join(" | ") :undefined }
+        slotProps={{ primary: { color: isArchived ? "textDisabled"  : "textPrimary" } }}
       />}
     </ListItem>
   )
