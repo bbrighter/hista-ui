@@ -27,7 +27,7 @@ export const NumberDecimalInput = (
 
   return (
     <TextField
-      value={value}
+      value={value == null ? "" : value}
       onChange={onChange}
       type="number"
       slotProps={{

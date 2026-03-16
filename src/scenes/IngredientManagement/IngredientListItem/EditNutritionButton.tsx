@@ -5,32 +5,29 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import IconButton from "@mui/material/IconButton"
+import IconButton, { IconButtonProps } from "@mui/material/IconButton"
 import { useState } from "react";
 
 import { ingredientsService, Nutrition } from "../../../store";
 import { NumberDecimalInput } from "../../components/NumberDecimalInput";
 
-export const EditNutritionButton = ({ id, nutrition }: {id: number, nutrition?: Nutrition}) => {
+export const EditNutritionButton = ({ ingredientId, nutrition, ...other }: IconButtonProps & {ingredientId: number, nutrition?: Nutrition}) => {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const onClose  = () => setOpen(false)
 
-  const [carbohydrate, setCarbohydrate] = useState(nutrition?.carbohydrate)
-  const [protein, setProtein] = useState(nutrition?.protein)
-  const [fat, setFat] = useState<null | number>(nutrition?.fat || null)
-  const [fiber, setFiber] = useState(nutrition?.fiber)
+  const [carbohydrate, setCarbohydrate] = useState(nutrition?.carbohydrate ?? null)
+  const [protein, setProtein] = useState(nutrition?.protein ?? null)
+  const [fat, setFat] = useState(nutrition?.fat ?? null)
+  const [fiber, setFiber] = useState(nutrition?.fiber ?? null)
 
-  const canBeSaved = 
-    carbohydrate != undefined && 
-    protein != undefined && 
-    fat != undefined && 
-    fiber != undefined && 
-    carbohydrate + protein + fat + fiber < 100
+  const isFilled = carbohydrate != undefined &&  protein != undefined &&   fat != undefined &&  fiber != undefined 
+  const canBeSaved = isFilled && carbohydrate <= 100 && protein <= 100 &&  fat <= 100 && fiber <= 100
+    
 
   const onSave = async () => {
     setLoading(true)
-    await ingredientsService.updateNutrition(id, { carbohydrate, protein, fat, fiber })
+    await ingredientsService.updateNutrition(ingredientId, { carbohydrate, protein, fat, fiber })
     setLoading(false)
     setOpen(false)
   }
@@ -42,12 +39,15 @@ export const EditNutritionButton = ({ id, nutrition }: {id: number, nutrition?: 
     { value: protein, onChange: setProtein, label: "Eiweiß" },
   ]
 
+
   return (
     <>
       <IconButton 
         title="Nährwerte"
         onClick={() => setOpen(true)}
         data-testid="editNutritionButton"
+        color={isFilled ? "success" : "default" }
+        {...other}
       >
         <ScienceIcon/>
       </IconButton>
