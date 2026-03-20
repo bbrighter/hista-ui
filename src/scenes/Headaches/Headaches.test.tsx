@@ -38,6 +38,10 @@ describe("Headache management", () => {
     expect(deleteButton).toBeInTheDocument()
 
     await userEvent.click(deleteButton)
+    const modal = screen.getByRole("dialog")
+    expect(modal).toBeInTheDocument()
+    const confirmDeleteButton = within(modal).getByRole("button", { name: "Löschen" })
+    await userEvent.click(confirmDeleteButton)
     expect(screen.queryByText(new RegExp("01.01.2022"))).not.toBeInTheDocument()
   })
 

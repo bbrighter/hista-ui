@@ -29,6 +29,7 @@ export default function Meals() {
     <Container sx={{ padding: "2rem" }}>
       <ButtonGroup>
         <Button
+          data-testid="add-meal-button"
           startIcon={<RestaurantIcon />}
           variant="contained"
           onClick={onCreate}
@@ -37,6 +38,7 @@ export default function Meals() {
           Neue Mahlzeit
         </Button>
         <Button 
+          data-testid="manage-ingredients-button"
           onClick={onManageClick}>
           Zutaten verwalten
         </Button>

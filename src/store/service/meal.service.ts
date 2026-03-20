@@ -43,8 +43,9 @@ export const mealService = {
   patchMealDate: async (id: number, dateIsoString: string) => {
     await client.PatchMeal(id, { date: dateIsoString })
 
-    const { updateMeal } = useHista.getState()
+    const { updateMeal, setMetaMeal } = useHista.getState()
     updateMeal({ date: new Date(dateIsoString) })
+    setMetaMeal(id, { date: new Date(dateIsoString) })
   },
 
   patchMealFreshness: async (id: number, freshness: Freshness) => {

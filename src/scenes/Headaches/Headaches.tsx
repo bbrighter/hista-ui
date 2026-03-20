@@ -5,7 +5,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 import useHista from "../../store/store"
-import OverviewList from "../components/OverviewList"
+import { OverviewList } from "../components"
 import { getColor } from "../Headache/components/colorMapping"
 
 export default function Headaches() {
