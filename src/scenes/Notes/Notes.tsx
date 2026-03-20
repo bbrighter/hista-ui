@@ -6,7 +6,7 @@ import { useMemo, useState } from "react"
 
 import { useAppNavigate } from "../../hooks/useNavigate"
 import useHista from "../../store/store"
-import OverviewList from "../components/OverviewList"
+import { OverviewList } from "../components"
 import NoteSearch from "./components/NoteSearch"
 
 export default function Notes() {

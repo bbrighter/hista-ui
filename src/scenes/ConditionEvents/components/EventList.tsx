@@ -1,6 +1,8 @@
 import { useAppNavigate } from "../../../hooks/useNavigate"
 import useHista from "../../../store/store"
-import OverviewList from "../../components/OverviewList"
+import { OverviewList } from "../../components"
+
+
 
 export default function EventList() {
   const getConditionEvents = useHista(state => state.getConditionEvents)

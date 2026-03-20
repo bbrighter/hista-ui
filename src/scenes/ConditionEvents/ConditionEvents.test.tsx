@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { render, screen, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { MemoryRouter } from "react-router-dom"
 import { beforeAll, describe, expect, it, vi } from "vitest"
@@ -37,6 +37,10 @@ describe("Manage condition events", () => {
     expect(deleteButton).toBeInTheDocument()
 
     await userEvent.click(deleteButton)
+    const modal = screen.getByRole("dialog")
+    expect(modal).toBeInTheDocument()
+    const confirmDeleteButton = within(modal).getByRole("button", { name: "Löschen" })
+    await userEvent.click(confirmDeleteButton)
     expect(screen.queryByText(new RegExp("01.01.2024"))).not.toBeInTheDocument()
   })
 

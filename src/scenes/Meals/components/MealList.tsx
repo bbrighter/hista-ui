@@ -1,7 +1,7 @@
 import { useAppNavigate } from "../../../hooks/useNavigate"
 import { mealService } from "../../../store"
 import useHista from "../../../store/store"
-import OverviewList from "../../components/OverviewList"
+import { OverviewList } from "../../components"
 
 export default function MealList() {
   const meals = useHista(state => state.meals)
