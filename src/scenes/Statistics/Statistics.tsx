@@ -1,3 +1,7 @@
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import FaceRetouchingNaturalIcon from "@mui/icons-material/FaceRetouchingNatural"
+import RestaurantIcon from "@mui/icons-material/Restaurant";
+import ScienceIcon from "@mui/icons-material/Science";
 import Container from "@mui/material/Container"
 import Tab from "@mui/material/Tab"
 import Tabs from "@mui/material/Tabs"
@@ -10,7 +14,7 @@ import { Nutrition } from "./Nutrition"
 
 type TabValue = 0 | 1 | 2 | 3 | 4
 interface TabType {
-  label: string
+  icon: JSX.Element
   value: TabValue
   child: JSX.Element
 }
@@ -23,17 +27,17 @@ export default function Statistics() {
   }
 
   const tabs: Array<TabType> = [
-    { label: "Essen", value: 1, child: <Charts /> },
-    { label: "Tagebuch", value: 2, child: <Diary /> },
-    { label: "Kopfschmerzen", value: 3, child: <HeadacheDiary /> },
-    { label: "Nährwerte", value: 4, child: <Nutrition/> },
+    { icon: <RestaurantIcon/>, value: 1, child: <Charts /> },
+    { icon: <AutoStoriesIcon/>, value: 2, child: <Diary /> },
+    { icon: <FaceRetouchingNaturalIcon/>, value: 3, child: <HeadacheDiary /> },
+    { icon: <ScienceIcon/>, value: 4, child: <Nutrition/> },
   ]
 
   return (
     <Container sx={{ padding: "2rem" }}>
       <Tabs onChange={handleTabChange} value={selectedTab}>
         {tabs.map(tab => (
-          <Tab key={tab.value} label={tab.label} value={tab.value} />
+          <Tab key={tab.value} icon={tab.icon} value={tab.value} />
         ))}
       </Tabs>
       {tabs.map(tab => (
