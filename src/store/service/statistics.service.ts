@@ -1,6 +1,6 @@
 import { client } from "../../api/api"
 import useHista from "../store"
-import { respToRawDiary, respToSymptomStatistics } from "../types"
+import { respToNutritionStatistics, respToRawDiary, respToSymptomStatistics } from "../types"
 
 export const statisticsService = {
   getMealStatistics: async (from: Date, to: Date, ingredientId: number | undefined) => {
@@ -17,5 +17,12 @@ export const statisticsService = {
 
     const { setDiaryEntries } = useHista.getState()
     setDiaryEntries(respToRawDiary(resp))
+  },
+
+  getNutritionStatistics: async (interval: "day" | "week" | "month" | "quarter") => {
+    const resp = await client.GetNutritionByInterval({ Interval: interval })
+
+    const { setNutritionStatistics } = useHista.getState()
+    setNutritionStatistics({ interval: interval, statistics: respToNutritionStatistics(resp) })
   },
 }

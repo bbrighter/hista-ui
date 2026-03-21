@@ -24,3 +24,15 @@ test("get diaries", async () => {
   expect(diaryEntries).toContainEqual({ Date: new Date("2026-02-14T09:54:55.232+01:00"), Type: "Essen", What: "Zucchini", Severity: "Gar", Category: "" })
   expect(diaryEntries).toContainEqual({ Date: new Date("2025-12-20T09:36:03.139833+01:00"), Type: "Notiz", What: "Notizi", Severity: "", Category: "" })
 })
+
+
+test("get nutrition stats", async () => {
+  await statisticsService.getNutritionStatistics("day")
+
+  const { nutrutionStatistics } = useHista.getState()
+  expect(nutrutionStatistics.statistics).toHaveLength(2)
+  expect(nutrutionStatistics.interval).toBe("day")
+  const stat0 = nutrutionStatistics.statistics[0]
+  expect(stat0.date.getDate()).toBe(14)
+  expect(stat0.nutrition).toStrictEqual({ carbohydrate: 10, fat: 25, fiber: 5.2, protein: 0 })
+})

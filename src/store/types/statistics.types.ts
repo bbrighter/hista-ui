@@ -1,4 +1,5 @@
 import { entity } from "../../api/generatedApi"
+import { Nutrition } from "./ingredients.types"
 
 export type SymptomStatistics = Array<
   {
@@ -23,3 +24,24 @@ export const respToSymptomStatistics = (
     (a, b) => (b.within72hours - a.within72hours),
   )
 )
+
+export type NutritionStatistics = {
+  interval: string
+  statistics: Array<NutritionStatistic>
+}
+
+type NutritionStatistic = {
+  date: Date
+  nutrition: Nutrition
+}
+
+export const respToNutritionStatistics = (resp: entity.NutritionStatisticsResponse): Array<NutritionStatistic> => {
+  return resp.statistics.map(s => ({
+    date: new Date(s.time),
+    nutrition: {
+      carbohydrate: s?.nutrition?.carbohydrate ?? 0,
+      fat: s?.nutrition?.fat ?? 0,
+      fiber: s?.nutrition?.fiber ?? 0,
+      protein: s?.nutrition?.protein ?? 0,
+    } }))
+}

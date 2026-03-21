@@ -5,7 +5,7 @@ import { intakeHandlers, medicineHandlers } from "./medicineHandlers";
 import { noteHandlers } from "./noteHandlers";
 import { permissionsHandler } from "./permissionsHandler";
 import { pollenHandlers } from "./pollenHandlers";
-import { getDiariesHandler, getStatisticsHandler } from "./statisticsHandler";
+import { getDiariesHandler, getNutritionStatisticsHandler, getStatisticsHandler } from "./statisticsHandler";
 import { statusHandlers } from "./statusHandler";
 import {
   conditionEventHandlers,
@@ -31,6 +31,7 @@ const handlers = [
   ...authHandlers(baseUrl),
   getStatisticsHandler(baseUrlWithPiid),
   getDiariesHandler(baseUrlWithPiid),
+  getNutritionStatisticsHandler(baseUrlWithPiid),
   ...medicineHandlers(baseUrlWithPiid),
   ...intakeHandlers(baseUrlWithPiid),
 ];

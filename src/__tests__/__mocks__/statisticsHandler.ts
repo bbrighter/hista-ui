@@ -46,4 +46,13 @@ const getDiariesHandler = (baseUrl: string) => (
   ] } satisfies hista.DiaryResp))
 )
 
-export { getDiariesHandler, getStatisticsHandler }
+const getNutritionStatisticsHandler = (baseUrl: string) => (
+  http.get(`${baseUrl}/statistics/nutrition`, () => HttpResponse.json({
+    statistics: [
+      { time: "2026-02-14T12:00:00.000+01:00", nutrition: { carbohydrate: 10, fat: 25, fiber: 5.2, protein: 0 } },
+      { time: "2026-02-15T12:00:00.000+01:00", nutrition: { carbohydrate: 8, fat: 2, fiber: 1.2, protein: 20 } },
+    ],
+  } satisfies entity.NutritionStatisticsResponse))
+)
+
+export { getDiariesHandler, getNutritionStatisticsHandler,getStatisticsHandler }

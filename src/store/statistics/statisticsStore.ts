@@ -5,13 +5,14 @@ import { IngredientStore } from "../meal/ingredientStore"
 import { MealStore } from "../meal/mealStore"
 import { ConditionStore } from "../symptom/conditionStore"
 import { SymptomStore } from "../symptom/symptomStore"
-import { SymptomStatistics as Statistics } from "../types"
+import { NutritionStatistics, SymptomStatistics as Statistics } from "../types"
 import { RawDiary } from "../types/diary.types"
 
 interface State {
   diaryEntries: Array<RawDiary>
   statistics: Statistics
   mealCount: number
+  nutrutionStatistics: NutritionStatistics
 }
 
 interface Actions {
@@ -19,6 +20,7 @@ interface Actions {
   setMealCount: (count: number) => void
   setSymptomStatistics: (stats: Statistics) => void
   resetStatistics: () => void
+  setNutritionStatistics: (stats: NutritionStatistics) => void
 }
 
 export interface StatisticsStore extends State, Actions { }
@@ -27,6 +29,7 @@ const initialState: State = {
   diaryEntries: [],
   mealCount: 0,
   statistics: [],
+  nutrutionStatistics: { statistics: [], interval: "" },
 }
 
 export const createStatisticsSlice: StateCreator<
@@ -49,6 +52,11 @@ export const createStatisticsSlice: StateCreator<
   setSymptomStatistics: (stats: Statistics) => {
     set((produce((draft: State) => {
       draft.statistics = stats
+    })))
+  },
+  setNutritionStatistics: (stats: NutritionStatistics) => {
+    set((produce((draft: State) => {
+      draft.nutrutionStatistics = stats
     })))
   },
   resetStatistics: () => {

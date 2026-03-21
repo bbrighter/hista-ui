@@ -6,8 +6,9 @@ import { JSX, useState } from "react"
 import { Charts } from "./Charts"
 import { Diary } from "./Diary"
 import { HeadacheDiary } from "./Headaches"
+import { Nutrition } from "./Nutrition"
 
-type TabValue = 0 | 1 | 2 | 3
+type TabValue = 0 | 1 | 2 | 3 | 4
 interface TabType {
   label: string
   value: TabValue
@@ -25,6 +26,7 @@ export default function Statistics() {
     { label: "Essen", value: 1, child: <Charts /> },
     { label: "Ernährungstagebuch", value: 2, child: <Diary /> },
     { label: "Kopfschmerzen", value: 3, child: <HeadacheDiary /> },
+    { label: "Nährwerte", value: 4, child: <Nutrition/> },
   ]
 
   return (
