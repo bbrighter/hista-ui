@@ -24,7 +24,7 @@ export default function Statistics() {
 
   const tabs: Array<TabType> = [
     { label: "Essen", value: 1, child: <Charts /> },
-    { label: "Ernährungstagebuch", value: 2, child: <Diary /> },
+    { label: "Tagebuch", value: 2, child: <Diary /> },
     { label: "Kopfschmerzen", value: 3, child: <HeadacheDiary /> },
     { label: "Nährwerte", value: 4, child: <Nutrition/> },
   ]
