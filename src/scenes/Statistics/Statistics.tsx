@@ -35,9 +35,22 @@ export default function Statistics() {
 
   return (
     <Container sx={{ padding: "2rem" }}>
-      <Tabs onChange={handleTabChange} value={selectedTab}>
+      <Tabs 
+        onChange={handleTabChange} value={selectedTab}
+        variant="fullWidth"
+        sx={{
+          minHeight: 40,
+          "& .MuiTab-root": {
+            minWidth: 40,
+          },
+        }}
+      >
         {tabs.map(tab => (
-          <Tab key={tab.value} icon={tab.icon} value={tab.value} />
+          <Tab 
+            key={tab.value} 
+            icon={tab.icon} 
+            value={tab.value}
+          />
         ))}
       </Tabs>
       {tabs.map(tab => (
@@ -58,8 +71,8 @@ function VisibleTab(props: React.PropsWithChildren<{
   value: number
 }>) {
   return (
-    <div hidden={props.selectedTab !== props.value}>
-      {props.children}
+    <div>
+      {props.selectedTab == props.value && props.children}
     </div>
   )
 }

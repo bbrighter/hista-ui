@@ -8,9 +8,12 @@ export const ToggleInterval = ({ value, onChange } : {
 
   return (
     <ToggleButtonGroup
+      sx={{ pt: 3 }}
+      data-testid="toggle-interval-group"
       exclusive
       value={value}
       onChange={onChange}
+      fullWidth
     >
       <ToggleButton value="day">T</ToggleButton>
       <ToggleButton value="week">W</ToggleButton>

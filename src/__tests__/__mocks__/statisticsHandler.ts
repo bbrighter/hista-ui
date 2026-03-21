@@ -47,12 +47,22 @@ const getDiariesHandler = (baseUrl: string) => (
 )
 
 const getNutritionStatisticsHandler = (baseUrl: string) => (
-  http.get(`${baseUrl}/statistics/nutrition`, () => HttpResponse.json({
-    statistics: [
-      { time: "2026-02-14T12:00:00.000+01:00", nutrition: { carbohydrate: 10, fat: 25, fiber: 5.2, protein: 0 } },
-      { time: "2026-02-15T12:00:00.000+01:00", nutrition: { carbohydrate: 8, fat: 2, fiber: 1.2, protein: 20 } },
-    ],
-  } satisfies entity.NutritionStatisticsResponse))
+  http.get(`${baseUrl}/statistics/nutrition`, ({ request }) => {
+    const url = new URL(request.url)
+    const interval = url.searchParams.get("interval")
+    const statistics = interval == "day" ? 
+      [
+        { time: "2026-02-14T12:00:00.000+01:00", nutrition: { carbohydrate: 10, fat: 25, fiber: 5.2, protein: 0 } },
+        { time: "2026-02-15T12:00:00.000+01:00", nutrition: { carbohydrate: 8, fat: 2, fiber: 1.2, protein: 20 } },
+      ]
+      : [
+        { time: "2026-02-01T12:00:00.000+01:00", nutrition: { carbohydrate: 18, fat: 30, fiber: 6.4, protein: 20 } },
+      ]
+
+    return HttpResponse.json({
+      statistics: statistics,
+    } satisfies entity.NutritionStatisticsResponse)},
+  )
 )
 
 export { getDiariesHandler, getNutritionStatisticsHandler,getStatisticsHandler }
