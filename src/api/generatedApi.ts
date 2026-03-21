@@ -196,6 +196,10 @@ export namespace hista {
         text?: string
     }
 
+    export interface NutritionStatisticsParams {
+        Interval: string
+    }
+
     export interface PatchCategoryNameParams {
         name: string
     }
@@ -304,6 +308,7 @@ export namespace hista {
             this.GetFoods = this.GetFoods.bind(this)
             this.GetHeadache = this.GetHeadache.bind(this)
             this.GetMeal = this.GetMeal.bind(this)
+            this.GetNutritionByInterval = this.GetNutritionByInterval.bind(this)
             this.GetStatisticsByIngredientId = this.GetStatisticsByIngredientId.bind(this)
             this.IncrementIntake = this.IncrementIntake.bind(this)
             this.ListConditionEvents = this.ListConditionEvents.bind(this)
@@ -443,6 +448,17 @@ export namespace hista {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/piid/${encodeURIComponent(piid)}/meals/${encodeURIComponent(id)}`)
             return await resp.json() as entity.MealResponse
+        }
+
+        public async GetNutritionByInterval(piid: string, params: NutritionStatisticsParams): Promise<entity.NutritionStatisticsResponse> {
+            // Convert our params into the objects we need for the request
+            const query = makeRecord<string, string | string[]>({
+                interval: params.Interval,
+            })
+
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("GET", `/piid/${encodeURIComponent(piid)}/statistics/nutrition`, undefined, {query})
+            return await resp.json() as entity.NutritionStatisticsResponse
         }
 
         public async GetStatisticsByIngredientId(piid: string, params: MealStatisticsParams): Promise<entity.SymptomStatisticsResponse> {
@@ -790,6 +806,15 @@ export namespace entity {
         carbohydrate: number
         fat: number
         fiber: number
+    }
+
+    export interface NutritionStatisticResponse {
+        time: string
+        nutrition: NutritionResp
+    }
+
+    export interface NutritionStatisticsResponse {
+        statistics: NutritionStatisticResponse[]
     }
 
     export interface PatchMealParams {
