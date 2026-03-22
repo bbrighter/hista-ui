@@ -12,7 +12,7 @@ import { Diary } from "./Diary"
 import { HeadacheDiary } from "./Headaches"
 import { NutritionStats } from "./Nutrition"
 
-type TabValue = 0 | 1 | 2 | 3 | 4
+type TabValue = 1 | 2 | 3 | 4
 interface TabType {
   icon: JSX.Element
   value: TabValue
@@ -27,10 +27,10 @@ export default function Statistics() {
   }
 
   const tabs: Array<TabType> = [
-    { icon: <RestaurantIcon/>, value: 1, child: <Charts /> },
-    { icon: <AutoStoriesIcon/>, value: 2, child: <Diary /> },
-    { icon: <FaceRetouchingNaturalIcon/>, value: 3, child: <HeadacheDiary /> },
-    { icon: <ScienceIcon/>, value: 4, child: <NutritionStats/> },
+    { icon: <ScienceIcon/>, value: 1, child: <NutritionStats/> },
+    { icon: <RestaurantIcon/>, value: 2, child: <Charts /> },
+    { icon: <AutoStoriesIcon/>, value: 3, child: <Diary /> },
+    { icon: <FaceRetouchingNaturalIcon/>, value: 4, child: <HeadacheDiary /> },
   ]
 
   return (

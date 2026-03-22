@@ -2,7 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
-import { NutritionStats } from "./Nutrition";
+import { NutritionStats } from "./NutritionStats";
 
 const findToggleGroup = async () => screen.findByTestId("toggle-interval-group")
 const findToggleButton = async (button: "T" | "W" | "M" | "Q") => {
