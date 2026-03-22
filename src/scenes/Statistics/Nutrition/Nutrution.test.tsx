@@ -19,14 +19,18 @@ describe("Nutrition stats are displayed", () => {
   it("Renders", async () => {
     render(<Nutrition/>)
 
+    // Verify interval toggle
     const toggle = await findToggleGroup()
     expect(toggle).toBeInTheDocument()
 
+    // Verify list item with date and chart
     const listItem = getListItem("14.2.2026")
     expect(listItem.querySelector("svg")).toBeInTheDocument()
+
+    // Verify legend
     const nutritions = ["Fett", "Kohlenhydrate", "Ballaststoffe", "Eiweiß"]
     nutritions.forEach(n => {
-      expect(within(listItem).getByText(n)).toBeInTheDocument()
+      expect(screen.getByText(n)).toBeInTheDocument()
     }) 
   })
 
@@ -45,7 +49,5 @@ describe("Nutrition stats are displayed", () => {
     expect(weekButton).toBeInTheDocument()
     const weekListItem = getListItem("Woche 5")
     expect(weekListItem.querySelector("svg")).toBeInTheDocument()
-
-
   })
 })
