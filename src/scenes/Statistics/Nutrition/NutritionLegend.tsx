@@ -19,7 +19,9 @@ export const NutritionLegend = ({ hideFiber }: {hideFiber: boolean}) => {
   }
 
   return (
-    <Paper elevation={3}
+    <Paper 
+      data-testid="nutrition-legend"
+      elevation={3}
       sx={{ display: "flex", gap: 2, flexWrap: "wrap" , px: 1 }}>
       {nutrition_legend.map(item => (
         <Box key={item.id} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
