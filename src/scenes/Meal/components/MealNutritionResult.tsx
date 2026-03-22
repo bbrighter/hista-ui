@@ -9,10 +9,10 @@ export const MealNutritionResult = () => {
   const nutrition = useTotalMealNutrition()
 
   const indicators = [
-    { label: "Fett", value: nutrition.fat },
-    { label: "Kohlenhydrate", value: nutrition.carbohydrate },
-    { label: "Ballaststoffe", value: nutrition.fiber },
-    { label: "Eiweiß", value: nutrition.protein },
+    { label: "F", value: nutrition.fat },
+    { label: "K", value: nutrition.carbohydrate },
+    { label: "B", value: nutrition.fiber },
+    { label: "E", value: nutrition.protein },
   ]
 
   return (
@@ -22,7 +22,7 @@ export const MealNutritionResult = () => {
     >
       <Grid container columnGap={2} direction="row" justifyContent="space-between">
         {indicators.map((i) => (
-          <Grid key={i.label} size={{ xs: 4, md: 2 }}>
+          <Grid key={i.label} size={1}>
             <Stack direction="row" spacing={0.5} justifyContent="space-between">
               <Typography color="textDisabled">
                 {i.label}

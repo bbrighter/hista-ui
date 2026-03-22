@@ -56,10 +56,10 @@ describe("test meals list", () => {
 
     const kpis = screen.getByTestId("nutrition-kpis")
     expect(kpis).toBeInTheDocument()
-    expect(kpis).toHaveTextContent(/Fett\s*5 g/)
-    expect(kpis).toHaveTextContent(/Kohlenhydrate\s*20 g/)
-    expect(kpis).toHaveTextContent(/Ballaststoffe\s*0 g/)
-    expect(kpis).toHaveTextContent(/Eiweiß\s*3 g/)
+    expect(kpis).toHaveTextContent(/F\s*5 g/)
+    expect(kpis).toHaveTextContent(/K\s*20 g/)
+    expect(kpis).toHaveTextContent(/B\s*0 g/)
+    expect(kpis).toHaveTextContent(/E\s*3 g/)
   })
 
   it("deleting food is possible",  async () => {

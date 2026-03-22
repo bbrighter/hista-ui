@@ -19,30 +19,35 @@ describe("Nutrition stats are displayed", () => {
   it("Renders", async () => {
     render(<Nutrition/>)
 
+    // Verify interval toggle
     const toggle = await findToggleGroup()
     expect(toggle).toBeInTheDocument()
 
-    const listItem = getListItem("Woche 5")
+    // Verify list item with date and chart
+    const listItem = getListItem("14.2.2026")
     expect(listItem.querySelector("svg")).toBeInTheDocument()
+
+    // Verify legend
     const nutritions = ["Fett", "Kohlenhydrate", "Ballaststoffe", "Eiweiß"]
     nutritions.forEach(n => {
-      expect(within(listItem).getByText(n)).toBeInTheDocument()
+      expect(screen.getByText(n)).toBeInTheDocument()
     }) 
   })
 
   it("Toggle interval", async () => {
     render(<Nutrition/>)
 
-    const weekButton = await findToggleButton("W")
-    expect(weekButton).toBeInTheDocument()
-    const weekListItem = getListItem("Woche 5")
-    expect(weekListItem.querySelector("svg")).toBeInTheDocument()
-
     const dayButton = await findToggleButton("T")
-    await userEvent.click(dayButton)
+    expect(dayButton).toBeInTheDocument()
     const firstDayListItem = getListItem("14.2.2026")
     expect(firstDayListItem.querySelector("svg")).toBeInTheDocument()
     const secondDayListItem = getListItem("15.2.2026")
     expect(secondDayListItem.querySelector("svg")).toBeInTheDocument()
+
+    const weekButton = await findToggleButton("W")
+    await userEvent.click(weekButton)
+    expect(weekButton).toBeInTheDocument()
+    const weekListItem = getListItem("Woche 5")
+    expect(weekListItem.querySelector("svg")).toBeInTheDocument()
   })
 })
