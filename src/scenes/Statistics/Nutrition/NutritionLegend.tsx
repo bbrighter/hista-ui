@@ -2,7 +2,7 @@ import Box from "@mui/material/Box"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 
-export const NUTRITION_COLORS = ["#4A90E2", "#F4C542", "#4CAF50", "#b12323"]
+import { NUTRITION_COLORS } from "../../components/NutritionChart"
 
 
 

@@ -7,9 +7,9 @@ import { useEffect, useState } from "react"
 
 import { Nutrition, statisticsService } from "../../../store"
 import useHista from "../../../store/store"
+import { NutritionChart } from "../../components/NutritionChart"
 import { formatDateBasedOnInterval } from "./formatDate"
 import { HideFiberButton } from "./HideFiberButton"
-import { NutritionChart } from "./NutritionChart"
 import { NutritionLegend } from "./NutritionLegend"
 import { ToggleInterval } from "./ToggleInterval"
 

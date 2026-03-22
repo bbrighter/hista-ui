@@ -22,7 +22,7 @@ export const MealNutritionResult = () => {
     >
       <Grid container columnGap={2} direction="row" justifyContent="space-between">
         {indicators.map((i) => (
-          <Grid key={i.label} size={1}>
+          <Grid key={i.label} size={4}>
             <Stack direction="row" spacing={0.5} justifyContent="space-between">
               <Typography color="textDisabled">
                 {i.label}
