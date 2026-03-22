@@ -12,7 +12,7 @@ import { ToggleInterval } from "./ToggleInterval"
 
 export const Nutrition = () => {
   const nutrition = useHista(state => state.nutrutionStatistics.statistics)
-  const [interval, setInterval] = useState<"day" | "week" | "month" | "quarter">("week")
+  const [interval, setInterval] = useState<"day" | "week" | "month" | "quarter">("day")
   const onToggle = (_: React.MouseEvent<HTMLElement>, newValue: "day" | "week" | "month" | "quarter") => {
     setInterval(newValue)
   }
