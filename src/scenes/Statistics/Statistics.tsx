@@ -10,7 +10,7 @@ import { JSX, useState } from "react"
 import { Charts } from "./Charts"
 import { Diary } from "./Diary"
 import { HeadacheDiary } from "./Headaches"
-import { Nutrition } from "./Nutrition"
+import { NutritionStats } from "./Nutrition"
 
 type TabValue = 0 | 1 | 2 | 3 | 4
 interface TabType {
@@ -30,7 +30,7 @@ export default function Statistics() {
     { icon: <RestaurantIcon/>, value: 1, child: <Charts /> },
     { icon: <AutoStoriesIcon/>, value: 2, child: <Diary /> },
     { icon: <FaceRetouchingNaturalIcon/>, value: 3, child: <HeadacheDiary /> },
-    { icon: <ScienceIcon/>, value: 4, child: <Nutrition/> },
+    { icon: <ScienceIcon/>, value: 4, child: <NutritionStats/> },
   ]
 
   return (
