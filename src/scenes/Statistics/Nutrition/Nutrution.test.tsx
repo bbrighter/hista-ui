@@ -2,7 +2,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
-import { Nutrition } from "./Nutrition";
+import { NutritionStats } from "./Nutrition";
 
 const findToggleGroup = async () => screen.findByTestId("toggle-interval-group")
 const findToggleButton = async (button: "T" | "W" | "M" | "Q") => {
@@ -17,7 +17,7 @@ const getListItem = (name: string) => {
 
 describe("Nutrition stats are displayed", () => {
   it("Renders", async () => {
-    render(<Nutrition/>)
+    render(<NutritionStats/>)
 
     // Verify interval toggle
     const toggle = await findToggleGroup()
@@ -35,7 +35,7 @@ describe("Nutrition stats are displayed", () => {
   })
 
   it("Toggle interval", async () => {
-    render(<Nutrition/>)
+    render(<NutritionStats/>)
 
     const dayButton = await findToggleButton("T")
     expect(dayButton).toBeInTheDocument()
