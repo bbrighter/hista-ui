@@ -6,12 +6,13 @@ import { NUTRITION_COLORS } from "./nutritionColors";
 
 export const NutritionChart = ({ nutrition, hideFiber } : {nutrition: Nutrition, hideFiber?: boolean}) => {
   const colors = NUTRITION_COLORS
-  const data = [ { id: 0, value: nutrition.carbohydrate, label: "Kohlenhydrate", color: colors[0] },
+  const data = [ 
     { id: 1, value: nutrition.fat, label: "Fett", color: colors[1] },
-    { id: 3, value: nutrition.protein, label: "Eiweiß", color: colors[3] },
+    { id: 2, value: nutrition.protein, label: "Eiweiß", color: colors[3] },
+    { id: 3, value: nutrition.carbohydrate, label: "Kohlenhydrate", color: colors[0] },    
   ]
   if (!hideFiber) {
-    data.push({ id: 2, value: nutrition.fiber, label: "Ballaststoffe", color: colors[2] })
+    data.push({ id: 4, value: nutrition.fiber, label: "Ballaststoffe", color: colors[2] })
   }
 
   return (
