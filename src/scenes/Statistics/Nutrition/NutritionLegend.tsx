@@ -5,8 +5,6 @@ import Typography from "@mui/material/Typography"
 import { NUTRITION_COLORS } from "../../components/NutritionChart"
 
 
-
-
 export const NutritionLegend = ({ hideFiber }: {hideFiber: boolean}) => {
   const nutrition_legend = [
     { id: 0, label: "K", color: NUTRITION_COLORS[0] },

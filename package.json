@@ -12,6 +12,7 @@
     "lint:fix": "eslint . --fix",
     "lint:debug": "pnpm dlx eslint --debug eslint.config.mjs",
     "test": "vitest",
+    "test:debug": "DEBUG=true vitest",
     "test:nowatch": "vitest run",
     "tsc": "tsc",
     "knip": "knip",

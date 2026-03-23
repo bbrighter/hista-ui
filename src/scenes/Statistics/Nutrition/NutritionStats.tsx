@@ -7,9 +7,9 @@ import { useEffect, useState } from "react"
 
 import { Nutrition, statisticsService } from "../../../store"
 import useHista from "../../../store/store"
-import { NutritionChart } from "../../components/NutritionChart"
+import { HideFiberButton } from "../../components/NutritionChart"
+import { NutritionChart } from "../../components/NutritionChart/NutritionChart"
 import { formatDateBasedOnInterval } from "./formatDate"
-import { HideFiberButton } from "./HideFiberButton"
 import { NutritionLegend } from "./NutritionLegend"
 import { ToggleInterval } from "./ToggleInterval"
 
@@ -27,9 +27,8 @@ export const NutritionStats = () => {
   }, [interval])
 
   const computeCalories = (n: Nutrition): string => {
-    const calories = n.protein * 4.1 + n.carbohydrate * 4.1 + n.fat * 9.3
+    const calories = n.protein * 4 + n.carbohydrate * 4 + n.fat * 9
     return calories.toLocaleString("de-DE", { maximumFractionDigits: 0 }) + " kcal"
-
   }
 
   return (

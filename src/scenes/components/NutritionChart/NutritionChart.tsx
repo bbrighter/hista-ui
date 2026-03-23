@@ -1,8 +1,7 @@
 import { PieChart } from "@mui/x-charts/PieChart";
 
-import { Nutrition } from "../../store";
-
-export const NUTRITION_COLORS = ["#4A90E2", "#F4C542", "#4CAF50", "#b12323"]
+import { Nutrition } from "../../../store";
+import { NUTRITION_COLORS } from "./nutritionColors";
 
 
 export const NutritionChart = ({ nutrition, hideFiber } : {nutrition: Nutrition, hideFiber?: boolean}) => {

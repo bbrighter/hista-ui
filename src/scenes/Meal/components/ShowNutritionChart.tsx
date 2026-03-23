@@ -9,18 +9,21 @@ import IconButton from "@mui/material/IconButton"
 import Slide from "@mui/material/Slide";
 import Toolbar from "@mui/material/Toolbar";
 import { TransitionProps } from "@mui/material/transitions";
+import Typography from "@mui/material/Typography";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react"
 import React from "react";
 
-import { statisticsService } from "../../../store"
+import { Nutrition, statisticsService } from "../../../store"
 import useHista from "../../../store/store";
-import { NutritionChart } from "../../components/NutritionChart"
+import { HideFiberButton } from "../../components/NutritionChart";
+import { NutritionChart } from "../../components/NutritionChart/NutritionChart"
 import { useMealDaysNutrition } from "./useMealDaysNutrition"
 
 export const ShowNutritionChart = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [open, setOpen] = useState(false)
+  const [hideFiber, setHideFiber] = useState(true)
   const mealDate = useHista(state => state.meal.date)
   const nutrition = useMealDaysNutrition()
 
@@ -36,6 +39,10 @@ export const ShowNutritionChart = () => {
     ).finally(() => setIsLoading(false))
   }, [open, mealDayJs])
 
+  const computeCalories = (n: Nutrition): string => {
+    const calories = n.protein * 4 + n.carbohydrate * 4 + n.fat * 9
+    return calories.toLocaleString("de-DE", { maximumFractionDigits: 0 }) + " kcal"
+  }
 
   return (
     <Box>
@@ -44,20 +51,18 @@ export const ShowNutritionChart = () => {
         open={open} 
         onClose={() => setOpen(false)}
         fullScreen
-        slots={{
-          transition: Transition,
-        }}
+        slots={{ transition: Transition }}
       >
-        <AppBar sx={{ position: "relative" }}>
+        <AppBar >
           <Toolbar>
             <IconButton
               edge="start"
               color="inherit"
               onClick={() => setOpen(false)}
-              aria-label="close"
             >
               <CloseIcon />
             </IconButton>
+            <Typography variant="h6">{mealDate.toLocaleDateString("de-DE")}</Typography>
           </Toolbar>
         </AppBar>
         <DialogContent
@@ -66,7 +71,13 @@ export const ShowNutritionChart = () => {
             alignItems: "center",
             justifyContent: "center",
           }}> 
-          {isLoading ? <CircularProgress/> : <NutritionChart nutrition={nutrition}/>}
+        
+          {isLoading ? <CircularProgress/> : 
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <HideFiberButton value={hideFiber} onClick={() => setHideFiber(!hideFiber)}/>
+              <NutritionChart nutrition={nutrition} hideFiber={hideFiber}/>
+              <Typography>{computeCalories(nutrition)}</Typography>
+            </Box>}
         </DialogContent>
       </Dialog>
     </Box>
@@ -79,5 +90,5 @@ const Transition = React.forwardRef(function Transition(
   },
   ref: React.Ref<unknown>,
 ) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="left" ref={ref} {...props} />;
 });

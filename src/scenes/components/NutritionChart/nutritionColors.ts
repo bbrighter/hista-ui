@@ -1,0 +1,1 @@
+export const NUTRITION_COLORS = ["#4A90E2", "#F4C542", "#4CAF50", "#b12323"]
