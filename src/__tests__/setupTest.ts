@@ -1,6 +1,7 @@
 import * as matchers from "@testing-library/jest-dom/matchers"
+import { cleanup } from "@testing-library/react"
 import { setupServer } from "msw/node"
-import { afterAll, afterEach, beforeAll, beforeEach, expect } from "vitest"
+import { afterAll, afterEach, beforeAll, beforeEach, expect, vi } from "vitest"
 
 import useHista from "../store/store"
 import handlers from "./__mocks__/handlers"
@@ -11,11 +12,15 @@ export const server = setupServer(...handlers)
 
 beforeAll(() => {
   server.listen({ onUnhandledRequest: "error" })
-  // // Uncomment to allow debugging more easily
-  // server.events.on('request:start', ({ request }) => {
-  //     console.log('➡️', request.method, request.url)
-  //     console.log('   Headers:', Object.fromEntries(request.headers.entries()))
-  // })
+
+  if (process.env.DEBUG) {
+    server.events.on("request:start", ({ request }) => {
+      // eslint-disable-next-line no-console
+      console.log("➡️", request.method, request.url)
+      // eslint-disable-next-line no-console
+      console.log("   Headers:", Object.fromEntries(request.headers.entries()))
+    })
+  }
 })
 
 beforeEach(() => {
@@ -28,10 +33,12 @@ beforeEach(() => {
   store.resetStatistics()
   store.resetStatus()
   store.setPiid("7b3047c2-d56d-4942-abc4-39eb85e785f2")
-  window.localStorage.setItem("token", "test-token")
+  Storage.prototype.setItem = vi.fn()
+  Storage.prototype.getItem = vi.fn(() => "test-token")
+  Storage.prototype.clear = vi.fn()
 })
 afterEach(() => {
   server.resetHandlers()
-  window.localStorage.clear()
+  cleanup()
 })
 afterAll(() => server.close())
