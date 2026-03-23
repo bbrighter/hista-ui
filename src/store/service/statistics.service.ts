@@ -1,4 +1,5 @@
 import { client } from "../../api/api"
+import { hista } from "../../api/generatedApi"
 import useHista from "../store"
 import { respToNutritionStatistics, respToRawDiary, respToSymptomStatistics } from "../types"
 
@@ -19,8 +20,15 @@ export const statisticsService = {
     setDiaryEntries(respToRawDiary(resp))
   },
 
-  getNutritionStatistics: async (interval: "day" | "week" | "month" | "quarter") => {
-    const resp = await client.GetNutritionByInterval({ Interval: interval })
+  getNutritionStatistics: async (interval: "day" | "week" | "month" | "quarter", from?: Date, to?: Date) => {
+    const params: hista.NutritionStatisticsParams = { Interval: interval } 
+    if (from) {
+      params.From = from.toISOString()
+    }
+    if (to) {
+      params.To = to.toISOString()
+    }
+    const resp = await client.GetNutritionByInterval(params)
 
     const { setNutritionStatistics } = useHista.getState()
     setNutritionStatistics({ interval: interval, statistics: respToNutritionStatistics(resp) })
