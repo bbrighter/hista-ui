@@ -8,8 +8,7 @@ import { useParams } from "react-router-dom"
 import { usePiidEffect } from "../../hooks/usePiidEffect"
 import { mealService } from "../../store"
 import useHista from "../../store/store"
-import { AddFood, FoodList, MealNutritionResult, MealSettings } from "./components"
-import { ShowNutritionChart } from "./components/ShowNutritionChart"
+import { AddFood, FoodList, MealNutritionResult, MealSettings, ShowNutritionChart } from "./components"
 
 export default function Meal() {
   const isLoading = useHista(state => state.meal.isLoading)

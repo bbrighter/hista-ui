@@ -2,7 +2,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import PieChartIcon from "@mui/icons-material/PieChart";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box"
-import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog"
 import DialogContent from "@mui/material/DialogContent"
 import IconButton from "@mui/material/IconButton"
@@ -14,16 +13,14 @@ import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react"
 import React from "react";
 
-import { Nutrition, statisticsService } from "../../../store"
+import { statisticsService } from "../../../store"
 import useHista from "../../../store/store";
-import { HideFiberButton } from "../../components/NutritionChart";
-import { NutritionChart } from "../../components/NutritionChart/NutritionChart"
+import { SingleNutritonChart } from "./SingleNutritionChart";
 import { useMealDaysNutrition } from "./useMealDaysNutrition"
 
 export const ShowNutritionChart = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [open, setOpen] = useState(false)
-  const [hideFiber, setHideFiber] = useState(true)
   const mealDate = useHista(state => state.meal.date)
   const nutrition = useMealDaysNutrition()
 
@@ -39,10 +36,7 @@ export const ShowNutritionChart = () => {
     ).finally(() => setIsLoading(false))
   }, [open, mealDayJs])
 
-  const computeCalories = (n: Nutrition): string => {
-    const calories = n.protein * 4 + n.carbohydrate * 4 + n.fat * 9
-    return calories.toLocaleString("de-DE", { maximumFractionDigits: 0 }) + " kcal"
-  }
+
 
   return (
     <Box>
@@ -71,13 +65,7 @@ export const ShowNutritionChart = () => {
             alignItems: "center",
             justifyContent: "center",
           }}> 
-        
-          {isLoading ? <CircularProgress/> : 
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <HideFiberButton value={hideFiber} onClick={() => setHideFiber(!hideFiber)}/>
-              <NutritionChart nutrition={nutrition} hideFiber={hideFiber}/>
-              <Typography>{computeCalories(nutrition)}</Typography>
-            </Box>}
+          <SingleNutritonChart nutrition={nutrition} isLoading={isLoading}/>
         </DialogContent>
       </Dialog>
     </Box>
