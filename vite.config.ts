@@ -19,8 +19,10 @@ export default defineConfig({
     rollupOptions: {
       treeshake: true,
       output: {
-        manualChunks: {
-          xlsx: ["xlsx"],
+        manualChunks: (id) => {
+          if (id.includes("xlsx")) {
+            return "xlsx"
+          }
         },
       },
     },
