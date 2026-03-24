@@ -37,6 +37,8 @@ export default function DateInput(props: {
       adapterLocale="de"
       localeText={{
         todayButtonLabel: "Jetzt",
+        okButtonLabel: "Ok",
+        cancelButtonLabel: "Abbrechen",
       }}
     >
       {hideTime && (
@@ -57,7 +59,7 @@ export default function DateInput(props: {
             onChange={handleInputChange}
             slotProps={{ 
               actionBar: {
-                actions: ["today"],
+                actions: ["today", "cancel", "accept"],
               },
             }}
           />
