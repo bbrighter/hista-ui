@@ -25,8 +25,9 @@ export const NutritionChart = ({ nutrition, hideFiber } : {nutrition: Nutrition,
           }),
         },
       ]}
-      height={200}
+      height={300}
       hideLegend
+      skipAnimation
     />
   )
 }
