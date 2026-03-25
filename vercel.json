@@ -3,6 +3,10 @@
     {
       "source": "/api/:path*",
       "destination": "https://prod-hista-api-dpc2.encr.app/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
