@@ -5,8 +5,8 @@
       "destination": "https://prod-hista-api-dpc2.encr.app/:path*"
     },
     {
-      "source": "/:path*",
-      "destination": "/:path*"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
