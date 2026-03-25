@@ -1,21 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { fetcher } from "./fetcher"
-import Client, { ClientOptions, Environment, Local } from "./generatedApi"
+import Client, { ClientOptions, Local } from "./generatedApi"
 
-const getStageURL = (): string => {
-  const hostname = new URL(window.location.href).hostname
-  if (hostname.includes("hista-ui-git")) {
-    return Environment("staging")
-  }
-  else {
-    return Environment("prod")
-  }
-}
 
 const baseUrl = import.meta.env.MODE === "test"
   ? "http://localhost:4444"
   : import.meta.env.PROD
-    ? getStageURL()
+    ? "/api"
     : Local
 
 const options: ClientOptions = {

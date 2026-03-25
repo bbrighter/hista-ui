@@ -15,3 +15,5 @@ tsconfig.tsbuildinfo
 # Dependency cruiser
 graph.svg
 graph.html
+.vercel
+.env*.local
