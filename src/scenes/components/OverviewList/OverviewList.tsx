@@ -26,9 +26,11 @@ export function OverviewList(props: {
 
   usePiidEffect(() => {
     setLoading(true)
-    props.getData().finally(
-      () => setLoading(false),
-    )
+    const fetchData = async () => {
+      props.getData()
+      setLoading(false)
+    }
+    fetchData()
   }, [])
 
   return (
