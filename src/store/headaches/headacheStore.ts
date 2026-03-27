@@ -1,4 +1,3 @@
-import { produce } from "immer"
 import { StateCreator } from "zustand"
 
 import { client } from "../../api/api"
@@ -36,7 +35,7 @@ const initialState: State = {
 
 export const createHeadacheSlice: StateCreator<
   HeadacheStore,
-  [],
+  [["zustand/immer", never]],
   [],
   HeadacheStore> = (set, get) => ({
   ...initialState,
@@ -47,10 +46,10 @@ export const createHeadacheSlice: StateCreator<
     let headaches: Array<Headache> = []
     const resp = await client.ListHeadaches()
     headaches = respToHeadaches(resp)
-    set(produce((draft: State) => {
-      draft.headaches = headaches
-      draft.isHeadacheLoaded = true
-    }))
+    set(state => {
+      state.headaches = headaches
+      state.isHeadacheLoaded = true
+    })
     return headaches
   },
 
@@ -59,17 +58,17 @@ export const createHeadacheSlice: StateCreator<
       await get().getHeadaches()
     }
     const headache = get().headaches.find(h => h.id == id)
-    set(produce((draft: State) => {
-      draft.headache = headache
-    }))
+    set(state => {
+      state.headache = headache
+    })
   },
 
   postHeadache: async () => {
     const date = new Date()
     const severity = 5
     const resp = await client.PostHeadache({ date: date.toISOString(), severity: severity })
-    set(produce((draft: State) => {
-      draft.headaches.unshift({
+    set(state => {
+      state.headaches.unshift({
         id: resp.id,
         date: date,
         severity: severity,
@@ -78,62 +77,62 @@ export const createHeadacheSlice: StateCreator<
         types: [],
         description: "",
       })
-    }))
+    })
     return resp.id
   },
 
   deleteHeadache: async (id: number) => {
     await client.DeleteHeadache(id)
-    set(produce((draft: State) => {
-      draft.headaches = get().headaches.filter(h => h.id != id)
-    }))
+    set(state => {
+      state.headaches = get().headaches.filter(h => h.id != id)
+    })
   },
 
   patchHeadacheSeverity: async (newSeverity: number) => {
     const headacheId = get().headache.id
     await client.PatchHeadacheSeverity(headacheId, { severity: newSeverity })
-    set(produce((draft: State) => {
-      draft.headache.severity = newSeverity
-    }))
+    set(state => {
+      state.headache.severity = newSeverity
+    })
   },
   patchHeadacheDate: async (date: Date) => {
     const headacheId = get().headache.id
     await client.PatchHeadacheDate(headacheId, { date: date.toISOString() })
-    set(produce((draft: State) => {
-      draft.headache.date = date
-    }))
+    set(state => {
+      state.headache.date = date
+    })
   },
   patchHeadachePositions: async (pos: HeadachePositions) => {
     if (equalPositions(pos, get().headache.positions)) return
     const headacheId = get().headache.id
     if (headacheId == 0) return
     await client.PatchHeadachePositions(headacheId, { positions: pos.map(p => p.value) })
-    set(produce((draft: State) => {
-      draft.headache.positions = pos
-    }))
+    set(state => {
+      state.headache.positions = pos
+    })
   },
   patchHeadacheTypes: async (types: HeadacheTypes) => {
     if (equalPositions(types, get().headache.types)) return
     const headacheId = get().headache.id
     await client.PatchHeadacheTypes(headacheId, { types: types.map(t => t.value) })
-    set(produce((draft: State) => {
-      draft.headache.types = types
-    }))
+    set(state => {
+      state.headache.types = types
+    })
   },
   patchHeadacheSymptoms: async (symptoms: HeadacheSymptoms) => {
     if (equalPositions(symptoms, get().headache.symptoms)) return
     const headacheId = get().headache.id
     await client.PatchHeadacheSymptoms(headacheId, { symptoms: symptoms.map(s => s.value) })
-    set(produce((draft: State) => {
-      draft.headache.symptoms = symptoms
-    }))
+    set(state => {
+      state.headache.symptoms = symptoms
+    })
   },
   patchHeadacheDescription: async (description: string) => {
     const headacheId = get().headache.id
     await client.PatchHeadacheDescription(headacheId, { description: description })
-    set(produce((draft: State) => {
-      draft.headache.description = description
-    }))
+    set(state => {
+      state.headache.description = description
+    })
   },
 })
 

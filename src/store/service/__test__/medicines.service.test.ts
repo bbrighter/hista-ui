@@ -4,19 +4,20 @@ import { client } from "../../../api/api";
 import useHista from "../../store";
 import { medicinesService } from "../medicines.service";
 
-describe("medicines service", () => {
+describe("medicines service, manage medicines", () => {
   const spyPatch = vi.spyOn(client, "PatchMedicine");
+  const spyListMeds = vi.spyOn(client, "ListMedicines")
 
   beforeEach(async () => {
-    vi.resetAllMocks();
     const { setMedicines } = useHista.getState();
     setMedicines([{ id: 1, isArchived: false, name: "Medicine" }]);
   });
 
-  it("getMedicines", async () => {
+  it("list medicines", async () => {
     await medicinesService.getMedicines();
-    const { medicines } = useHista.getState();
-    expect(medicines).toHaveLength(2);
+    const { medicines, isMedicinesLoaded } = useHista.getState();
+    expect(medicines).toHaveLength(2)
+    expect(isMedicinesLoaded).toBeTruthy()
     expect(medicines).toContainEqual({
       id: 1,
       isArchived: false,
@@ -28,6 +29,13 @@ describe("medicines service", () => {
       name: "Archived medicine",
     });
   });
+
+  it("list medicines only called once", async () => {
+    await medicinesService.getMedicines()
+    await medicinesService.getMedicines()
+
+    expect(spyListMeds).toHaveBeenCalledOnce()
+  })
 
   it("create medicine", async () => {
     await medicinesService.createMedicine("new medicine");
@@ -109,6 +117,10 @@ describe("medicines service", () => {
     const { medicines } = useHista.getState();
     expect(medicines.find((i) => i.id == 1).name).toBe("new name");
   });
+})
+
+describe("medicines service, edit intakes", () => {
+  const sypListIntakes = vi.spyOn(client, "ListIntakes")
 
   it("List intakes", async () => {
     await medicinesService.listIntakes();
@@ -116,6 +128,13 @@ describe("medicines service", () => {
     const { intakes } = useHista.getState();
     expect(intakes).toHaveLength(3);
   });
+
+  it("List intakes is called only once", async () => {
+    await medicinesService.listIntakes();
+    await medicinesService.listIntakes();
+
+    expect(sypListIntakes).toHaveBeenCalledOnce()  
+  })
 
   it("Increment intake", async () => {
     const { setIntakes } = useHista.getState();

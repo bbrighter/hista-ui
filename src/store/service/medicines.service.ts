@@ -4,10 +4,13 @@ import { respToIntakeList, respToMedicineList } from "../types/medicines.types";
 
 export const medicinesService = {
   getMedicines: async () => {
-    const resp = await client.ListMedicines();
+    const { isMedicinesLoaded, setMedicines, setIsMedicinesLoaded } = useHista.getState()
+    if (isMedicinesLoaded) return
 
-    const { setMedicines } = useHista.getState();
-    setMedicines(respToMedicineList(resp));
+    const resp = await client.ListMedicines()
+
+    setMedicines(respToMedicineList(resp))
+    setIsMedicinesLoaded(true)
   },
 
   createMedicine: async (name: string) => {
@@ -53,10 +56,12 @@ export const medicinesService = {
   },
 
   listIntakes: async () => {
+    const { setIntakes, isIntakesLoaded , setIsIntakesLoaded } = useHista.getState()
+    if (isIntakesLoaded) return
     const resp = await client.ListIntakes();
 
-    const { setIntakes } = useHista.getState();
     setIntakes(respToIntakeList(resp));
+    setIsIntakesLoaded(true)
   },
 
   incrementIntake: async (medicineId: number) => {

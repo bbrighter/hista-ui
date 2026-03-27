@@ -4,11 +4,12 @@ import { Nutrition, respToIngredients } from "../types";
 
 export const ingredientsService = {
   getIngredients: async () => {
+    const { setIngredients, ingredients } = useHista.getState();
+    if (ingredients.length > 0) return
+    
     const resp = await client.ListIngredients();
 
-    const { setIngredients, setIngredientsAreLoaded } = useHista.getState();
     setIngredients(respToIngredients(resp));
-    setIngredientsAreLoaded();
   },
 
   deleteIngredient: async (id: number) => {

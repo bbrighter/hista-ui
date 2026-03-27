@@ -5,8 +5,10 @@ import { FoodCondition, Freshness, respToFood, respToIngredients, respToMeal, re
 
 export const mealService = {
   listMeals: async () => {
+    const { setMeals, meals } = useHista.getState()
+    if (meals.length > 0) return
+
     const resp = await client.ListMeals()
-    const { setMeals } = useHista.getState()
 
     setMeals(respToMetaMeals(resp))
   },

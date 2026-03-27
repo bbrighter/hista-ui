@@ -1,5 +1,4 @@
 import dayjs from "dayjs"
-import { produce } from "immer"
 import { StateCreator } from "zustand"
 
 import { client } from "../../api/api"
@@ -45,7 +44,7 @@ const initialState: State = {
 
 export const createConditionSlice: StateCreator<
     ConditionStore & SymptomStore,
-    [],
+    [["zustand/immer", never]],
     [],
     ConditionStore> = (set, get) => ({
   ...initialState,
@@ -57,26 +56,26 @@ export const createConditionSlice: StateCreator<
     if (!get().conditionEventsAreLoaded || get().conditionEvents.length == 0) {
       const resp = await client.ListConditionEvents()
       const states = respToConditionEvents(resp)
-      set(produce((draft: State) => {
-        draft.conditionEvents = states
-        draft.conditionEventsAreLoaded = true
-      }))
+      set(state => {
+        state.conditionEvents = states
+        state.conditionEventsAreLoaded = true
+      })
     }
   },
   postConditionEvent: async () => {
     const resp = await client.CreateConditionEvent()
-    set(produce((draft: State) => {
+    set(state => {
       const event: ConditionEvent = respToConditionEvent(resp)
-      const index = draft.conditionEvents.findIndex(
+      const index = state.conditionEvents.findIndex(
         e => new Date(event.date) > new Date(e.date),
       )
       if (index === -1) {
-        draft.conditionEvents.push(event)
+        state.conditionEvents.push(event)
       }
       else {
-        draft.conditionEvents.splice(index, 0, event)
+        state.conditionEvents.splice(index, 0, event)
       }
-    }))
+    })
     return resp.id
   },
 
@@ -84,15 +83,15 @@ export const createConditionSlice: StateCreator<
   getConditionEvent: async (eventId: number) => {
     const resp = await client.GetConditionEvent(eventId)
     const event = respToConditionEvent(resp)
-    set(produce((draft: State) => {
-      draft.conditionEvent = event
-    }))
+    set(state => {
+      state.conditionEvent = event
+    })
   },
   deleteConditionEvent: async (eventId: number) => {
     const resp = await client.DeleteConditionEvent(eventId)
-    set(produce((draft: State) => {
-      draft.conditionEvents = removeItemById(eventId, get().conditionEvents)
-    }))
+    set(state => {
+      state.conditionEvents = removeItemById(eventId, get().conditionEvents)
+    })
     get().setSymptoms(resp)
   },
   setConditionEventDate: async (date: Date | dayjs.Dayjs) => {
@@ -101,10 +100,10 @@ export const createConditionSlice: StateCreator<
     const index = get().conditionEvents.findIndex(v => v.id == get().conditionEvent.id)
     if (index === -1) return
     const dateDate = date instanceof Date ? date : date.toDate()
-    set(produce((draft: State) => {
-      draft.conditionEvent.date = dateDate
-      draft.conditionEvents[index].date = dateDate
-    }))
+    set(state => {
+      state.conditionEvent.date = dateDate
+      state.conditionEvents[index].date = dateDate
+    })
   },
 
   // Conditions
@@ -117,9 +116,9 @@ export const createConditionSlice: StateCreator<
     const resp = await client.PostCondition(get().conditionEvent.id, params)
     const condition = respToCondition(resp.condition)
     get().setSymptoms(resp.symptoms)
-    set(produce((draft: State) => {
-      draft.conditionEvent.conditions.unshift(condition)
-    }))
+    set(state => {
+      state.conditionEvent.conditions.unshift(condition)
+    })
   },
   postSymptomCategory: async (name: string): Promise<number> => {
     const params: hista.PostSymptomCategoryRequest = { name: name }
@@ -133,16 +132,16 @@ export const createConditionSlice: StateCreator<
     }
     await client.PatchCondition(conditionId, params)
     const conditionIndex = get().conditionEvent.conditions.findIndex(c => c.id == conditionId)
-    set(produce((draft: State) => {
-      draft.conditionEvent.conditions[conditionIndex].severity = severity
-    }))
+    set(state => {
+      state.conditionEvent.conditions[conditionIndex].severity = severity
+    })
   },
   deleteCondition: async (conditionId: number): Promise<void> => {
     const resp = await client.DeleteCondition(conditionId)
     get().setSymptoms(resp)
-    set(produce((draft: State) => {
-      draft.conditionEvent.conditions = removeItemById(conditionId, get().conditionEvent.conditions)
-    }))
+    set(state => {
+      state.conditionEvent.conditions = removeItemById(conditionId, get().conditionEvent.conditions)
+    })
   },
 
 })

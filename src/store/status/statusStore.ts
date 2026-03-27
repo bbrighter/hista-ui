@@ -1,4 +1,3 @@
-import { produce } from "immer"
 import { StateCreator } from "zustand"
 
 import { Status, Statuses } from "../types"
@@ -14,12 +13,7 @@ interface Actions {
   addStatus: (status: Status) => void
   updateStatus: (id: number, update: Partial<Status>) => void
   removeStatus: (id: number) => void
-  setStatusIsLoaded: (isLoaded: boolean) => void
-
-//   getStatuses: () => Promise<void>
-//   addStatus: (date: Dayjs) => Promise<void>
-//   updateStatus: (p: PutStatusParams) => Promise<void>
-//   deleteStatus: (id: number) => Promise<void>
+  setStatusIsLoaded: (loaded: boolean) => void,
 }
 
 export interface StatusStore extends State, Actions { }
@@ -31,41 +25,41 @@ const initialState: State = {
 
 export const createStatusSlice: StateCreator<
   StatusStore,
-  [],
+  [["zustand/immer", never]],
   [],
   StatusStore> = (set) => ({
   ...initialState,
   resetStatus: () => set(initialState),
 
   setStatusList(statuses) {
-    set(produce((draft: State) => {
-      draft.statuses = statuses
-    }))
+    set(state => {
+      state.statuses = statuses
+    })
   },
 
   updateStatus(id: number, update: Status) {
-    set(produce((draft: State) => {
-      const status = draft.statuses.find(s => s.id == id)
+    set(state => {
+      const status = state.statuses.find(s => s.id == id)
       if (!status) return
       Object.assign(status, update)
-    }))
+    })
   },
 
   addStatus(status: Status) {
-    set(produce((draft: State) => {
-      draft.statuses.push(status)
-    }))
+    set(state => {
+      state.statuses.push(status)
+    })
   },
 
   removeStatus(id: number) {
-    set(produce((draft: State) => {
-      draft.statuses = draft.statuses.filter(s => s.id != id)
-    }))    
+    set(state => {
+      state.statuses = state.statuses.filter(s => s.id != id)
+    })    
   },
 
-  setStatusIsLoaded(isLoaded) {
-    set(produce((draft: State) => {
-      draft.statusIsLoaded = isLoaded
-    }))
+  setStatusIsLoaded(loaded: boolean) {
+    set(state => {
+      state.statusIsLoaded = loaded
+    })
   },
 })

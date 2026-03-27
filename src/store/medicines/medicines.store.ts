@@ -1,4 +1,3 @@
-import { produce } from "immer";
 import { StateCreator } from "zustand";
 
 import { Intake, Medicine } from "../types/medicines.types";
@@ -6,10 +5,14 @@ import { Intake, Medicine } from "../types/medicines.types";
 type State = {
   medicines: Array<Medicine>;
   intakes: Array<Intake>;
+  isMedicinesLoaded: boolean
+  isIntakesLoaded: boolean
 };
 
 interface Actions {
   resetMedicines: () => void;
+  setIsMedicinesLoaded: (loaded: boolean) => void
+  setIsIntakesLoaded: (loaded: boolean) => void
   setMedicines: (medicines: Array<Medicine>) => void;
   updateMedicine: (id: number, medicine: Partial<Medicine>) => void;
   changeOrder: (id: number, targetIndex: number) => void;
@@ -22,70 +25,73 @@ export interface MedicineStore extends State, Actions {}
 const initialState = (): State => ({
   medicines: [],
   intakes: [],
+  isIntakesLoaded: false,
+  isMedicinesLoaded: false,
 });
 
 export const createMedicineSlice: StateCreator<
   MedicineStore,
-  [],
+  [["zustand/immer", never]],
   [],
   MedicineStore
 > = (set) => ({
   ...initialState(),
+
+  setIsIntakesLoaded: (loaded: boolean) => {
+    set(state => {
+      state.isIntakesLoaded = loaded
+    })
+  },
+  setIsMedicinesLoaded: (loaded: boolean) => {
+    set(state => {
+      state.isMedicinesLoaded = loaded
+    })
+  },
 
   resetMedicines: () => {
     set(initialState());
   },
 
   setMedicines: (medicines: Array<Medicine>) => {
-    set(
-      produce((draft: State) => {
-        draft.medicines = medicines;
-      }),
-    );
+    set(state => {
+      state.medicines = medicines;
+    });
   },
   updateMedicine: (id: number, partial: Partial<Medicine>) => {
-    set(
-      produce((draft: State) => {
-        const medicine = draft.medicines.find((m) => m.id === id);
-        if (!medicine) return;
-        Object.assign(medicine, partial);
-      }),
-    );
+    set(state => {
+      const medicine = state.medicines.find((m) => m.id === id);
+      if (!medicine) return;
+      Object.assign(medicine, partial);
+    });
   },
   changeOrder(id: number, targetIndex: number) {
-    set(produce((draft: State) => {
-      const medicineIndex = draft.medicines.findIndex(m => m.id == id)
-      const [medicine] = draft.medicines.splice(medicineIndex, 1)
+    set(state => {
+      const medicineIndex = state.medicines.findIndex(m => m.id == id)
+      const [medicine] = state.medicines.splice(medicineIndex, 1)
       const adjustedIndex = medicineIndex < targetIndex ? targetIndex - 1 : targetIndex
-      draft.medicines.splice(adjustedIndex, 0, medicine)
-    }))
+      state.medicines.splice(adjustedIndex, 0, medicine)
+    })
       
   },
   setIntakes: (intakes: Array<Intake>) => {
-    set(
-      produce((draft: State) => {
-        draft.intakes = intakes;
-      }),
-    );
+    set(state => {
+      state.intakes = intakes;
+    });
   },
   changeMedicineIntake: (id, date, value) => {
-    set(
-      produce((draft: State) => {
-        const intake = draft.intakes.find(
-          (i) =>
-            i.medicineId == id &&
-            i.date.getFullYear() == date.getFullYear() &&
-            i.date.getMonth() == date.getMonth() &&
-            i.date.getDate() == date.getDate(),
-        );
-        if (intake) {
-          intake.count = intake.count + value
-        } else {
-          draft.intakes.push({ medicineId: id, date: date, count: value })
-        }
-        
-        
-      }),
-    );
+    set(state => {
+      const intake = state.intakes.find(
+        (i) =>
+          i.medicineId == id &&
+          i.date.getFullYear() == date.getFullYear() &&
+          i.date.getMonth() == date.getMonth() &&
+          i.date.getDate() == date.getDate(),
+      );
+      if (intake) {
+        intake.count = intake.count + value
+      } else {
+        state.intakes.push({ medicineId: id, date: date, count: value })
+      }
+    });
   },
 });

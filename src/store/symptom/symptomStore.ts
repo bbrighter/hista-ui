@@ -1,4 +1,3 @@
-import { produce } from "immer"
 import { StateCreator } from "zustand"
 
 import { client } from "../../api/api"
@@ -32,7 +31,7 @@ const initialState: State = {
 
 export const createSymptomSlice: StateCreator<
   SymptomStore,
-  [],
+  [["zustand/immer", never]],
   [],
   SymptomStore> = (set, get) => ({
   ...initialState,
@@ -46,71 +45,71 @@ export const createSymptomSlice: StateCreator<
     else {
       symptoms = respToSymptoms(s)
     }
-    set(produce((draft: State) => {
-      draft.symptoms = symptoms
-    }))
+    set(state => {
+      state.symptoms = symptoms
+    })
   },
 
   addSymptomCategory: (cId: number, name: string) => {
-    set(produce((draft: State) => {
-      draft.symptoms.unshift({ categoryId: cId, categoryName: name, symptoms: [] })
-    }))
+    set(state => {
+      state.symptoms.unshift({ categoryId: cId, categoryName: name, symptoms: [] })
+    })
   },
 
   getSymptoms: async () => {
     if (!get().symptomsAreLoaded || get().symptoms.length == 0) {
       const resp = await client.ListSymptoms()
       get().setSymptoms(resp)
-      set(produce((draft: State) => {
-        draft.symptomsAreLoaded = true
-      }))
+      set(state => {
+        state.symptomsAreLoaded = true
+      })
     }
   },
 
   deleteCategory: async (cId: number) => {
     await client.DeleteSymptomCategory(cId)
-    set(produce((draft: State) => {
-      draft.symptoms = draft.symptoms.filter(c => c.categoryId !== cId)
-    }))
+    set(state => {
+      state.symptoms = state.symptoms.filter(c => c.categoryId !== cId)
+    })
   },
   changeSymptomCategory: async (symptomId: number, fromCategoryId: number, toCategoryId: number) => {
     await client.PatchSymptomCategory(symptomId, { toCategoryId: toCategoryId })
-    set(produce((draft: State) => {
-      const fromCategoryIndex = draft.symptoms.findIndex(c => c.categoryId == fromCategoryId)
-      const toCategory = draft.symptoms.find(c => c.categoryId == toCategoryId)
+    set(state => {
+      const fromCategoryIndex = state.symptoms.findIndex(c => c.categoryId == fromCategoryId)
+      const toCategory = state.symptoms.find(c => c.categoryId == toCategoryId)
       if (fromCategoryIndex < 0 || !toCategory) {
         return
       }
-      toCategory.symptoms.push(draft.symptoms[fromCategoryIndex].symptoms.find(s => s.id == symptomId))
-      draft.symptoms[fromCategoryIndex].symptoms = draft.symptoms[fromCategoryIndex].symptoms.filter(s => s.id != symptomId)
+      toCategory.symptoms.push(state.symptoms[fromCategoryIndex].symptoms.find(s => s.id == symptomId))
+      state.symptoms[fromCategoryIndex].symptoms = state.symptoms[fromCategoryIndex].symptoms.filter(s => s.id != symptomId)
       const symptom = toCategory.symptoms.find(s => s.id == symptomId)
       symptom.categoryId = toCategoryId
-    }))
+    })
   },
   changeSymptomName: async (symptomId: number, newName: string) => {
     const trimmedName = newName.trim()
     await client.PatchSymptomName(symptomId, { name: trimmedName })
-    set(produce((draft: State) => {
-      for (const category of draft.symptoms) {
+    set(state => {
+      for (const category of state.symptoms) {
         const symptom = category.symptoms.find(s => s.id == symptomId)
         if (symptom) {
           symptom.name = trimmedName
           return
         }
       }
-    }))
+    })
   },
 
   changeSymptomCategoryName: async (categoryId: number, newName: string) => {
     const trimmedName = newName.trim()
     await client.PatchCategoryName(categoryId, { name: trimmedName })
-    set(produce((draft: State) => {
-      const categoryIndex = draft.symptoms.findIndex(c => c.categoryId == categoryId)
+    set(state => {
+      const categoryIndex = state.symptoms.findIndex(c => c.categoryId == categoryId)
       if (categoryIndex < 0) {
         return
       }
-      draft.symptoms[categoryIndex].categoryName = trimmedName
-    }))
+      state.symptoms[categoryIndex].categoryName = trimmedName
+    })
   },
 
   isCategoryNameAvailable: (categoryName: string) => {

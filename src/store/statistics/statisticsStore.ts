@@ -1,4 +1,3 @@
-import { produce } from "immer"
 import { StateCreator } from "zustand"
 
 import { IngredientStore } from "../meal/ingredientStore"
@@ -34,30 +33,30 @@ const initialState: State = {
 
 export const createStatisticsSlice: StateCreator<
     MealStore & ConditionStore & StatisticsStore & IngredientStore & SymptomStore,
-    [],
+    [["zustand/immer", never]],
     [],
     StatisticsStore
 > = set => ({
   ...initialState,
   setDiaryEntries: (diaries: Array<RawDiary>) => {
-    set(produce((draft: State) => {
-      draft.diaryEntries = diaries
-    }))
+    set(state => {
+      state.diaryEntries = diaries
+    })
   },
   setMealCount: (count: number) => {
-    set(produce((draft: State) => {
-      draft.mealCount = count
-    }))
+    set(state => {
+      state.mealCount = count
+    })
   },
   setSymptomStatistics: (stats: Statistics) => {
-    set((produce((draft: State) => {
-      draft.statistics = stats
-    })))
+    set(state => {
+      state.statistics = stats
+    })
   },
   setNutritionStatistics: (stats: NutritionStatistics) => {
-    set((produce((draft: State) => {
-      draft.nutrutionStatistics = stats
-    })))
+    set(state => {
+      state.nutrutionStatistics = stats
+    })
   },
   resetStatistics: () => {
     set(initialState)
