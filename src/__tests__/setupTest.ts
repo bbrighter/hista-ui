@@ -24,6 +24,7 @@ beforeAll(() => {
 })
 
 beforeEach(() => {
+  vi.resetAllMocks()
   const store = useHista.getState()
   store.resetSymptoms()
   store.resetConditionEvents()
@@ -32,6 +33,8 @@ beforeEach(() => {
   store.resetPollens()
   store.resetStatistics()
   store.resetStatus()
+  store.resetMedicines()
+  store.resetIngredients()
   store.setPiid("7b3047c2-d56d-4942-abc4-39eb85e785f2")
   Storage.prototype.setItem = vi.fn()
   Storage.prototype.getItem = vi.fn(() => "test-token")

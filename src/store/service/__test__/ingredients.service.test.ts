@@ -1,15 +1,23 @@
-import { beforeEach, describe, expect, it } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 
+import { client } from "../../../api/api"
 import useHista from "../../store"
 import { ingredientsService } from "../ingredients.service"
 
 describe("ingredient list service", () => {
+  const spy = vi.spyOn(client, "ListIngredients")
+
   it("List ingredients", async () => {
     await ingredientsService.getIngredients()
 
-    const { ingredients, ingredientsAreLoaded } = useHista.getState()
-    expect(ingredientsAreLoaded).toBeTruthy()
+    const { ingredients } = useHista.getState()
     expect(ingredients).toHaveLength(2)
+  })
+
+  it("Ingredients are only loaded once", async () => {
+    await ingredientsService.getIngredients()
+    await ingredientsService.getIngredients()
+    expect(spy).toHaveBeenCalledOnce()  
   })
 })
 

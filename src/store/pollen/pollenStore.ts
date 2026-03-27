@@ -1,4 +1,3 @@
-import { produce } from "immer"
 import { StateCreator } from "zustand"
 
 import { client } from "../../api/api"
@@ -24,7 +23,7 @@ const initialState: State = {
 
 export const createPollensSlice: StateCreator<
   PollenStore,
-  [],
+  [["zustand/immer", never]],
   [],
   PollenStore> = (set, get) => ({
   ...initialState,
@@ -34,9 +33,9 @@ export const createPollensSlice: StateCreator<
   getPollens: async () => {
     if (get().pollensAreLoaded) return
     const resp = await client.ListPollens()
-    set(produce((draft: State) => {
-      draft.pollens = respToPollens(resp)
-      draft.pollensAreLoaded = true
-    }))
+    set(state => {
+      state.pollens = respToPollens(resp)
+      state.pollensAreLoaded = true
+    })
   },
 })

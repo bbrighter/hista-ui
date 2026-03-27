@@ -1,4 +1,3 @@
-import { produce } from "immer"
 import { StateCreator } from "zustand"
 
 import { Instance } from "./instance"
@@ -35,45 +34,45 @@ const initialState: State = {
 
 export const createAuthSlice: StateCreator<
   AuthStore,
-  [],
+  [["zustand/immer", never]],
   [],
   AuthStore> = set => ({
   ...initialState,
 
   setPiid(piid: string) {
-    set(produce((draft: State) => {
-      draft.piid = piid
-    }))
+    set(state => {
+      state.piid = piid
+    })
   },
 
   setToken(token: string) {
     window.localStorage.setItem("token", token)
-    set(produce((draft: State) => {
-      draft.token = token
-    }))
+    set(state => {
+      state.token = token
+    })
   },
 
   setUserName: (name: string) => {
-    set(produce((draft: State) => {
-      draft.userName = name
-    }))
+    set(state => {
+      state.userName = name
+    })
   },
 
   setUsers: (users: Array<User>) => {
-    set(produce((draft: State) => {
-      draft.users = users
-    }))
+    set(state => {
+      state.users = users
+    })
   },
 
   setInstances: async (instances: Array<Instance>) => {
-    set(produce((draft: State) => {
-      draft.instances = instances
-    }))
+    set(state => {
+      state.instances = instances
+    })
   },
 
   setInstancesLoaded: (isLoaded: boolean) => {
-    set(produce((draft: State) => {
-      draft.instancesAreLoaded = isLoaded
-    }))
+    set(state => {
+      state.instancesAreLoaded = isLoaded
+    })
   },
 })

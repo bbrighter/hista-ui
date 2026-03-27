@@ -1,10 +1,13 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { client } from "../../../api/api";
 import useHista from "../../store";
 import { ingredientsService } from "../ingredients.service";
 import { mealService } from "../meal.service";
 
-describe("many meals", () => {
+describe("meal service, meals", () => {
+  const spyListMeals = vi.spyOn(client, "ListMeals")
+
   beforeEach(async () => {
     await mealService.listMeals()
   })
@@ -14,9 +17,18 @@ describe("many meals", () => {
     expect(meals).toHaveLength(1)
   })
 
+  it("list meals only called once", async () => {
+    await mealService.listMeals()
+
+    expect(spyListMeals).toHaveBeenCalledOnce()
+  })
+
   it("post meal", async () => {
     const id = await mealService.postMeal()
     expect(id).toBe(2)
+
+    const { meals } = useHista.getState()
+    expect(meals).toHaveLength(2)
   })
 
   it("get meal", async () => {
@@ -34,7 +46,7 @@ describe("many meals", () => {
   })
 })
 
-describe("single meal", () => {
+describe("meal service, single meal", () => {
   beforeEach(async () => {
     await mealService.getMeal(1)
   })
