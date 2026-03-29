@@ -30,8 +30,8 @@ export const NutritionChart = ({ nutrition, hideFiber, height } : NutritionChart
           }),
         },
       ]}
-      height={height ? height : 300}
-      width={typeof window !== "undefined" ? window.innerWidth - 32 : height}
+      height={height ?? 300}
+      width={undefined}
       hideLegend
       skipAnimation
     />

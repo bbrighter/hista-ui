@@ -38,12 +38,12 @@ export const NutritionStats = () => {
       </Paper>
       <List>
         {nutrition.map(n => (
-          <ListItem key={n.date.toString()} sx={{ height: height + 50 }}>
+          <ListItem key={n.date.toString()} sx={{ height: height + 50, width: height+50 }}>
             <Box>
               <Typography>{formatDateBasedOnInterval(n.date, interval)}</Typography>
-              <Typography variant="caption">{computeCalories(n.nutrition)}</Typography>  
+              <Typography variant="caption">{computeCalories(n.nutrition)}</Typography>
+              <NutritionChart nutrition={n.nutrition} hideFiber={hideFiber} />
             </Box>
-            <NutritionChart nutrition={n.nutrition} hideFiber={hideFiber} height={height} />
           </ListItem>))}
       </List>
     </Box>
