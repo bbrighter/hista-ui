@@ -27,6 +27,7 @@ export const NutritionStats = () => {
     statisticsService.getNutritionStatistics(interval)
   }, [interval])
 
+  const height = 300
 
   return (
     <Box>
@@ -37,12 +38,12 @@ export const NutritionStats = () => {
       </Paper>
       <List>
         {nutrition.map(n => (
-          <ListItem key={n.date.toString()} sx={{ height: 200 }}>
+          <ListItem key={n.date.toString()} sx={{ height: height + 50 }}>
             <Box>
               <Typography>{formatDateBasedOnInterval(n.date, interval)}</Typography>
               <Typography variant="caption">{computeCalories(n.nutrition)}</Typography>  
             </Box>
-            <NutritionChart nutrition={n.nutrition} hideFiber={hideFiber} />
+            <NutritionChart nutrition={n.nutrition} hideFiber={hideFiber} height={height} />
           </ListItem>))}
       </List>
     </Box>

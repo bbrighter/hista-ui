@@ -12,7 +12,7 @@ import { useEffect, useMemo, useState } from "react"
 
 import { statisticsService } from "../../../store"
 import useHista from "../../../store/store";
-import { SingleNutritonChart } from "./SingleNutritionChart";
+import { SingleNutritionChart } from "./SingleNutritionChart";
 import { useMealDaysNutrition } from "./useMealDaysNutrition"
 
 export const ShowNutritionChart = () => {
@@ -61,7 +61,7 @@ export const ShowNutritionChart = () => {
             alignItems: "center",
             justifyContent: "center",
           }}> 
-          <SingleNutritonChart nutrition={nutrition} isLoading={isLoading}/>
+          <SingleNutritionChart nutrition={nutrition} isLoading={isLoading}/>
         </DialogContent>
       </Dialog>
     </Box>
