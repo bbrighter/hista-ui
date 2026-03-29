@@ -20,13 +20,13 @@ export function OverviewListItem(props: {
 }) {
   const [swiped, setSwiped] = useState(false)
   const onDelete = async () => await props.onDelete()
-
+  
   return (
     <SwipeableListItem
       threshold={0.5}
       trailingActions={swipeDeleteItem(onDelete)}
       onSwipeStart={() => setSwiped(true)}
-      leadingActions={props.onSetNow ? swipeSetNow(props.onSetNow) : undefined}
+      {...(props.onSetNow && { leadingActions: swipeSetNow(props.onSetNow) })}
     >
       <ListItem
         sx={{

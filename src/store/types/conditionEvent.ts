@@ -1,14 +1,17 @@
 import { entity } from "../../api/generatedApi"
-import { Symptom } from "./symptom"
+import { Symptom } from "./symptom.types"
+
+
+export type Condition = {
+  id: number
+  symptom: Symptom
+  severity: number
+}
 
 export interface ConditionEvent {
   id: number
   date: Date
-  conditions: Array<{
-    id: number
-    symptom: Symptom
-    severity: number
-  }>
+  conditions: Array<Condition>
 }
 
 export const respToConditionEvent = (resp: entity.ConditionEventResponse): ConditionEvent => ({

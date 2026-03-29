@@ -6,8 +6,8 @@ const categories = {
       id: 1,
       name: "cat",
       symptoms: [
-        { id: 1, name: "symptom1", categoriyId: 1 },
-        { id: 2, name: "symptom2", categoriyId: 1 },
+        { id: 1, name: "symptom1", categoryId: 1 },
+        { id: 2, name: "symptom2", categoryId: 1 },
       ],
     },
     {
@@ -20,6 +20,7 @@ const categories = {
 
 const symptomHandlers = (baseUrl: string) => ([
   http.get(baseUrl + "/symptoms", () => (HttpResponse.json(categories))),
+  http.post(baseUrl + "/symptom-categories", () => (HttpResponse.json({ id: 3 }))),
   http.patch(baseUrl + "/symptom-categories/:id", () => (HttpResponse.json({}))),
   http.delete(baseUrl + "/symptom-categories/:id", () => (HttpResponse.json({}))),
   http.patch(baseUrl + "/symptoms/:id/category", () => (HttpResponse.json({}))),
@@ -62,6 +63,7 @@ const conditionEventHandlers = (baseUrl: string) => (
 const conditionHandlers = (baseUrl: string) => (
   [
     http.delete(baseUrl + "/conditions/:id", () => (HttpResponse.json(categories))),
+    http.patch(`${baseUrl}/conditions/:id`, () => (HttpResponse.json({}))),
   ]
 )
 

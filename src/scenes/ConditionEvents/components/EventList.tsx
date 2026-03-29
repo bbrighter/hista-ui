@@ -1,13 +1,13 @@
 import { useAppNavigate } from "../../../hooks/useNavigate"
-import useHista from "../../../store/store"
+import { services, useConditionEvents } from "../../../store"
 import { OverviewList } from "../../components"
 
 
 
 export default function EventList() {
-  const getConditionEvents = useHista(state => state.getConditionEvents)
-  const deleteConditionEvent = useHista(state => state.deleteConditionEvent)
-  const events = useHista(state => state.conditionEvents)
+  const getConditionEvents = services.conditionEvents.list
+  const deleteConditionEvent = services.conditionEvents.delete
+  const events = useConditionEvents()
   const navigate = useAppNavigate()
 
   const onClick = (id: number) => {
@@ -23,6 +23,7 @@ export default function EventList() {
       onClick={onClick}
       onDelete={onDelete}
       getData={getConditionEvents}
+      onSetNow={undefined}
     />
   )
 }

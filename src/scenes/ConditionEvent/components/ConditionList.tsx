@@ -4,11 +4,11 @@ import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
 
+import { services } from "../../../store"
 import useHista from "../../../store/store"
 import Severity from "./Severity"
 
 export default function ConditionList() {
-  const deleteCondition = useHista(state => state.deleteCondition)
   const conditions = useHista(state => state.conditionEvent.conditions)
   const categories = useHista(state => state.symptoms)
 
@@ -19,7 +19,7 @@ export default function ConditionList() {
   conditionsAndCategories.sort((a, b) => b.id - a.id)
 
   const onDelete = (conditionId: number) => {
-    deleteCondition(conditionId)
+    services.conditions.delete(conditionId)
   }
 
   return (

@@ -46,7 +46,7 @@ export function OverviewList(props: {
             showSeverity={props.showSeverity}
             severity={i.severity}
             severityColorMapping={props.severityColorMapping}
-            onSetNow={() => props.onSetNow(i.id)}
+            {...(props.onSetNow && { onSetNow: () => props.onSetNow(i.id) })}
           />
         ))}
       </SwipeableList>

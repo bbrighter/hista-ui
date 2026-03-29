@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField"
 import { FilterOptionsState } from "@mui/material/useAutocomplete"
 import { useEffect, useState } from "react"
 
+import { services } from "../../../store"
 import useHista from "../../../store/store"
 import AddOrSelectCategory from "./AddOrSelectCategory"
 
@@ -27,13 +28,11 @@ export default function AddCondition() {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState<Option | null>(null)
   const [inputValue, setInputValue] = useState("")
-  const getSymptoms = useHista(state => state.getSymptoms)
-  const postConditionById = useHista(state => state.postCondition)
   const symptoms = useHista(state => state.symptoms)
 
   useEffect(() => {
-    getSymptoms()
-  }, [getSymptoms])
+    services.symptoms.list()
+  }, [])
 
   const options = symptoms.flatMap(cat => (
     cat.symptoms.map(sym => (
@@ -48,7 +47,7 @@ export default function AddCondition() {
       setValue(v)
     }
     else if (!isNewOption(v) && reason == "selectOption") {
-      await postConditionById(v.categoryId, v.symptomId, undefined)
+      await services.conditions.postById(v.symptomId)
       setInputValue("")
     }
   }

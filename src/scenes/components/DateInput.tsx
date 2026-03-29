@@ -5,7 +5,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker"
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 import dayjs from "dayjs"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import useDebounce from "../../hooks/useDebounce"
 import { useDidUpdateEffect } from "../../hooks/useDidUpdateEffect"
@@ -16,16 +16,27 @@ export default function DateInput(props: {
   onChange: ((value: dayjs.Dayjs | null) => void)
   hideTime?: boolean
 }) {
-  const initialValue = dayjs(props.date)
-  const [inputValue, setInputValue] = useState(initialValue)
+  const [inputValue, setInputValue] = useState(dayjs(props.date))
   const debouncedInputValue = useDebounce(inputValue, 500)
+  const isUserInteraction = useRef(false)
+
+  useEffect(() => {
+    if (!isUserInteraction.current) {
+      setInputValue(dayjs(props.date))
+    }
+    isUserInteraction.current = false
+  }, [props.date])
 
   useDidUpdateEffect(() => {
-    props.onChange(debouncedInputValue)
+    if (isUserInteraction.current) {
+      props.onChange(debouncedInputValue)
+    }
+    
   }, [debouncedInputValue])
 
   const handleInputChange = (value: dayjs.Dayjs | null) => {
     if (value != null) {
+      isUserInteraction.current = true
       setInputValue(value)
     }
   }

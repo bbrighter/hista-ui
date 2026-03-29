@@ -1,6 +1,6 @@
 import Accordion from "@mui/material/Accordion"
 
-import { SymptomCategory } from "../../../store/symptom/symptom"
+import { SymptomCategory } from "../../../store"
 import AccordionCategory from "./AccordionCategory"
 import AccordionSymptoms from "./AccordionSymptoms"
 

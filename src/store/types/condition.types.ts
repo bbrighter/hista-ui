@@ -1,6 +1,6 @@
 import { entity } from "../../api/generatedApi"
 import { MuiSliderColor } from "../../types"
-import { respToSymptom, Symptom } from "./symptom"
+import { respToSymptom, Symptom } from "./symptom.types"
 
 interface Condition {
   id: number

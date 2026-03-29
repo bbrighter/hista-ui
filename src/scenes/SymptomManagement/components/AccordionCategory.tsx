@@ -9,8 +9,7 @@ import IconButton from "@mui/material/IconButton"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
 
-import useHista from "../../../store/store"
-import { SymptomCategory } from "../../../store/symptom/symptom"
+import { services, SymptomCategory, useIsCategoryNameAvailable } from "../../../store"
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
 
 export default function AccordionCategory(props: {
@@ -18,15 +17,13 @@ export default function AccordionCategory(props: {
 }) {
   const [mode, setMode] = useState<"default" | "editing" | "deleting">("default")
   const [isLoading, setIsLoading] = useState(false)
-  const categories = useHista(state => state.symptoms)
-  const changeSymptomCategoryName = useHista(state => state.changeSymptomCategoryName)
-  const deleteCategory = useHista(state => state.deleteCategory)
+  const isUniqueName = useIsCategoryNameAvailable()
 
-  const isSaveable = (v: string): boolean => (!categories.some(c => c.categoryName == v))
+  const isSaveable = (v: string): boolean => (isUniqueName(v))
   const isDeletable = props.category.symptoms.length == 0
   const onSave = async (v: string) => {
     setIsLoading(true)
-    await changeSymptomCategoryName(props.category.categoryId, v)
+    await services.symptoms.patchCategoryName(props.category.categoryId, v)
     setIsLoading(false)
     setMode("default")
   }
@@ -34,7 +31,7 @@ export default function AccordionCategory(props: {
   const onDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     setIsLoading(true)
-    await deleteCategory(props.category.categoryId)
+    await services.symptoms.deleteCategory(props.category.categoryId)
     setIsLoading(false)
     setMode("default")
   }
