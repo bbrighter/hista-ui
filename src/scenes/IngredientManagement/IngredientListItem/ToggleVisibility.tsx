@@ -10,10 +10,12 @@ export const ToggleVisibility = ({ checked, onChange }: ToggleVisibilityProps) =
 
   return (
     <FormControlLabel
-      control={    <Checkbox 
-        checked={checked}
-        onChange={onChange}
-      />}
+      control={    
+        <Checkbox 
+          data-testid="toggle-visibility-checkbox"
+          checked={checked}
+          onChange={onChange}
+        />}
       label="Archivierte anzeigen"
     />
 
