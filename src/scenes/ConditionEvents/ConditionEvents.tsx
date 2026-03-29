@@ -5,7 +5,7 @@ import Container from "@mui/material/Container"
 import { useState } from "react"
 
 import { useAppNavigate } from "../../hooks/useNavigate"
-import { conditionEvents } from "../../store/service/conditionEvents.service"
+import { conditionEvents } from "../../store"
 import EventList from "./components/EventList"
 
 export default function ConditionEvents() {

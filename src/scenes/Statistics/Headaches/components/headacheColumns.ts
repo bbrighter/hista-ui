@@ -1,6 +1,6 @@
 import { GridColDef, GridColumnGroupingModel, GridRowsProp } from "@mui/x-data-grid/models"
 
-import { Headache, validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from "../../../../store/headaches/headaches"
+import { Headache, validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from "../../../../store"
 import useHista from "../../../../store/store"
 
 export const headacheGridColumns: Array<GridColDef> = [

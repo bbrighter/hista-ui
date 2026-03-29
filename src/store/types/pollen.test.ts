@@ -1,7 +1,8 @@
 import { expect, test } from "vitest"
 
 import { entity } from "../../api/generatedApi"
-import { respToPollens } from "./pollen"
+import { respToPollens } from "./pollen.types"
+
 
 test("respToPollens", () => {
   const resp: entity.PollenEventsResponse = {

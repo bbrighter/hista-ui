@@ -1,6 +1,6 @@
 import { utils, WorkBook } from "xlsx"
 
-import { Headache } from "../../../../store/headaches/headaches"
+import { Headache } from "../../../../store"
 import useHista from "../../../../store/store"
 import { excelHeaderColumns, headacheExcelRows } from "./headacheColumns"
 

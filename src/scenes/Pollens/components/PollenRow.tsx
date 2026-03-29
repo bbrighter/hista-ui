@@ -3,7 +3,7 @@ import ListItem from "@mui/material/ListItem"
 import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 
-import { Pollen } from "../../../store/pollen/pollen"
+import { Pollen } from "../../../store"
 import { FIRST_COLUMN_WIDTH, intensityToColor, POLLEN_TYPES } from "./pollen_helper"
 
 export default function PollenRow(props: {

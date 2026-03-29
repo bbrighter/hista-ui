@@ -1,6 +1,6 @@
 import { entity } from "../../api/generatedApi"
 
-export interface Pollen {
+export type Pollen = {
   date: Date
   ambrosia: PollenIntensity
   beifuss: PollenIntensity

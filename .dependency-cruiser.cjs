@@ -134,6 +134,32 @@ module.exports = {
         ],
       },
     },
+    {
+      "name": "only-index-from-other-folders",
+      "comment": "Imports from other folders must go through index.ts(x)",
+      "severity": "error",
+      "from": {
+        "pathNot": "index\\.tsx?$",
+      },
+      "to": {
+        "path": "^\\.\\.(/|$)", 
+        "pathNot": "index\\.tsx?$",
+      },
+    },
+    {
+      name: "only-store-entrypoints",
+      comment: "Imports from the store folder must go through store.ts or index.ts",
+      severity: "error",
+      from : {
+        path: ".*",
+        pathNot: "store\\**",
+      },
+      to: {
+        path: "store/",
+        pathNot: "(store\\.ts$|index\\.ts$)",
+      },
+    },
+
   ],
   options: {
 
@@ -144,10 +170,7 @@ module.exports = {
     },
 
     /* Which modules to exclude */
-    // exclude : {
-    //   /* path: an array of regular expressions in strings to match against */
-    //   path: '',
-    // },
+    exclude : "(\\.test\\.tsx?$|\\.spec\\.tsx?$|__tests__|__test__)",
 
     /* Which modules to exclusively include (array of regular expressions in strings)
        dependency-cruiser will skip everything not matching this pattern
