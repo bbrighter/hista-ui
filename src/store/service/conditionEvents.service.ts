@@ -5,8 +5,9 @@ import { respToConditionEvents } from "../types/conditionEvents"
 
 export const conditionEvents = {
   list: async () => {
-    const { setConditionEvents, setIsConditionEventsLoaded } = useHista.getState()
+    const { setConditionEvents, setIsConditionEventsLoaded, isConditionEventsLoaded } = useHista.getState()
 
+    if (isConditionEventsLoaded) return
     const resp = await client.ListConditionEvents()
     setConditionEvents(respToConditionEvents(resp))
     setIsConditionEventsLoaded(true)
