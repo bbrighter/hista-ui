@@ -23,7 +23,7 @@ const getNutritionButton = (ingredient: string): HTMLElement => {
 }
 
 describe("IngredientManagement", () => {
-  it("Everthing renders", async () => {
+  it("Everything renders", async () => {
     render(<MemoryRouter><IngredientManagement /></MemoryRouter>)
 
     const row1 = await waitFor(() => getIngredientRow("ingredient1"))
@@ -45,8 +45,12 @@ describe("IngredientManagement", () => {
     expect(within(archiveButton).getByTestId("ArchiveIcon")).toBeInTheDocument()
 
     await userEvent.click(archiveButton)
-    expect(within(archiveButton).getByTestId("UnarchiveIcon")).toBeInTheDocument()
+    expect(archiveButton).not.toBeInTheDocument()
 
+    const checkbox = screen.getByTestId("toggle-visibility-checkbox")
+    await userEvent.click(checkbox)
+
+    expect(getArchiveButton("ingredient1")).toBeInTheDocument()
     expect(getEditButton("ingredient1")).toBeDisabled()
     expect(getNutritionButton("ingredient1")).toBeDisabled()
   })

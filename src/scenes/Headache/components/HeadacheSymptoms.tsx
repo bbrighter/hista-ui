@@ -1,4 +1,4 @@
-import { validHeadacheSymptoms } from "../../../store/headaches/headaches"
+import { validHeadacheSymptoms } from "../../../store"
 import useHista from "../../../store/store"
 import HeadacheInputs, { ValueLabelPair } from "./Tags"
 

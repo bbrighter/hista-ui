@@ -1,7 +1,7 @@
 import { StateCreator } from "zustand"
 
 import { client } from "../../api/api"
-import { Pollens, respToPollens } from "./pollen"
+import { Pollens, respToPollens } from "../types"
 
 interface State {
   pollensAreLoaded: boolean

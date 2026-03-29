@@ -15,8 +15,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
 
-import { services, Symptom, SymptomCategory } from "../../../store"
-import { useIsSymptomNameAvailable } from "../../../store/selectors/symptom.selectors"
+import { services, Symptom, SymptomCategory, useIsSymptomNameAvailable } from "../../../store"
 import useHista from "../../../store/store"
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
 

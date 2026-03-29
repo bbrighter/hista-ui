@@ -9,7 +9,7 @@ import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
 
 import { useAppNavigate } from "../../hooks/useNavigate"
-import { toAppError } from "../../store/error/appError"
+import { toAppError } from "../../store"
 
 export function ErrorFallback({ error, resetErrorBoundary }: { error: unknown, resetErrorBoundary: () => void }) {
   const navigate = useAppNavigate()

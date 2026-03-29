@@ -4,8 +4,7 @@ import Fab from "@mui/material/Fab"
 import Modal from "@mui/material/Modal"
 import { useState } from "react"
 
-import { services } from "../../../store"
-import { useIsCategoryNameAvailable } from "../../../store/selectors/symptom.selectors"
+import { services, useIsCategoryNameAvailable } from "../../../store"
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
 
 export default function AddSymptomCategory() {

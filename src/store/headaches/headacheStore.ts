@@ -2,7 +2,7 @@ import { StateCreator } from "zustand"
 
 import { client } from "../../api/api"
 import { ValueLabelPair } from "../../scenes/Headache/components/Tags"
-import { Headache, HeadachePositions, HeadacheSymptoms, HeadacheTypes, respToHeadaches } from "./headaches"
+import { Headache, HeadachePositions, HeadacheSymptoms, HeadacheTypes, respToHeadaches } from "../types/headaches.types"
 
 interface State {
   headaches: Array<Headache>

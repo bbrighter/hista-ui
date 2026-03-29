@@ -7,7 +7,7 @@ import AppProvider from "./AppProvider";
 import { appRoutes } from "./constants";
 import { ErrorFallback } from "./scenes/Error/ErrorFallback";
 import Start from "./scenes/Start";
-import { ErrorBridge } from "./store/error/ErrorBridge";
+import { ErrorBridge } from "./store";
 
 type RawRoute = {
   path: string;

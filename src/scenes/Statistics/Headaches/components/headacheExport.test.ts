@@ -1,6 +1,6 @@
 import { expect, test } from "vitest"
 
-import { Headache } from "../../../../store/headaches/headaches"
+import { Headache } from "../../../../store"
 import { buildHeadacheWorkbook } from "./headacheExport"
 
 test("headache workbook", async () => {
