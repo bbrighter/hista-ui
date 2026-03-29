@@ -14,9 +14,13 @@ export const SingleNutritionChart = ({ nutrition, isLoading }: ChartProps) => {
   return (
     <>
       {isLoading ? <CircularProgress/> : 
-        <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <Box sx={{ display: "flex", flexDirection: "column", width: "100%", maxWidth: 500 }}>
           <HideFiberButton value={hideFiber} onClick={() => setHideFiber(!hideFiber)}/>
-          <NutritionChart nutrition={nutrition} hideFiber={hideFiber} height={300}/>
+          <NutritionChart 
+            nutrition={nutrition} 
+            hideFiber={hideFiber} 
+            showLegend
+          />
           <Typography>{computeCalories(nutrition)}</Typography>
         </Box>
       }
