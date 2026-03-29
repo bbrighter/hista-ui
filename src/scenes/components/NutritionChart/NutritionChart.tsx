@@ -3,8 +3,13 @@ import { PieChart } from "@mui/x-charts/PieChart";
 import { Nutrition } from "../../../store";
 import { NUTRITION_COLORS } from "./nutritionColors";
 
+export type NutritionChartProps = {
+  nutrition: Nutrition
+  height?: number
+  hideFiber?: boolean
+}
 
-export const NutritionChart = ({ nutrition, hideFiber } : {nutrition: Nutrition, hideFiber?: boolean}) => {
+export const NutritionChart = ({ nutrition, hideFiber, height } : NutritionChartProps) => {
   const colors = NUTRITION_COLORS
   const data = [ 
     { id: 1, value: nutrition.fat, label: "Fett", color: colors[1] },
@@ -25,7 +30,8 @@ export const NutritionChart = ({ nutrition, hideFiber } : {nutrition: Nutrition,
           }),
         },
       ]}
-      height={300}
+      height={height ?? 300}
+      width={undefined}
       hideLegend
       skipAnimation
     />

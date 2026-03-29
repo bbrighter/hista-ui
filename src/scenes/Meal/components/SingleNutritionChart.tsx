@@ -3,20 +3,20 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
-import { Nutrition } from "../../../store";
 import { computeCalories } from "../../../utils/nutrition";
-import { HideFiberButton, NutritionChart } from "../../components/NutritionChart";
+import { HideFiberButton, NutritionChart, NutritionChartProps } from "../../components/NutritionChart";
 
-export const SingleNutritonChart = ({ nutrition, isLoading }: {nutrition: Nutrition, isLoading: boolean}) => {
+type ChartProps = NutritionChartProps & {isLoading: boolean}
+
+export const SingleNutritionChart = ({ nutrition, isLoading }: ChartProps) => {
   const [hideFiber, setHideFiber] = useState(true)
-
 
   return (
     <>
       {isLoading ? <CircularProgress/> : 
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <HideFiberButton value={hideFiber} onClick={() => setHideFiber(!hideFiber)}/>
-          <NutritionChart nutrition={nutrition} hideFiber={hideFiber}/>
+          <NutritionChart nutrition={nutrition} hideFiber={hideFiber} height={300}/>
           <Typography>{computeCalories(nutrition)}</Typography>
         </Box>
       }
