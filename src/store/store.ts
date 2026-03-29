@@ -3,6 +3,8 @@ import { immer } from "zustand/middleware/immer";
 
 import { injectPiidGetter } from "../api/api";
 import { AuthStore, createAuthSlice } from "./auth/authStore";
+import { ConditionsStore,createConditionsSlice } from "./conditionEvents/conditionEventsStore";
+import { ConditionStore, createConditionSlice } from "./conditionEvents/conditionEventStore";
 import { wrapActionsWithErrorHandler } from "./error/errorHandler";
 import { createHeadacheSlice, HeadacheStore } from "./headaches/headacheStore";
 import { createIngredientSlice, IngredientStore } from "./meal/ingredientStore";
@@ -18,7 +20,6 @@ import {
   StatisticsStore,
 } from "./statistics/statisticsStore";
 import { createStatusSlice, StatusStore } from "./status/statusStore";
-import { ConditionStore, createConditionSlice } from "./symptom/conditionStore";
 import { createSymptomSlice, SymptomStore } from "./symptom/symptomStore";
 
 const useHista = create<
@@ -26,6 +27,7 @@ const useHista = create<
     MealStore &
     IngredientStore &
     ConditionStore &
+    ConditionsStore &
     SymptomStore &
     StatisticsStore &
     NotesStore &
@@ -40,6 +42,7 @@ const useHista = create<
       ...createIngredientSlice(...a),
       ...createAuthSlice(...a),
       ...createConditionSlice(...a),
+      ...createConditionsSlice(...a),
       ...createSymptomSlice(...a),
       ...createStatisticsSlice(...a),
       ...createNotesSlice(...a),

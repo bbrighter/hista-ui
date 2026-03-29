@@ -5,25 +5,25 @@ import dayjs from "dayjs"
 import { useParams } from "react-router-dom"
 
 import { usePiidEffect } from "../../hooks/usePiidEffect"
+import { conditionEvents } from "../../store"
 import useHista from "../../store/store"
 import DateInput from "../components/DateInput"
 import AddCondition from "./components/AddCondition"
 import ConditionList from "./components/ConditionList"
 
 export default function ConditionEvent() {
-  const getConditionEvent = useHista(state => state.getConditionEvent)
-  const setConditionEventDate = useHista(state => state.setConditionEventDate)
   const conditionEvent = useHista(state => state.conditionEvent)
   const params = useParams<{ eventId: string }>()
 
   usePiidEffect(() => {
-    getConditionEvent(Number(params.eventId))
+    conditionEvents.get(Number(params.eventId))
   },
   [params.eventId])
 
   const onChange = (v: dayjs.Dayjs | null) => {
+    if (!params.eventId) return
     if (v === null) return
-    setConditionEventDate(v)
+    conditionEvents.patchDate(Number(params.eventId), v.toDate())
   }
 
   return (

@@ -1,16 +1,16 @@
 import Container from "@mui/material/Container"
 import { useEffect } from "react"
 
+import { services } from "../../store"
 import useHista from "../../store/store"
 import AddSymptomCategory from "./components/AddSymptomCategory"
 import SymptomCategoryAccordion from "./components/SymptomCategoryAccordion"
 
 export default function SymptomManagement() {
-  const getSymptoms = useHista(state => state.getSymptoms)
   const symptoms = useHista(state => state.symptoms)
 
   useEffect(() => {
-    getSymptoms()
+    services.symptoms.list()
   }, [])
 
   return (

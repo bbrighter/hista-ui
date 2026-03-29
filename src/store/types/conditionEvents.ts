@@ -1,6 +1,6 @@
 import { entity } from "../../api/generatedApi"
 
-interface MetaConditionEvent {
+export interface MetaConditionEvent {
   id: number
   date: Date
 }

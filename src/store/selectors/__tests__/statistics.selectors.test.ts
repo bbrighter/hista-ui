@@ -6,10 +6,11 @@ import { useSymptomStatisticsWithNames } from "../statistics.selectors"
 
 test("useSymptomStatisticsWithNames", () => {
   const { setSymptoms, setSymptomStatistics } = useHista.getState()
-  setSymptoms({ Categories: [{ id: 1, name: "cat", symptoms: [
-    { id: 1, categoryId: 1, name: "Name 1" },
-    { id: 2, categoryId: 1, name: "Name 2" },
-  ] }] })
+  setSymptoms(
+    [{ categoryId: 1, categoryName: "cat", symptoms: [
+      { id: 1, categoryId: 1, name: "Name 1" },
+      { id: 2, categoryId: 1, name: "Name 2" },
+    ] }])
   setSymptomStatistics([{ symptomId: 1, severity: 1, within1hour: 1, within24hours: 1, within72hours: 1 }])
 
   const { result } = renderHook(() => useSymptomStatisticsWithNames())

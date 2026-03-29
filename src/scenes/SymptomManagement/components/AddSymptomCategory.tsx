@@ -4,13 +4,13 @@ import Fab from "@mui/material/Fab"
 import Modal from "@mui/material/Modal"
 import { useState } from "react"
 
-import useHista from "../../../store/store"
+import { services } from "../../../store"
+import { useIsCategoryNameAvailable } from "../../../store/selectors/symptom.selectors"
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
 
 export default function AddSymptomCategory() {
   const [open, setOpen] = useState(false)
-  const postSymptomCategory = useHista(state => state.postSymptomCategory)
-  const isCategoryNameAvailable = useHista(state => state.isCategoryNameAvailable)
+  const isCategoryNameAvailable = useIsCategoryNameAvailable()
 
   const closeModal = () => setOpen(false)
 
@@ -27,7 +27,7 @@ export default function AddSymptomCategory() {
   }
 
   const onSave = async (v: string) => {
-    await postSymptomCategory(v)
+    await services.symptoms.postCategory(v)
     closeModal()
   }
 

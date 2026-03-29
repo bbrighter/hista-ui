@@ -8,18 +8,18 @@ describe("useBarChartStatistics", () => {
   beforeEach(() => {
     const { setSymptomStatistics, setSymptoms, setMealCount } =
       useHista.getState();
-    setSymptoms({
-      Categories: [
+    setSymptoms(
+      [
         {
-          id: 1,
-          name: "cat",
+          categoryId: 1,
+          categoryName: "cat",
           symptoms: [
             { id: 1, categoryId: 1, name: "name1" },
             { id: 2, categoryId: 1, name: "name2" },
           ],
         },
       ],
-    });
+    );
     setSymptomStatistics([
       {
         severity: 1,

@@ -2,7 +2,7 @@ import { StateCreator } from "zustand"
 
 import { IngredientStore } from "../meal/ingredientStore"
 import { MealStore } from "../meal/mealStore"
-import { ConditionStore } from "../symptom/conditionStore"
+import { ConditionStore } from "../conditionEvents/conditionEventsStore"
 import { SymptomStore } from "../symptom/symptomStore"
 import { NutritionStatistics, SymptomStatistics as Statistics } from "../types"
 import { RawDiary } from "../types/diary.types"

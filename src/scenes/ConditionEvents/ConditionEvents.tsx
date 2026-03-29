@@ -5,17 +5,16 @@ import Container from "@mui/material/Container"
 import { useState } from "react"
 
 import { useAppNavigate } from "../../hooks/useNavigate"
-import useHista from "../../store/store"
+import { conditionEvents } from "../../store/service/conditionEvents.service"
 import EventList from "./components/EventList"
 
 export default function ConditionEvents() {
-  const postConditionEvent = useHista(state => state.postConditionEvent)
   const navigate = useAppNavigate()
   const [loading, setLoading] = useState(false)
 
   const onClickAddSymptom = async () => {
     setLoading(true)
-    const id = await postConditionEvent()
+    const id = await conditionEvents.post()
     setLoading(false)
     if (id) {
       navigate.to.conditionEventDetails(id)
