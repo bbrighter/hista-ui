@@ -6,10 +6,12 @@ export * from "./statistics.service";
 export * from "./status.service"
 
 import { conditionEvents } from "./conditionEvents.service";
+import { notes } from "./notes.service";
 import { conditions,symptoms } from "./symptoms.service";
 
 export const services = {
   symptoms,
   conditions,
   conditionEvents,
+  notes,
 }

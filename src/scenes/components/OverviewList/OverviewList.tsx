@@ -10,6 +10,7 @@ import { OverviewListItem } from "./OverviewListItem";
 interface ListItemInterface {
   id: number
   date: Date
+  secondary?: string
   severity?: number
 }
 
@@ -45,6 +46,7 @@ export function OverviewList(props: {
             onDelete={() => props.onDelete(i.id)}
             showSeverity={props.showSeverity}
             severity={i.severity}
+            secondary={i.secondary}
             severityColorMapping={props.severityColorMapping}
             {...(props.onSetNow && { onSetNow: () => props.onSetNow(i.id) })}
           />
