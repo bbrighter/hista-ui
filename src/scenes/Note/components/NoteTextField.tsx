@@ -22,8 +22,6 @@ export const NoteTextField = ({ noteId  }: { noteId: number}) => {
     setIsUpToDate(false)
   }
 
-  console.log("value:", value, initialText)
-
   return (
     <TextField
       data-testid="note-text-field"

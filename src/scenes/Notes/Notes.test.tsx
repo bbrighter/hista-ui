@@ -27,7 +27,6 @@ describe("notes component", () => {
     const search = await screen.findByTitle("Suche")
     expect(search).toBeInTheDocument()
     await userEvent.type(search, "text")
-    screen.debug()
     expect(screen.queryByTestId("delete-button")).toBeInTheDocument()
 
     await userEvent.type(search, "blabla")

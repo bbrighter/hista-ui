@@ -20,8 +20,6 @@ export default function Headache() {
   const patchSeverity = useHista(state => state.patchHeadacheSeverity)
   const patchDate = useHista(state => state.patchHeadacheDate)
 
-
-  console.log(params.headacheId)
   usePiidEffect(() => {
     getHeadache(Number(params.headacheId))
   }, [params.headacheId])
