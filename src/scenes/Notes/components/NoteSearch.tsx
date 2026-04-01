@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search"
 import IconButton from "@mui/material/IconButton"
 import Input from "@mui/material/Input"
 
-export default function NoteSearch(props: {
+export function NoteSearch(props: {
   searchValue: string
   onClear: () => void
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void

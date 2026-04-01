@@ -1,22 +1,15 @@
-import NoteIcon from "@mui/icons-material/Note"
+
 import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
 import Container from "@mui/material/Container"
 import { useMemo, useState } from "react"
 
-import { useAppNavigate } from "../../hooks/useNavigate"
-import useHista from "../../store/store"
-import { OverviewList } from "../components"
-import NoteSearch from "./components/NoteSearch"
+import {  useNotes } from "../../store"
+import { AddNoteButton, NoteSearch, NotesList } from "./components"
 
 export default function Notes() {
-  const getNotes = useHista(state => state.getNotes)
-  const createNote = useHista(state => state.postNote)
-  const deleteNote = useHista(state => state.deleteNote)
-  const notes = useHista(state => state.notes)
-  const navigate = useAppNavigate()
+  const notes = useNotes()
 
-  const [loading, setLoading] = useState(false)
+
   const [searchValue, setSearchValue] = useState("")
 
   const filteredNotes = useMemo(() => {
@@ -37,33 +30,13 @@ export default function Notes() {
     return items
   }, [searchValue, notes])
 
-  const onClick = (id: number) => navigate.to.noteDetails(id)
-
-  const onDelete = async (id: number) => await deleteNote(id)
-
-  const onCreate = async () => {
-    setLoading(true)
-    const id = await createNote()
-    setLoading(false)
-    if (id) {
-      navigate.to.noteDetails(id)
-    }
-  }
-
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value)
   }
 
   return (
     <Container sx={{ padding: "2rem" }}>
-      <Button
-        variant="outlined"
-        onClick={onCreate}
-        loading={loading}
-        startIcon={<NoteIcon />}
-      >
-        Neue Notiz
-      </Button>
+      <AddNoteButton/>
       <Box>
         <NoteSearch
           searchValue={searchValue}
@@ -71,12 +44,7 @@ export default function Notes() {
           onChange={handleSearchChange}
         />
       </Box>
-      <OverviewList
-        getData={getNotes}
-        items={filteredNotes}
-        onClick={onClick}
-        onDelete={onDelete}
-      />
+      <NotesList notes={filteredNotes}/>
     </Container>
   )
 }
