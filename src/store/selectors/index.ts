@@ -1,3 +1,4 @@
+export * from "./app.selectors"
 export * from "./conditionEvent.selectors"
 export * from "./ingredients.selectors";
 export * from "./meal.selectors"
