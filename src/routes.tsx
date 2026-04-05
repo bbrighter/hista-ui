@@ -1,13 +1,16 @@
 import { Login } from "@bbrighter/auth-module/login";
-import { JSX, lazy, LazyExoticComponent, Suspense } from "react";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import Modal from "@mui/material/Modal";
+import { JSX, lazy, LazyExoticComponent, Suspense, useMemo } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { createBrowserRouter, RouteObject } from "react-router-dom";
+import { createBrowserRouter, RouteObject, RouterProvider } from "react-router-dom";
 
 import AppProvider from "./AppProvider";
 import { appRoutes } from "./constants";
 import { ErrorFallback } from "./scenes/Error/ErrorFallback";
 import Start from "./scenes/Start";
-import { ErrorBridge } from "./store";
+import { ErrorBridge, useIsAppReady } from "./store";
 
 type RawRoute = {
   path: string;
@@ -124,6 +127,32 @@ const childRoutes: Array<RouteObject> = rawRoutes.map((r) => ({
   ),
 }));
 
+const LoadingLayout = ({ children }) => {
+  const image = useMemo(() => {
+    const max = 9
+    const id = Math.floor(Math.random() * max) + 1
+    return `/loading_${id}.svg`
+  }, [])
+
+  const isReady = useIsAppReady()
+
+  return (
+    <>
+      <Modal open={!isReady}>
+        <> 
+          <Box 
+            component="img" 
+            src={image}
+            sx={{ maxWidth: "100%", maxHeight: "100%", position: "absolute",  top: "50%",   left: "50%", transform: "translate(-50%, -50%)" }}
+          />
+          <CircularProgress size={64} sx={{ top: "50%", left: "50%", position: "absolute" }}/>
+        </>
+      </Modal>
+      {children}
+    </>
+  )
+}
+
 const routes: Array<RouteObject> = [
   {
     path: "",
@@ -135,11 +164,19 @@ const routes: Array<RouteObject> = [
       },
       {
         path: "*",
-        element: <Start />,
+        element: <LoadingLayout><Start /></LoadingLayout>,
       },
-      ...childRoutes,
+      ...childRoutes.map(r => ({
+        ...r,
+        element: r.path != appRoutes.login ? (<LoadingLayout>{r.element}</LoadingLayout>) : <>{r.element}</>,
+      })),
     ],
   },
 ];
 
-export default createBrowserRouter(routes);
+
+export const Router = () => {
+  const router = createBrowserRouter(routes)
+
+  return ( <RouterProvider router={router}/> )
+}
