@@ -2,7 +2,7 @@ import { Login } from "@bbrighter/auth-module/login";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Modal from "@mui/material/Modal";
-import { JSX, lazy, LazyExoticComponent, Suspense, useMemo } from "react";
+import { JSX, lazy, LazyExoticComponent, PropsWithChildren, Suspense, useMemo } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { createBrowserRouter, RouteObject, RouterProvider } from "react-router-dom";
 
@@ -127,7 +127,7 @@ const childRoutes: Array<RouteObject> = rawRoutes.map((r) => ({
   ),
 }));
 
-const LoadingLayout = ({ children }) => {
+const LoadingLayout = ({ children }: PropsWithChildren) => {
   const image = useMemo(() => {
     const max = 9
     const id = Math.floor(Math.random() * max) + 1

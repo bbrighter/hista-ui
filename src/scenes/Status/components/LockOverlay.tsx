@@ -1,0 +1,98 @@
+import Box from "@mui/material/Box"
+import Stack from "@mui/material/Stack"
+import Typography from "@mui/material/Typography"
+import { useEffect, useRef, useState } from "react"
+
+import useHista from "../../../store/store"
+
+export const LockOverlay = ({ id, locked, children }: {id: number, locked?: boolean, children: React.ReactNode}) => {
+  const timerRef = useRef<ReturnType<typeof setTimeout>| null>(null)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const [progress, setProgress] = useState(0)
+  const isPressingRef = useRef(false)
+  const updateStatus = useHista(state => state.updateStatus)
+  const duration = 500
+
+
+  useEffect(() => {
+    return () => resetTimer()
+  }, [])
+  
+  const startTimer = () => {
+    const start = Date.now()
+    intervalRef.current = setInterval(() => {
+      if (!isPressingRef.current) {
+        clearInterval(intervalRef.current!)
+        intervalRef.current = null
+        return
+      }
+      const elapsed = Date.now() - start
+      const prog = Math.min(elapsed / duration, 1)
+      setProgress(prog)
+
+      if (prog >= 1 && intervalRef.current){
+        clearInterval(intervalRef.current)
+        intervalRef.current = null
+      }
+    }, 16)
+
+    timerRef.current = setTimeout(() => {
+      if (isPressingRef.current) {
+        updateStatus(id, { locked: false })
+      }
+    }, duration)
+  }
+
+  const resetTimer = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+      timerRef.current = null
+    }
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+      intervalRef.current = null
+    }
+    setProgress(0)
+  }
+
+  const onRelease = () => {
+    isPressingRef.current = false
+    resetTimer()
+
+  }
+
+  const onPress = () => {
+    if (isPressingRef.current) return
+    isPressingRef.current = true
+    startTimer()
+  }
+
+  if (!locked) return children
+
+  return (
+    <Box sx={{ position: "relative" }}>
+      <Box 
+        onMouseDown={onPress}
+        onMouseUp={onRelease}
+        onPointerDown={onPress}
+        onPointerUp={onRelease}
+        sx={{ 
+          position: "absolute", 
+          inset: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "rgba(0,0,0,0.55)",
+          zIndex: 10,
+          height: `calc(100% - ${progress * 100}%)`,
+        }}
+      >
+        <Stack alignItems="center">
+          <Typography variant="button">LOCKED</Typography>
+          <Typography variant="body2">Long press to unlock</Typography>
+        </Stack>
+      </Box>
+      {children}
+    </Box>
+  )
+}
