@@ -15,7 +15,7 @@ import { PutStatusParams, Status, statusService } from "../../../store";
 
 type StatusProps = {status: Status}
 
-export const Evening = ({ status }: StatusProps) => {
+export const Morning = ({ status }: StatusProps) => {
   const [morningFitness, setMorningFitness] = useState<number | undefined>(status.morningFitness)
   const [morningSleep, setMorningSleep] = useState<number | undefined>(status.morningSleep)
 
@@ -70,7 +70,7 @@ export const Evening = ({ status }: StatusProps) => {
 }
 
 
-export const Morning = ({ status } : StatusProps) => {
+export const Evening = ({ status } : StatusProps) => {
   const [eveningFitness, setEveningFitness] = useState<number | undefined>(status.eveningFitness)
 
   const debouncedUpdate = useRef(debounce(async (params) => {

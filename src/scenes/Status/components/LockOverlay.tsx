@@ -11,7 +11,7 @@ export const LockOverlay = ({ id, locked, children }: {id: number, locked?: bool
   const [progress, setProgress] = useState(0)
   const isPressingRef = useRef(false)
   const updateStatus = useHista(state => state.updateStatus)
-  const duration = 1500
+  const duration = 500
 
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export const LockOverlay = ({ id, locked, children }: {id: number, locked?: bool
   const startTimer = () => {
     const start = Date.now()
     intervalRef.current = setInterval(() => {
-      if (!isPressingRef.current) {
+      if (!isPressingRef.current ) {
         clearInterval(intervalRef.current!)
         intervalRef.current = null
         return
@@ -55,15 +55,19 @@ export const LockOverlay = ({ id, locked, children }: {id: number, locked?: bool
     setProgress(0)
   }
 
-  const onRelease = () => {
+  const onRelease = (e: React.PointerEvent) => {
     isPressingRef.current = false
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    }
     resetTimer()
 
   }
 
-  const onPress = () => {
+  const onPress = (e: React.PointerEvent) => {
     if (isPressingRef.current) return
     isPressingRef.current = true
+    e.currentTarget.setPointerCapture(e.pointerId)
     startTimer()
   }
 
@@ -74,8 +78,6 @@ export const LockOverlay = ({ id, locked, children }: {id: number, locked?: bool
       data-testid="lock-overlay"
       sx={{ position: "relative" }}>
       <Box 
-        onMouseDown={onPress}
-        onMouseUp={onRelease}
         onPointerDown={onPress}
         onPointerUp={onRelease}
         onPointerCancel={onRelease}
