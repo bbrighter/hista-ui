@@ -78,6 +78,7 @@ export const LockOverlay = ({ id, locked, children }: {id: number, locked?: bool
         onMouseUp={onRelease}
         onPointerDown={onPress}
         onPointerUp={onRelease}
+        onPointerCancel={onRelease}
         sx={{ 
           position: "absolute", 
           inset: 0,
