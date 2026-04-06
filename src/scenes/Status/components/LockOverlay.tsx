@@ -91,8 +91,8 @@ export const LockOverlay = ({ id, locked, children }: {id: number, locked?: bool
         }}
       >
         <Stack alignItems="center">
-          <Typography variant="button">LOCKED</Typography>
-          <Typography variant="body2">Long press to unlock</Typography>
+          <Typography variant="button">Gesperrt</Typography>
+          <Typography variant="body2">Zum Entsperren gedrückt halten</Typography>
         </Stack>
       </Box>
       {children}
