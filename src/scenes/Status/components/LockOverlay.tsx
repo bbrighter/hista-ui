@@ -11,7 +11,7 @@ export const LockOverlay = ({ id, locked, children }: {id: number, locked?: bool
   const [progress, setProgress] = useState(0)
   const isPressingRef = useRef(false)
   const updateStatus = useHista(state => state.updateStatus)
-  const duration = 500
+  const duration = 1500
 
 
   useEffect(() => {
