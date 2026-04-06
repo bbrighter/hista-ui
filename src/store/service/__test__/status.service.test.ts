@@ -20,12 +20,14 @@ describe("status service", () => {
       morningFitness: 3, 
       morningSleep: 2, 
       eveningFitness: 1,
+      locked: true,
     })
     expect(statuses).toContainEqual({ 
       id: 2, 
       date: dayjs("2023-01-01T14:00:00Z"),
       morningFitness: 3, 
       morningSleep: 1, 
+      locked: true,
     })
     expect(statusIsLoaded).toBeTruthy()
   })

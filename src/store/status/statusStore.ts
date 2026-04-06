@@ -37,7 +37,7 @@ export const createStatusSlice: StateCreator<
     })
   },
 
-  updateStatus(id: number, update: Status) {
+  updateStatus(id: number, update: Partial<Status>) {
     set(state => {
       const status = state.statuses.find(s => s.id == id)
       if (!status) return
