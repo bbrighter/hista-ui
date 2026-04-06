@@ -70,7 +70,9 @@ export const LockOverlay = ({ id, locked, children }: {id: number, locked?: bool
   if (!locked) return children
 
   return (
-    <Box sx={{ position: "relative" }}>
+    <Box 
+      data-testid="lock-overlay"
+      sx={{ position: "relative" }}>
       <Box 
         onMouseDown={onPress}
         onMouseUp={onRelease}

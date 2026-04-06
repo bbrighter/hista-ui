@@ -44,6 +44,7 @@ export const Evening = ({ status }: StatusProps) => {
         <Stack direction="row" spacing={2}>
           <SleepIcon sleep={morningSleep}/>
           <Slider
+            data-testid="morning-sleep-slider"
             min={1}
             max={5}
             value={morningSleep}
@@ -54,6 +55,7 @@ export const Evening = ({ status }: StatusProps) => {
         <Stack direction="row" spacing={2}>
           <FitnessIcon fitness={morningFitness} />
           <Slider
+            data-testid="morning-fitness-slider"
             min={1}
             max={5}
             value={morningFitness}
@@ -96,6 +98,7 @@ export const Morning = ({ status } : StatusProps) => {
           <Stack spacing={2} direction="row">
             <FitnessIcon fitness={eveningFitness} />
             <Slider
+              data-testid="evening-fitness-slider"
               min={1}
               max={5}
               value={eveningFitness}
