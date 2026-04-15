@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { client } from "../../../api/api";
 import useHista from "../../store";
+import { services } from "..";
 import { ingredientsService } from "../ingredients.service";
 import { mealService } from "../meal.service";
 
@@ -108,5 +109,16 @@ describe("meal service, single meal", () => {
     const { meal } = useHista.getState()
     const changedFood = meal.foods.find(f => f.id == 10)
     expect(changedFood.amount).toBe(undefined)
+  })
+
+  it("post foods by template", async () => {
+    await services.template.list()
+
+    await mealService.postFoodsByTemplate(1, 1)
+
+    const { meal } = useHista.getState()
+    expect(meal.foods).toHaveLength(4)
+    expect(meal.foods).toContainEqual({ id: 5, ingredientName: "ingredient1", ingredientId: 1, condition: "raw" })
+    expect(meal.foods).toContainEqual({ id: 6, ingredientName: "ingredient2", ingredientId: 2, condition: "cooked" })
   })
 })

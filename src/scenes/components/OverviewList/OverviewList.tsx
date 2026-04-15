@@ -9,7 +9,7 @@ import { OverviewListItem } from "./OverviewListItem";
 
 interface ListItemInterface {
   id: number
-  date: Date
+  date: Date | string
   secondary?: string
   severity?: number
 }

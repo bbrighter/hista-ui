@@ -1,4 +1,4 @@
-import { AuthStore } from "../auth/authStore"
+import { AuthStore } from "../store.type"
 import { toAppError } from "./appError"
 import { errorBus } from "./errorBus"
 

@@ -286,6 +286,16 @@ export namespace hista {
         name: string
     }
 
+    export interface TemplateItemParams {
+        ingredientId: number
+        condition: entity.FoodCondition
+    }
+
+    export interface TemplateParams {
+        name: string
+        items: TemplateItemParams[]
+    }
+
     export class ServiceClient {
         private baseClient: BaseClient
 
@@ -305,6 +315,7 @@ export namespace hista {
             this.DeleteNote = this.DeleteNote.bind(this)
             this.DeleteStatus = this.DeleteStatus.bind(this)
             this.DeleteSymptomCategory = this.DeleteSymptomCategory.bind(this)
+            this.DeleteTemplate = this.DeleteTemplate.bind(this)
             this.GetConditionEvent = this.GetConditionEvent.bind(this)
             this.GetDiary = this.GetDiary.bind(this)
             this.GetFoods = this.GetFoods.bind(this)
@@ -323,6 +334,7 @@ export namespace hista {
             this.ListPollens = this.ListPollens.bind(this)
             this.ListStatus = this.ListStatus.bind(this)
             this.ListSymptoms = this.ListSymptoms.bind(this)
+            this.ListTemplates = this.ListTemplates.bind(this)
             this.PatchCategoryName = this.PatchCategoryName.bind(this)
             this.PatchCondition = this.PatchCondition.bind(this)
             this.PatchDate = this.PatchDate.bind(this)
@@ -343,11 +355,14 @@ export namespace hista {
             this.PatchSymptomName = this.PatchSymptomName.bind(this)
             this.PostCondition = this.PostCondition.bind(this)
             this.PostFood = this.PostFood.bind(this)
+            this.PostFoodByTemplate = this.PostFoodByTemplate.bind(this)
             this.PostHeadache = this.PostHeadache.bind(this)
             this.PostMeal = this.PostMeal.bind(this)
             this.PostNote = this.PostNote.bind(this)
             this.PostStatus = this.PostStatus.bind(this)
             this.PostSymptomCategory = this.PostSymptomCategory.bind(this)
+            this.PostTemplate = this.PostTemplate.bind(this)
+            this.PutTemplate = this.PutTemplate.bind(this)
             this.ReorderMedicine = this.ReorderMedicine.bind(this)
         }
 
@@ -420,6 +435,10 @@ export namespace hista {
 
         public async DeleteSymptomCategory(piid: string, id: number): Promise<void> {
             await this.baseClient.callTypedAPI("DELETE", `/piid/${encodeURIComponent(piid)}/symptom-categories/${encodeURIComponent(id)}`)
+        }
+
+        public async DeleteTemplate(piid: string, id: number): Promise<void> {
+            await this.baseClient.callTypedAPI("DELETE", `/piid/${encodeURIComponent(piid)}/templates/${encodeURIComponent(id)}`)
         }
 
         public async GetConditionEvent(piid: string, eventId: number): Promise<entity.ConditionEventResponse> {
@@ -542,6 +561,12 @@ export namespace hista {
             return await resp.json() as entity.SymptomCategoriesResponse
         }
 
+        public async ListTemplates(piid: string): Promise<entity.TemplateListResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("GET", `/piid/${encodeURIComponent(piid)}/templates`)
+            return await resp.json() as entity.TemplateListResponse
+        }
+
         public async PatchCategoryName(piid: string, id: number, params: PatchCategoryNameParams): Promise<void> {
             await this.baseClient.callTypedAPI("PATCH", `/piid/${encodeURIComponent(piid)}/symptom-categories/${encodeURIComponent(id)}`, JSON.stringify(params))
         }
@@ -626,6 +651,12 @@ export namespace hista {
             return await resp.json() as PostFoodResponse
         }
 
+        public async PostFoodByTemplate(piid: string, mealId: number, templateId: number): Promise<entity.FoodsResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("POST", `/piid/${encodeURIComponent(piid)}/meal/${encodeURIComponent(mealId)}/foods/by-template/${encodeURIComponent(templateId)}`)
+            return await resp.json() as entity.FoodsResponse
+        }
+
         public async PostHeadache(piid: string, params: PostHeadacheParams): Promise<entity.IDResponse> {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("POST", `/piid/${encodeURIComponent(piid)}/headaches`, JSON.stringify(params))
@@ -654,6 +685,16 @@ export namespace hista {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("POST", `/piid/${encodeURIComponent(piid)}/symptom-categories`, JSON.stringify(params))
             return await resp.json() as entity.IDResponse
+        }
+
+        public async PostTemplate(piid: string, params: TemplateParams): Promise<entity.IDResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("POST", `/piid/${encodeURIComponent(piid)}/templates`, JSON.stringify(params))
+            return await resp.json() as entity.IDResponse
+        }
+
+        public async PutTemplate(piid: string, id: number, params: TemplateParams): Promise<void> {
+            await this.baseClient.callTypedAPI("PUT", `/piid/${encodeURIComponent(piid)}/templates/${encodeURIComponent(id)}`, JSON.stringify(params))
         }
 
         public async ReorderMedicine(piid: string, medicineId: number, params: MoveMedicineParams): Promise<void> {
@@ -912,6 +953,22 @@ export namespace entity {
     export interface SymptomStatisticsResponse {
         count: number
         statistics: StatisticBySymptom[]
+    }
+
+    export interface TemplateItemResponse {
+        item: number
+        ingredientId: number
+        condition: FoodCondition
+    }
+
+    export interface TemplateListResponse {
+        templates: TemplateResponse[]
+    }
+
+    export interface TemplateResponse {
+        id: number
+        name: string
+        items: TemplateItemResponse[]
     }
 }
 

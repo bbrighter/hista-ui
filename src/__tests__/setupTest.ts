@@ -36,6 +36,8 @@ beforeEach(() => {
   store.resetMedicines()
   store.resetIngredients()
   store.resetNotes()
+  store.resetTemplates()
+  store.resetLoaded()
   store.setPiid("7b3047c2-d56d-4942-abc4-39eb85e785f2")
   Storage.prototype.setItem = vi.fn()
   Storage.prototype.getItem = vi.fn(() => "test-token")

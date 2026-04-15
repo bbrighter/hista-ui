@@ -104,6 +104,11 @@ const rawRoutes: Array<RawRoute> = [
     element: lazy(() => import("./scenes/MedicineManagement")),
     name: "Medicine management",
   },
+  {
+    path: appRoutes.templates,
+    element: lazy(() => import("./scenes/Templates")),
+    name: "Templates",
+  },
 ];
 
 const withSuspense = (Component: LazyExoticComponent<() => JSX.Element>) => {

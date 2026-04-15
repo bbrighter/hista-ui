@@ -10,13 +10,16 @@ export interface Food {
 
 export type FoodCondition = "raw" | "cooked"
 
+export const respToFoodCondition = (resp: entity.FoodCondition): FoodCondition => {
+  return resp == "raw" ? "raw" : "cooked"
+}
+
 export const respToFood = (resp: entity.FoodResponse): Food => {
-  const condition: FoodCondition = resp.foodCondition == "raw" ? "raw" : "cooked"
   return {
     id: resp.id,
     ingredientName: resp.ingredient.name,
     ingredientId: resp.ingredient.id,
-    condition: condition,
+    condition: respToFoodCondition(resp.foodCondition),
     amount: resp.amount,
   }
 }

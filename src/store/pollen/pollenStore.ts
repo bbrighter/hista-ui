@@ -1,20 +1,12 @@
 import { StateCreator } from "zustand"
 
 import { client } from "../../api/api"
-import { Pollens, respToPollens } from "../types"
+import { NonFunctionProperties, PollenStore, StoreType } from "../store.type"
+import { respToPollens } from "../types"
 
-interface State {
-  pollensAreLoaded: boolean
-  pollens: Pollens
-}
+type State = NonFunctionProperties<PollenStore>
 
-interface Actions {
-  resetPollens: () => void
 
-  getPollens: () => Promise<void>
-}
-
-export interface PollenStore extends State, Actions { }
 
 const initialState: State = {
   pollensAreLoaded: false,
@@ -22,7 +14,7 @@ const initialState: State = {
 }
 
 export const createPollensSlice: StateCreator<
-  PollenStore,
+  StoreType,
   [["zustand/immer", never]],
   [],
   PollenStore> = (set, get) => ({

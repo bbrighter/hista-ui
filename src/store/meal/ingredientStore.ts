@@ -1,20 +1,9 @@
 import { StateCreator } from "zustand"
 
-import { Ingredient, Ingredients } from "./../types"
+import { IngredientStore, NonFunctionProperties, StoreType } from "../store.type"
+import { Ingredient } from "./../types"
 
-interface State {
-  ingredients: Ingredients
-  isIngredientsLoaded: boolean
-}
-
-interface Actions {
-  resetIngredients: () => void
-  setIngredients: (ingredients: Ingredients) => void
-  updateIngredient: (id: number, update: Partial<Ingredient>) => void
-  setIsIngredientsLoaded: (loaded: boolean) => void
-}
-
-export interface IngredientStore extends State, Actions { }
+type State = NonFunctionProperties<IngredientStore>
 
 const initialState = (): State => ({
   ingredients: [],
@@ -22,7 +11,7 @@ const initialState = (): State => ({
 })
 
 export const createIngredientSlice: StateCreator<
-  IngredientStore,
+  StoreType,
   [["zustand/immer", never]],
   [],
   IngredientStore> = set => ({

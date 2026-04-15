@@ -43,6 +43,7 @@ export const useAppNavigate = () => {
       manageIngredients: () => navigateWithPiid(appRoutes.manageIngredients),
       medicine: () => navigateWithPiid(appRoutes.medicines),
       manageMedicine: () => navigateWithPiid(appRoutes.manageMedicines),
+      templates: () => navigateWithPiid(appRoutes.templates),
     },
   };
 };

@@ -1,30 +1,9 @@
 import { StateCreator } from "zustand"
 
+import { MealStore, NonFunctionProperties, StoreType } from "../store.type"
 import { Food,Freshness, Meal, Meals, MetaMeal } from "../types"
-import { IngredientStore } from "./ingredientStore"
 
-interface State {
-  meals: Meals
-  meal: Meal
-  isMealsLoaded: boolean
-}
-
-interface Actions {
-  resetMeals: () => void
-  setIsMealsLoaded: (loaded: boolean) => void
-
-  setMeals: (meals: Meals) => void
-  setMetaMeal: (id: number, meal: Partial<MetaMeal>) => void
-  setMeal: (meal: Meal) => void
-  removeMeal: (id: number) => void
-  updateMeal: (partial: Partial<Meal>) => void
-
-  addFood: (food: Food) => void
-  removeFood: (id: number) => void
-  updateFood: (id: number, partial: Partial<Food>) => void
-}
-
-export interface MealStore extends State, Actions { }
+type State = NonFunctionProperties<MealStore>
 
 const initialState: State = {
   meals: [],
@@ -40,10 +19,10 @@ const initialState: State = {
 }
 
 export const createMealSlice: StateCreator<
-    MealStore & IngredientStore,
-    [["zustand/immer", never]],
-    [],
-    MealStore> = (set) => ({
+  StoreType,
+  [["zustand/immer", never]],
+  [],
+  MealStore> = (set) => ({
   ...initialState,
 
   resetMeals: () => set(initialState),
@@ -73,9 +52,15 @@ export const createMealSlice: StateCreator<
     Object.assign(state.meal, partial)
   }),
 
-  addFood: (food: Food) => set(state => {
-    state.meal.foods.unshift(food)
+  addFood: (food: Food | Array<Food>) => set(state => {
+    if (Array.isArray(food)) {
+      state.meal.foods = [...state.meal.foods, ...food]
+    } else {
+      state.meal.foods.unshift(food)
+    }
+    
   }),
+
 
   removeFood: (id: number) => set(state => {
     state.meal.foods = removeItemById(id, state.meal.foods)

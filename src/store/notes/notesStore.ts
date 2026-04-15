@@ -1,24 +1,9 @@
 import { StateCreator } from "zustand"
 
+import { NonFunctionProperties, NotesStore, StoreType } from "../store.type"
 import { Note, Notes } from "../types"
 
-interface State {
-  notes: Notes
-  notesAreLoaded: boolean
-}
-
-interface Actions {
-  resetNotes: () => void
-
-  setNotes: (notes: Notes) => void
-  updateNote: (id: number, part: Partial<Note>) => void
-  deleteNote: (id: number) => void
-  addNote: (note: Note) => void
-
-  setNotesAreLoaded: (loaded: boolean) => void
-}
-
-export interface NotesStore extends State, Actions { }
+type State = NonFunctionProperties<NotesStore>
 
 const initialState = (): State => ({
   notes: {},
@@ -26,7 +11,7 @@ const initialState = (): State => ({
 })
 
 export const createNotesSlice: StateCreator<
-  NotesStore,
+  StoreType,
   [["zustand/immer", never]],
   [],
   NotesStore> = (set) => ({

@@ -1,23 +1,9 @@
 import { StateCreator } from "zustand"
 
+import { NonFunctionProperties, StatisticsStore, StoreType } from "../store.type"
 import { NutritionStatistics, RawDiary, SymptomStatistics } from "../types"
 
-interface State {
-  diaryEntries: Array<RawDiary>
-  statistics: SymptomStatistics
-  mealCount: number
-  nutrutionStatistics: NutritionStatistics
-}
-
-interface Actions {
-  setDiaryEntries: (diaries: Array<RawDiary>) => void
-  setMealCount: (count: number) => void
-  setSymptomStatistics: (stats: SymptomStatistics) => void
-  resetStatistics: () => void
-  setNutritionStatistics: (stats: NutritionStatistics) => void
-}
-
-export interface StatisticsStore extends State, Actions { }
+type State = NonFunctionProperties<StatisticsStore>
 
 const initialState: State = {
   diaryEntries: [],
@@ -27,7 +13,7 @@ const initialState: State = {
 }
 
 export const createStatisticsSlice: StateCreator<
-  StatisticsStore,
+  StoreType,
   [["zustand/immer", never]],
   [],
   StatisticsStore

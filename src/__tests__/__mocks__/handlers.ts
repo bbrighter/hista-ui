@@ -12,6 +12,7 @@ import {
   conditionHandlers,
   symptomHandlers,
 } from "./symptomHandlers";
+import { templateHandlers } from "./templateHander";
 
 const baseUrl = "http://localhost:4444";
 const baseUrlWithPiid = `${baseUrl}/piid/:piid`;
@@ -34,6 +35,7 @@ const handlers = [
   getNutritionStatisticsHandler(baseUrlWithPiid),
   ...medicineHandlers(baseUrlWithPiid),
   ...intakeHandlers(baseUrlWithPiid),
+  ...templateHandlers(baseUrlWithPiid),
 ];
 
 export default handlers;
