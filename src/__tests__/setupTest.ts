@@ -27,7 +27,7 @@ beforeEach(() => {
   vi.resetAllMocks()
   const store = useHista.getState()
   store.resetSymptoms()
-  store.resetConditionEvents()
+  store.resetMetaConditionEvents()
   store.resetMeals()
   store.resetHeadaches()
   store.resetPollens()

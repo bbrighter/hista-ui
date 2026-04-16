@@ -4,19 +4,19 @@ import { respToNote, respToNotes } from "../types"
 
 export const notes = {
   list: async () => {
-    const { notesAreLoaded, setNotes,setNotesAreLoaded } = useHista.getState()
-    if (notesAreLoaded) return
+    const { loaded, setNotes, setLoaded } = useHista.getState()
+    if (loaded["notes"]) return
 
     const resp = await client.ListNotes()
     setNotes(respToNotes(resp))
-    setNotesAreLoaded(true)
+    setLoaded("notes")
   },
 
   post: async () => {
     const { addNote } = useHista.getState()
 
     const resp = await client.PostNote()
-    addNote(respToNote(resp))
+    addNote(resp.id, respToNote(resp))
     return resp.id
   },
 
@@ -36,9 +36,9 @@ export const notes = {
   },
 
   delete: async (id: number) => {
-    const { deleteNote } = useHista.getState()
+    const { removeNote } = useHista.getState()
 
     await client.DeleteNote(id)
-    deleteNote(id)
+    removeNote(id)
   },
 }

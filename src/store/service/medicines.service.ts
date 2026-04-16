@@ -4,28 +4,26 @@ import { respToIntakeList, respToMedicineList } from "../types/medicines.types";
 
 export const medicinesService = {
   getMedicines: async () => {
-    const { isMedicinesLoaded, setMedicines, setIsMedicinesLoaded } = useHista.getState()
-    if (isMedicinesLoaded) return
+    const { loaded, setMedicines, setLoaded } = useHista.getState()
+    if (loaded["medicines"]) return
 
     const resp = await client.ListMedicines()
 
     setMedicines(respToMedicineList(resp))
-    setIsMedicinesLoaded(true)
+    setLoaded("medicines")
   },
 
   createMedicine: async (name: string) => {
     const idResp = await client.CreateMedicine({ name: name });
 
-    const { medicines, setMedicines } = useHista.getState();
-    setMedicines([
-      { id: idResp.id, isArchived: false, name: name },
-      ...medicines,
-    ]);
+    const { addMedicine } = useHista.getState();
+    addMedicine({ id: idResp.id, isArchived: false, name: name });
   },
 
   archiveMedicine: async (id: number) => {
     const { medicines } = useHista.getState()
     const medicine = medicines.find(m => m.id == id)
+    if (!medicine) return
     const newArchive = !medicine.isArchived
     await client.PatchMedicine(id, { archive: newArchive });
 
@@ -56,12 +54,12 @@ export const medicinesService = {
   },
 
   listIntakes: async () => {
-    const { setIntakes, isIntakesLoaded , setIsIntakesLoaded } = useHista.getState()
-    if (isIntakesLoaded) return
+    const { setIntakes, loaded , setLoaded } = useHista.getState()
+    if (loaded["intakes"]) return
     const resp = await client.ListIntakes();
 
     setIntakes(respToIntakeList(resp));
-    setIsIntakesLoaded(true)
+    setLoaded("intakes")
   },
 
   incrementIntake: async (medicineId: number) => {

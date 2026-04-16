@@ -23,7 +23,7 @@ export const createStatusSlice: StateCreator<
     })
   },
 
-  updateStatuses(id: number, update: Partial<Status>) {
+  updateStatus(id: number, update: Partial<Status>) {
     set(state => {
       const status = state.statuses.find(s => s.id == id)
       if (!status) return
@@ -31,13 +31,13 @@ export const createStatusSlice: StateCreator<
     })
   },
 
-  addStatuses(status: Status) {
+  addStatus(status: Status) {
     set(state => {
       state.statuses.push(status)
     })
   },
 
-  removeStatuses(id: number) {
+  removeStatus(id: number) {
     set(state => {
       state.statuses = state.statuses.filter(s => s.id != id)
     })    

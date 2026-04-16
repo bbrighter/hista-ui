@@ -18,15 +18,15 @@ export const statusService = {
   postStatus: async (date: Dayjs) => {
     const resp = await client.PostStatus({ date: date.toISOString() })
 
-    const { addStatuses } = useHista.getState()
-    addStatuses(respToStatus(resp))
+    const { addStatus } = useHista.getState()
+    addStatus(respToStatus(resp))
   },
 
   deleteStatus: async (id: number) => {
     await client.DeleteStatus(id)
 
-    const { removeStatuses } = useHista.getState()
-    removeStatuses(id)
+    const { removeStatus } = useHista.getState()
+    removeStatus(id)
   },
 
   patchStatus: async (id: number, params: PutStatusParams) => {
@@ -37,7 +37,7 @@ export const statusService = {
       morningSleep: params.morningSleep,
     })
 
-    const { updateStatuses } = useHista.getState()
-    updateStatuses(id, params)
+    const { updateStatus } = useHista.getState()
+    updateStatus(id, params)
   },
 }

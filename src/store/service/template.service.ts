@@ -27,9 +27,9 @@ export const template = {
   },
 
   change: async (id: number, name: string, items: Array<TemplateItem>) => {
-    const { changeTemplate } = useHista.getState()
+    const { updateTemplate } = useHista.getState()
 
     await client.PutTemplate(id, { name: name, items: items })
-    changeTemplate(id, { name: name, items: items })
+    updateTemplate(id, { name: name, items: items })
   },
 }

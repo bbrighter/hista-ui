@@ -7,9 +7,9 @@ describe("condition events service", () => {
   it("list events", async () => {
     await service.list()
 
-    const { conditionEvents, isConditionEventsLoaded } = useHista.getState()
-    expect(isConditionEventsLoaded).toBeTruthy()
-    expect(conditionEvents).toHaveLength(1)
+    const { metaConditionEvents, loaded } = useHista.getState()
+    expect(loaded["conditionEvents"]).toBeTruthy()
+    expect(metaConditionEvents).toHaveLength(1)
   })
 
   it("get event", async () => {
@@ -26,8 +26,8 @@ describe("condition events service", () => {
 
     await service.delete(1)
 
-    const { conditionEvents } = useHista.getState()
-    expect(conditionEvents).toHaveLength(0)
+    const { metaConditionEvents } = useHista.getState()
+    expect(metaConditionEvents).toHaveLength(0)
   })
 
   it("delete event with wrong id", async () => {
@@ -35,15 +35,15 @@ describe("condition events service", () => {
 
     await service.delete(10)
 
-    const { conditionEvents } = useHista.getState()
-    expect(conditionEvents).toHaveLength(1)
+    const { metaConditionEvents } = useHista.getState()
+    expect(metaConditionEvents).toHaveLength(1)
   })
 
   it("post event", async () => {
     await service.post()
 
-    const { conditionEvents } = useHista.getState()
-    expect(conditionEvents).toHaveLength(1)
+    const { metaConditionEvents } = useHista.getState()
+    expect(metaConditionEvents).toHaveLength(1)
   })
 
   it("patch date", async () => {
@@ -53,9 +53,8 @@ describe("condition events service", () => {
     const date = new Date("2022-09-13T00:00:00")
     await service.patchDate(1, date)
 
-    const { conditionEvents, conditionEvent } = useHista.getState()
+    const { metaConditionEvents, conditionEvent } = useHista.getState()
     expect(conditionEvent.date).toStrictEqual(date)
-    expect(conditionEvents[0].date).toStrictEqual(date)
-
+    expect(metaConditionEvents[0].date).toStrictEqual(date)
   })
 })

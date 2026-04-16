@@ -7,7 +7,6 @@ type State = NonFunctionProperties<NotesStore>
 
 const initialState = (): State => ({
   notes: {},
-  notesAreLoaded: false,
 })
 
 export const createNotesSlice: StateCreator<
@@ -25,11 +24,11 @@ export const createNotesSlice: StateCreator<
     state.notes = notes
   }),
 
-  addNote: (note: Note) => set(state => {
-    state.notes[note.id] = note
+  addNote: (id: number, note: Note) => set(state => {
+    state.notes[id] = note
   }),
 
-  deleteNote: (id: number) => set(state => {
+  removeNote: (id: number) => set(state => {
     delete state.notes[id]
   }),
 
@@ -38,9 +37,5 @@ export const createNotesSlice: StateCreator<
     if (!note) return
 
     state.notes[id] = { ...note, ...part }
-  }),
-
-  setNotesAreLoaded: (loaded: boolean) => set(state => {
-    state.notesAreLoaded = loaded
   }),
 })

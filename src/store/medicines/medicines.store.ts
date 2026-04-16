@@ -8,8 +8,6 @@ type State = NonFunctionProperties<MedicineStore>
 const initialState = (): State => ({
   medicines: [],
   intakes: [],
-  isIntakesLoaded: false,
-  isMedicinesLoaded: false,
 });
 
 export const createMedicineSlice: StateCreator<
@@ -20,17 +18,6 @@ export const createMedicineSlice: StateCreator<
 > = (set) => ({
   ...initialState(),
 
-  setIsIntakesLoaded: (loaded: boolean) => {
-    set(state => {
-      state.isIntakesLoaded = loaded
-    })
-  },
-  setIsMedicinesLoaded: (loaded: boolean) => {
-    set(state => {
-      state.isMedicinesLoaded = loaded
-    })
-  },
-
   resetMedicines: () => {
     set(initialState());
   },
@@ -40,6 +27,11 @@ export const createMedicineSlice: StateCreator<
       state.medicines = medicines;
     });
   },
+
+  addMedicine: (medicine: Medicine) => {set(state => {
+    state.medicines.unshift(medicine)
+  })},
+
   updateMedicine: (id: number, partial: Partial<Medicine>) => {
     set(state => {
       const medicine = state.medicines.find((m) => m.id === id);

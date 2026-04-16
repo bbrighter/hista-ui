@@ -15,9 +15,9 @@ describe("medicines service, manage medicines", () => {
 
   it("list medicines", async () => {
     await medicinesService.getMedicines();
-    const { medicines, isMedicinesLoaded } = useHista.getState();
+    const { medicines, loaded } = useHista.getState();
     expect(medicines).toHaveLength(2)
-    expect(isMedicinesLoaded).toBeTruthy()
+    expect(loaded["medicines"]).toBeTruthy()
     expect(medicines).toContainEqual({
       id: 1,
       isArchived: false,
@@ -103,7 +103,7 @@ describe("medicines service, manage medicines", () => {
     );
 
     const { medicines } = useHista.getState();
-    expect(medicines.find((i) => i.id == 1).isArchived).toBeTruthy();
+    expect(medicines.find((i) => i.id == 1)!.isArchived).toBeTruthy();
   });
 
   it("rename medicine", async () => {
@@ -115,7 +115,7 @@ describe("medicines service, manage medicines", () => {
     );
 
     const { medicines } = useHista.getState();
-    expect(medicines.find((i) => i.id == 1).name).toBe("new name");
+    expect(medicines.find((i) => i.id == 1)!.name).toBe("new name");
   });
 })
 

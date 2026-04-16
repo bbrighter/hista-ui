@@ -5,12 +5,12 @@ import { respToConditionEvents } from "../types/conditionEvents"
 
 export const conditionEvents = {
   list: async () => {
-    const { setConditionEvents, setIsConditionEventsLoaded, isConditionEventsLoaded } = useHista.getState()
+    const { setMetaConditionEvents,  loaded, setLoaded } = useHista.getState()
 
-    if (isConditionEventsLoaded) return
+    if (loaded["conditionEvents"]) return
     const resp = await client.ListConditionEvents()
-    setConditionEvents(respToConditionEvents(resp))
-    setIsConditionEventsLoaded(true)
+    setMetaConditionEvents(respToConditionEvents(resp))
+    setLoaded("conditionEvents")
   },
 
   get: async (id: number) => {
@@ -21,27 +21,27 @@ export const conditionEvents = {
   },
 
   delete: async (id: number) => {
-    const { removeConditionEvent } = useHista.getState()
+    const { removeMetaConditionEvent } = useHista.getState()
 
     await client.DeleteConditionEvent(id)
-    removeConditionEvent(id)
+    removeMetaConditionEvent(id)
   },
 
   post: async (): Promise<number> => {
-    const { setConditionEvent, setConditionEvents, conditionEvents } = useHista.getState()
+    const { setConditionEvent, setMetaConditionEvents,  metaConditionEvents } = useHista.getState()
 
     const resp = await client.CreateConditionEvent()
     const event = respToConditionEvent(resp)
     setConditionEvent(event)
-    setConditionEvents([...conditionEvents, event])
+    setMetaConditionEvents([...metaConditionEvents, event])
     return event.id
   },
 
   patchDate: async (id: number, date: Date) => {
-    const { updateConditionEvent, updateConditionEvents } = useHista.getState()
+    const { updateConditionEvent, updateMetaConditionEvent } = useHista.getState()
 
     await client.PatchDate(id, { date: date.toISOString() })
     updateConditionEvent(id, { date: date })
-    updateConditionEvents(id, { date: date })
+    updateMetaConditionEvent(id, { date: date })
   },
 }

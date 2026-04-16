@@ -1,8 +1,8 @@
 import { User } from "@bbrighter/auth-module/users";
 
 import { Instance } from "./auth/instance";
-import { BaseCollectionStore } from "./genericTypes";
-import { Condition, ConditionEvent, ConditionEvents, Food, Headache, HeadachePositions, HeadacheSymptoms, HeadacheTypes, Ingredient, Meal, Meals, Medicine, MetaConditionEvent, MetaMeal, Note, Notes, NutritionStatistics, Pollens, RawDiary, Status, Symptom, SymptomCategories, SymptomCategory, SymptomStatistics, Template, Templates } from "./types";
+import { BaseArrayStore, BaseRecordStore, UpdateAction } from "./genericTypes";
+import * as types from "./types"
 import { Intake } from "./types/medicines.types";
 
 export type StoreType = AuthStore &
@@ -44,50 +44,36 @@ export type AuthStore = {
 }
 
 
-export type ConditionEventsStore = {
-  conditionEvents: ConditionEvents
-  isConditionEventsLoaded: boolean
-
-  resetConditionEvents: () => void
-      
-  setConditionEvents: (events: ConditionEvents) => void
-  removeConditionEvent: (id: number) => void
-  addConditionEvent: (event: MetaConditionEvent) => void
-  updateConditionEvents: (id: number, part: Partial<ConditionEvent>) => void
-        
-  setIsConditionEventsLoaded: (loaded: boolean) => void
-}
-
 export type ConditionEventStore = {
-  conditionEvent: ConditionEvent
+  conditionEvent: types.ConditionEvent
     
   resetConditionEvent: () => void
     
-  setConditionEvent: (event: ConditionEvent) => void
-  updateConditionEvent: (id: number, part: Partial<ConditionEvent>) => void
+  setConditionEvent: (event: types.ConditionEvent) => void
+  updateConditionEvent: (id: number, part: Partial<types.ConditionEvent>) => void
     
   removeCondition: (id: number) => void
-  addCondition: (cond: Condition) => void
-  updateCondition: (id: number, part: Partial<Condition>) => void 
+  addCondition: (cond: types.Condition) => void
+  updateCondition: (id: number, part: Partial<types.Condition>) => void 
 }
 
 export type HeadacheStore = {
-  headaches: Array<Headache>
-  headache: Headache
+  headaches: Array<types.Headache>
+  headache: types.Headache
       
   isHeadacheLoaded: boolean
   resetHeadaches: () => void
     
-  getHeadaches(): Promise<Array<Headache>>
+  getHeadaches(): Promise<Array<types.Headache>>
   getHeadache(id: number): Promise<void>
   postHeadache(): Promise<number>
   deleteHeadache(id: number): Promise<void>
     
   patchHeadacheSeverity(newSeverity: number): Promise<void>
   patchHeadacheDate(date: Date): Promise<void>
-  patchHeadachePositions(pos: HeadachePositions): Promise<void>
-  patchHeadacheTypes(types: HeadacheTypes): Promise<void>
-  patchHeadacheSymptoms(symptoms: HeadacheSymptoms): Promise<void>
+  patchHeadachePositions(pos: types.HeadachePositions): Promise<void>
+  patchHeadacheTypes(types: types.HeadacheTypes): Promise<void>
+  patchHeadacheSymptoms(symptoms: types.HeadacheSymptoms): Promise<void>
   patchHeadacheDescription(description: string): Promise<void>
 }
 
@@ -95,6 +81,12 @@ export const loadingEntities = [
   "templates",
   "statuses", 
   "ingredients",
+  "conditionEvents",
+  "conditionEvent",
+  "medicines",
+  "intakes",
+  "notes",
+  "symptoms",
 ] as const
 export type LoadingEntity = typeof loadingEntities[number]
 
@@ -106,62 +98,45 @@ export type LoadingStore = {
 }
 
 
-export type IngredientStore = BaseCollectionStore<Ingredient, "ingredients"> 
-export type StatusStore = BaseCollectionStore<Status, "statuses">
-
+export type IngredientStore = BaseArrayStore<types.Ingredient, "ingredients", "ingredient"> 
+export type StatusStore = BaseArrayStore<types.Status, "statuses", "status">
+export type ConditionEventsStore = BaseArrayStore<types.MetaConditionEvent, "metaConditionEvents", "metaConditionEvent">
+export type TemplateStore = BaseRecordStore<types.Template, "templates", "template">
+export type MedicineStore = 
+    Omit<BaseArrayStore<types.Medicine, "medicines", "medicine">, "removeMedicine"> & 
+    {
+      intakes: Array<Intake>
+      setIntakes: (intakes: Array<Intake>) => void
+      changeMedicineIntake: (id: number, date: Date, value: number) => void;
+      changeOrder: (id: number, targetIndex: number) => void;
+    }
+export type NotesStore = BaseRecordStore<types.Note, "notes", "note">
+export type SymptomStore = 
+    BaseArrayStore<types.SymptomCategory, "symptoms", "category"> & 
+    UpdateAction<types.Symptom, "symptom">
+    
 export type MealStore = {
-  meals: Meals
-  meal: Meal
+  meals: types.Meals
+  meal: types.Meal
   isMealsLoaded: boolean
 
   resetMeals: () => void
   setIsMealsLoaded: (loaded: boolean) => void
     
-  setMeals: (meals: Meals) => void
-  setMetaMeal: (id: number, meal: Partial<MetaMeal>) => void
-  setMeal: (meal: Meal) => void
+  setMeals: (meals: types.Meals) => void
+  setMetaMeal: (id: number, meal: Partial<types.MetaMeal>) => void
+  setMeal: (meal: types.Meal) => void
   removeMeal: (id: number) => void
-  updateMeal: (partial: Partial<Meal>) => void
+  updateMeal: (partial: Partial<types.Meal>) => void
     
-  addFood: (food: Food | Array<Food>) => void
+  addFood: (food: types.Food | Array<types.Food>) => void
   removeFood: (id: number) => void
-  updateFood: (id: number, partial: Partial<Food>) => void
-}
-
-export interface MedicineStore {
-  medicines: Array<Medicine>;
-  intakes: Array<Intake>;
-  isMedicinesLoaded: boolean
-  isIntakesLoaded: boolean
-
-  resetMedicines: () => void;
-  setIsMedicinesLoaded: (loaded: boolean) => void
-  setIsIntakesLoaded: (loaded: boolean) => void
-  setMedicines: (medicines: Array<Medicine>) => void;
-  updateMedicine: (id: number, medicine: Partial<Medicine>) => void;
-  changeOrder: (id: number, targetIndex: number) => void;
-  setIntakes: (intakes: Array<Intake>) => void;
-  changeMedicineIntake: (id: number, date: Date, value: number) => void;
-}
-
-export interface NotesStore {
-  notes: Notes
-  notesAreLoaded: boolean
-
-  resetNotes: () => void
-    
-  setNotes: (notes: Notes) => void
-  updateNote: (id: number, part: Partial<Note>) => void
-  deleteNote: (id: number) => void
-  addNote: (note: Note) => void
-    
-  setNotesAreLoaded: (loaded: boolean) => void
-    
+  updateFood: (id: number, partial: Partial<types.Food>) => void
 }
 
 export interface PollenStore {
   pollensAreLoaded: boolean
-  pollens: Pollens
+  pollens: types.Pollens
 
   resetPollens: () => void
     
@@ -170,38 +145,16 @@ export interface PollenStore {
 }
 
 export interface StatisticsStore {
-  diaryEntries: Array<RawDiary>
-  statistics: SymptomStatistics
+  diaryEntries: Array<types.RawDiary>
+  statistics: types.SymptomStatistics
   mealCount: number
-  nutrutionStatistics: NutritionStatistics
+  nutrutionStatistics: types.NutritionStatistics
 
-  setDiaryEntries: (diaries: Array<RawDiary>) => void
+  setDiaryEntries: (diaries: Array<types.RawDiary>) => void
   setMealCount: (count: number) => void
-  setSymptomStatistics: (stats: SymptomStatistics) => void
+  setSymptomStatistics: (stats: types.SymptomStatistics) => void
   resetStatistics: () => void
-  setNutritionStatistics: (stats: NutritionStatistics) => void
+  setNutritionStatistics: (stats: types.NutritionStatistics) => void
     
 }
 
-export interface SymptomStore {
-  symptoms: SymptomCategories
-  symptomsAreLoaded: boolean
-    
-  resetSymptoms: () => void  
-  setSymptoms: (s: SymptomCategories) => void
-  setSymptomsAreLoaded: (loaded: boolean) => void 
-  addCategory: (c: SymptomCategory) => void
-  removeCategory: (id: number) => void
-  updateCategory: (id: number, part: Partial<SymptomCategory>) => void
-  updateSymptom: (id: number, part: Partial<Symptom>) => void
-}
-
-export interface TemplateStore {
-  templates: Templates
-      
-  resetTemplates: () => void
-  setTemplates: (templates: Templates) => void
-  addTemplate: (id: number, template: Template) => void
-  changeTemplate: (id: number, template: Partial<Template>) => void
-  removeTemplate: (id: number) => void
-}
