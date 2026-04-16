@@ -12,7 +12,7 @@ describe("status service", () => {
 
   it("get", async () => {
 
-    const { statuses, statusIsLoaded } = useHista.getState()
+    const { statuses, loaded } = useHista.getState()
     expect(statuses).toHaveLength(2)
     expect(statuses).toContainEqual({ 
       id: 1, 
@@ -29,7 +29,7 @@ describe("status service", () => {
       morningSleep: 1, 
       locked: true,
     })
-    expect(statusIsLoaded).toBeTruthy()
+    expect(loaded["statuses"]).toBeTruthy()
   })
 
   it("delete", async () => {
@@ -53,7 +53,7 @@ describe("status service", () => {
     
     const { statuses } = useHista.getState()
     expect(statuses).toHaveLength(2)
-    const status = statuses.find(s => s.id == 2)
+    const status = statuses.find(s => s.id == 2)!
     expect(status.eveningFitness).toBe(2)
     expect(status.morningFitness).toBe(3)
 

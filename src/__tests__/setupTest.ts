@@ -32,7 +32,7 @@ beforeEach(() => {
   store.resetHeadaches()
   store.resetPollens()
   store.resetStatistics()
-  store.resetStatus()
+  store.resetStatuses()
   store.resetMedicines()
   store.resetIngredients()
   store.resetNotes()

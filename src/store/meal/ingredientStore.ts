@@ -7,7 +7,6 @@ type State = NonFunctionProperties<IngredientStore>
 
 const initialState = (): State => ({
   ingredients: [],
-  isIngredientsLoaded: false,
 })
 
 export const createIngredientSlice: StateCreator<
@@ -35,11 +34,6 @@ export const createIngredientSlice: StateCreator<
       if (index !== -1) {
         state.ingredients[index] = { ...state.ingredients[index], ...update }
       }
-    })
-  },
-  setIngredientsLoaded: (loaded: boolean) => {
-    set(state => {
-      state.isIngredientsLoaded = loaded
     })
   },
 })

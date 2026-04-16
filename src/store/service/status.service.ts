@@ -6,27 +6,27 @@ import { PutStatusParams, respToStatus, respToStatuses } from "../types";
 
 export const statusService = {
   getStatuses: async () => {
-    const { setStatusList, statusIsLoaded, setStatusIsLoaded } = useHista.getState()
-    if (statusIsLoaded) return
+    const { setStatuses, loaded, setLoaded } = useHista.getState()
+    if (loaded["statuses"]) return
 
     const resp = await client.ListStatus()
 
-    setStatusList(respToStatuses(resp))
-    setStatusIsLoaded(true)
+    setStatuses(respToStatuses(resp))
+    setLoaded("statuses")
   },
 
   postStatus: async (date: Dayjs) => {
     const resp = await client.PostStatus({ date: date.toISOString() })
 
-    const { addStatus } = useHista.getState()
-    addStatus(respToStatus(resp))
+    const { addStatuses } = useHista.getState()
+    addStatuses(respToStatus(resp))
   },
 
   deleteStatus: async (id: number) => {
     await client.DeleteStatus(id)
 
-    const { removeStatus } = useHista.getState()
-    removeStatus(id)
+    const { removeStatuses } = useHista.getState()
+    removeStatuses(id)
   },
 
   patchStatus: async (id: number, params: PutStatusParams) => {
@@ -37,8 +37,7 @@ export const statusService = {
       morningSleep: params.morningSleep,
     })
 
-    const { updateStatus } = useHista.getState()
-    updateStatus(id, params)
+    const { updateStatuses } = useHista.getState()
+    updateStatuses(id, params)
   },
-
 }

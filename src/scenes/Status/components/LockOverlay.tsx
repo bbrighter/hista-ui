@@ -10,7 +10,7 @@ export const LockOverlay = ({ id, locked, children }: {id: number, locked?: bool
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const [progress, setProgress] = useState(0)
   const isPressingRef = useRef(false)
-  const updateStatus = useHista(state => state.updateStatus)
+  const updateStatus = useHista(state => state.updateStatuses)
   const duration = 500
 
 

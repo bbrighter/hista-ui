@@ -7,7 +7,6 @@ type State = NonFunctionProperties<StatusStore>
 
 const initialState: State = {
   statuses: [],
-  statusIsLoaded: false,
 }
 
 export const createStatusSlice: StateCreator<
@@ -16,15 +15,15 @@ export const createStatusSlice: StateCreator<
   [],
   StatusStore> = (set) => ({
   ...initialState,
-  resetStatus: () => set(initialState),
+  resetStatuses: () => set(initialState),
 
-  setStatusList(statuses) {
+  setStatuses(statuses) {
     set(state => {
       state.statuses = statuses
     })
   },
 
-  updateStatus(id: number, update: Partial<Status>) {
+  updateStatuses(id: number, update: Partial<Status>) {
     set(state => {
       const status = state.statuses.find(s => s.id == id)
       if (!status) return
@@ -32,21 +31,15 @@ export const createStatusSlice: StateCreator<
     })
   },
 
-  addStatus(status: Status) {
+  addStatuses(status: Status) {
     set(state => {
       state.statuses.push(status)
     })
   },
 
-  removeStatus(id: number) {
+  removeStatuses(id: number) {
     set(state => {
       state.statuses = state.statuses.filter(s => s.id != id)
     })    
-  },
-
-  setStatusIsLoaded(loaded: boolean) {
-    set(state => {
-      state.statusIsLoaded = loaded
-    })
   },
 })

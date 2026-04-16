@@ -1,8 +1,8 @@
 import { User } from "@bbrighter/auth-module/users";
 
 import { Instance } from "./auth/instance";
-import { BaseStore } from "./genericTypes";
-import { Condition, ConditionEvent, ConditionEvents, Food, Headache, HeadachePositions, HeadacheSymptoms, HeadacheTypes, Ingredient, Meal, Meals, Medicine, MetaConditionEvent, MetaMeal, Note, Notes, NutritionStatistics, Pollens, RawDiary, Status, Statuses, Symptom, SymptomCategories, SymptomCategory, SymptomStatistics, Template, Templates } from "./types";
+import { BaseCollectionStore } from "./genericTypes";
+import { Condition, ConditionEvent, ConditionEvents, Food, Headache, HeadachePositions, HeadacheSymptoms, HeadacheTypes, Ingredient, Meal, Meals, Medicine, MetaConditionEvent, MetaMeal, Note, Notes, NutritionStatistics, Pollens, RawDiary, Status, Symptom, SymptomCategories, SymptomCategory, SymptomStatistics, Template, Templates } from "./types";
 import { Intake } from "./types/medicines.types";
 
 export type StoreType = AuthStore &
@@ -91,18 +91,23 @@ export type HeadacheStore = {
   patchHeadacheDescription(description: string): Promise<void>
 }
 
-export const loadingEntities = ["templates"] as const
+export const loadingEntities = [
+  "templates",
+  "statuses", 
+  "ingredients",
+] as const
 export type LoadingEntity = typeof loadingEntities[number]
 
 export type LoadingStore = {
   loaded: Record<LoadingEntity, boolean>
     
   resetLoaded: () => void
-  setLoaded: (k: LoadingEntity) => void    
+  setLoaded: (k: LoadingEntity, loaded?: boolean) => void    
 }
 
 
-export type IngredientStore = BaseStore<Ingredient, "ingredients"> 
+export type IngredientStore = BaseCollectionStore<Ingredient, "ingredients"> 
+export type StatusStore = BaseCollectionStore<Status, "statuses">
 
 export type MealStore = {
   meals: Meals
@@ -165,7 +170,6 @@ export interface PollenStore {
 }
 
 export interface StatisticsStore {
-    
   diaryEntries: Array<RawDiary>
   statistics: SymptomStatistics
   mealCount: number
@@ -177,18 +181,6 @@ export interface StatisticsStore {
   resetStatistics: () => void
   setNutritionStatistics: (stats: NutritionStatistics) => void
     
-}
-
-export interface StatusStore {
-  statuses: Statuses
-  statusIsLoaded: boolean
-    
-  resetStatus: () => void
-  setStatusList: (statuses: Array<Status>) => void
-  addStatus: (status: Status) => void
-  updateStatus: (id: number, update: Partial<Status>) => void
-  removeStatus: (id: number) => void
-  setStatusIsLoaded: (loaded: boolean) => void,
 }
 
 export interface SymptomStore {

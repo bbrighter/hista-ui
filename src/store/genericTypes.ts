@@ -18,9 +18,9 @@ type RemoveAction<K extends string> = {
   [P in `remove${Capitalize<K>}`]: (id: number) => void
 }
 
-type LoadedAction<K extends string> = {
-  [P in `set${Capitalize<K>}Loaded`]: (loaded: boolean) => void
-}
+// type LoadedAction<K extends string> = {
+//   [P in `set${Capitalize<K>}Loaded`]: (loaded: boolean) => void
+// }
 
 export type BaseCollectionStore<T, K extends string> = {
   [P in K]: Array<T> 
@@ -30,8 +30,8 @@ export type BaseCollectionStore<T, K extends string> = {
   & RemoveAction<K>
   & UpdateAction<T,K>
   
-type BaseLoadedStore<K extends string> = {
-  [P in `is${Capitalize<K>}Loaded`]: boolean
-} & LoadedAction<K>
+// type BaseLoadedStore<K extends string> = {
+//   [P in `is${Capitalize<K>}Loaded`]: boolean
+// } & LoadedAction<K>
 
-export type BaseStore<T, K extends string> = BaseCollectionStore<T, K> & BaseLoadedStore<K>
+// export type BaseStore<T, K extends string> = BaseCollectionStore<T, K> & BaseLoadedStore<K>
