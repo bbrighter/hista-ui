@@ -2,8 +2,9 @@ import List from "@mui/material/List"
 import { useState } from "react"
 
 import { medicinesService, useMedicine } from "../../../store"
+import { NoData } from "../../components"
 import { MedicineListItem } from "./MedicineListItem"
-import { NoData } from "./NoData"
+
 
 export const MedicineList = () => {
   const [dropIndicator, setDropIndicator] = useState<{overId?: number, nextId?: number, prevId?: number, edge: "top" | "bottom"} | null>(null)
@@ -32,7 +33,7 @@ export const MedicineList = () => {
   
   return (
     <>
-      <NoData/> 
+      <NoData show={medicines.length == 0} src="/pills.svg"/> 
       <List>
         {medicines.map(m => (
           <MedicineListItem 

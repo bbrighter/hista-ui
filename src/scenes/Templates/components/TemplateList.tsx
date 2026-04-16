@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react"
 
 import { ingredientsService, services } from "../../../store"
 import useHista from "../../../store/store"
-import { OverviewList } from "../../components";
+import { NoData, OverviewList } from "../../components";
 import { TemplateDialog } from "./TemplateDraft";
 
 export const TemplateList = () => {
@@ -15,9 +15,11 @@ export const TemplateList = () => {
   const templates = useHista(state => state.templates)
   const items = useMemo(() => (Object.entries(templates).map(([id, t]) => ({ id: Number(id), date: t.name }))), [templates])
   const onDelete = (id: number) => services.template.delete(id)
+  const showNoData = Object.keys(templates).length == 0
 
   return (
     <>
+      <NoData show={showNoData} src="/templates.svg"/>
       <OverviewList 
         items={items} 
         onClick={(id) => setEditId(id)} 
