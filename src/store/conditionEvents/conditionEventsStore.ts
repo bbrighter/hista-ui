@@ -1,25 +1,10 @@
 import { StateCreator } from "zustand"
 
+import { ConditionEventsStore, NonFunctionProperties, StoreType } from "../store.type"
 import { ConditionEvent } from "../types/conditionEvent"
 import { ConditionEvents, MetaConditionEvent } from "../types/conditionEvents"
 
-interface State {
-  conditionEvents: ConditionEvents
-  isConditionEventsLoaded: boolean
-}
-
-interface Actions {
-  resetConditionEvents: () => void
-
-  setConditionEvents: (events: ConditionEvents) => void
-  removeConditionEvent: (id: number) => void
-  addConditionEvent: (event: MetaConditionEvent) => void
-  updateConditionEvents: (id: number, part: Partial<ConditionEvent>) => void
-  
-  setIsConditionEventsLoaded: (loaded: boolean) => void
-}
-
-export interface ConditionsStore extends State, Actions { }
+type State = NonFunctionProperties<ConditionEventsStore>
 
 const initialState: State = {
   conditionEvents: [],
@@ -27,35 +12,35 @@ const initialState: State = {
 }
 
 export const createConditionsSlice: StateCreator<
-  ConditionsStore,
+  StoreType,
   [["zustand/immer", never]],
   [],
-  ConditionsStore> = (set) => ({
+  ConditionEventsStore> = (set) => ({
   ...initialState,
 
   resetConditionEvents: () => set(initialState),
 
-  setConditionEvents: (events: ConditionEvents) => set(state => {
+  setConditionEvents: (events: ConditionEvents) => set((state: State) => {
     state.conditionEvents = events
   }),
 
-  addConditionEvent: (event: MetaConditionEvent) => set(state => {
+  addConditionEvent: (event: MetaConditionEvent) => set((state: State) => {
     state.conditionEvents.push(event)
   }),
 
 
-  updateConditionEvents: (id: number, part: Partial<ConditionEvent>) => set(state => {
+  updateConditionEvents: (id: number, part: Partial<ConditionEvent>) => set((state: State) => {
     const idx = state.conditionEvents.findIndex(c => c.id == id)
     if (idx > -1) {
       Object.assign(state.conditionEvents[idx], part)
     }
   }),
 
-  removeConditionEvent: (id: number) => set(state => {
+  removeConditionEvent: (id: number) => set((state: State) => {
     state.conditionEvents = state.conditionEvents.filter(c => c.id !== id)
   }),
 
-  setIsConditionEventsLoaded: (loaded: boolean) => set(state => {
+  setIsConditionEventsLoaded: (loaded: boolean) => set((state: State) => {
     state.isConditionEventsLoaded = loaded
   }),
 })

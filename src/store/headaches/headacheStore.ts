@@ -2,30 +2,10 @@ import { StateCreator } from "zustand"
 
 import { client } from "../../api/api"
 import { ValueLabelPair } from "../../scenes/Headache/components/Tags"
+import { HeadacheStore, NonFunctionProperties, StoreType } from "../store.type"
 import { Headache, HeadachePositions, HeadacheSymptoms, HeadacheTypes, respToHeadaches } from "../types/headaches.types"
 
-interface State {
-  headaches: Array<Headache>
-  headache: Headache
-  isHeadacheLoaded: boolean
-}
-interface Actions {
-  resetHeadaches: () => void
-
-  getHeadaches(): Promise<Array<Headache>>
-  getHeadache(id: number): Promise<void>
-  postHeadache(): Promise<number>
-  deleteHeadache(id: number): Promise<void>
-
-  patchHeadacheSeverity(newSeverity: number): Promise<void>
-  patchHeadacheDate(date: Date): Promise<void>
-  patchHeadachePositions(pos: HeadachePositions): Promise<void>
-  patchHeadacheTypes(types: HeadacheTypes): Promise<void>
-  patchHeadacheSymptoms(symptoms: HeadacheSymptoms): Promise<void>
-  patchHeadacheDescription(description: string): Promise<void>
-}
-
-export interface HeadacheStore extends State, Actions { }
+type State = NonFunctionProperties<HeadacheStore>
 
 const initialState: State = {
   headaches: [],
@@ -34,7 +14,7 @@ const initialState: State = {
 }
 
 export const createHeadacheSlice: StateCreator<
-  HeadacheStore,
+  StoreType,
   [["zustand/immer", never]],
   [],
   HeadacheStore> = (set, get) => ({
@@ -46,7 +26,7 @@ export const createHeadacheSlice: StateCreator<
     let headaches: Array<Headache> = []
     const resp = await client.ListHeadaches()
     headaches = respToHeadaches(resp)
-    set(state => {
+    set((state: State) => {
       state.headaches = headaches
       state.isHeadacheLoaded = true
     })
@@ -58,7 +38,7 @@ export const createHeadacheSlice: StateCreator<
       await get().getHeadaches()
     }
     const headache = get().headaches.find(h => h.id == id)
-    set(state => {
+    set((state: State) => {
       state.headache = headache
     })
   },
@@ -67,7 +47,7 @@ export const createHeadacheSlice: StateCreator<
     const date = new Date()
     const severity = 5
     const resp = await client.PostHeadache({ date: date.toISOString(), severity: severity })
-    set(state => {
+    set((state: State) => {
       state.headaches.unshift({
         id: resp.id,
         date: date,
@@ -83,7 +63,7 @@ export const createHeadacheSlice: StateCreator<
 
   deleteHeadache: async (id: number) => {
     await client.DeleteHeadache(id)
-    set(state => {
+    set((state: State) => {
       state.headaches = get().headaches.filter(h => h.id != id)
     })
   },
@@ -91,14 +71,14 @@ export const createHeadacheSlice: StateCreator<
   patchHeadacheSeverity: async (newSeverity: number) => {
     const headacheId = get().headache.id
     await client.PatchHeadacheSeverity(headacheId, { severity: newSeverity })
-    set(state => {
+    set((state: State) => {
       state.headache.severity = newSeverity
     })
   },
   patchHeadacheDate: async (date: Date) => {
     const headacheId = get().headache.id
     await client.PatchHeadacheDate(headacheId, { date: date.toISOString() })
-    set(state => {
+    set((state: State) => {
       state.headache.date = date
     })
   },
@@ -107,7 +87,7 @@ export const createHeadacheSlice: StateCreator<
     const headacheId = get().headache.id
     if (headacheId == 0) return
     await client.PatchHeadachePositions(headacheId, { positions: pos.map(p => p.value) })
-    set(state => {
+    set((state: State) => {
       state.headache.positions = pos
     })
   },
@@ -115,7 +95,7 @@ export const createHeadacheSlice: StateCreator<
     if (equalPositions(types, get().headache.types)) return
     const headacheId = get().headache.id
     await client.PatchHeadacheTypes(headacheId, { types: types.map(t => t.value) })
-    set(state => {
+    set((state: State) => {
       state.headache.types = types
     })
   },
@@ -123,14 +103,14 @@ export const createHeadacheSlice: StateCreator<
     if (equalPositions(symptoms, get().headache.symptoms)) return
     const headacheId = get().headache.id
     await client.PatchHeadacheSymptoms(headacheId, { symptoms: symptoms.map(s => s.value) })
-    set(state => {
+    set((state: State) => {
       state.headache.symptoms = symptoms
     })
   },
   patchHeadacheDescription: async (description: string) => {
     const headacheId = get().headache.id
     await client.PatchHeadacheDescription(headacheId, { description: description })
-    set(state => {
+    set((state: State) => {
       state.headache.description = description
     })
   },

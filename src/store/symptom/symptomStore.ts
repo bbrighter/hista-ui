@@ -1,27 +1,9 @@
 import { StateCreator } from "zustand"
 
+import { NonFunctionProperties, StoreType, SymptomStore } from "../store.type"
 import { Symptom, SymptomCategories, SymptomCategory } from "../types"
 
-
-interface State {
-  symptoms: SymptomCategories
-  symptomsAreLoaded: boolean
-}
-
-interface Actions {
-  resetSymptoms: () => void
-
-  setSymptoms: (s: SymptomCategories) => void
-  setSymptomsAreLoaded: (loaded: boolean) => void
-
-  addCategory: (c: SymptomCategory) => void
-  removeCategory: (id: number) => void
-  updateCategory: (id: number, part: Partial<SymptomCategory>) => void
-
-  updateSymptom: (id: number, part: Partial<Symptom>) => void
-}
-
-export interface SymptomStore extends State, Actions { }
+type State = NonFunctionProperties<SymptomStore>
 
 const initialState: State = {
   symptoms: [],
@@ -29,7 +11,7 @@ const initialState: State = {
 }
 
 export const createSymptomSlice: StateCreator<
-  SymptomStore,
+  StoreType,
   [["zustand/immer", never]],
   [],
   SymptomStore> = (set) => ({

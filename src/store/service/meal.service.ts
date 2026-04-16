@@ -87,7 +87,14 @@ export const mealService = {
 
     const { addFood } = useHista.getState()
     addFood(respToFood(resp.food))
+  },
 
+  postFoodsByTemplate: async (mealId: number, templateId: number) => {
+    const { addFood } = useHista.getState()
+
+    const resp = await client.PostFoodByTemplate(mealId, templateId)
+    const foods = resp.foods.map(f => respToFood(f))
+    addFood(foods)
   },
 
   deleteFood: async (id: number) => {

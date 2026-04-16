@@ -20,7 +20,8 @@
     "install:local-package": "pnpm install ../auth-module/bbrighter-auth-module-0.1.1.tgz --no-cache",
     "dependencies:ci": "npx depcruise src  --include-only \"^src\"",
     "dependencies:table": "npx depcruise src  --include-only \"^src\" --output-type html > graph.html",
-    "dependencies:graph": "npx depcruise --include-only \"^src\" --output-type dot src | dot -T svg > graph.svg"
+    "dependencies:graph": "npx depcruise --include-only \"^src\" --output-type dot src | dot -T svg > graph.svg",
+    "validate": "knip & tsc & pnpm dependencies:ci & pnpm lint"
   },
   "engines": {
     "node": "24.x",

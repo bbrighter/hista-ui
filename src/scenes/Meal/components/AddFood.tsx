@@ -1,20 +1,21 @@
+import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import Autocomplete from "@mui/material/Autocomplete"
 import CircularProgress from "@mui/material/CircularProgress"
 import ListItem from "@mui/material/ListItem"
+import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
 import TextField from "@mui/material/TextField"
 import { useEffect, useState } from "react"
 import React from "react"
 
-import { ingredientsService,mealService,useNonArchivedIngredients } from "../../../store"
+import { ingredientsService,mealService, services } from "../../../store"
 import useHista from "../../../store/store"
+import { useOptions } from "./useOptions"
 
-interface InputOption {
-  id: number
-  name: string
-}
+
 
 type NewOption = string
+type InputOption = ReturnType<typeof useOptions>[0]
 
 type Option = InputOption | NewOption
 
@@ -22,10 +23,13 @@ const isNewOption = (v: unknown): v is NewOption => {
   return typeof (v) == "string"
 }
 
+const isFoodOption = (v: InputOption) => {
+  return v.type == "food"
+}
+
 export function AddFood() {
-  const mealId = useHista(state => state.meal.id)
-  const ingredients = useNonArchivedIngredients()
-  const options: Array<Option> = ingredients.map(ing => ({ name: ing.name, id: ing.id }))
+  const mealId = useHista(state => state.meal.id)!
+  const options = useOptions()
 
   const [inputValue, setInputValue] = useState<string | undefined>("")
   const [value, setValue] = useState<Option | null>(null)
@@ -33,6 +37,7 @@ export function AddFood() {
 
   useEffect(() => {
     ingredientsService.getIngredients()
+    services.template.list()
   }, [])
 
 
@@ -42,8 +47,10 @@ export function AddFood() {
     setIsLoading(true)
     if (isNewOption(value)) {
       await mealService.postFoodByName(mealId, value)
-    } else {
+    } else if (isFoodOption(value)) {
       await mealService.postFoodById(mealId, value.id)
+    } else {
+      await mealService.postFoodsByTemplate(mealId, value.id)
     }
     setIsLoading(false)
     setInputValue("")
@@ -68,6 +75,7 @@ export function AddFood() {
         return (
           <ListItem {...props} key={key}>
             <ListItemText primary={label} />
+            {!isNewOption(option) && option.type == "template" && <ListItemIcon><ContentPasteIcon/></ListItemIcon>}
           </ListItem>
         )
       }}
@@ -76,14 +84,16 @@ export function AddFood() {
         <TextField
           {...params}
           label="Zutaten"
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <React.Fragment>
-                {isLoading ? <CircularProgress size={30} /> : null}
-                {params.InputProps.endAdornment}
-              </React.Fragment>
-            ),
+          slotProps={{
+            input: { 
+              ...params.InputProps,
+              endAdornment: (
+                <React.Fragment>
+                  {isLoading ? <CircularProgress size={30} /> : null}
+                  {params.InputProps.endAdornment}
+                </React.Fragment>
+              ),
+            },
           }}
         />
       )}

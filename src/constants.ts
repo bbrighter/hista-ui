@@ -13,6 +13,7 @@ const piidRoutes = {
   homepagePiid: "/",
   meals: "/meals",
   mealDetails: "/meals/:mealId",
+  templates: "/templates",
   conditionEvents: "/condition-events/",
   conditionEventDetails: "/condition-events/:eventId",
   statistics: "/statistics",

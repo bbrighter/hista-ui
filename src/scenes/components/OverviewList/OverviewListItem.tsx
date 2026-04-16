@@ -9,7 +9,7 @@ import { formatDate } from "../../../utils/formatDate"
 import { swipeDeleteItem, swipeSetNow } from "./ListActions"
 
 export function OverviewListItem(props: {
-  date: Date
+  date: Date | string
   secondary?: string
   severity?: number
   showSeverity: boolean
@@ -44,7 +44,7 @@ export function OverviewListItem(props: {
         }}
       >
         <ListItemText
-          primary={formatDate(props.date, "withTime")}
+          primary={typeof(props.date) == "string" ? props.date : formatDate(props.date, "withTime")}
           secondary={props.secondary}
         />
         {props.showSeverity && props.severity !== undefined

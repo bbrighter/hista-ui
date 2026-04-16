@@ -1,77 +1,60 @@
 import { StateCreator } from "zustand"
 
+import { AuthStore, NonFunctionProperties, StoreType } from "../store.type"
 import { Instance } from "./instance"
 import { User } from "./users"
 
-type State =  {
-  instances: Array<Instance>
-  token: string
-  piid: string | null
-  userName: string
-  users: Array<User>
-  instancesAreLoaded: boolean
-}
+type State = NonFunctionProperties<AuthStore>
 
-interface Actions {
-  setPiid: (piid: string) => void
-  setInstances: (instances: Array<Instance>) => Promise<void>
-  setToken: (token: string) => void
-  setUserName: (name: string) => void
-  setUsers: (users: Array<User>) => void
-  setInstancesLoaded: (isLoaded: boolean) => void
-}
-
-export interface AuthStore extends State, Actions { }
-
-const initialState: State = {
+const initialState = {
   instances: [],
   token: window.localStorage.getItem("token") || "",
   piid: null,
   userName: "",
   users: [],
   instancesAreLoaded: false,
-}
+} satisfies State
 
 export const createAuthSlice: StateCreator<
-  AuthStore,
+  StoreType,
   [["zustand/immer", never]],
   [],
   AuthStore> = set => ({
   ...initialState,
 
   setPiid(piid: string) {
-    set(state => {
+    set((state: State) => {
       state.piid = piid
     })
   },
 
   setToken(token: string) {
     window.localStorage.setItem("token", token)
-    set(state => {
+    set((state: State) => {
       state.token = token
     })
   },
 
   setUserName: (name: string) => {
-    set(state => {
+    set((state: State) => {
       state.userName = name
     })
   },
 
   setUsers: (users: Array<User>) => {
-    set(state => {
+    set((state: State) => {
       state.users = users
     })
   },
 
   setInstances: async (instances: Array<Instance>) => {
-    set(state => {
+    set((state: State) => {
       state.instances = instances
     })
   },
 
   setInstancesLoaded: (isLoaded: boolean) => {
-    set(state => {
+    set((state: State) => {
       state.instancesAreLoaded = isLoaded
     })
   },

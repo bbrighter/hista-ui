@@ -12,7 +12,7 @@ describe("meal list items", () => {
   it("everything is rendered", async () => {
     render(<MemoryRouter><Meals /></MemoryRouter>)
 
-    expect(await screen.findByText("Neue Mahlzeit")).toBeInTheDocument()
+    expect(await screen.findByTestId("add-meal-button")).toBeInTheDocument()
     expect(await screen.findByText("01.01.2024 01:00")).toBeInTheDocument()
     expect(await findDeleteButton()).toBeInTheDocument()
     expect(getSetNowButton()).toBeInTheDocument()
@@ -59,7 +59,7 @@ describe("meal list items", () => {
       </MemoryRouter>,
     )
 
-    const manageButton = await screen.findByText("Zutaten verwalten", { selector: "button" })
+    const manageButton = await screen.findByTestId("manage-ingredients-button")
     expect(manageButton).toBeInTheDocument()
     await userEvent.click(manageButton)
     expect(screen.getByText("Management scene")).toBeInTheDocument()

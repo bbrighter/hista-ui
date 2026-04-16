@@ -2,40 +2,26 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 
 import { injectPiidGetter } from "../api/api";
-import { AuthStore, createAuthSlice } from "./auth/authStore";
-import { ConditionsStore,createConditionsSlice } from "./conditionEvents/conditionEventsStore";
-import { ConditionStore, createConditionSlice } from "./conditionEvents/conditionEventStore";
+import {  createAuthSlice } from "./auth/authStore";
+import { createConditionsSlice } from "./conditionEvents/conditionEventsStore";
+import {  createConditionSlice } from "./conditionEvents/conditionEventStore";
 import { wrapActionsWithErrorHandler } from "./error/errorHandler";
-import { createHeadacheSlice, HeadacheStore } from "./headaches/headacheStore";
-import { createIngredientSlice, IngredientStore } from "./meal/ingredientStore";
-import { createMealSlice, MealStore } from "./meal/mealStore";
-import {
-  createMedicineSlice,
-  MedicineStore,
-} from "./medicines/medicines.store";
-import { createNotesSlice, NotesStore } from "./notes/notesStore";
-import { createPollensSlice, PollenStore } from "./pollen/pollenStore";
-import {
-  createStatisticsSlice,
-  StatisticsStore,
-} from "./statistics/statisticsStore";
-import { createStatusSlice, StatusStore } from "./status/statusStore";
-import { createSymptomSlice, SymptomStore } from "./symptom/symptomStore";
+import { createHeadacheSlice } from "./headaches/headacheStore";
+import { createLoadingSlice } from "./loading/loadingStore";
+import { createIngredientSlice } from "./meal/ingredientStore";
+import { createMealSlice } from "./meal/mealStore";
+import {  createMedicineSlice } from "./medicines/medicines.store";
+import { createNotesSlice } from "./notes/notesStore";
+import { createPollensSlice } from "./pollen/pollenStore";
+import {  createStatisticsSlice } from "./statistics/statisticsStore";
+import { createStatusSlice } from "./status/statusStore";
+import { StoreType } from "./store.type";
+import { createSymptomSlice } from "./symptom/symptomStore";
+import { createTemplateSlice } from "./templates/templates.store";
 
-const useHista = create<
-    AuthStore &
-    MealStore &
-    IngredientStore &
-    ConditionStore &
-    ConditionsStore &
-    SymptomStore &
-    StatisticsStore &
-    NotesStore &
-    PollenStore &
-    StatusStore &
-    HeadacheStore &
-    MedicineStore
->()(
+
+
+const useHista = create<StoreType>()(
   immer((...a) => {
     const store = {
       ...createMealSlice(...a),
@@ -50,6 +36,8 @@ const useHista = create<
       ...createStatusSlice(...a),
       ...createHeadacheSlice(...a),
       ...createMedicineSlice(...a),
+      ...createTemplateSlice(...a),
+      ...createLoadingSlice(...a),
     };
     return wrapActionsWithErrorHandler(store, createAuthSlice(...a));
   }),

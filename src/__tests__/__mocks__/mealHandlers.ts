@@ -55,7 +55,13 @@ const foodHandlers = (baseUrl: string) => ([
                     { ingredients: ingredients },
       } as hista.PostFoodResponse)
   }),
-
+  http.post(`${baseUrl}/meal/:id/foods/by-template/:templateId`, () => (HttpResponse.json({
+    foods: [
+      {      id: 5, foodCondition: "raw", ingredient: ingredients[0] },
+      { id: 6, foodCondition: "cooked", ingredient: ingredients[1] },
+    ],
+  } satisfies entity.FoodsResponse,
+  ))),
 ])
 
 export { foodHandlers, ingredientHandlers, mealHandlers }

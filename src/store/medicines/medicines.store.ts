@@ -1,26 +1,9 @@
 import { StateCreator } from "zustand";
 
+import { MedicineStore, NonFunctionProperties, StoreType } from "../store.type";
 import { Intake, Medicine } from "../types/medicines.types";
 
-type State = {
-  medicines: Array<Medicine>;
-  intakes: Array<Intake>;
-  isMedicinesLoaded: boolean
-  isIntakesLoaded: boolean
-};
-
-interface Actions {
-  resetMedicines: () => void;
-  setIsMedicinesLoaded: (loaded: boolean) => void
-  setIsIntakesLoaded: (loaded: boolean) => void
-  setMedicines: (medicines: Array<Medicine>) => void;
-  updateMedicine: (id: number, medicine: Partial<Medicine>) => void;
-  changeOrder: (id: number, targetIndex: number) => void;
-  setIntakes: (intakes: Array<Intake>) => void;
-  changeMedicineIntake: (id: number, date: Date, value: number) => void;
-}
-
-export interface MedicineStore extends State, Actions {}
+type State = NonFunctionProperties<MedicineStore>
 
 const initialState = (): State => ({
   medicines: [],
@@ -30,7 +13,7 @@ const initialState = (): State => ({
 });
 
 export const createMedicineSlice: StateCreator<
-  MedicineStore,
+  StoreType,
   [["zustand/immer", never]],
   [],
   MedicineStore
