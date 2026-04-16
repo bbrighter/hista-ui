@@ -1,7 +1,8 @@
 import { User } from "@bbrighter/auth-module/users";
 
 import { Instance } from "./auth/instance";
-import { Condition, ConditionEvent, ConditionEvents, Food, Headache, HeadachePositions, HeadacheSymptoms, HeadacheTypes, Ingredient, Ingredients, Meal, Meals, Medicine, MetaConditionEvent, MetaMeal, Note, Notes, NutritionStatistics, Pollens, RawDiary, Status, Statuses, Symptom, SymptomCategories, SymptomCategory, SymptomStatistics, Template, Templates } from "./types";
+import { BaseStore } from "./genericTypes";
+import { Condition, ConditionEvent, ConditionEvents, Food, Headache, HeadachePositions, HeadacheSymptoms, HeadacheTypes, Ingredient, Meal, Meals, Medicine, MetaConditionEvent, MetaMeal, Note, Notes, NutritionStatistics, Pollens, RawDiary, Status, Statuses, Symptom, SymptomCategories, SymptomCategory, SymptomStatistics, Template, Templates } from "./types";
 import { Intake } from "./types/medicines.types";
 
 export type StoreType = AuthStore &
@@ -24,6 +25,7 @@ export type NonFunctionProperties<T> = {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   [K in keyof T as T[K] extends Function ? never : K]: T[K]
 }
+
 
 export type AuthStore = {
   instances: Array<Instance>
@@ -100,16 +102,7 @@ export type LoadingStore = {
 }
 
 
-export type IngredientStore = {
-  ingredients: Ingredients
-  isIngredientsLoaded: boolean
-
-  resetIngredients: () => void
-  setIngredients: (ingredients: Ingredients) => void
-  updateIngredient: (id: number, update: Partial<Ingredient>) => void
-  setIsIngredientsLoaded: (loaded: boolean) => void
-    
-}
+export type IngredientStore = BaseStore<Ingredient, "ingredients"> 
 
 export type MealStore = {
   meals: Meals

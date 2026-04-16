@@ -7,7 +7,7 @@ import { IngredientManagement } from "./IngredientManagement"
 
 const getIngredientRow = (ingredient: string): HTMLElement => {
   const ing = screen.getByText(ingredient)
-  return ing.closest("li")
+  return ing.closest("li")!
 }
 
 const getArchiveButton = (ingredient: string): HTMLElement => {

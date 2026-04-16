@@ -17,6 +17,9 @@ export const createIngredientSlice: StateCreator<
   IngredientStore> = set => ({
   ...initialState(),
 
+  addIngredients(_ing: Ingredient) {},
+  removeIngredients(_id: number) {},
+  
   resetIngredients() {
     set(initialState())
   },
@@ -26,7 +29,7 @@ export const createIngredientSlice: StateCreator<
       state.ingredients = ingredients
     })
   },
-  updateIngredient: (id: number, update: Partial<Ingredient>) => {
+  updateIngredients: (id: number, update: Partial<Ingredient>) => {
     set(state => {
       const index = state.ingredients.findIndex(ing => ing.id === id)
       if (index !== -1) {
@@ -34,7 +37,7 @@ export const createIngredientSlice: StateCreator<
       }
     })
   },
-  setIsIngredientsLoaded: (loaded: boolean) => {
+  setIngredientsLoaded: (loaded: boolean) => {
     set(state => {
       state.isIngredientsLoaded = loaded
     })

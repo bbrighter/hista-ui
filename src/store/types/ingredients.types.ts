@@ -14,7 +14,7 @@ export type Nutrition = {
   fiber: number
 }
 
-export type Ingredients = Array<Ingredient>
+type Ingredients = Array<Ingredient>
 
 export const respToIngredients = (resp: entity.IngredientsResponse): Ingredients => {
   if (!resp.ingredients) return []
