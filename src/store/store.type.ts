@@ -3,7 +3,6 @@ import { User } from "@bbrighter/auth-module/users";
 import { Instance } from "./auth/instance";
 import { BaseArrayStore, BaseRecordStore, UpdateAction } from "./genericTypes";
 import * as types from "./types"
-import { Intake } from "./types/medicines.types";
 
 export type StoreType = AuthStore &
     MealStore &
@@ -105,8 +104,8 @@ export type TemplateStore = BaseRecordStore<types.Template, "templates", "templa
 export type MedicineStore = 
     Omit<BaseArrayStore<types.Medicine, "medicines", "medicine">, "removeMedicine"> & 
     {
-      intakes: Array<Intake>
-      setIntakes: (intakes: Array<Intake>) => void
+      intakes: Array<types.Intake>
+      setIntakes: (intakes: Array<types.Intake>) => void
       changeMedicineIntake: (id: number, date: Date, value: number) => void;
       changeOrder: (id: number, targetIndex: number) => void;
     }
@@ -114,7 +113,7 @@ export type NotesStore = BaseRecordStore<types.Note, "notes", "note">
 export type SymptomStore = 
     BaseArrayStore<types.SymptomCategory, "symptoms", "category"> & 
     UpdateAction<types.Symptom, "symptom">
-    
+
 export type MealStore = {
   meals: types.Meals
   meal: types.Meal
