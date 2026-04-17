@@ -1,7 +1,7 @@
 import { User } from "@bbrighter/auth-module/users";
 
 import { Instance } from "./auth/instance";
-import { BaseArrayStore, BaseRecordStore, UpdateAction } from "./genericTypes";
+import { BaseArrayStore, BaseRecordStore, ResetAction, SetAction, UpdateAction } from "./genericTypes";
 import * as types from "./types"
 
 export type StoreType = AuthStore &
@@ -86,6 +86,7 @@ export const loadingEntities = [
   "intakes",
   "notes",
   "symptoms",
+  "pollens",
 ] as const
 export type LoadingEntity = typeof loadingEntities[number]
 
@@ -113,6 +114,9 @@ export type NotesStore = BaseRecordStore<types.Note, "notes", "note">
 export type SymptomStore = 
     BaseArrayStore<types.SymptomCategory, "symptoms", "category"> & 
     UpdateAction<types.Symptom, "symptom">
+export type PollenStore = SetAction<types.Pollen, "pollens"> &
+    ResetAction<"pollens"> &
+    { pollens: Array<types.Pollen>}
 
 export type MealStore = {
   meals: types.Meals
@@ -131,16 +135,6 @@ export type MealStore = {
   addFood: (food: types.Food | Array<types.Food>) => void
   removeFood: (id: number) => void
   updateFood: (id: number, partial: Partial<types.Food>) => void
-}
-
-export interface PollenStore {
-  pollensAreLoaded: boolean
-  pollens: types.Pollens
-
-  resetPollens: () => void
-    
-  getPollens: () => Promise<void>
-    
 }
 
 export interface StatisticsStore {

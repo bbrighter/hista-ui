@@ -1,8 +1,8 @@
-type ResetAction<K extends string> = {
+export type ResetAction<K extends string> = {
   [P in `reset${Capitalize<K>}`]: () => void
 }
 
-type SetAction<T, K extends string> = {
+export type SetAction<T, K extends string> = {
   [P in `set${Capitalize<K>}`]: (items: Array<T>) => void
 }
 

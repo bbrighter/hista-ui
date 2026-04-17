@@ -6,20 +6,21 @@ import Skeleton from "@mui/material/Skeleton"
 import { useState } from "react"
 
 import { usePiidEffect } from "../../hooks/usePiidEffect"
+import { services } from "../../store"
 import useHista from "../../store/store"
 import PollenHeader from "./components/PollenHeader"
 import PollenRow from "./components/PollenRow"
 
 export default function PollenView() {
-  const getPollens = useHista(state => state.getPollens)
+
   const pollens = useHista(state => state.pollens)
 
   const [isLoading, setIsLoading] = useState(false)
 
   usePiidEffect(() => {
     setIsLoading(true)
-    getPollens().finally(() => setIsLoading(false))
-  }, [getPollens])
+    services.pollens.get().finally(() => setIsLoading(false))
+  }, [])
 
   return (
     <Container sx={{ padding: 2 }}>
