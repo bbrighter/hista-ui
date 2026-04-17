@@ -6,8 +6,8 @@ import useHista from "../../store";
 import { useStatus, useStatusExistsOnDay } from "../status.selectors";
 
 test("useStatus", () => {
-  const { setStatusList } = useHista.getState()
-  setStatusList([
+  const { setStatuses } = useHista.getState()
+  setStatuses([
     { id: 10, date: dayjs() },
     { id: 2, date: dayjs().add(1, "day") },
     { id: 3, date: dayjs().add(-1, "day") },
@@ -24,9 +24,9 @@ test("useStatus", () => {
 describe("useStatusExistsOnDay", () => {
   const existingDay = dayjs()
   beforeEach(() => {
-    const { setStatusList, setStatusIsLoaded } = useHista.getState()
-    setStatusList([{ id: 10, date: existingDay }])
-    setStatusIsLoaded(true)
+    const { setStatuses, setLoaded } = useHista.getState()
+    setStatuses([{ id: 10, date: existingDay }])
+    setLoaded("statuses")
   })
 
   it("exists", () => {
@@ -42,14 +42,11 @@ describe("useStatusExistsOnDay", () => {
   })
 
   it("not loaded", () => {
-    const { setStatusList, setStatusIsLoaded } = useHista.getState()
-    setStatusList([])
-    setStatusIsLoaded(false)
+    const { setStatuses, setLoaded } = useHista.getState()
+    setStatuses([])
+    setLoaded("statuses", false)
 
     const { result } = renderHook(() => useStatusExistsOnDay(dayjs()))
     expect(result.current).toBeTruthy()
   })
-
-  
-
 })

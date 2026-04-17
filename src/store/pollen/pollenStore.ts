@@ -1,15 +1,13 @@
 import { StateCreator } from "zustand"
 
-import { client } from "../../api/api"
 import { NonFunctionProperties, PollenStore, StoreType } from "../store.type"
-import { respToPollens } from "../types"
+import { Pollen } from "../types"
 
 type State = NonFunctionProperties<PollenStore>
 
 
 
 const initialState: State = {
-  pollensAreLoaded: false,
   pollens: [],
 }
 
@@ -17,17 +15,13 @@ export const createPollensSlice: StateCreator<
   StoreType,
   [["zustand/immer", never]],
   [],
-  PollenStore> = (set, get) => ({
+  PollenStore> = (set) => ({
   ...initialState,
 
-  resetPollens: () => set(initialState),
+  setPollens: (pollens: Array<Pollen>) => {set(state => {
+    state.pollens = pollens
+  })
 
-  getPollens: async () => {
-    if (get().pollensAreLoaded) return
-    const resp = await client.ListPollens()
-    set(state => {
-      state.pollens = respToPollens(resp)
-      state.pollensAreLoaded = true
-    })
   },
+  resetPollens: () => set(initialState),
 })

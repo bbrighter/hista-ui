@@ -27,7 +27,7 @@ export const createTemplateSlice: StateCreator<
     state.templates[id] = template
   }),
 
-  changeTemplate: (id: number, template: Partial<Template>) => set(state => {
+  updateTemplate: (id: number, template: Partial<Template>) => set(state => {
     const existing = state.templates[id]
     if (!existing) return 
 

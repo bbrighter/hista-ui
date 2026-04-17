@@ -5,9 +5,7 @@ export interface MetaConditionEvent {
   date: Date
 }
 
-export type ConditionEvents = Array<MetaConditionEvent>
-
-export const respToConditionEvents = (resp: entity.ConditionEventsResponse): ConditionEvents => {
+export const respToConditionEvents = (resp: entity.ConditionEventsResponse): Array<MetaConditionEvent> => {
   return resp.conditionEvents.map(ev => (
     { id: ev.id, date: new Date(ev.date) }
   ))

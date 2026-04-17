@@ -21,7 +21,7 @@ export const createLoadingSlice: StateCreator<
 
   resetLoaded: () => set(initialState()),
 
-  setLoaded: (k :LoadingEntity) => set((state: State) => {
-    state.loaded[k] = true
+  setLoaded: (k :LoadingEntity, loaded?: boolean) => set((state: State) => {
+    state.loaded[k] = loaded != undefined ? loaded : true
   }),
 })

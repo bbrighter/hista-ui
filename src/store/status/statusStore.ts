@@ -7,7 +7,6 @@ type State = NonFunctionProperties<StatusStore>
 
 const initialState: State = {
   statuses: [],
-  statusIsLoaded: false,
 }
 
 export const createStatusSlice: StateCreator<
@@ -16,9 +15,9 @@ export const createStatusSlice: StateCreator<
   [],
   StatusStore> = (set) => ({
   ...initialState,
-  resetStatus: () => set(initialState),
+  resetStatuses: () => set(initialState),
 
-  setStatusList(statuses) {
+  setStatuses(statuses) {
     set(state => {
       state.statuses = statuses
     })
@@ -42,11 +41,5 @@ export const createStatusSlice: StateCreator<
     set(state => {
       state.statuses = state.statuses.filter(s => s.id != id)
     })    
-  },
-
-  setStatusIsLoaded(loaded: boolean) {
-    set(state => {
-      state.statusIsLoaded = loaded
-    })
   },
 })

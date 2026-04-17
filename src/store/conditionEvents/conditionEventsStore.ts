@@ -1,14 +1,12 @@
 import { StateCreator } from "zustand"
 
 import { ConditionEventsStore, NonFunctionProperties, StoreType } from "../store.type"
-import { ConditionEvent } from "../types/conditionEvent"
-import { ConditionEvents, MetaConditionEvent } from "../types/conditionEvents"
+import { MetaConditionEvent } from "../types"
 
 type State = NonFunctionProperties<ConditionEventsStore>
 
 const initialState: State = {
-  conditionEvents: [],
-  isConditionEventsLoaded: false,
+  metaConditionEvents: [],
 }
 
 export const createConditionsSlice: StateCreator<
@@ -18,29 +16,25 @@ export const createConditionsSlice: StateCreator<
   ConditionEventsStore> = (set) => ({
   ...initialState,
 
-  resetConditionEvents: () => set(initialState),
+  resetMetaConditionEvents: () => set(initialState),
 
-  setConditionEvents: (events: ConditionEvents) => set((state: State) => {
-    state.conditionEvents = events
+  setMetaConditionEvents: (events: Array<MetaConditionEvent>) => set((state: State) => {
+    state.metaConditionEvents = events
   }),
 
-  addConditionEvent: (event: MetaConditionEvent) => set((state: State) => {
-    state.conditionEvents.push(event)
+  addMetaConditionEvent: (event: MetaConditionEvent) => set((state: State) => {
+    state.metaConditionEvents.push(event)
   }),
 
 
-  updateConditionEvents: (id: number, part: Partial<ConditionEvent>) => set((state: State) => {
-    const idx = state.conditionEvents.findIndex(c => c.id == id)
+  updateMetaConditionEvent: (id: number, part: Partial<MetaConditionEvent>) => set((state: State) => {
+    const idx = state.metaConditionEvents.findIndex(c => c.id == id)
     if (idx > -1) {
-      Object.assign(state.conditionEvents[idx], part)
+      Object.assign(state.metaConditionEvents[idx], part)
     }
   }),
 
-  removeConditionEvent: (id: number) => set((state: State) => {
-    state.conditionEvents = state.conditionEvents.filter(c => c.id !== id)
-  }),
-
-  setIsConditionEventsLoaded: (loaded: boolean) => set((state: State) => {
-    state.isConditionEventsLoaded = loaded
+  removeMetaConditionEvent: (id: number) => set((state: State) => {
+    state.metaConditionEvents = state.metaConditionEvents.filter(c => c.id !== id)
   }),
 })

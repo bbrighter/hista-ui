@@ -4,13 +4,13 @@ import { Nutrition, respToIngredients } from "../types";
 
 export const ingredientsService = {
   getIngredients: async () => {
-    const { setIngredients, isIngredientsLoaded, setIngredientsLoaded } = useHista.getState();
-    if (isIngredientsLoaded) return
+    const { setIngredients, loaded, setLoaded } = useHista.getState();
+    if (loaded["ingredients"]) return
     
     const resp = await client.ListIngredients()
 
     setIngredients(respToIngredients(resp))
-    setIngredientsLoaded(true)
+    setLoaded("ingredients")
   },
 
   deleteIngredient: async (id: number) => {
@@ -35,14 +35,16 @@ export const ingredientsService = {
   },
 
   archive: async (id: number) => {
-    const { updateIngredients, ingredients } = useHista.getState();
-    const isCurrentlyArchived = ingredients.find(i => i.id == id).isArchived
+    const { updateIngredient, ingredients } = useHista.getState();
+    const ingredient = ingredients.find(i => i.id == id)
+    if (!ingredient) return
+    const isCurrentlyArchived = ingredient.isArchived
     await client.PatchIngredient(id, { archived: !isCurrentlyArchived })
-    updateIngredients(id, { isArchived: !isCurrentlyArchived })
+    updateIngredient(id, { isArchived: !isCurrentlyArchived })
   },
 
   updateNutrition: async (id: number, nutrition: Nutrition) => {
-    const { updateIngredients } = useHista.getState()
+    const { updateIngredient } = useHista.getState()
 
     await client.PatchIngredient(id, { nutrition: {
       carbohydrate: nutrition.carbohydrate,
@@ -51,6 +53,6 @@ export const ingredientsService = {
       protein: nutrition.protein,
     } })
 
-    updateIngredients(id, { nutrition: nutrition })
+    updateIngredient(id, { nutrition: nutrition })
   },
 };

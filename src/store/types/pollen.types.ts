@@ -17,9 +17,7 @@ interface PollenIntensity {
   intensityString: string
 }
 
-export type Pollens = Array<Pollen>
-
-export const respToPollens = (resp: entity.PollenEventsResponse): Pollens => {
+export const respToPollens = (resp: entity.PollenEventsResponse): Array<Pollen> => {
   return resp.pollens.map(pol => ({
     date: new Date(pol.date),
     ambrosia: findIntensity(pol.pollens, "Ambrosia"),

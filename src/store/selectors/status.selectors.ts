@@ -9,7 +9,7 @@ export const useStatus = () => {
 
 export const useStatusExistsOnDay = (day: Dayjs) => {
   const statuses = useHista(state => state.statuses)
-  const isLoaded = useHista(state => state.statusIsLoaded)
-  if (!isLoaded) return true
+  const isLoaded = useHista(state => state.loaded)
+  if (!isLoaded["statuses"]) return true
   return statuses.some(s => s.date.isSame(day, "day"))
 }

@@ -5,13 +5,13 @@ import { respToSymptoms } from "../types/symptom.types"
 
 export const symptoms = {
   list: async () => {
-    const { setSymptoms, setSymptomsAreLoaded, symptomsAreLoaded } = useHista.getState()
+    const { setSymptoms, loaded, setLoaded } = useHista.getState()
 
-    if (symptomsAreLoaded) return
+    if (loaded["symptoms"]) return
     const resp = await client.ListSymptoms()
     
     setSymptoms(respToSymptoms(resp))
-    setSymptomsAreLoaded(true)
+    setLoaded("symptoms")
   },
 
   patchName: async (id: number, name: string) => {

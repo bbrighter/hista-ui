@@ -6,13 +6,13 @@ import { PutStatusParams, respToStatus, respToStatuses } from "../types";
 
 export const statusService = {
   getStatuses: async () => {
-    const { setStatusList, statusIsLoaded, setStatusIsLoaded } = useHista.getState()
-    if (statusIsLoaded) return
+    const { setStatuses, loaded, setLoaded } = useHista.getState()
+    if (loaded["statuses"]) return
 
     const resp = await client.ListStatus()
 
-    setStatusList(respToStatuses(resp))
-    setStatusIsLoaded(true)
+    setStatuses(respToStatuses(resp))
+    setLoaded("statuses")
   },
 
   postStatus: async (date: Dayjs) => {
@@ -40,5 +40,4 @@ export const statusService = {
     const { updateStatus } = useHista.getState()
     updateStatus(id, params)
   },
-
 }

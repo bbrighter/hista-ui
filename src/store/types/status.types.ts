@@ -2,9 +2,7 @@ import dayjs, { Dayjs } from "dayjs"
 
 import { entity } from "../../api/generatedApi"
 
-export type Statuses = Array<Status>
-
-export const respToStatuses = (resp: entity.StatusesResponse): Statuses => {
+export const respToStatuses = (resp: entity.StatusesResponse): Array<Status> => {
 
   return resp.statuses.map(s => {
     const isToday = dayjs(s.date).isSame(dayjs(), "date")
