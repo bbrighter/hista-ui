@@ -1,4 +1,4 @@
-import { entity } from "../../api/generatedApi";
+import { hista } from "../../api/generatedApi";
 
 export type Medicine = {
   id: number;
@@ -6,7 +6,7 @@ export type Medicine = {
   isArchived: boolean;
 };
 
-const respToMedicine = (resp: entity.MedicineResponse): Medicine => {
+const respToMedicine = (resp: hista.MedicineResponse): Medicine => {
   return {
     id: resp.id,
     isArchived: resp.isArchived,
@@ -15,7 +15,7 @@ const respToMedicine = (resp: entity.MedicineResponse): Medicine => {
 };
 
 export const respToMedicineList = (
-  resp: entity.MedicineListResponse,
+  resp: hista.MedicineListResponse,
 ): Array<Medicine> => {
   return resp.medicines.sort((a,b) => a.sortOrder - b.sortOrder).map((m) => respToMedicine(m));
 };
@@ -26,7 +26,7 @@ export type Intake = {
   count: number;
 };
 
-const respToIntake = (resp: entity.IntakeResponse): Intake => {
+const respToIntake = (resp: hista.IntakeResponse): Intake => {
   return {
     count: resp.count,
     date: new Date(resp.date),
@@ -35,7 +35,7 @@ const respToIntake = (resp: entity.IntakeResponse): Intake => {
 };
 
 export const respToIntakeList = (
-  resp: entity.IntakeResponseList,
+  resp: hista.IntakeListResponse,
 ): Array<Intake> => {
   return resp.intakes.map((i) => respToIntake(i));
 };

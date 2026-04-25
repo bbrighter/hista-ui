@@ -53,7 +53,7 @@ describe("headache store", () => {
 })
 
 describe("Single headache actions", () => {
-  const spyPatchTypes = vi.spyOn(client, "PatchHeadacheTypes")
+  const spyPatchTypes = vi.spyOn(client, "PatchHeadache")
   beforeEach(async () => {
     await useHista.getState().getHeadache(1)
   })

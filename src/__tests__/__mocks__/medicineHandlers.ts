@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw";
 
-import { entity } from "../../api/generatedApi";
+import { hista } from "../../api/generatedApi";
 
 export const medicineHandlers = (baseUrl: string) => [
   http.get(`${baseUrl}/medicines`, () =>
@@ -9,7 +9,7 @@ export const medicineHandlers = (baseUrl: string) => [
         { id: 1, isArchived: false, name: "Medicine", sortOrder: 100 },
         { id: 2, isArchived: true, name: "Archived medicine", sortOrder: 200 },
       ],
-    } satisfies entity.MedicineListResponse),
+    } satisfies hista.MedicineListResponse),
   ),
   http.post(`${baseUrl}/medicines`, () => HttpResponse.json({ id: 3 })),
   http.patch(`${baseUrl}/medicines/:id`, () => HttpResponse.json({})),
@@ -24,7 +24,7 @@ export const intakeHandlers = (baseUrl: string) => [
         { medicineId: 1, count: 5, date: "2025-06-05T00:00:00Z" },
         { medicineId: 1, count: 4, date: "2025-06-04T00:00:00Z" },
       ],
-    } satisfies entity.IntakeResponseList),
+    } satisfies hista.IntakeListResponse),
   ),
   http.post(`${baseUrl}/intakes/medicines/:medicineId/increment`, () =>
     HttpResponse.json({}),

@@ -1,4 +1,4 @@
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 import { Symptom } from "./symptom.types"
 
 
@@ -14,7 +14,7 @@ export interface ConditionEvent {
   conditions: Array<Condition>
 }
 
-export const respToConditionEvent = (resp: entity.ConditionEventResponse): ConditionEvent => ({
+export const respToConditionEvent = (resp: hista.ConditionEventResponse): ConditionEvent => ({
   id: resp.id,
   date: new Date(resp.date),
   conditions: resp.conditions.map(c => (

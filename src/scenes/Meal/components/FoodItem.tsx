@@ -13,7 +13,9 @@ import { Food, mealService } from "../../../store"
 import NumberField from "../../components/NumberField"
 import { swipeDeleteFood, swipeToggleFoodCondition } from "./SwipeFoodActions"
 
-export function FoodItem({ food }: {food: Food}) {
+type FoodItemType = Food & {ingredientName: string}
+
+export function FoodItem({ food }: {food: FoodItemType}) {
   const [amount, setAmount] = useState<number | null>(food.amount ?? null)
   const [isPatchAmountLoading, setIsPatchAmountLoading] = useState<number | undefined>()
   const debouncedInputValue = useDebounce(amount, 1000)
@@ -21,7 +23,7 @@ export function FoodItem({ food }: {food: Food}) {
 
   useDidUpdateEffect(() => {
     setIsPatchAmountLoading(food.id)
-    mealService.patchFoodAmount(food.id, amount).finally(() => {
+    mealService.patchFoodAmount(food.id, amount ?? 0).finally(() => {
       setIsPatchAmountLoading(undefined)
     })
   }, [debouncedInputValue])

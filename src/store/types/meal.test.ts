@@ -1,10 +1,10 @@
 import { expect, test } from "vitest"
 
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 import { Freshness, respToMeal } from "./meal.types"
 
 test("Meal", () => {
-  const resp: entity.MealResponse = {
+  const resp: hista.MealResponse = {
     id: 1,
     date: "2024-04-22T17:28:58.419+02:00",
     freshness: 0,

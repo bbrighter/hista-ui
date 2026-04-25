@@ -1,4 +1,4 @@
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 import { Nutrition } from "./ingredients.types"
 
 export type SymptomStatistics = Array<
@@ -11,7 +11,7 @@ export type SymptomStatistics = Array<
   }>
 
 export const respToSymptomStatistics = (
-  resp: entity.SymptomStatisticsResponse,
+  resp: hista.SymptomStatisticsResponse,
 ): SymptomStatistics => (
   resp.statistics.map(r => (
     {
@@ -35,7 +35,7 @@ type NutritionStatistic = {
   nutrition: Nutrition
 }
 
-export const respToNutritionStatistics = (resp: entity.NutritionStatisticsResponse): Array<NutritionStatistic> => {
+export const respToNutritionStatistics = (resp: hista.NutritionStatisticsResponse): Array<NutritionStatistic> => {
   return resp.statistics.map(s => ({
     date: new Date(s.time),
     nutrition: {

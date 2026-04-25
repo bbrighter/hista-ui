@@ -1,11 +1,11 @@
 import { expect, test } from "vitest"
 
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 import { respToPollens } from "./pollen.types"
 
 
 test("respToPollens", () => {
-  const resp: entity.PollenEventsResponse = {
+  const resp: hista.PollenEventListResponse = {
     pollens: [{
       date: "2002-12-01 12:00:30",
       pollens: [{

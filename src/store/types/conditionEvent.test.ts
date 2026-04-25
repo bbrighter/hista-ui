@@ -1,10 +1,10 @@
 import { expect, test } from "vitest"
 
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 import { respToConditionEvent } from "./conditionEvent"
 
 test("respToConditionEvent", () => {
-  const resp: entity.ConditionEventResponse = {
+  const resp: hista.ConditionEventResponse = {
     id: 1,
     date: "2024-05-05T20:45:15.913+02:00",
     conditions: [

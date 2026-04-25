@@ -1,4 +1,4 @@
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 import { MuiSliderColor } from "../../types"
 import { respToSymptom, Symptom } from "./symptom.types"
 
@@ -8,7 +8,7 @@ interface Condition {
   severity: number
 }
 
-export const respToCondition = (resp: entity.ConditionResponse): Condition => ({
+export const respToCondition = (resp: hista.ConditionResponse): Condition => ({
   id: resp.id,
   symptom: respToSymptom(resp.symptom),
   severity: resp.severity,

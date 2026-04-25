@@ -1,4 +1,4 @@
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 import { FoodCondition, respToFoodCondition } from "./food.types"
 
 
@@ -14,12 +14,12 @@ export type TemplateItem = {
   condition: FoodCondition
 }
 
-export const repoToTemplates = (resp: entity.TemplateListResponse): Templates => {
+export const repoToTemplates = (resp: hista.TemplateListResponse): Templates => {
   return Object.fromEntries(
     resp.templates.map(t => [t.id, { name: t.name, items: t.items.map(i => (itemRespToItem(i))) }]),
   )
 }
 
-const itemRespToItem = (resp: entity.TemplateItemResponse): TemplateItem => {
+const itemRespToItem = (resp: hista.TemplateItemResponse): TemplateItem => {
   return { condition: respToFoodCondition(resp.condition), ingredientId: resp.ingredientId }
 }

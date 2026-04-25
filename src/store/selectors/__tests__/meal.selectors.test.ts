@@ -15,9 +15,9 @@ test("useTotalNutrition", () => {
     stressLevel: 3, 
     isLoading: false, 
     foods:[
-      { id: 1, condition: "cooked", ingredientId: 1, ingredientName: "name 1", amount: 100 },
-      { id: 2, condition: "cooked", ingredientId: 2, ingredientName: "name 2", amount: 10  },
-      { id: 3, condition: "cooked", ingredientId: 3, ingredientName: "name 3" },
+      { id: 1, condition: "cooked", ingredientId: 1, amount: 100 },
+      { id: 2, condition: "cooked", ingredientId: 2, amount: 10  },
+      { id: 3, condition: "cooked", ingredientId: 3 },
     ] })
   setIngredients([
     { id: 1, name: "name 1", isArchived: false, nutrition: { carbohydrate: 25, fat: 3, fiber: 10, protein: 5 } },

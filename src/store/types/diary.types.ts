@@ -1,4 +1,4 @@
-import { entity, hista } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 import { mealConstants } from "../../constants"
 
 export interface RawDiary {
@@ -11,7 +11,7 @@ export interface RawDiary {
 
 type DiaryEntryType = "Essen" | "Symptom" | "Notiz" | "Pollen" | "Medikament"
 
-export const respToRawDiary = (resp: hista.DiaryResp): Array<RawDiary> => {
+export const respToRawDiary = (resp: hista.DiaryRespList): Array<RawDiary> => {
   return resp.diaries.map(d => ({
     Date: new Date(d.date),
     What: d.content,
@@ -37,7 +37,7 @@ const respTypeToType = (resp: string): DiaryEntryType => {
   }
 }
 
-const respToTypeAndSeverity = (resp: entity.RawDiary): { Type: DiaryEntryType, Severity: string } => {
+const respToTypeAndSeverity = (resp: hista.DiaryResp): { Type: DiaryEntryType, Severity: string } => {
   const type = respTypeToType(resp.type)
   let severity = ""
   if (type == "Essen") {

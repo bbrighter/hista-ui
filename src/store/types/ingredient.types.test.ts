@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { entity } from "../../api/generatedApi";
+import { hista } from "../../api/generatedApi";
 import { respToIngredients } from "./ingredients.types";
 
 describe("respToIngredients", () => {
   it("all filled", () => {
-    const resp: entity.IngredientResponse = {
+    const resp: hista.IngredientResponse = {
       id: 1,
       isArchived: true,
       name: "name",
@@ -24,14 +24,14 @@ describe("respToIngredients", () => {
     expect(ing.isArchived).toBeTruthy()
     expect(ing.name).toBe("name")
     expect(ing.nutrition).toBeDefined()
-    expect(ing.nutrition.carbohydrate).toBe(100)
-    expect(ing.nutrition.fat).toBe(20)
-    expect(ing.nutrition.fiber).toBe(0)
-    expect(ing.nutrition.protein).toBe(5)
+    expect(ing.nutrition!.carbohydrate).toBe(100)
+    expect(ing.nutrition!.fat).toBe(20)
+    expect(ing.nutrition!.fiber).toBe(0)
+    expect(ing.nutrition!.protein).toBe(5)
   })
 
   it("no nutrition", () => {
-    const resp: entity.IngredientResponse = {
+    const resp: hista.IngredientResponse = {
       id: 1,
       isArchived: true,
       name: "name",

@@ -1,8 +1,7 @@
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 
 export interface Food {
   id: number
-  ingredientName: string
   ingredientId: number
   condition: FoodCondition
   amount?: number
@@ -10,15 +9,14 @@ export interface Food {
 
 export type FoodCondition = "raw" | "cooked"
 
-export const respToFoodCondition = (resp: entity.FoodCondition): FoodCondition => {
+export const respToFoodCondition = (resp: string): FoodCondition => {
   return resp == "raw" ? "raw" : "cooked"
 }
 
-export const respToFood = (resp: entity.FoodResponse): Food => {
+export const respToFood = (resp: hista.FoodResponse): Food => {
   return {
     id: resp.id,
-    ingredientName: resp.ingredient.name,
-    ingredientId: resp.ingredient.id,
+    ingredientId: resp.ingredientId,
     condition: respToFoodCondition(resp.foodCondition),
     amount: resp.amount,
   }
