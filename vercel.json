@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://staging-hista-api-dpc2.encr.app/:path*"
+      "destination": "https://prod-hista-api-dpc2.encr.app/:path*"
     },
     {
       "source": "/(.*)",
