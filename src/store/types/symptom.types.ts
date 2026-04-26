@@ -1,4 +1,4 @@
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 
 export interface Symptom {
   id: number
@@ -14,7 +14,7 @@ export interface SymptomCategory {
 
 export type SymptomCategories = Array<SymptomCategory>
 
-export function respToSymptoms(resp: entity.SymptomCategoriesResponse): SymptomCategories {
+export function respToSymptoms(resp: hista.SymptomCategoryListResponse): SymptomCategories {
   return resp.Categories.map(c => (
     {
       categoryId: c.id,
@@ -28,12 +28,4 @@ export function respToSymptoms(resp: entity.SymptomCategoriesResponse): SymptomC
   ),
 
   )
-}
-
-export function respToSymptom(resp: entity.SymptomResponse): Symptom {
-  return {
-    id: resp.id,
-    categoryId: resp.categoryId,
-    name: resp.name,
-  }
 }

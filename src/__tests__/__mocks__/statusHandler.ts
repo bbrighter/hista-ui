@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw"
 
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 
 const statusHandlers = (baseUrl: string) => ([
 
@@ -18,7 +18,7 @@ const statusHandlers = (baseUrl: string) => ([
         morningSleep: 1,
       },
     ],
-  } as entity.StatusesResponse)),
+  } as hista.StatusListResponse)),
   http.post(baseUrl + "/status", () => HttpResponse.json({
     id: 3, date: "2024-03-31T00:00:00",
 

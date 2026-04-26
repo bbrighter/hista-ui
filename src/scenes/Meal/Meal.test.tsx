@@ -12,8 +12,8 @@ describe("test meals list", () => {
     const box = label.closest("div")
     expect(box).toBeInTheDocument()
 
-    const thumb = box!.querySelector(".MuiSlider-thumb")
-    const svg = box!.querySelector(".MuiSvgIcon-root")
+    const thumb = box!.querySelector(".MuiSlider-thumb")!
+    const svg = box!.querySelector(".MuiSvgIcon-root")!
 
     const colorRegex = new RegExp(`${expectedColor}`)
     expect(thumb.getAttribute("class")).toMatch(colorRegex)
@@ -23,12 +23,15 @@ describe("test meals list", () => {
   const findIngredientRow = async (name: string): Promise<HTMLElement> => {
     const ingredientLabel = await screen.findByText(name)
     const listItem = ingredientLabel.closest("li")
-    return listItem
+    expect(listItem).toBeInTheDocument()
+    return listItem!
   }
 
   const isButtonPressed = (options: { title?: string, text?: string, parent?: HTMLElement }) => {
     const parent = options.parent ? within(options.parent) : screen
-    const button = options.title ? parent.getByTitle(options.title) : parent.getByText(options.text)
+    const button = options.title ? 
+      parent.getByTitle(options.title) : 
+      parent.getByText(options.text!)
     return button.getAttribute("aria-pressed") == "true"
   }
 
@@ -82,7 +85,7 @@ describe("test meals list", () => {
     expect(within(ingredient1Row).queryByText("Roh")).toBeInTheDocument()
     expect(within(ingredient1Row).queryByText("Gar")).not.toBeInTheDocument()
 
-    const buttons = screen.queryAllByTestId("toggle-food-condition-button")
+    const buttons = screen.queryAllByTestId("food-condition-chip")
     expect(buttons).toHaveLength(2)
     // Set cooked
     const button = buttons[0]
@@ -170,7 +173,7 @@ describe("test meals list", () => {
     render(<MemoryRouter><Meal /></MemoryRouter>)
 
     const row1 = await findIngredientRow("ingredient1")
-    const amountInput = within(row1).getByTestId("number-input").querySelector("input")
+    const amountInput = within(row1).getByTestId("number-input").querySelector("input")!
     expect(amountInput).toBeInTheDocument()
     expect(amountInput).toHaveValue(100)
 

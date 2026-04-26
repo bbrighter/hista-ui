@@ -1,7 +1,9 @@
 import SickIcon from "@mui/icons-material/Sick"
+import SortIcon from "@mui/icons-material/Sort";
 import Button from "@mui/material/Button"
-import ButtonGroup from "@mui/material/ButtonGroup"
 import Container from "@mui/material/Container"
+import IconButton from "@mui/material/IconButton"
+import Stack from "@mui/material/Stack";
 import { useState } from "react"
 
 import { useAppNavigate } from "../../hooks/useNavigate"
@@ -27,7 +29,7 @@ export default function ConditionEvents() {
 
   return (
     <Container sx={{ paddingTop: "2rem" }}>
-      <ButtonGroup variant="outlined">
+      <Stack direction="row" spacing={2}>
         <Button
           variant="contained"
           startIcon={<SickIcon />}
@@ -36,10 +38,13 @@ export default function ConditionEvents() {
         >
           Neues Symptom
         </Button>
-        <Button onClick={onClickManageSymptoms}>
-          Symptome verwalten
-        </Button>
-      </ButtonGroup>
+        <IconButton 
+          data-testid="manage-symptoms-button"
+          color="primary" 
+          onClick={onClickManageSymptoms}>
+          <SortIcon/>
+        </IconButton>
+      </Stack>
       <EventList />
     </Container>
   )

@@ -2,15 +2,15 @@ import "react-swipeable-list/dist/styles.css";
 
 import { SwipeableList } from "react-swipeable-list"
 
-import useHista from "../../../store/store"
+import { useFoodForMeal } from "../../../store";
 import { FoodItem } from "./FoodItem"
 
 export function FoodList() {
-  const food = useHista(state => state.meal.foods)
+  const foods = useFoodForMeal()
 
   return (
     <SwipeableList>
-      {food.map(f => (
+      {foods.map(f => (
         <FoodItem food={f} key={f.id}/>
       ))}
     </SwipeableList>

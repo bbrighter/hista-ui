@@ -33,7 +33,7 @@ export default function Headaches() {
     <Container sx={{ padding: "2rem" }}>
       <Button
         startIcon={<FaceRetouchingNaturalIcon />}
-        variant="outlined"
+        variant="contained"
         onClick={onCreate}
         loading={loading}
       >

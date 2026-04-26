@@ -1,8 +1,8 @@
 import dayjs, { Dayjs } from "dayjs"
 
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 
-export const respToStatuses = (resp: entity.StatusesResponse): Array<Status> => {
+export const respToStatuses = (resp: hista.StatusListResponse): Array<Status> => {
 
   return resp.statuses.map(s => {
     const isToday = dayjs(s.date).isSame(dayjs(), "date")
@@ -19,13 +19,13 @@ export interface Status {
   locked?: boolean
 }
 
-export const respToStatus = (resp: entity.StatusResponse, locked?: boolean): Status => {
+export const respToStatus = (resp: hista.StatusResponse, locked?: boolean): Status => {
   return {
     id: resp.id,
     date: dayjs(resp.date),
-    morningFitness: resp.morningFitness,
-    morningSleep: resp.morningSleep,
-    eveningFitness: resp.eveningFitness,
+    morningFitness: resp?.morningFitness ?? undefined,
+    morningSleep: resp?.morningSleep ?? undefined,
+    eveningFitness: resp?.eveningFitness ?? undefined,
     locked: locked,
   }
 }

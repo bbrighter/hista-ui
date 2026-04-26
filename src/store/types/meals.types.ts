@@ -1,4 +1,4 @@
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 
 export interface MetaMeal {
   id: number
@@ -7,10 +7,10 @@ export interface MetaMeal {
 
 export type Meals = Array<MetaMeal>
 
-export const respToMetaMeals = (resp: entity.MealsResponse): Meals => {
+export const respToMetaMeals = (resp: hista.MealListResponse): Meals => {
   if (!resp.meals) return []
   const meals = resp.meals.map(m => (
     { id: m.id, date: new Date(m.date) }
   ))
-  return meals
+  return meals.sort((a,b) => b.date.getTime() - a.date.getTime())
 }

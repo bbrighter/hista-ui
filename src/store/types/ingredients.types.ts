@@ -1,4 +1,4 @@
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 
 export type Ingredient = {
   id: number
@@ -16,7 +16,7 @@ export type Nutrition = {
 
 type Ingredients = Array<Ingredient>
 
-export const respToIngredients = (resp: entity.IngredientsResponse): Ingredients => {
+export const respToIngredients = (resp: hista.IngredientListResponse): Ingredients => {
   if (!resp.ingredients) return []
   const ingredients = resp.ingredients.map(ing =>  {
     return ({ 

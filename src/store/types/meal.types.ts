@@ -1,4 +1,4 @@
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 import { Food, respToFood } from "./food.types"
 
 export interface Meal {
@@ -28,7 +28,7 @@ const stringToFreshness = (str: number): Freshness => {
   }
 }
 
-export const respToMeal = (resp: entity.MealResponse): Meal => {
+export const respToMeal = (resp: hista.MealResponse): Meal => {
   const foods = resp.foods.map(f => respToFood(f))
   const meal: Meal = {
     id: resp.id,

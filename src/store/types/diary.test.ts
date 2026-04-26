@@ -5,7 +5,7 @@ import { respToRawDiary } from "./diary.types"
 
 describe("RawDiary", () => {
   it("Food", () => {
-    const resp: hista.DiaryResp = {
+    const resp: hista.DiaryRespList = {
       diaries: [{
         content: "Content",
         date: "2024-12-05T02:00:00+02:00",
@@ -23,7 +23,7 @@ describe("RawDiary", () => {
   })
 
   it("Medicine", () => {
-    const resp: hista.DiaryResp = {
+    const resp: hista.DiaryRespList = {
       diaries: [{
         content: "Medicine No. 1",
         date: "2024-12-05T02:00:00+02:00",

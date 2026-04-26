@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw"
 
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 
 export const templateHandlers = (baseUrl: string) =>  ([
   http.get(`${baseUrl}/templates`, () => HttpResponse.json({
@@ -9,7 +9,7 @@ export const templateHandlers = (baseUrl: string) =>  ([
         { condition: "raw", ingredientId: 1 },
       ],
     }],
-  }as entity.TemplateListResponse) ),
+  }as hista.TemplateListResponse) ),
 
   http.post(`${baseUrl}/templates`, () => HttpResponse.json({ id: 2 })),
   http.delete(`${baseUrl}/templates/:id`, () => HttpResponse.json({})),

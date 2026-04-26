@@ -64,7 +64,7 @@ describe("meal service, single meal", () => {
     await mealService.postFoodByName(1, "name")
 
     const { meal, ingredients } = useHista.getState()
-    expect(meal.foods).toContainEqual({ ingredientId: 3, ingredientName: "name", condition: "raw", id: 1, amount: undefined })
+    expect(meal.foods).toContainEqual({ ingredientId: 3, condition: "raw", id: 1, amount: undefined })
     expect(ingredients).toHaveLength(3)
   })
 
@@ -72,7 +72,7 @@ describe("meal service, single meal", () => {
     await mealService.postFoodById(1, 1)
 
     const { meal } = useHista.getState()
-    expect(meal.foods).toContainEqual({ ingredientId: 1, ingredientName: "ingredient1", condition: "raw", id: 1, amount: undefined })
+    expect(meal.foods).toContainEqual({ ingredientId: 1, condition: "raw", id: 1, amount: undefined })
   })
 
   it("delete food", async () => {
@@ -90,7 +90,7 @@ describe("meal service, single meal", () => {
     await mealService.patchFoodCondition(10, "cooked")
 
     const { meal } = useHista.getState()
-    const changedFood = meal.foods.find(f => f.id == 10)
+    const changedFood = meal.foods.find(f => f.id == 10)!
     expect(changedFood.condition).toBe("cooked")
   })
 
@@ -98,7 +98,7 @@ describe("meal service, single meal", () => {
     await mealService.patchFoodAmount(10, 100)
 
     const { meal } = useHista.getState()
-    const changedFood = meal.foods.find(f => f.id == 10)
+    const changedFood = meal.foods.find(f => f.id == 10)!
     expect(changedFood.amount).toBe(100)
   })
 
@@ -107,7 +107,7 @@ describe("meal service, single meal", () => {
     await mealService.patchFoodAmount(10, 0)
 
     const { meal } = useHista.getState()
-    const changedFood = meal.foods.find(f => f.id == 10)
+    const changedFood = meal.foods.find(f => f.id == 10)!
     expect(changedFood.amount).toBe(undefined)
   })
 
@@ -118,7 +118,7 @@ describe("meal service, single meal", () => {
 
     const { meal } = useHista.getState()
     expect(meal.foods).toHaveLength(4)
-    expect(meal.foods).toContainEqual({ id: 5, ingredientName: "ingredient1", ingredientId: 1, condition: "raw" })
-    expect(meal.foods).toContainEqual({ id: 6, ingredientName: "ingredient2", ingredientId: 2, condition: "cooked" })
+    expect(meal.foods).toContainEqual({ id: 5, ingredientId: 1, condition: "raw" })
+    expect(meal.foods).toContainEqual({ id: 6, ingredientId: 2, condition: "cooked" })
   })
 })

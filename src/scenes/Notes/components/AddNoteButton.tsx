@@ -20,7 +20,7 @@ export const AddNoteButton = () => {
   
   return (
     <Button
-      variant="outlined"
+      variant="contained"
       onClick={onCreate}
       loading={loading}
       startIcon={<NoteIcon />}

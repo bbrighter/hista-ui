@@ -19,16 +19,19 @@ const renderConditionEvent = () => {
 const getSlider = (symptomName: string): HTMLElement => {
   const symptom = screen.getByText(symptomName)
   const listItem = symptom.closest("li")
+  expect(listItem).toBeInTheDocument()
 
-  const input = within(listItem).getByRole("slider")
+  const input = within(listItem!).getByRole("slider")
   return input
 }
 
 const sliderHasColor = (symptomName: string, color: "Error" | "Secondary"): boolean => {
   const symptom = screen.getByText(symptomName)
   const listItem = symptom.closest("li")
-  const button = listItem.querySelector(".MuiSlider-root")
-  return button.className.includes(color)
+  expect(listItem).toBeInTheDocument()
+  const button = listItem!.querySelector(".MuiSlider-root")
+  expect(button).toBeInTheDocument()
+  return button!.className.includes(color)
 }
 
 describe("condition event is rendered and can be edited", () => {
@@ -76,5 +79,8 @@ describe("condition event is rendered and can be edited", () => {
     await userEvent.click(selectableValue)
 
     expect(getSlider("symptom2")).toBeInTheDocument()
+    const newListItem = screen.getByTestId("condition-list-item-4")// 4 is the ID of the new condition
+    expect(newListItem).toBeInTheDocument()
+    expect(newListItem).toHaveTextContent("symptom2")
   })
 })

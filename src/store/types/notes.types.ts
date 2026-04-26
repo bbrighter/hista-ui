@@ -1,4 +1,4 @@
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 
 export type Note = {
   id: number
@@ -8,14 +8,14 @@ export type Note = {
 
 export type Notes = Record<number, Note>
 
-export const respToNotes = (resp: entity.NotesResp): Notes => {
+export const respToNotes = (resp: hista.NoteListResponse): Notes => {
   return Object.fromEntries(resp.notes.map(n => {
     const note = respToNote(n)
     return [note.id, note]
   }))
 }
 
-export const respToNote = (resp: entity.NoteResp): Note => {
+export const respToNote = (resp: hista.NoteResponse): Note => {
   return (
     {
       id: resp.id,

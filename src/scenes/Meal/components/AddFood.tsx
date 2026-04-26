@@ -70,7 +70,7 @@ export function AddFood() {
       onInputChange={onInputChange}
       onChange={onChange}
       renderOption={(props, option) => {
-        const key = isNewOption(option) ? 0 : option.id
+        const key = isNewOption(option) ? 0 : option.id + option.type
         const label = isNewOption(option) ? option : option.name
         return (
           <ListItem {...props} key={key}>

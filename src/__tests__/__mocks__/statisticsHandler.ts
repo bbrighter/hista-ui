@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw"
 
-import { entity, hista } from "../../api/generatedApi"
+import {  hista } from "../../api/generatedApi"
 
 const getStatisticsHandler = (baseUrl: string) => (
   http.get(baseUrl + "/statistics/ingredients", () => HttpResponse.json({
@@ -10,7 +10,7 @@ const getStatisticsHandler = (baseUrl: string) => (
       { symptomId: 1, hours1: 0, hours24: 1, hours72: 0, severity: 2 },
       { symptomId: 2, hours1: 0, hours24: 1, hours72: 4, severity: 1 },
     ],
-  } satisfies entity.SymptomStatisticsResponse))
+  } satisfies hista.SymptomStatisticsResponse))
 )
 
 const getDiariesHandler = (baseUrl: string) => (
@@ -43,7 +43,7 @@ const getDiariesHandler = (baseUrl: string) => (
       severity: "",
       category: "",
     },
-  ] } satisfies hista.DiaryResp))
+  ] } satisfies hista.DiaryRespList))
 )
 
 const getNutritionStatisticsHandler = (baseUrl: string) => (
@@ -61,7 +61,7 @@ const getNutritionStatisticsHandler = (baseUrl: string) => (
 
     return HttpResponse.json({
       statistics: statistics,
-    } satisfies entity.NutritionStatisticsResponse)},
+    } satisfies hista.NutritionStatisticsResponse)},
   )
 )
 

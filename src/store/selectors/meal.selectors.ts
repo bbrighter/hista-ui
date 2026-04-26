@@ -21,3 +21,12 @@ const useFoodAmountsAndNutritionsForMeal = () => {
     ...ingredients.find(i => i.id == f.ingredientId)?.nutrition,
   }))
 }
+
+export const useFoodForMeal = () => {
+  const foods = useHista(state => state.meal.foods)
+  const ingredients = useHista(state => state.ingredients)
+  return foods.map(f => {
+    const name = ingredients.find(i => i.id == f.ingredientId)?.name ?? "Unbenannt"
+    return { ...f, ingredientName: name }
+  })
+}

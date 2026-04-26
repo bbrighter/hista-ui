@@ -1,4 +1,4 @@
-import { entity } from "../../api/generatedApi"
+import { hista } from "../../api/generatedApi"
 
 export type Pollen = {
   date: Date
@@ -17,7 +17,7 @@ interface PollenIntensity {
   intensityString: string
 }
 
-export const respToPollens = (resp: entity.PollenEventsResponse): Array<Pollen> => {
+export const respToPollens = (resp: hista.PollenEventListResponse): Array<Pollen> => {
   return resp.pollens.map(pol => ({
     date: new Date(pol.date),
     ambrosia: findIntensity(pol.pollens, "Ambrosia"),
@@ -31,7 +31,7 @@ export const respToPollens = (resp: entity.PollenEventsResponse): Array<Pollen> 
   }))
 }
 
-const findIntensity = (resp: Array<entity.PollenResponse>, type: string): PollenIntensity => {
+const findIntensity = (resp: Array<hista.PollenResponse>, type: string): PollenIntensity => {
   const relevant = resp.find(p => p.type == type)
   return { intensity: relevant?.intensity || 0, intensityString: relevant?.intensityString || "Keine" }
 }

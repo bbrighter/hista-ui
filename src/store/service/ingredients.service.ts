@@ -13,17 +13,6 @@ export const ingredientsService = {
     setLoaded("ingredients")
   },
 
-  deleteIngredient: async (id: number) => {
-    const { setIngredients, ingredients } = useHista.getState();
-    try {
-      await client.DeleteIngredient(id);
-      setIngredients(ingredients.filter((i) => i.id != id));
-      return true;
-    } catch {
-      return false;
-    }
-  },
-
   changeName: async (id: number, newName: string) => {
     const { setIngredients, ingredients } = useHista.getState();
     await client.PatchIngredient(id, { name: newName.trim() });

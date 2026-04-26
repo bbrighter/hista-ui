@@ -4,19 +4,11 @@ import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
 
-import { services } from "../../../store"
-import useHista from "../../../store/store"
+import { services, useConditionsWithSymptoms } from "../../../store"
 import Severity from "./Severity"
 
 export default function ConditionList() {
-  const conditions = useHista(state => state.conditionEvent.conditions)
-  const categories = useHista(state => state.symptoms)
-
-  const conditionsAndCategories = conditions.map((con) => {
-    const name = categories.find(cat => cat.categoryId == con.symptom.categoryId)?.categoryName || ""
-    return { ...con, categoryName: name }
-  })
-  conditionsAndCategories.sort((a, b) => b.id - a.id)
+  const conditionsAndCategories = useConditionsWithSymptoms()
 
   const onDelete = (conditionId: number) => {
     services.conditions.delete(conditionId)
@@ -26,6 +18,7 @@ export default function ConditionList() {
     <List>
       {conditionsAndCategories.map(con => (
         <ListItem
+          data-testid={`condition-list-item-${con.id}`}
           key={con.id}
           secondaryAction={(
             <IconButton
@@ -37,8 +30,8 @@ export default function ConditionList() {
           )}
         >
           <ListItemText
-            primary={con.symptom.name}
-            secondary={con.categoryName}
+            primary={con.symptomName ?? "Unbekannt"}
+            secondary={con.catName ?? "Unbekannt"}
           />
           <Severity
             conditionId={con.id}

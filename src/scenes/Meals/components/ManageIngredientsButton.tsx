@@ -1,4 +1,4 @@
-import AppleIcon from "@mui/icons-material/Apple";
+import SortIcon from "@mui/icons-material/Sort";
 import IconButton from "@mui/material/IconButton";
 
 import { useAppNavigate } from "../../../hooks/useNavigate"
@@ -16,7 +16,7 @@ export const ManageIngredientsButton = () => {
       onClick={onManageClick}
       color="primary"
     >
-      <AppleIcon/>
+      <SortIcon/>
     </IconButton>
   )
 }
