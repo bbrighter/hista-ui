@@ -2,13 +2,12 @@ import { hista } from "../../api/generatedApi"
 import { Food, respToFood } from "./food.types"
 
 export interface Meal {
-  id?: number
+  id: number
   date: Date
   freshness: Freshness
   isAlone: boolean
   stressLevel: number
   foods: Food[]
-  isLoading: boolean
 }
 
 export enum Freshness {
@@ -37,7 +36,6 @@ export const respToMeal = (resp: hista.MealResponse): Meal => {
     isAlone: resp.isAlone,
     stressLevel: resp.stressLevel,
     foods: foods,
-    isLoading: false,
   }
   return meal
 }

@@ -7,10 +7,13 @@ import Stack from "@mui/material/Stack";
 import { useState } from "react"
 
 import { useAppNavigate } from "../../hooks/useNavigate"
-import { conditionEvents } from "../../store"
+import { conditionEvents, selectIsLoadingAny } from "../../store"
+import useHista from "../../store/store";
+import { Loading } from "../components";
 import EventList from "./components/EventList"
 
 export default function ConditionEvents() {
+  const isLoading = useHista(selectIsLoadingAny(["conditionEvents"]))
   const navigate = useAppNavigate()
   const [loading, setLoading] = useState(false)
 
@@ -28,24 +31,26 @@ export default function ConditionEvents() {
   }
 
   return (
-    <Container sx={{ paddingTop: "2rem" }}>
-      <Stack direction="row" spacing={2}>
-        <Button
-          variant="contained"
-          startIcon={<SickIcon />}
-          onClick={onClickAddSymptom}
-          loading={loading}
-        >
-          Neues Symptom
-        </Button>
-        <IconButton 
-          data-testid="manage-symptoms-button"
-          color="primary" 
-          onClick={onClickManageSymptoms}>
-          <SortIcon/>
-        </IconButton>
-      </Stack>
-      <EventList />
-    </Container>
+    <Loading show={isLoading}>
+      <Container sx={{ paddingTop: "2rem" }}>
+        <Stack direction="row" spacing={2}>
+          <Button
+            variant="contained"
+            startIcon={<SickIcon />}
+            onClick={onClickAddSymptom}
+            loading={loading}
+          >
+            Neues Symptom
+          </Button>
+          <IconButton 
+            data-testid="manage-symptoms-button"
+            color="primary" 
+            onClick={onClickManageSymptoms}>
+            <SortIcon/>
+          </IconButton>
+        </Stack>
+        <EventList />
+      </Container>
+    </Loading>
   )
 }

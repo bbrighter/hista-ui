@@ -6,6 +6,7 @@ export * from "./statistics.service";
 export * from "./status.service"
 
 import { conditionEvents } from "./conditionEvents.service";
+import { headaches }  from "./headaches.service"
 import { mealService } from "./meal.service";
 import { notes } from "./notes.service";
 import { pollens } from "./pollens.service"
@@ -20,5 +21,5 @@ export const services = {
   template,
   meal: mealService,
   pollens,
-
+  headaches,
 }

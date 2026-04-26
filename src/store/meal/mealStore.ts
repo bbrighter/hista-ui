@@ -8,14 +8,13 @@ type State = NonFunctionProperties<MealStore>
 const initialState: State = {
   meals: [],
   meal: {
+    id: 0,
     date: new Date(),
     freshness: Freshness.fresh,
     isAlone: true,
     stressLevel: 0,
     foods: [],
-    isLoading: true,
   },
-  isMealsLoaded: false,
 }
 
 export const createMealSlice: StateCreator<
@@ -26,9 +25,6 @@ export const createMealSlice: StateCreator<
   ...initialState,
 
   resetMeals: () => set(initialState),
-  setIsMealsLoaded: (loaded: boolean) => set(state => {
-    state.isMealsLoaded = loaded
-  }),
 
   setMeals: (meals: Meals) => set(state => {
     state.meals = meals

@@ -1,7 +1,7 @@
 import { User } from "@bbrighter/auth-module/users";
 
 import { Instance } from "./auth/instance";
-import { BaseArrayStore, BaseRecordStore, ResetAction, SetAction, UpdateAction } from "./genericTypes";
+import { BaseArrayStore, BaseRecordStore, ResetAction, SetAction, SetSingleAction, UpdateAction } from "./genericTypes";
 import * as types from "./types"
 
 export type StoreType = AuthStore &
@@ -56,25 +56,25 @@ export type ConditionEventStore = {
   updateCondition: (id: number, part: Partial<types.Condition>) => void 
 }
 
-export type HeadacheStore = {
-  headaches: Array<types.Headache>
-  headache: types.Headache
+// export type HeadacheStore = {
+//   headaches: Array<types.Headache>
+//   headache: types.Headache
       
-  isHeadacheLoaded: boolean
-  resetHeadaches: () => void
+//   isHeadacheLoaded: boolean
+//   resetHeadaches: () => void
     
-  getHeadaches(): Promise<Array<types.Headache>>
-  getHeadache(id: number): Promise<void>
-  postHeadache(): Promise<number>
-  deleteHeadache(id: number): Promise<void>
+//   getHeadaches(): Promise<Array<types.Headache>>
+//   getHeadache(id: number): Promise<void>
+//   postHeadache(): Promise<number>
+//   deleteHeadache(id: number): Promise<void>
     
-  patchHeadacheSeverity(newSeverity: number): Promise<void>
-  patchHeadacheDate(date: Date): Promise<void>
-  patchHeadachePositions(pos: types.HeadachePositions): Promise<void>
-  patchHeadacheTypes(types: types.HeadacheTypes): Promise<void>
-  patchHeadacheSymptoms(symptoms: types.HeadacheSymptoms): Promise<void>
-  patchHeadacheDescription(description: string): Promise<void>
-}
+//   patchHeadacheSeverity(newSeverity: number): Promise<void>
+//   patchHeadacheDate(date: Date): Promise<void>
+//   patchHeadachePositions(pos: types.HeadachePositions): Promise<void>
+//   patchHeadacheTypes(types: types.HeadacheTypes): Promise<void>
+//   patchHeadacheSymptoms(symptoms: types.HeadacheSymptoms): Promise<void>
+//   patchHeadacheDescription(description: string): Promise<void>
+// }
 
 export const loadingEntities = [
   "templates",
@@ -87,6 +87,10 @@ export const loadingEntities = [
   "notes",
   "symptoms",
   "pollens",
+  "meal",
+  "meals",
+  "headaches",
+  "headache",
 ] as const
 export type LoadingEntity = typeof loadingEntities[number]
 
@@ -121,10 +125,8 @@ export type PollenStore = SetAction<types.Pollen, "pollens"> &
 export type MealStore = {
   meals: types.Meals
   meal: types.Meal
-  isMealsLoaded: boolean
 
   resetMeals: () => void
-  setIsMealsLoaded: (loaded: boolean) => void
     
   setMeals: (meals: types.Meals) => void
   setMetaMeal: (id: number, meal: Partial<types.MetaMeal>) => void
@@ -141,13 +143,15 @@ export interface StatisticsStore {
   diaryEntries: Array<types.RawDiary>
   statistics: types.SymptomStatistics
   mealCount: number
-  nutrutionStatistics: types.NutritionStatistics
+  nutritionStatistics: types.NutritionStatistics
 
   setDiaryEntries: (diaries: Array<types.RawDiary>) => void
   setMealCount: (count: number) => void
   setSymptomStatistics: (stats: types.SymptomStatistics) => void
   resetStatistics: () => void
   setNutritionStatistics: (stats: types.NutritionStatistics) => void
-    
 }
 
+export type HeadacheStore = 
+  BaseRecordStore<types.Headache, "headaches", "headache"> &
+  {headache: types.Headache} & SetSingleAction<types.Headache, "headache">

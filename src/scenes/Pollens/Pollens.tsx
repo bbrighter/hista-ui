@@ -3,23 +3,19 @@ import Container from "@mui/material/Container"
 import Divider from "@mui/material/Divider"
 import List from "@mui/material/List"
 import Skeleton from "@mui/material/Skeleton"
-import { useState } from "react"
 
 import { usePiidEffect } from "../../hooks/usePiidEffect"
-import { services } from "../../store"
+import { selectIsLoadingAny, services } from "../../store"
 import useHista from "../../store/store"
 import PollenHeader from "./components/PollenHeader"
 import PollenRow from "./components/PollenRow"
 
 export default function PollenView() {
-
   const pollens = useHista(state => state.pollens)
-
-  const [isLoading, setIsLoading] = useState(false)
+  const isLoading = useHista(selectIsLoadingAny(["pollens"]))
 
   usePiidEffect(() => {
-    setIsLoading(true)
-    services.pollens.get().finally(() => setIsLoading(false))
+    services.pollens.get()
   }, [])
 
   return (

@@ -5,13 +5,15 @@ import dayjs from "dayjs"
 import { useParams } from "react-router-dom"
 
 import { usePiidEffect } from "../../hooks/usePiidEffect"
-import { conditionEvents } from "../../store"
+import { conditionEvents, selectIsLoadingAny } from "../../store"
 import useHista from "../../store/store"
+import { Loading } from "../components"
 import DateInput from "../components/DateInput"
 import AddCondition from "./components/AddCondition"
 import ConditionList from "./components/ConditionList"
 
 export default function ConditionEvent() {
+  const isLoading = useHista(selectIsLoadingAny(["conditionEvent", "symptoms"]))
   const conditionEvent = useHista(state => state.conditionEvent)
   const params = useParams<{ eventId: string }>()
 
@@ -27,18 +29,20 @@ export default function ConditionEvent() {
   }
 
   return (
-    <Container sx={{ padding: "2rem" }}>
-      <FormGroup>
-        <DateInput
-          date={conditionEvent.date}
-          title="Symptome"
-          onChange={onChange}
-        />
-        <FormControl>
-          <AddCondition />
-        </FormControl>
-      </FormGroup>
-      <ConditionList />
-    </Container>
+    <Loading show={isLoading}>
+      <Container sx={{ padding: "2rem" }}>
+        <FormGroup>
+          <DateInput
+            date={conditionEvent.date}
+            title="Symptome"
+            onChange={onChange}
+          />
+          <FormControl>
+            <AddCondition />
+          </FormControl>
+        </FormGroup>
+        <ConditionList />
+      </Container>
+    </Loading>
   )
 }

@@ -29,10 +29,10 @@ test("get diaries", async () => {
 test("get nutrition stats", async () => {
   await statisticsService.getNutritionStatistics("day")
 
-  const { nutrutionStatistics } = useHista.getState()
-  expect(nutrutionStatistics.statistics).toHaveLength(2)
-  expect(nutrutionStatistics.interval).toBe("day")
-  const stat0 = nutrutionStatistics.statistics[0]
+  const { nutritionStatistics } = useHista.getState()
+  expect(nutritionStatistics.statistics).toHaveLength(2)
+  expect(nutritionStatistics.interval).toBe("day")
+  const stat0 = nutritionStatistics.statistics[0]
   expect(stat0.date.getDate()).toBe(14)
   expect(stat0.nutrition).toStrictEqual({ carbohydrate: 10, fat: 25, fiber: 5.2, protein: 0 })
 })

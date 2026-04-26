@@ -21,8 +21,6 @@ export const useConditionsWithSymptoms = () => {
     cat.symptoms.map(s => ({ catId: cat.categoryId, catName: cat.categoryName, symptomId: s.id, symptomName: s.name }))
   ))
 
-  console.log("useConditionswithsymptoms", conditions, symptoms)
-
   return useMemo(() => conditions.map(c => {
     const symptom = flatSymptoms.find(s => s.symptomId == c.symptomId)
     return { ...c, ...symptom }

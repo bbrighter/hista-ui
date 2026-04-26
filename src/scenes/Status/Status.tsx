@@ -1,44 +1,30 @@
 import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
-import Skeleton from "@mui/material/Skeleton"
-import dayjs from "dayjs"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
-import { statusService, useStatus } from "../../store"
+import { selectIsLoadingAny, statusService, useStatus } from "../../store"
+import useHista from "../../store/store"
+import { Loading } from "../components"
 import { AddStatus, StatusCard } from "./components"
 
 export default function Status() {
   const statuses = useStatus()
-  const [isLoading, setIsLoading] = useState(false)
+  const isLoading = useHista(selectIsLoadingAny(["statuses"]))
 
   useEffect(() => {
-    setIsLoading(true)
-    statusService.getStatuses().finally(() => setIsLoading(false))
+    statusService.getStatuses()
   }, [])
 
   return (
-    <Container sx={{ padding: "2rem" }}>
-      <AddStatus disabled={isLoading} />
-      <Grid container>
-        {isLoading
-          ? (
-            <>
-              {[{ id: 1, date: dayjs() }, { id: 2, date: dayjs() }, { id: 3, date: dayjs() }].map(s =>
-                (
-                  <Skeleton key={s.id}><StatusCard status={s} /></Skeleton>
-                ))}
-            </>
-          )
-
-          : (
-            <>
-              {statuses.map(s => (
-                <StatusCard key={s.id} status={s} />
-
-              ))}
-            </>
-          )}
-      </Grid>
-    </Container>
+    <Loading show={isLoading}>
+      <Container sx={{ padding: "2rem" }}>
+        <AddStatus disabled={isLoading} />
+        <Grid container>
+          {statuses.map(s => (
+            <StatusCard key={s.id} status={s} />
+          ))}       
+        </Grid>
+      </Container>
+    </Loading>
   )
 }

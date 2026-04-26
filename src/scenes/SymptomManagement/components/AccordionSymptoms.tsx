@@ -63,7 +63,7 @@ function SymptomAccordionEntry(props: {
     setIsLoading(false)
     setMode("default")
   }
-  const onCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onCancel = (e: React.MouseEvent<Element, MouseEvent>) => {
     e.stopPropagation()
     setMode("default")
   }
