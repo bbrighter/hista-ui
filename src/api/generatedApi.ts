@@ -184,7 +184,7 @@ export namespace hista {
 
     export interface ConditionResponse {
         id: number
-        symptom: SymptomResponse
+        symptomId: number
         severity: number
     }
 
@@ -348,7 +348,7 @@ export namespace hista {
     }
 
     export interface PatchFoodAmountParams {
-        amount: number
+        amount?: number
     }
 
     export interface PatchFoodConditionParams {

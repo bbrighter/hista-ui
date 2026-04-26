@@ -12,5 +12,5 @@ export const respToMetaMeals = (resp: hista.MealListResponse): Meals => {
   const meals = resp.meals.map(m => (
     { id: m.id, date: new Date(m.date) }
   ))
-  return meals
+  return meals.sort((a,b) => b.date.getTime() - a.date.getTime())
 }

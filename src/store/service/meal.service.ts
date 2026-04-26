@@ -113,9 +113,10 @@ export const mealService = {
   },
 
   patchFoodAmount: async (id: number, amount: number) => {
-    await client.PatchFoodAmount(id, { amount: amount })
+    const value = amount > 0 ? amount : undefined
+    await client.PatchFoodAmount(id, { amount: value })
 
     const { updateFood } = useHista.getState()
-    updateFood(id, { amount: amount > 0 ? amount : undefined })
+    updateFood(id, { amount: value })
   },
 }

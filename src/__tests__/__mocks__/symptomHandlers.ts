@@ -40,7 +40,7 @@ const conditionEventHandlers = (baseUrl: string) => (
     http.get(baseUrl + "/condition-events/:id", () => (HttpResponse.json(
       {
         id: 1, date: "2024-01-01T00:00:00Z", conditions: [
-          { id: 1, severity: 3, symptom: { id: 1, name: "symptom1", categoryId: 1 } },
+          { id: 1, severity: 3, symptomId: 1 },
         ],
       } satisfies hista.ConditionEventResponse,
     ))),
@@ -56,7 +56,7 @@ const conditionEventHandlers = (baseUrl: string) => (
       return HttpResponse.json({})
     }),
     http.post(baseUrl + "/condition-events/:id/conditions", () => (HttpResponse.json({
-      condition: { id: 4, severity: 1, symptom: { id: 2, name: "symptom2", categoryId: 1 } },
+      condition: { id: 4, severity: 1, symptomId: 2 },
       symptoms: categories,
     } satisfies hista.PostConditionResponse))),
   ]

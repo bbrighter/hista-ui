@@ -6,7 +6,7 @@ import { beforeAll, describe, expect, it, vi } from "vitest"
 import ConditionEvents from "./ConditionEvents"
 
 const findRowByDate = async (date: string): Promise<HTMLElement> => {
-  return (await screen.findByText(new RegExp(date))).closest("li")
+  return (await screen.findByText(new RegExp(date))).closest("li")!
 }
 
 const mockNavigate = vi.fn()
@@ -76,7 +76,7 @@ describe("Manage condition events", () => {
   it("Symptom management can be opened", async () => {
     render(<MemoryRouter><ConditionEvents /></MemoryRouter>)
 
-    const managementButton = await screen.findByText("Symptome verwalten")
+    const managementButton = await screen.findByTestId("manage-symptoms-button")
     expect(managementButton).toBeInTheDocument()
 
     await userEvent.click(managementButton)

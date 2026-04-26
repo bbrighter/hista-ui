@@ -86,7 +86,10 @@ export const conditions = {
 
     const resp = await client.PostCondition(conditionEvent.id, { symptomName: name, categoryId: catId })
     addCondition(respToCondition(resp.condition))
-    setSymptoms(respToSymptoms(resp.symptoms))
+    if (resp.symptoms) {
+      setSymptoms(respToSymptoms(resp.symptoms))
+    }
+    
 
   },
 

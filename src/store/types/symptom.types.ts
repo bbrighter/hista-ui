@@ -29,11 +29,3 @@ export function respToSymptoms(resp: hista.SymptomCategoryListResponse): Symptom
 
   )
 }
-
-export function respToSymptom(resp: hista.SymptomResponse): Symptom {
-  return {
-    id: resp.id,
-    categoryId: resp.categoryId,
-    name: resp.name,
-  }
-}

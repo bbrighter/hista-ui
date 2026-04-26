@@ -1,10 +1,9 @@
 import { hista } from "../../api/generatedApi"
-import { Symptom } from "./symptom.types"
 
 
 export type Condition = {
   id: number
-  symptom: Symptom
+  symptomId: number
   severity: number
 }
 
@@ -21,11 +20,7 @@ export const respToConditionEvent = (resp: hista.ConditionEventResponse): Condit
     {
       id: c.id,
       severity: c.severity,
-      symptom: {
-        id: c.symptom.id,
-        name: c.symptom.name,
-        categoryId: c.symptom.categoryId,
-      },
+      symptomId: c.symptomId,
     }
   )),
 })

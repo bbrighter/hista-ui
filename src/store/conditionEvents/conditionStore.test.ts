@@ -7,7 +7,7 @@ describe("condition event store", () => {
     useHista.getState().setConditionEvent({
       id: 1,
       date: new Date(),
-      conditions: [{ id: 2, severity: 2, symptom: { id: 3, categoryId: 4, name: "symptom" } }],
+      conditions: [{ id: 2, severity: 2, symptomId: 3 }],
     })
   })
 
