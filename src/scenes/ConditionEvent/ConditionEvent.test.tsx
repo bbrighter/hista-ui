@@ -1,9 +1,11 @@
 import { fireEvent, screen, waitFor, within } from "@testing-library/dom"
 import { render } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { delay, http, HttpResponse } from "msw"
 import { MemoryRouter, Route, Routes } from "react-router-dom"
 import { describe, expect, it } from "vitest"
 
+import { server } from "../../__tests__/setupTest"
 import ConditionEvent from "./ConditionEvent"
 
 const renderConditionEvent = () => {
@@ -82,5 +84,19 @@ describe("condition event is rendered and can be edited", () => {
     const newListItem = screen.getByTestId("condition-list-item-4")// 4 is the ID of the new condition
     expect(newListItem).toBeInTheDocument()
     expect(newListItem).toHaveTextContent("symptom2")
+  })
+
+  it("Show loading indicator", async () => {
+    server.use(
+      http.get("http://localhost:4444/piid/:piid/condition-events/:id", async () => {
+        await delay(100)
+        return HttpResponse.json( {
+          id: 1, date: "2024-01-01T00:00:00Z", conditions: [{ id: 1, severity: 3, symptomId: 1 }] })
+      }))
+    renderConditionEvent()
+
+    expect(await screen.findByTestId("loading-spinner")).toBeVisible()
+
+    await waitFor(() => expect(screen.queryByTestId("loading-spinner")).not.toBeVisible())
   })
 })

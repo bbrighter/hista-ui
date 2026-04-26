@@ -1,8 +1,10 @@
-import { render, screen, within } from "@testing-library/react"
+import { render, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { delay, http, HttpResponse } from "msw"
 import { MemoryRouter } from "react-router-dom"
 import { beforeAll, describe, expect, it, vi } from "vitest"
 
+import { server } from "../../__tests__/setupTest"
 import ConditionEvents from "./ConditionEvents"
 
 const findRowByDate = async (date: string): Promise<HTMLElement> => {
@@ -81,5 +83,18 @@ describe("Manage condition events", () => {
 
     await userEvent.click(managementButton)
     expect(mockNavigate).toHaveBeenCalledWith("/7b3047c2-d56d-4942-abc4-39eb85e785f2/manage-symptoms")
+  })
+
+  it("Show loading indicator", async () => {
+    server.use(
+      http.get("http://localhost:4444/piid/:piid/condition-events", async () => {
+        await delay(100)
+        return HttpResponse.json({ conditionEvents: [] })}),
+    )
+    render(<MemoryRouter><ConditionEvents /></MemoryRouter>)
+
+    expect(await screen.findByTestId("loading-spinner")).toBeVisible()
+
+    await waitFor(() => expect(screen.queryByTestId("loading-spinner")).not.toBeVisible())
   })
 })

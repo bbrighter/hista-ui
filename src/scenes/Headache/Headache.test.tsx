@@ -2,9 +2,11 @@ import { beforeEach } from "node:test"
 
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { delay, http, HttpResponse } from "msw"
 import { MemoryRouter, Route, Routes } from "react-router-dom"
 import { describe, expect, it, vi } from "vitest"
 
+import { server } from "../../__tests__/setupTest"
 import { services } from "../../store"
 import Headache from "./Headache"
 
@@ -164,5 +166,30 @@ describe("A headache can be edited and displayed", () => {
     // await waitFor(() => {
     //     expect(patchHeadacheDescription).toHaveBeenCalled()
     // }, { timeout: 5000 })
+  })
+
+  it("Show loading indicator", async () => {
+    server.use(
+      http.get("http://localhost:4444/piid/:piid/headaches/:id", async () => {
+        await delay(100)
+        return HttpResponse.json({  id: 1,
+          date: "2022-01-01T00:00:00Z",
+          severity: 3,
+          types: ["stabbing"],
+          positions: ["left", "right"],
+          symptoms: ["tired", "nausea"],
+          description: "description" })}),
+    )
+    render(      
+      <MemoryRouter initialEntries={["/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1"]}>
+        <Routes>
+          <Route path="/:piid/headaches/:headacheId" element={<Headache />} />
+        </Routes>
+      </MemoryRouter>,
+    )
+
+    expect(await screen.findByTestId("loading-spinner")).toBeVisible()
+
+    await waitFor(() => expect(screen.queryByTestId("loading-spinner")).not.toBeVisible())
   })
 })

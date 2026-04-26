@@ -15,7 +15,10 @@ export const Loading = ({ show, children }: {show: boolean, children: React.Reac
           zIndex: (theme) => theme.zIndex.modal,
         }}
       >
-        <CircularProgress size={60}/>
+        <CircularProgress
+          data-testid="loading-spinner" 
+          size={60}
+        />
       </Backdrop>
     </Box>
   )
