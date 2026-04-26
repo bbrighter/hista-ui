@@ -89,15 +89,13 @@ export const conditions = {
     if (resp.symptoms) {
       setSymptoms(respToSymptoms(resp.symptoms))
     }
-    
-
   },
 
   postById: async (id: number) => {
     const { addCondition, conditionEvent } = useHista.getState()
 
     const resp = await client.PostCondition(conditionEvent.id, { symptomId: id })
-    addCondition(respToCondition(resp.condition))
+    addCondition({ id: resp.condition.id, symptomId: id, severity: resp.condition.severity })
   },
 
   patchSeverity: async (id: number, severity: number) => {

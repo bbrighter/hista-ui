@@ -30,8 +30,8 @@ export default function ConditionList() {
           )}
         >
           <ListItemText
-            primary={con.symptomName}
-            secondary={con.catName}
+            primary={con.symptomName ?? "Unbekannt"}
+            secondary={con.catName ?? "Unbekannt"}
           />
           <Severity
             conditionId={con.id}

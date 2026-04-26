@@ -116,6 +116,6 @@ describe("useConditionsWithSymptoms", () => {
 
     expect(result.current).toHaveLength(2)
     expect(result.current).toContainEqual({ catId: 1, catName: "Cat 1", symptomId: 1, symptomName: "Symptom 1", id: 1, severity: 3 })
-    expect(result.current).toContainEqual({ catId: 0, catName: "Unbekannt", symptomId: 5, symptomName: "Unbekannt", id: 2, severity: 1 })
+    expect(result.current).toContainEqual({ symptomId: 5, id: 2, severity: 1 })
   })
 })
