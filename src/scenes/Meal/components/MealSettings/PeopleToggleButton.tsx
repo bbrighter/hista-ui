@@ -6,7 +6,7 @@ import ToggleButton from "@mui/material/ToggleButton"
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup"
 
 type PeopleToggleButtonProps = {
-  isLoading: boolean
+  isLoading?: boolean
   isAlone: boolean
   handleToggleOptionChange: (value: boolean | null) => void
 }
@@ -27,7 +27,7 @@ export const PeopleToggleButton = ({ isLoading, isAlone, handleToggleOptionChang
               value={true}
               title="Alleine"
             >
-              {isLoading == true ? <CircularProgress size={20} /> : <PersonIcon />}
+              {isLoading ? <CircularProgress size={20} /> : <PersonIcon />}
             </ToggleButton>
             <ToggleButton
               value={false}

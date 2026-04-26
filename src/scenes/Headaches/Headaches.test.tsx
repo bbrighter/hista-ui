@@ -1,12 +1,14 @@
-import { render, screen, within } from "@testing-library/react"
+import { render, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { delay, http, HttpResponse } from "msw"
 import { MemoryRouter } from "react-router-dom"
 import { describe, expect, it, vi } from "vitest"
 
+import { server } from "../../__tests__/setupTest"
 import Headaches from "./Headaches"
 
 const findRowByDate = async (date: string): Promise<HTMLElement> => {
-  return (await screen.findByText(new RegExp(date))).closest("li")
+  return (await screen.findByText(new RegExp(date))).closest("li")!
 }
 
 const mockNavigate = vi.fn()
@@ -63,5 +65,18 @@ describe("Headache management", () => {
     await userEvent.click(row)
 
     expect(mockNavigate).toHaveBeenCalledWith("1")
+  })
+
+  it("Show loading indicator", async () => {
+    server.use(
+      http.get("http://localhost:4444/piid/:piid/headaches", async () => {
+        await delay(100)
+        return HttpResponse.json({ headaches: [] })}),
+    )
+    render(<MemoryRouter><Headaches /></MemoryRouter>)
+
+    expect(await screen.findByTestId("loading-spinner")).toBeVisible()
+
+    await waitFor(() => expect(screen.queryByTestId("loading-spinner")).not.toBeVisible())
   })
 })

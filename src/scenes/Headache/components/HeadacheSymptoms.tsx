@@ -1,13 +1,13 @@
-import { validHeadacheSymptoms } from "../../../store"
+import { services, validHeadacheSymptoms } from "../../../store"
 import useHista from "../../../store/store"
 import HeadacheInputs, { ValueLabelPair } from "./Tags"
 
 export default function HeadacheSymptomsButtons() {
   const symptoms = useHista(state => state.headache.symptoms)
-  const patchSymptoms = useHista(state => state.patchHeadacheSymptoms)
+  const id = useHista(state => state.headache.id)
 
-  const onAdd = (v: ValueLabelPair) => patchSymptoms([...symptoms, v])
-  const onRemove = (v: ValueLabelPair) => patchSymptoms(symptoms.filter(pos => pos.value !== v.value))
+  const onAdd = (v: ValueLabelPair) => services.headaches.patchSymptoms(id, [...symptoms, v])
+  const onRemove = (v: ValueLabelPair) => services.headaches.patchSymptoms(id, symptoms.filter(pos => pos.value !== v.value))
 
   return (
     <HeadacheInputs

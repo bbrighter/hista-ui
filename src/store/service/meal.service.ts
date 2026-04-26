@@ -5,12 +5,13 @@ import { FoodCondition, Freshness, respToFood, respToIngredients, respToMeal, re
 
 export const mealService = {
   listMeals: async () => {
-    const { setMeals, meals } = useHista.getState()
+    const { setMeals, meals, setLoaded } = useHista.getState()
     if (meals.length > 0) return
 
     const resp = await client.ListMeals()
 
     setMeals(respToMetaMeals(resp))
+    setLoaded("meals")
   },
 
   postMeal: async () => {
@@ -30,8 +31,9 @@ export const mealService = {
   getMeal: async (id: number) => {
     const resp = await client.GetMeal(id)
     
-    const { setMeal } = useHista.getState()
+    const { setMeal, setLoaded } = useHista.getState()
     setMeal(respToMeal(resp))
+    setLoaded("meal")
   },
 
   deleteMeal: async (id: number) => {

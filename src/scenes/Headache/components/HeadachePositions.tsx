@@ -1,15 +1,14 @@
-
-import { validHeadachePositions } from "../../../store"
+import { services, validHeadachePositions } from "../../../store"
 import useHista from "../../../store/store"
 import HeadacheInputs, { ValueLabelPair } from "./Tags"
 
 export default function HeadachePositionsButtons() {
   const positions = useHista(state => state.headache.positions)
-  const patchPositions = useHista(state => state.patchHeadachePositions)
+  const id = useHista(state => state.headache.id)
 
-  const onAdd = (v: ValueLabelPair) => patchPositions([...positions, v])
+  const onAdd = (v: ValueLabelPair) => services.headaches.patchPositions(id, [...positions, v])
 
-  const onRemove = (v: ValueLabelPair) => patchPositions(positions.filter(pos => pos.value != v.value))
+  const onRemove = (v: ValueLabelPair) => services.headaches.patchPositions(id, positions.filter(pos => pos.value != v.value))
 
   return (
     <HeadacheInputs

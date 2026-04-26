@@ -4,22 +4,21 @@ import Container from "@mui/material/Container"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
+import { selectIsLoadingAny, services, useHeadaches } from "../../store"
 import useHista from "../../store/store"
-import { OverviewList } from "../components"
+import { Loading, OverviewList } from "../components"
 import { getColor } from "../Headache/components/colorMapping"
 
 export default function Headaches() {
+  const isLoading = useHista(selectIsLoadingAny(["headaches"]))
   const navigate = useNavigate()
-  const [loading, setLoading] = useState(false)
-  const getHeadaches = useHista(state => state.getHeadaches)
-  const postHeadache = useHista(state => state.postHeadache)
-  const deleteHeadache = useHista(state => state.deleteHeadache)
-  const headaches = useHista(state => state.headaches)
+  const [postLoading, setPostLoading] = useState(false)
+  const headaches = useHeadaches()
 
   const onCreate = async () => {
-    setLoading(true)
-    const id = await postHeadache()
-    setLoading(false)
+    setPostLoading(true)
+    const id = await services.headaches.post()
+    setPostLoading(false)
     if (id) {
       navigate(`${id}`)
     }
@@ -30,24 +29,26 @@ export default function Headaches() {
   }
 
   return (
-    <Container sx={{ padding: "2rem" }}>
-      <Button
-        startIcon={<FaceRetouchingNaturalIcon />}
-        variant="contained"
-        onClick={onCreate}
-        loading={loading}
-      >
-        Neuer Kopfschmerz
-      </Button>
-      <OverviewList
-        getData={getHeadaches}
-        items={headaches}
-        onClick={onClick}
-        onDelete={deleteHeadache}
-        showSeverity
-        severityColorMapping={getColor}
-      />
-    </Container>
+    <Loading show={isLoading}>
+      <Container sx={{ padding: "2rem" }}>
+        <Button
+          startIcon={<FaceRetouchingNaturalIcon />}
+          variant="contained"
+          onClick={onCreate}
+          loading={postLoading}
+        >
+          Neuer Kopfschmerz
+        </Button>
+        <OverviewList
+          getData={services.headaches.list}
+          items={headaches}
+          onClick={onClick}
+          onDelete={services.headaches.delete}
+          showSeverity
+          severityColorMapping={getColor}
+        />
+      </Container>
+    </Loading>
 
   )
 }

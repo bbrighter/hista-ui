@@ -28,7 +28,7 @@ const isFoodOption = (v: InputOption) => {
 }
 
 export function AddFood() {
-  const mealId = useHista(state => state.meal.id)!
+  const mealId = useHista(state => state.meal.id)
   const options = useOptions()
 
   const [inputValue, setInputValue] = useState<string | undefined>("")

@@ -6,6 +6,10 @@ export type SetAction<T, K extends string> = {
   [P in `set${Capitalize<K>}`]: (items: Array<T>) => void
 }
 
+export type SetSingleAction<T, K extends string> = {
+  [P in `set${Capitalize<K>}`]: (item: T) => void
+}
+
 type SetRecordAction<T, K extends string> = {
   [P in `set${Capitalize<K>}`]: (items: Record<number,T>) => void
 }

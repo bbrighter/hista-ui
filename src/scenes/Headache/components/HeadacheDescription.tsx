@@ -4,12 +4,13 @@ import { useEffect, useRef, useState } from "react"
 
 import useDebounce from "../../../hooks/useDebounce"
 import { useDidUpdateEffect } from "../../../hooks/useDidUpdateEffect"
+import { services } from "../../../store"
 import useHista from "../../../store/store"
 
 export default function HeadacheDescription() {
   const firstUpdate = useRef(true)
   const description = useHista(state => state.headache.description)
-  const patchDescription = useHista(state => state.patchHeadacheDescription)
+  const id = useHista(state => state.headache.id)
 
   const [textInput, setTextInput] = useState("")
   const [isDirty, setIsDirty] = useState(false)
@@ -26,7 +27,7 @@ export default function HeadacheDescription() {
       firstUpdate.current = false
       return
     }
-    patchDescription(debouncedValue).then(() => setIsDirty(false))
+    services.headaches.patchDescription(id, debouncedValue).then(() => setIsDirty(false))
   }, [debouncedValue])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

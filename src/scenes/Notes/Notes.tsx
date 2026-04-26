@@ -3,10 +3,13 @@ import Box from "@mui/material/Box"
 import Container from "@mui/material/Container"
 import { useMemo, useState } from "react"
 
-import {  useNotes } from "../../store"
+import {  selectIsLoadingAny, useNotes } from "../../store"
+import useHista from "../../store/store"
+import { Loading } from "../components"
 import { AddNoteButton, NoteSearch, NotesList } from "./components"
 
 export default function Notes() {
+  const isLoading = useHista(selectIsLoadingAny(["notes"]))
   const notes = useNotes()
 
 
@@ -35,16 +38,18 @@ export default function Notes() {
   }
 
   return (
-    <Container sx={{ padding: "2rem" }}>
-      <AddNoteButton/>
-      <Box>
-        <NoteSearch
-          searchValue={searchValue}
-          onClear={() => setSearchValue("")}
-          onChange={handleSearchChange}
-        />
-      </Box>
-      <NotesList notes={filteredNotes}/>
-    </Container>
+    <Loading show={isLoading}>
+      <Container sx={{ padding: "2rem" }}>
+        <AddNoteButton/>
+        <Box>
+          <NoteSearch
+            searchValue={searchValue}
+            onClear={() => setSearchValue("")}
+            onChange={handleSearchChange}
+          />
+        </Box>
+        <NotesList notes={filteredNotes}/>
+      </Container>
+    </Loading>
   )
 }

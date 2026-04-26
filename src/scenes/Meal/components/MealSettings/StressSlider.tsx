@@ -9,7 +9,7 @@ import { JSX } from "react"
 import DebouncedSlider from "../../../components/DebouncedSlider"
 
 type StressSliderProps = {
-  isLoading: boolean
+  isLoading?: boolean
   stressLevel: number
   setStressLevel: (v: number) => Promise<void>
 }

@@ -9,7 +9,7 @@ const initialState: State = {
   diaryEntries: [],
   mealCount: 0,
   statistics: [],
-  nutrutionStatistics: { statistics: [], interval: "" },
+  nutritionStatistics: { statistics: [], interval: "" },
 }
 
 export const createStatisticsSlice: StateCreator<
@@ -36,7 +36,7 @@ export const createStatisticsSlice: StateCreator<
   },
   setNutritionStatistics: (stats: NutritionStatistics) => {
     set(state => {
-      state.nutrutionStatistics = stats
+      state.nutritionStatistics = stats
     })
   },
   resetStatistics: () => {

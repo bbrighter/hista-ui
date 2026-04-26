@@ -1,13 +1,13 @@
-import { validHeadacheTypes } from "../../../store"
+import { services, validHeadacheTypes } from "../../../store"
 import useHista from "../../../store/store"
 import HeadacheInputs, { ValueLabelPair } from "./Tags"
 
 export default function HeadacheTypesButtons() {
   const types = useHista(state => state.headache.types)
-  const patchTypes = useHista(state => state.patchHeadacheTypes)
+  const id = useHista(state => state.headache.id)
 
-  const onAdd = (v: ValueLabelPair) => patchTypes([...types, v])
-  const onRemove = (v: ValueLabelPair) => patchTypes(types.filter(pos => pos.value != v.value))
+  const onAdd = (v: ValueLabelPair) => services.headaches.patchTypes(id, [...types, v])
+  const onRemove = (v: ValueLabelPair) => services.headaches.patchTypes(id, types.filter(pos => pos.value != v.value))
 
   return (
     <HeadacheInputs

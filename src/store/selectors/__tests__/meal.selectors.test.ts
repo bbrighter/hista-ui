@@ -9,11 +9,11 @@ import { useTotalMealNutrition } from "../meal.selectors";
 test("useTotalNutrition", () => {
   const { setIngredients, setMeal } = useHista.getState()
   setMeal({ 
+    id: 1,
     date: new Date(), 
     freshness: Freshness.fresh, 
     isAlone: true, 
     stressLevel: 3, 
-    isLoading: false, 
     foods:[
       { id: 1, condition: "cooked", ingredientId: 1, amount: 100 },
       { id: 2, condition: "cooked", ingredientId: 2, amount: 10  },
