@@ -1,5 +1,3 @@
-import { hista } from "../../api/generatedApi"
-
 export interface Headache {
   id: number
   date: Date
@@ -56,20 +54,3 @@ export const validHeadacheSymptoms: HeadacheSymptoms = [
   { value: "physical activity", label: "Verstärkt durch körperliche Aktivität" },
   { value: "mind activity", label: "Verstärkt durch geistige Aktivität" },
 ]
-
-const respToHeadache = (resp: hista.HeadacheResponse): Headache => {
-  const headache: Headache = {
-    id: resp.id,
-    date: new Date(resp.date),
-    severity: resp.severity,
-    positions: resp.positions?.map(p => ({ value: p, label: validHeadachePositions.find(v => v.value == p)?.label ?? p })) ?? [],
-    types: resp.types?.map(t => ({ value: t, label: validHeadacheTypes.find(v => v.value == t)?.label ?? t })) ?? [],
-    symptoms: resp.symptoms?.map(s => ({ value: s, label: validHeadacheSymptoms.find(v => v.value == s)?.label ?? s })) ?? [],
-    description: resp.description,
-  }
-  return headache
-}
-
-export const respToHeadaches = (resp: hista.HeadacheListResponse): Array<Headache> => {
-  return resp.headaches.map(h => respToHeadache(h))
-}

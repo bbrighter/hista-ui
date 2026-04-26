@@ -14,10 +14,11 @@ export const conditionEvents = {
   },
 
   get: async (id: number) => {
-    const { setConditionEvent } = useHista.getState()
+    const { setConditionEvent, setLoaded } = useHista.getState()
 
     const resp = await client.GetConditionEvent(id)
     setConditionEvent(respToConditionEvent(resp))
+    setLoaded("conditionEvent")
   },
 
   delete: async (id: number) => {

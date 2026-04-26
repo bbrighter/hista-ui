@@ -4,7 +4,9 @@ import { Dayjs } from "dayjs"
 import { useParams } from "react-router-dom"
 
 import { usePiidEffect } from "../../hooks/usePiidEffect"
+import { selectIsLoadingAny, services } from "../../store"
 import useHista from "../../store/store"
+import { Loading } from "../components"
 import DateInput from "../components/DateInput"
 import DebouncedSlider from "../components/DebouncedSlider"
 import { getColor } from "./components/colorMapping"
@@ -14,24 +16,24 @@ import HeadacheSymptomsButtons from "./components/HeadacheSymptoms"
 import HeadacheTypesButtons from "./components/HeadacheTypes"
 
 export default function Headache() {
-  const params = useParams<{ headacheId: string }>()
+  const isLOading = useHista(selectIsLoadingAny(["headache"]))
+  const { headacheId } = useParams<{ headacheId: string }>()
+  const id = Number(headacheId)
   const headache = useHista(state => state.headache)
-  const getHeadache = useHista(state => state.getHeadache)
-  const patchSeverity = useHista(state => state.patchHeadacheSeverity)
-  const patchDate = useHista(state => state.patchHeadacheDate)
 
   usePiidEffect(() => {
-    getHeadache(Number(params.headacheId))
-  }, [params.headacheId])
+    services.headaches.get(id)
+  }, [headacheId])
 
   const onSeverityChange = (v: number) => {
     if (v != headache.severity) {
-      patchSeverity(v)
+      services.headaches.patchSeverity(id, v)
     }
   }
 
-  const onDateChange = (v: Dayjs) => {
-    patchDate(v.toDate())
+  const onDateChange = (v: Dayjs | null) => {
+    if (!v) return
+    services.headaches.patchDate(id, v)
   }
 
   const iconMapping = (value: number) => {
@@ -56,25 +58,27 @@ export default function Headache() {
   }
 
   return (
-    <Container sx={{ padding: "2rem" }}>
-      <DateInput
-        title="Datum"
-        date={headache.date}
-        onChange={onDateChange}
-      />
-      <DebouncedSlider
-        initialValue={headache.severity}
-        onChange={onSeverityChange}
-        label="Schwere"
-        min={0}
-        max={10}
-        colorMapping={getColor}
-        iconMapping={iconMapping}
-      />
-      <HeadachePositionsButtons />
-      <HeadacheTypesButtons />
-      <HeadacheSymptomsButtons />
-      <HeadacheDescription />
-    </Container>
+    <Loading show={isLOading}>
+      <Container sx={{ padding: "2rem" }}>
+        <DateInput
+          title="Datum"
+          date={headache.date}
+          onChange={onDateChange}
+        />
+        <DebouncedSlider
+          initialValue={headache.severity}
+          onChange={onSeverityChange}
+          label="Schwere"
+          min={0}
+          max={10}
+          colorMapping={getColor}
+          iconMapping={iconMapping}
+        />
+        <HeadachePositionsButtons />
+        <HeadacheTypesButtons />
+        <HeadacheSymptomsButtons />
+        <HeadacheDescription />
+      </Container>
+    </Loading>
   )
 }

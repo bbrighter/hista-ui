@@ -5,7 +5,7 @@ import { Freshness } from "../../../../store"
 import DebouncedSlider from "../../../components/DebouncedSlider"
 
 type FreshnessSliderProps = {
-  isLoading: boolean
+  isLoading?: boolean
   freshness: number
   setFreshness: (v: number) => Promise<void>
 }

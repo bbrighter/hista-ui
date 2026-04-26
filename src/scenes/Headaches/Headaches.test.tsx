@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest"
 import Headaches from "./Headaches"
 
 const findRowByDate = async (date: string): Promise<HTMLElement> => {
-  return (await screen.findByText(new RegExp(date))).closest("li")
+  return (await screen.findByText(new RegExp(date))).closest("li")!
 }
 
 const mockNavigate = vi.fn()

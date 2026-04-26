@@ -1,7 +1,6 @@
 import { utils, WorkBook } from "xlsx"
 
-import { Headache } from "../../../../store"
-import useHista from "../../../../store/store"
+import { Headache, useHeadaches } from "../../../../store"
 import { excelHeaderColumns, headacheExcelRows } from "./headacheColumns"
 
 export const buildHeadacheWorkbook = (headaches: Array<Headache>): WorkBook => {
@@ -26,6 +25,6 @@ export const buildHeadacheWorkbook = (headaches: Array<Headache>): WorkBook => {
 }
 
 export const useBuildHeadacheWorkBook = (): () => WorkBook => {
-  const headaches = useHista(state => state.headaches)
+  const headaches = useHeadaches()
   return () => buildHeadacheWorkbook(headaches)
 }

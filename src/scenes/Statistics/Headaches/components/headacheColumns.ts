@@ -1,7 +1,6 @@
 import { GridColDef, GridColumnGroupingModel, GridRowsProp } from "@mui/x-data-grid/models"
 
-import { Headache, validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from "../../../../store"
-import useHista from "../../../../store/store"
+import { Headache, useHeadaches, validHeadachePositions, validHeadacheSymptoms, validHeadacheTypes } from "../../../../store"
 
 export const headacheGridColumns: Array<GridColDef> = [
   { field: "date", headerName: "Zeit", type: "dateTime" },
@@ -19,7 +18,7 @@ export const headacheColumnGroupingModel: GridColumnGroupingModel = [
 ]
 
 export const useHeadacheGridRows = (): GridRowsProp => {
-  const headaches = useHista(state => state.headaches)
+  const headaches = useHeadaches()
   return headacheGridRows(headaches)
 }
 const headacheGridRows = (headaches: Array<Headache>): GridRowsProp => {
