@@ -1,4 +1,4 @@
-import ContentPasteIcon from "@mui/icons-material/ContentPaste";
+import DinnerDiningIcon from "@mui/icons-material/DinnerDining";
 import IconButton from "@mui/material/IconButton";
 
 import { useAppNavigate } from "../../../hooks/useNavigate"
@@ -15,6 +15,6 @@ export const ManageTemplatesButton = () => {
       data-testid="manage-templates-button"
       onClick={onManageClick}
       color="primary"
-    ><ContentPasteIcon/></IconButton>
+    ><DinnerDiningIcon/></IconButton>
   )
 }
