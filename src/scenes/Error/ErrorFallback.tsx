@@ -1,4 +1,3 @@
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import Accordion from "@mui/material/Accordion"
 import AccordionDetails from "@mui/material/AccordionDetails"
 import AccordionSummary from "@mui/material/AccordionSummary"
@@ -10,6 +9,7 @@ import Typography from "@mui/material/Typography"
 
 import { useAppNavigate } from "../../hooks/useNavigate"
 import { toAppError } from "../../store"
+import { Icons } from "../components/Icons"
 
 export function ErrorFallback({ error, resetErrorBoundary }: { error: unknown, resetErrorBoundary: () => void }) {
   const navigate = useAppNavigate()
@@ -31,7 +31,7 @@ export function ErrorFallback({ error, resetErrorBoundary }: { error: unknown, r
         {appError.stack
           && (
             <Accordion>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <AccordionSummary expandIcon={<Icons.actions.expand />}>
                 <Typography>Error stack</Typography>
               </AccordionSummary>
               <AccordionDetails>

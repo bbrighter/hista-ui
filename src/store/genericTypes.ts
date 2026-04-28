@@ -14,7 +14,7 @@ type SetRecordAction<T, K extends string> = {
   [P in `set${Capitalize<K>}`]: (items: Record<number,T>) => void
 }
 
-export type AddAction<T, K extends string> = {
+type AddAction<T, K extends string> = {
   [P in `add${Capitalize<K>}`]: (item: T) => void
 }
 
@@ -26,7 +26,7 @@ export type UpdateAction<T, K extends string> = {
   [P in `update${Capitalize<K>}`]: (id: number, partial: Partial<T>) => void
 }
 
-export type RemoveAction<K extends string> = {
+type RemoveAction<K extends string> = {
   [P in `remove${Capitalize<K>}`]: (id: number) => void
 }
 

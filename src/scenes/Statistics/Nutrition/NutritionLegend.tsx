@@ -24,7 +24,7 @@ export const NutritionLegend = ({ hideFiber }: {hideFiber: boolean}) => {
       {nutrition_legend.map(item => (
         <Box key={item.id} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Box sx={{ width: "1rem", height: "1rem", backgroundColor: item.color, borderColor: "ButtonBorder", mb: "4px" }} />
-          <Typography fontSize="1rem">{item.label}</Typography>
+          <Typography sx={{ fontSize:"1rem" }}>{item.label}</Typography>
         </Box>
       ))}
     </Paper>

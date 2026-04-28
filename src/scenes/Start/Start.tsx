@@ -26,10 +26,12 @@ export default function Start() {
 
   return (
     <Grid
-      justifyContent="center"
       container
       spacing={2}
-      sx={{ padding: "2rem" }}
+      sx={{ 
+        padding: "2rem",
+        justifyContent: "center",
+      }}
     >
       {types.map(t => (<StartPageCard key={t} type={t} highlight={highlight(t)}/>))}
     </Grid>

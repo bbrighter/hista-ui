@@ -36,7 +36,11 @@ export default function DebouncedSlider(props: {
   return (
     <Box sx={{ width: "100%" }}>
       <Typography gutterBottom>{props.label}</Typography>
-      <Stack spacing={3} direction="row" alignItems="center">
+      <Stack 
+        spacing={3} 
+        direction="row" 
+        sx={{ alignItems:"center" }}
+      >
         {props.icon}
         {props.iconMapping ? props.iconMapping(value) : <></>}
         <Slider

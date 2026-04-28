@@ -1,4 +1,3 @@
-import DeleteIcon from "@mui/icons-material/Delete"
 import Card from "@mui/material/Card"
 import CardHeader from "@mui/material/CardHeader"
 import IconButton from "@mui/material/IconButton"
@@ -8,6 +7,7 @@ import { useState } from "react"
 
 import { Status, statusService } from "../../../store"
 import { formatDate } from "../../../utils/formatDate"
+import { Icons } from "../../components/Icons"
 import StatusCardContent from "./StatusCardContent"
 
 export function StatusCard(props: { status: Status }) {
@@ -45,7 +45,7 @@ export function StatusCard(props: { status: Status }) {
         slotProps={{ title: { variant: "overline" } }}
         action={(
           <IconButton onClick={handleDelete} size="small" title="Löschen">
-            <DeleteIcon />
+            <Icons.actions.delete />
           </IconButton>
         )}
       />

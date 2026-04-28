@@ -20,10 +20,10 @@ export const MealNutritionResult = () => {
       data-testid="nutrition-kpis"
       sx={{ px: "0.5rem", py: "0.25rem", mb: "1rem" }} 
     >
-      <Grid container columnGap={2} direction="row" justifyContent="space-between">
+      <Grid container columnSpacing={4} direction="row" sx={{ justifyContent:"space-between" }}>
         {indicators.map((i) => (
-          <Grid key={i.label} size={4}>
-            <Stack direction="row" spacing={0.5} justifyContent="space-between">
+          <Grid key={i.label} size={3}>
+            <Stack direction="row" spacing={0.5} sx={{ justifyContent: "space-between" }}>
               <Typography color="textDisabled">
                 {i.label}
               </Typography>

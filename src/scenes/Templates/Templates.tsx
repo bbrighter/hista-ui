@@ -13,7 +13,7 @@ export const Templates = () => {
   return (
     <Loading show={isLoading}>
       <Container sx={{ padding: "2rem" }}>
-        <Stack direction="row" justifyContent="space-between">
+        <Stack direction="row" sx={{ justifyContent:"space-between" }}>
           <Typography variant="h4">Vorlagen</Typography>
           <AddTemplate/>
         </Stack>

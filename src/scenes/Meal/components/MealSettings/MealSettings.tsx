@@ -24,8 +24,11 @@ export function MealSettings() {
     <Grid
       container
       spacing={2}
-      alignItems="center"
-      justifyContent="center"
+      sx={{
+        alignItems:"center",
+        justifyContent:"center",
+      }}
+ 
     >
       <Grid size={{ xs: 12 }}> 
         <DateInput

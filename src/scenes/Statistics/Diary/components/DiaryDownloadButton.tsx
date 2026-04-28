@@ -1,7 +1,7 @@
-import DownloadIcon from "@mui/icons-material/Download"
 import Button from "@mui/material/Button"
 import { writeFile } from "xlsx"
 
+import { Icons } from "../../../components/Icons"
 import { useBuildWorkBook } from "./useBuildWorkBook"
 
 export function DiaryDownloadButton() {
@@ -15,7 +15,7 @@ export function DiaryDownloadButton() {
   return (
     <Button
       sx={{ marginTop: "1rem", marginBottom: "1rem" }}
-      startIcon={<DownloadIcon />}
+      startIcon={<Icons.actions.download />}
       variant="outlined"
       onClick={onClick}
     >

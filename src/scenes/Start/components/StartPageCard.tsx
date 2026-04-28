@@ -1,11 +1,3 @@
-import FaceRetouchingNaturalIcon from "@mui/icons-material/FaceRetouchingNatural"
-import ForestIcon from "@mui/icons-material/Forest"
-import MedicationIcon from "@mui/icons-material/Medication";
-import NoteIcon from "@mui/icons-material/Note"
-import QueryStatsIcon from "@mui/icons-material/QueryStats"
-import RestaurantIcon from "@mui/icons-material/Restaurant"
-import SelfImprovementIcon from "@mui/icons-material/SelfImprovement"
-import SickIcon from "@mui/icons-material/Sick"
 import Card from "@mui/material/Card"
 import CardContent from "@mui/material/CardContent"
 import CardHeader from "@mui/material/CardHeader"
@@ -13,6 +5,7 @@ import Grid from "@mui/material/Grid"
 import Typography from "@mui/material/Typography"
 
 import { useAppNavigate } from "../../../hooks/useNavigate"
+import { Icons } from "../../components/Icons";
 
 export type CardType = keyof typeof CARD_CONFIG
 
@@ -47,8 +40,7 @@ export default function StartPageCard({ type, highlight }: StartPageCardProps) {
         <CardHeader
           avatar={<Icon style={{ color: fontHighlightColor  }}/>}
           title={
-            <Typography 
-              color={fontHighlightColor}
+            <Typography sx={{ color: fontHighlightColor }}
               variant="h4">{title}
             </Typography>
           }
@@ -68,49 +60,49 @@ const CARD_CONFIG = {
   meals: (navigate: ReturnType<typeof useAppNavigate>) => ({
     title: "Mahlzeiten",
     content: "Mahlzeiten hinzufügen, ansehen und bearbeiten",
-    icon: RestaurantIcon,
+    icon: Icons.meal,
     onClick: navigate.to.meals,
   }),
   conditionEvents: (navigate: ReturnType<typeof useAppNavigate>) => ({
     title: "Symptome",
     content: "Symptome aufzeichnen",
-    icon: SickIcon,
+    icon: Icons.symptom,
     onClick: navigate.to.conditionEvents,
   }),
   statistics: (navigate: ReturnType<typeof useAppNavigate>) => ({
     title: "Auswertungen",
     content: "Ernährungstagebuch und mehr",
-    icon: QueryStatsIcon,
+    icon: Icons.statistics,
     onClick: navigate.to.statistics,
   }),
   notes: (navigate: ReturnType<typeof useAppNavigate>) => ({
     title: "Notizen",
     content: "Notizen anfertigen und durchsuchen",
-    icon: NoteIcon,
+    icon: Icons.notes,
     onClick: navigate.to.notes,
   }),
   pollens: (navigate: ReturnType<typeof useAppNavigate>) => ({
     title: "Pollen",
     content: "Pollenflug bewundern",
-    icon: ForestIcon,
+    icon: Icons.pollens,
     onClick: navigate.to.pollens,
   }),
   status: (navigate: ReturnType<typeof useAppNavigate>) => ({
     title: "Status",
     content: "Wie geht's denn heute?",
-    icon: SelfImprovementIcon,
+    icon: Icons.status,
     onClick: navigate.to.statuses,
   }),
   headaches: (navigate: ReturnType<typeof useAppNavigate>) => ({
     title: "Kopfweh",
     content: "Kopfschmerztagebuch",
-    icon: FaceRetouchingNaturalIcon,
+    icon: Icons.headaches,
     onClick: navigate.to.headaches,
   }),
   medicines: (navigate: ReturnType<typeof useAppNavigate>) => ({
     title: "Medikamente",
     content: "Einnehmen und eintragen",
-    icon: MedicationIcon,
+    icon: Icons.medicines,
     onClick: navigate.to.medicine,
   }),
 } as const

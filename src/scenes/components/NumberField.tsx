@@ -42,7 +42,7 @@ export default function NumberField({
       minHeight: size === "small" ? "32px" : "42px",
       height: size === "small" ? "32px" : "42px",
       padding: size == "small" ? "0px" : "6px",
-      margin: size === "small" ? "0px": "6xpx",
+      margin: size === "small" ? "0px": "6px",
     },
     "& .MuiInput-input": {
       py: size === "small" ? "0px" : "6px",
@@ -82,7 +82,6 @@ export default function NumberField({
             onChange={props.onChange}
             onKeyUp={props.onKeyUp}
             onKeyDown={props.onKeyDown}
-            onFocus={props.onFocus}
             slotProps={{
               input: {
                 ...props,

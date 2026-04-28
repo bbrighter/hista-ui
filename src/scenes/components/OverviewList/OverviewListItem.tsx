@@ -1,4 +1,4 @@
-import CircleIcon from "@mui/icons-material/Circle"
+
 import ListItem from "@mui/material/ListItem"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
@@ -6,6 +6,7 @@ import { useState } from "react"
 import { SwipeableListItem } from "react-swipeable-list"
 
 import { formatDate } from "../../../utils/formatDate"
+import { Icons } from "../Icons"
 import { swipeDeleteItem, swipeSetNow } from "./ListActions"
 
 export function OverviewListItem(props: {
@@ -50,7 +51,7 @@ export function OverviewListItem(props: {
         {props.showSeverity && props.severity !== undefined
         && (
           <ListItemIcon title="Schwere">
-            <CircleIcon
+            <Icons.circle
               sx={{ color: props.severityColorMapping(props.severity) }}
               data-testid="circle-icon"
             />

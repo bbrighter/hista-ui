@@ -1,15 +1,15 @@
-import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import Autocomplete from "@mui/material/Autocomplete"
 import CircularProgress from "@mui/material/CircularProgress"
 import ListItem from "@mui/material/ListItem"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
 import TextField from "@mui/material/TextField"
-import { useEffect, useState } from "react"
 import React from "react"
+import { useEffect, useState } from "react"
 
 import { ingredientsService,mealService, services } from "../../../store"
 import useHista from "../../../store/store"
+import { Icons } from "../../components/Icons";
 import { useOptions } from "./useOptions"
 
 
@@ -75,7 +75,7 @@ export function AddFood() {
         return (
           <ListItem {...props} key={key}>
             <ListItemText primary={label} />
-            {!isNewOption(option) && option.type == "template" && <ListItemIcon><ContentPasteIcon/></ListItemIcon>}
+            {!isNewOption(option) && option.type == "template" && <ListItemIcon><Icons.template/></ListItemIcon>}
           </ListItem>
         )
       }}
@@ -85,12 +85,12 @@ export function AddFood() {
           {...params}
           label="Zutaten"
           slotProps={{
+            ...params.slotProps,
             input: { 
-              ...params.InputProps,
+              ...params.slotProps.input,
               endAdornment: (
                 <React.Fragment>
                   {isLoading ? <CircularProgress size={30} /> : null}
-                  {params.InputProps.endAdornment}
                 </React.Fragment>
               ),
             },

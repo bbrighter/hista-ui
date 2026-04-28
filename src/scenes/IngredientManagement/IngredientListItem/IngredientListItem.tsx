@@ -1,4 +1,3 @@
-import EditIcon from "@mui/icons-material/Edit"
 import ButtonGroup from "@mui/material/ButtonGroup"
 import IconButton from "@mui/material/IconButton"
 import ListItem from "@mui/material/ListItem"
@@ -6,6 +5,7 @@ import ListItemText from "@mui/material/ListItemText"
 import { useState } from "react"
 
 import { Nutrition } from "../../../store"
+import { Icons } from "../../components/Icons"
 import { ArchiveButton } from "./ArchiveButton"
 import { EditIngredientName } from "./EditIngredientName"
 import { EditNutritionButton } from "./EditNutritionButton"
@@ -26,7 +26,7 @@ export const IngredientListItem = ({ name, id, isArchived, nutrition }: { name: 
     <ListItem secondaryAction={(
       <ButtonGroup>
         <IconButton onClick={onEdit} data-testid="editButton" disabled={isArchived}>
-          <EditIcon />
+          <Icons.actions.edit />
         </IconButton>
         <EditNutritionButton ingredientId={id} nutrition={nutrition} disabled={isArchived}/>
         <ArchiveButton id={id} isArchived={isArchived} />

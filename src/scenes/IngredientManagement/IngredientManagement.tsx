@@ -25,7 +25,7 @@ export const IngredientManagement = () => {
   return (
     <Loading show={isLoading}>
       <Container>
-        <Box display="flex" justifyContent="end"> 
+        <Box sx={{ display:"flex",justifyContent:"end" }}> 
           <ToggleVisibility checked={!showArchived} onChange={() => setShowArchived(!showArchived)}/>
         </Box>
         <List>

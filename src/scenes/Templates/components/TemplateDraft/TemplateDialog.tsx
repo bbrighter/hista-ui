@@ -1,4 +1,3 @@
-import CloseIcon from "@mui/icons-material/Close";
 import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
 import Dialog, { DialogProps } from "@mui/material/Dialog";
@@ -7,6 +6,7 @@ import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
+import { Icons } from "../../../components/Icons";
 import { AddDraftRowButton } from "./AddDraftRowButton";
 import { DraftRow } from "./DraftRow";
 import { NameInput } from "./NameInput";
@@ -29,7 +29,7 @@ export const TemplateDialog = ({ open, onClose, templateId }: Props) => {
         <Toolbar>
           <IconButton
             onClick={onClose}
-          ><CloseIcon/>
+          ><Icons.actions.close/>
           </IconButton>
           <Typography sx={{ ml: 2, flex: 1 }} variant="h6">Vorlage erstellen</Typography>
           <SaveTemplateButton {...draftState} onSaved={onClose} id={templateId}/>

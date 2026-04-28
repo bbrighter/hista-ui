@@ -1,11 +1,11 @@
-import DeleteIcon from "@mui/icons-material/Delete"
-import TodayIcon from "@mui/icons-material/Today";
 import Button from "@mui/material/Button"
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState } from "react";
 import { LeadingActions, SwipeAction, TrailingActions } from "react-swipeable-list"
+
+import { Icons } from "../Icons";
 
 export const swipeDeleteItem = (onDelete: () => Promise<void>) => {
   const [open, setOpen] = useState(false)
@@ -18,7 +18,7 @@ export const swipeDeleteItem = (onDelete: () => Promise<void>) => {
             data-testid="delete-button"
             variant="contained"
             color="error"
-            startIcon={<DeleteIcon />}
+            startIcon={<Icons.actions.delete />}
           />
         </SwipeAction>
       </TrailingActions>
@@ -28,7 +28,7 @@ export const swipeDeleteItem = (onDelete: () => Promise<void>) => {
           <Button 
             variant="contained" 
             color="error" 
-            startIcon={<DeleteIcon/>}
+            startIcon={<Icons.today/>}
             onClick={() => {
               onDelete()
               setOpen(false)
@@ -53,7 +53,7 @@ export const swipeSetNow = (onSwipe: () => Promise<void>) => {
         <Button
           data-testid="set-now-button"
           variant="contained"
-          startIcon={<TodayIcon />}
+          startIcon={<Icons.today />}
           color="secondary"
         >Jetzt</Button>  
       </SwipeAction>

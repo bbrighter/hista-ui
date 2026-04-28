@@ -1,10 +1,10 @@
-import DeleteIcon from "@mui/icons-material/Delete"
 import IconButton from "@mui/material/IconButton"
 import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
 
 import { services, useConditionsWithSymptoms } from "../../../store"
+import { Icons } from "../../components/Icons"
 import Severity from "./Severity"
 
 export default function ConditionList() {
@@ -25,7 +25,7 @@ export default function ConditionList() {
               onClick={() => onDelete(con.id)}
               title="Löschen"
             >
-              <DeleteIcon />
+              <Icons.actions.delete />
             </IconButton>
           )}
         >

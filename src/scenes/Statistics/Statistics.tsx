@@ -1,12 +1,9 @@
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import FaceRetouchingNaturalIcon from "@mui/icons-material/FaceRetouchingNatural"
-import RestaurantIcon from "@mui/icons-material/Restaurant";
-import ScienceIcon from "@mui/icons-material/Science";
 import Container from "@mui/material/Container"
 import Tab from "@mui/material/Tab"
 import Tabs from "@mui/material/Tabs"
 import { JSX, useState } from "react"
 
+import { Icons } from "../components/Icons";
 import { Charts } from "./Charts"
 import { Diary } from "./Diary"
 import { HeadacheDiary } from "./Headaches"
@@ -27,10 +24,10 @@ export default function Statistics() {
   }
 
   const tabs: Array<TabType> = [
-    { icon: <ScienceIcon/>, value: 1, child: <NutritionStats/> },
-    { icon: <RestaurantIcon/>, value: 2, child: <Charts /> },
-    { icon: <AutoStoriesIcon/>, value: 3, child: <Diary /> },
-    { icon: <FaceRetouchingNaturalIcon/>, value: 4, child: <HeadacheDiary /> },
+    { icon: <Icons.nutrition/>, value: 1, child: <NutritionStats/> },
+    { icon: <Icons.meal/>, value: 2, child: <Charts /> },
+    { icon: <Icons.diary/>, value: 3, child: <Diary /> },
+    { icon: <Icons.headaches/>, value: 4, child: <HeadacheDiary /> },
   ]
 
   return (

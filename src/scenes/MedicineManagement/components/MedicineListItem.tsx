@@ -1,5 +1,4 @@
 import { draggable, dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
-import EditIcon from "@mui/icons-material/Edit"
 import Box from "@mui/material/Box";
 import ButtonGroup from "@mui/material/ButtonGroup"
 import IconButton from "@mui/material/IconButton"
@@ -9,6 +8,7 @@ import { useEffect, useRef, useState } from "react"
 
 import { Medicine, medicinesService, useIsNameUnique } from "../../../store"
 import { ArchiveButton } from "../../components/ArchiveButton"
+import { Icons } from "../../components/Icons";
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
 
 type DropIndicator = 
@@ -95,7 +95,7 @@ export const MedicineListItem = ({ medicine, dropIndicator, onDragOverItem, onDr
       secondaryAction={(
         <ButtonGroup>
           <IconButton onClick={onEdit} data-testid="editButton">
-            <EditIcon />
+            <Icons.actions.edit />
           </IconButton>
           <ArchiveButton id={medicine.id} isArchived={medicine.isArchived} onArchive={onArchive} />
         </ButtonGroup>
