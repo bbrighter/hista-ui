@@ -1,9 +1,9 @@
-import RestaurantIcon from "@mui/icons-material/Restaurant"
 import Button from "@mui/material/Button"
 import { useState } from "react"
 
 import { useAppNavigate } from "../../../hooks/useNavigate"
 import { services } from "../../../store"
+import { Icons } from "../../components/Icons"
 
 export const AddMealButton = () => {
   const [loading, setLoading] = useState(false)
@@ -21,7 +21,7 @@ export const AddMealButton = () => {
   return (
     <Button
       data-testid="add-meal-button"
-      startIcon={<RestaurantIcon/>}
+      startIcon={<Icons.meal/>}
       variant="contained"
       onClick={onCreate}
       loading={loading}

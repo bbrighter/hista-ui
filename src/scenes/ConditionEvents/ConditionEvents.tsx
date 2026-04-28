@@ -1,5 +1,3 @@
-import SickIcon from "@mui/icons-material/Sick"
-import SortIcon from "@mui/icons-material/Sort";
 import Button from "@mui/material/Button"
 import Container from "@mui/material/Container"
 import IconButton from "@mui/material/IconButton"
@@ -10,6 +8,7 @@ import { useAppNavigate } from "../../hooks/useNavigate"
 import { conditionEvents, selectIsLoadingAny } from "../../store"
 import useHista from "../../store/store";
 import { Loading } from "../components";
+import { Icons } from "../components/Icons";
 import EventList from "./components/EventList"
 
 export default function ConditionEvents() {
@@ -36,7 +35,7 @@ export default function ConditionEvents() {
         <Stack direction="row" spacing={2}>
           <Button
             variant="contained"
-            startIcon={<SickIcon />}
+            startIcon={<Icons.symptom />}
             onClick={onClickAddSymptom}
             loading={loading}
           >
@@ -46,7 +45,7 @@ export default function ConditionEvents() {
             data-testid="manage-symptoms-button"
             color="primary" 
             onClick={onClickManageSymptoms}>
-            <SortIcon/>
+            <Icons.manage/>
           </IconButton>
         </Stack>
         <EventList />

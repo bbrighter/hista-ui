@@ -1,8 +1,8 @@
-import Download from "@mui/icons-material/Download"
 import Button from "@mui/material/Button"
 import { useState } from "react"
 import { writeFile } from "xlsx"
 
+import { Icons } from "../../../components/Icons"
 import { useBuildHeadacheWorkBook } from "./headacheExport"
 
 export function HeadacheDownloadButton() {
@@ -20,7 +20,7 @@ export function HeadacheDownloadButton() {
   return (
     <Button
       sx={{ marginTop: "1rem", marginBottom: "1rem" }}
-      startIcon={<Download />}
+      startIcon={<Icons.actions.download />}
       onClick={onClick}
       loading={loading}
       variant="outlined"

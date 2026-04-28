@@ -1,8 +1,8 @@
-import SaveIcon from "@mui/icons-material/Save";
 import Button from "@mui/material/Button"
 import { useState } from "react";
 
 import { services } from "../../../../store";
+import { Icons } from "../../../components/Icons";
 import { DraftStateType } from "./useTemplateDraft";
 
 type SaveTemplateButtonProps = {
@@ -33,7 +33,7 @@ export const SaveTemplateButton = ({ name, draft, canBeSaved, onSaved, id }: Sav
   return (
     <Button 
       color="success" 
-      startIcon={<SaveIcon/>} 
+      startIcon={<Icons.actions.save/>} 
       variant="contained"
       onClick={onSave}
       disabled={!canBeSaved()}

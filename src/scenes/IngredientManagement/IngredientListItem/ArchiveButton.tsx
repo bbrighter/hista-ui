@@ -1,8 +1,7 @@
-import ArchiveIcon from "@mui/icons-material/Archive"
-import UnarchiveIcon from "@mui/icons-material/Unarchive"
 import IconButton from "@mui/material/IconButton"
 
 import { ingredientsService } from "../../../store"
+import { Icons } from "../../components/Icons"
 
 export const ArchiveButton = ({ id, isArchived }: { id: number, isArchived: boolean }) => {
   const onClick = () => {
@@ -15,8 +14,8 @@ export const ArchiveButton = ({ id, isArchived }: { id: number, isArchived: bool
       data-testid="archiveButton"
     >
       {isArchived
-        ? <UnarchiveIcon color="disabled" />
-        : <ArchiveIcon />}
+        ? <Icons.actions.unarchive color="disabled" />
+        : <Icons.actions.archive />}
     </IconButton>
   )
 }

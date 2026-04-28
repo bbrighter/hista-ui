@@ -1,4 +1,3 @@
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
 import Button from "@mui/material/Button"
 import ButtonGroup from "@mui/material/ButtonGroup"
 import Menu from "@mui/material/Menu"
@@ -7,6 +6,7 @@ import dayjs from "dayjs"
 import { useState } from "react"
 
 import { statusService, useStatusExistsOnDay } from "../../../store"
+import { Icons } from "../../components/Icons"
 
 export function AddStatus(props: { disabled: boolean }) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -54,7 +54,7 @@ export function AddStatus(props: { disabled: boolean }) {
           disabled={props.disabled}
           title="Status hinzufügen"
         >
-          <CalendarMonthIcon />
+          <Icons.status />
         </Button>
       </ButtonGroup>
       <Menu

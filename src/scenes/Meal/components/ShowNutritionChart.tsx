@@ -1,4 +1,3 @@
-import CloseIcon from "@mui/icons-material/Close";
 import PieChartIcon from "@mui/icons-material/PieChart";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box"
@@ -12,6 +11,7 @@ import { useEffect, useMemo, useState } from "react"
 
 import { statisticsService } from "../../../store"
 import useHista from "../../../store/store";
+import { Icons } from "../../components/Icons";
 import { SingleNutritionChart } from "./SingleNutritionChart";
 import { useMealDaysNutrition } from "./useMealDaysNutrition"
 
@@ -50,7 +50,7 @@ export const ShowNutritionChart = () => {
               color="inherit"
               onClick={() => setOpen(false)}
             >
-              <CloseIcon />
+              <Icons.actions.close />
             </IconButton>
             <Typography variant="h6">{mealDate.toLocaleDateString("de-DE")}</Typography>
           </Toolbar>

@@ -1,10 +1,10 @@
-import AddIcon from "@mui/icons-material/Add"
 import Box from "@mui/material/Box"
 import Fab from "@mui/material/Fab"
 import Modal from "@mui/material/Modal"
 import { useState } from "react"
 
 import { services, useIsCategoryNameAvailable } from "../../../store"
+import { Icons } from "../../components/Icons"
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
 
 export default function AddSymptomCategory() {
@@ -52,7 +52,7 @@ export default function AddSymptomCategory() {
         variant="extended"
         onClick={() => setOpen(!open)}
       >
-        <AddIcon />
+        <Icons.actions.create />
         {" "}
         Neue Kategorie
       </Fab>

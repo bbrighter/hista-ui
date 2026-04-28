@@ -1,7 +1,3 @@
-import CloseIcon from "@mui/icons-material/Close"
-import CreateIcon from "@mui/icons-material/Create"
-import DeleteIcon from "@mui/icons-material/Delete"
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import AccordionSummary from "@mui/material/AccordionSummary"
 import Box from "@mui/material/Box"
 import ButtonGroup from "@mui/material/ButtonGroup"
@@ -10,6 +6,7 @@ import Typography from "@mui/material/Typography"
 import { useState } from "react"
 
 import { services, SymptomCategory, useIsCategoryNameAvailable } from "../../../store"
+import { Icons } from "../../components/Icons"
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
 
 export default function AccordionCategory(props: {
@@ -42,7 +39,7 @@ export default function AccordionCategory(props: {
   }
 
   return (
-    <AccordionSummary expandIcon={<ExpandMoreIcon titleAccess="Ausklappen" />} component="div">
+    <AccordionSummary expandIcon={<Icons.actions.expand titleAccess="Ausklappen" />} component="div">
       {
         mode == "default"
         && (
@@ -62,7 +59,7 @@ export default function AccordionCategory(props: {
                 onClick={() => setMode("editing")}
                 title="Kategorie umbenennen"
               >
-                <CreateIcon />
+                <Icons.actions.edit />
               </IconButton>
               <IconButton
                 onClick={() => setMode("deleting")}
@@ -70,7 +67,7 @@ export default function AccordionCategory(props: {
                 color="error"
                 title="Löschen"
               >
-                <DeleteIcon />
+                <Icons.actions.delete />
               </IconButton>
             </ButtonGroup>
           </Box>
@@ -104,14 +101,14 @@ export default function AccordionCategory(props: {
                 onClick={onDelete}
                 title="Löschen bestätigen"
               >
-                <DeleteIcon />
+                <Icons.actions.delete />
               </IconButton>
               <IconButton
                 onClick={onCancel}
                 color="error"
                 title="Löschen abbrechen"
               >
-                <CloseIcon />
+                <Icons.actions.close />
               </IconButton>
             </ButtonGroup>
           </>

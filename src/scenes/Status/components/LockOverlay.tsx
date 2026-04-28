@@ -92,7 +92,7 @@ export const LockOverlay = ({ id, locked, children }: {id: number, locked?: bool
           height: `calc(100% - ${progress * 100}%)`,
         }}
       >
-        <Stack alignItems="center">
+        <Stack sx={{ alignItems:"center" }}>
           <Typography variant="button">Gesperrt</Typography>
           <Typography variant="body2">Zum Entsperren gedrückt halten</Typography>
         </Stack>

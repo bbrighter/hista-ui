@@ -1,8 +1,8 @@
-import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton"
 import Stack from "@mui/material/Stack"
 
 import { FoodConditionToggle } from "../../../components"
+import { Icons } from "../../../components/Icons";
 import { IngredientSelect } from "./IngredientSelect"
 import { DraftStateType } from "./useTemplateDraft";
 
@@ -15,10 +15,13 @@ export const DraftRow = ({ index, draft, onChangeIngredient, onChangeCondition, 
   const { ingredient, condition } = draft[index]
 
   return (
-    <Stack direction="row" justifyContent="space-between">
+    <Stack 
+      direction="row" 
+      sx={{ justifyContent:"space-between" }}
+    >
       <IngredientSelect ingredient={ingredient} onChange={(ing) => onChangeIngredient(index, ing)} />
       <FoodConditionToggle condition={condition} onClick={() => onChangeCondition(index)}/>
-      <IconButton onClick={() => onDelete(index)}><DeleteIcon/></IconButton>
+      <IconButton onClick={() => onDelete(index)}><Icons.actions.delete/></IconButton>
     </Stack>
   )
 }

@@ -1,7 +1,7 @@
-import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import Button from "@mui/material/Button"
 import { useState } from "react";
 
+import { Icons } from "../../components/Icons";
 import { TemplateDialog } from "./TemplateDraft";
 
 
@@ -14,7 +14,7 @@ export const AddTemplate = () => {
     <>
       <Button 
         variant="contained"
-        startIcon={<ContentPasteIcon/>}
+        startIcon={<Icons.template/>}
         onClick={onOpen}
       >
         Neue Vorlage

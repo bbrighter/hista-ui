@@ -1,7 +1,7 @@
-import DinnerDiningIcon from "@mui/icons-material/DinnerDining";
 import IconButton from "@mui/material/IconButton";
 
 import { useAppNavigate } from "../../../hooks/useNavigate"
+import { Icons } from "../../components/Icons";
 
 export const ManageTemplatesButton = () => {
   const navigate = useAppNavigate()
@@ -15,6 +15,6 @@ export const ManageTemplatesButton = () => {
       data-testid="manage-templates-button"
       onClick={onManageClick}
       color="primary"
-    ><DinnerDiningIcon/></IconButton>
+    ><Icons.template/></IconButton>
   )
 }

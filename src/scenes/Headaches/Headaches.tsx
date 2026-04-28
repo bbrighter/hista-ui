@@ -1,4 +1,3 @@
-import FaceRetouchingNaturalIcon from "@mui/icons-material/FaceRetouchingNatural"
 import Button from "@mui/material/Button"
 import Container from "@mui/material/Container"
 import { useState } from "react"
@@ -7,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { selectIsLoadingAny, services, useHeadaches } from "../../store"
 import useHista from "../../store/store"
 import { Loading, OverviewList } from "../components"
+import { Icons } from "../components/Icons"
 import { getColor } from "../Headache/components/colorMapping"
 
 export default function Headaches() {
@@ -32,7 +32,7 @@ export default function Headaches() {
     <Loading show={isLoading}>
       <Container sx={{ padding: "2rem" }}>
         <Button
-          startIcon={<FaceRetouchingNaturalIcon />}
+          startIcon={<Icons.headaches />}
           variant="contained"
           onClick={onCreate}
           loading={postLoading}

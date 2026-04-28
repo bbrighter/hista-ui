@@ -1,7 +1,3 @@
-import CloseIcon from "@mui/icons-material/Close"
-import CreateIcon from "@mui/icons-material/Create"
-import SaveIcon from "@mui/icons-material/Save"
-import SwapVertIcon from "@mui/icons-material/SwapVert"
 import AccordionDetails from "@mui/material/AccordionDetails"
 import Box from "@mui/material/Box"
 import ButtonGroup from "@mui/material/ButtonGroup"
@@ -17,6 +13,7 @@ import { useState } from "react"
 
 import { services, Symptom, SymptomCategory, useIsSymptomNameAvailable } from "../../../store"
 import useHista from "../../../store/store"
+import { Icons } from "../../components/Icons"
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
 
 export default function AccordionSymptoms(props: {
@@ -84,13 +81,13 @@ function SymptomAccordionEntry(props: {
                 title="Umbenennen"
                 onClick={() => setMode("editing")}
               >
-                <CreateIcon />
+                <Icons.actions.edit />
               </IconButton>
               <IconButton
                 onClick={() => setMode("swapping")}
                 title="Tauschen"
               >
-                <SwapVertIcon />
+                <Icons.actions.reorder />
               </IconButton>
             </ButtonGroup>
           </Box>
@@ -138,14 +135,14 @@ function SymptomAccordionEntry(props: {
                   title="Tauschen bestätigen"
                   disabled={targetCategoryId === props.symptom.categoryId}
                 >
-                  <SaveIcon />
+                  <Icons.actions.save />
                 </IconButton>
                 <IconButton
                   onClick={onCancel}
                   color="error"
                   title="Tauschen abbrechen"
                 >
-                  <CloseIcon />
+                  <Icons.actions.close />
                 </IconButton>
               </ButtonGroup>
             </Box>

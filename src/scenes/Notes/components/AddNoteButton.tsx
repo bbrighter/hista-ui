@@ -1,9 +1,9 @@
-import NoteIcon from "@mui/icons-material/Note"
 import Button from "@mui/material/Button"
 import { useState } from "react"
 
 import { useAppNavigate } from "../../../hooks/useNavigate"
 import { services } from "../../../store"
+import { Icons } from "../../components/Icons"
 
 export const AddNoteButton = () => {
   const [loading, setLoading] = useState(false)
@@ -23,7 +23,7 @@ export const AddNoteButton = () => {
       variant="contained"
       onClick={onCreate}
       loading={loading}
-      startIcon={<NoteIcon />}
+      startIcon={<Icons.notes />}
     >
       Neue Notiz
     </Button>

@@ -1,7 +1,7 @@
-import ClearIcon from "@mui/icons-material/Clear"
-import SearchIcon from "@mui/icons-material/Search"
 import IconButton from "@mui/material/IconButton"
 import Input from "@mui/material/Input"
+
+import { Icons } from "../../components/Icons"
 
 export function NoteSearch(props: {
   searchValue: string
@@ -13,7 +13,7 @@ export function NoteSearch(props: {
   return (
     <Input
       sx={{ marginTop: "1rem", width: "100%" }}
-      startAdornment={<SearchIcon />}
+      startAdornment={<Icons.actions.search />}
       endAdornment={
         isClearable
         && (
@@ -21,7 +21,7 @@ export function NoteSearch(props: {
             sx={{ height: "2rem" }}
             onClick={props.onClear}
           >
-            <ClearIcon fontSize="small" />
+            <Icons.actions.clear fontSize="small" />
           </IconButton>
         )
       }

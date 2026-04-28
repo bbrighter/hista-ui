@@ -12,12 +12,9 @@ describe("test meals list", () => {
     const box = label.closest("div")
     expect(box).toBeInTheDocument()
 
-    const thumb = box!.querySelector(".MuiSlider-thumb")!
-    const svg = box!.querySelector(".MuiSvgIcon-root")!
-
+    const slider = box!.querySelector(".MuiSlider-root")!
     const colorRegex = new RegExp(`${expectedColor}`)
-    expect(thumb.getAttribute("class")).toMatch(colorRegex)
-    expect(svg.getAttribute("class")).toMatch(colorRegex)
+    expect(slider.getAttribute("class")).toMatch(colorRegex)
   }
 
   const findIngredientRow = async (name: string): Promise<HTMLElement> => {

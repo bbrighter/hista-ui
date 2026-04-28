@@ -1,4 +1,3 @@
-import ScienceIcon from "@mui/icons-material/Science";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -9,6 +8,7 @@ import IconButton, { IconButtonProps } from "@mui/material/IconButton"
 import { useState } from "react";
 
 import { ingredientsService, Nutrition } from "../../../store";
+import { Icons } from "../../components/Icons";
 import { NumberDecimalInput } from "../../components/NumberDecimalInput";
 
 export const EditNutritionButton = ({ ingredientId, nutrition, ...other }: IconButtonProps & {ingredientId: number, nutrition?: Nutrition}) => {
@@ -49,7 +49,7 @@ export const EditNutritionButton = ({ ingredientId, nutrition, ...other }: IconB
         color={isFilled ? "success" : "default" }
         {...other}
       >
-        <ScienceIcon/>
+        <Icons.nutrition/>
       </IconButton>
       <Dialog 
         open={open}

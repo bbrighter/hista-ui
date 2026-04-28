@@ -47,7 +47,7 @@ describe("start page", () => {
     expect(mockNavigate).toHaveBeenCalledWith("/7b3047c2-d56d-4942-abc4-39eb85e785f2/meals")
   })
 
-  it("Missing status shows yellow border", async () => {
+  it("Missing status shows colored border", async () => {
     render(<MemoryRouter><Start /></MemoryRouter>)
 
     const normalCardTitle = await screen.findByRole("heading", { name: "Mahlzeiten" })
