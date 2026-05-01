@@ -1,7 +1,8 @@
 import Container from "@mui/material/Container"
 import { useEffect } from "react"
 
-import { selectIsLoadingAny, services } from "../../store"
+import { actions } from "../../actions"
+import { selectIsLoadingAny } from "../../store"
 import useHista from "../../store/store"
 import { Loading } from "../components"
 import AddSymptomCategory from "./components/AddSymptomCategory"
@@ -12,7 +13,7 @@ export default function SymptomManagement() {
   const symptoms = useHista(state => state.symptoms)
 
   useEffect(() => {
-    services.symptoms.list()
+    actions.symptoms.list()
   }, [])
 
   return (

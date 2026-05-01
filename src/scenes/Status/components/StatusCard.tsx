@@ -5,7 +5,8 @@ import { useTheme } from "@mui/material/styles"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import { useState } from "react"
 
-import { Status, statusService } from "../../../store"
+import { actions } from "../../../actions"
+import { Status } from "../../../store"
 import { formatDate } from "../../../utils/formatDate"
 import { Icons } from "../../components/Icons"
 import StatusCardContent from "./StatusCardContent"
@@ -27,7 +28,7 @@ export function StatusCard(props: { status: Status }) {
     cardWidth = "30%"
   }
 
-  const handleDelete = () => statusService.deleteStatus(props.status.id)
+  const handleDelete = () => actions.status.delete(props.status.id)
 
   return (
     <Card

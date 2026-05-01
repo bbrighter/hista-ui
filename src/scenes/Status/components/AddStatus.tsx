@@ -5,7 +5,8 @@ import MenuItem from "@mui/material/MenuItem"
 import dayjs from "dayjs"
 import { useState } from "react"
 
-import { statusService, useStatusExistsOnDay } from "../../../store"
+import { actions } from "../../../actions"
+import {  useStatusExistsOnDay } from "../../../store"
 import { Icons } from "../../components/Icons"
 
 export function AddStatus(props: { disabled: boolean }) {
@@ -20,13 +21,13 @@ export function AddStatus(props: { disabled: boolean }) {
   const yesterdaysStatusExists = useStatusExistsOnDay(yesterday)
   const dayBeforeYesterdaysStatusExists = useStatusExistsOnDay(dayBeforeYesterday)
 
-  const handleClickToday = () => statusService.postStatus(today)
+  const handleClickToday = () => actions.status.post(today)
   const handleClickYesterday = () => {
-    statusService.postStatus(yesterday)
+    actions.status.post(yesterday)
     closeMenu()
   }
   const handleClickDayBeforeYesterday = () => {
-    statusService.postStatus(dayBeforeYesterday)
+    actions.status.post(dayBeforeYesterday)
     closeMenu()
   }
 

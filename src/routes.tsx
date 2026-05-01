@@ -8,9 +8,9 @@ import { createBrowserRouter, RouteObject, RouterProvider } from "react-router-d
 
 import AppProvider from "./AppProvider";
 import { appRoutes } from "./constants";
-import { ErrorFallback } from "./scenes/Error/ErrorFallback";
+import { ErrorBridge, ErrorFallback } from "./errors";
 import Start from "./scenes/Start";
-import { ErrorBridge, useIsAppReady } from "./store";
+import { useIsAppReady } from "./store";
 
 type RawRoute = {
   path: string;

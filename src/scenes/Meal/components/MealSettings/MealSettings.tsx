@@ -1,6 +1,7 @@
 import Grid from "@mui/material/Grid"
 
-import { Freshness, mealService } from "../../../../store"
+import { actions } from "../../../../actions"
+import { Freshness } from "../../../../store"
 import useHista from "../../../../store/store"
 import DateInput from "../../../components/DateInput"
 import { FreshnessSlider } from "./FreshnessSlider"
@@ -10,10 +11,10 @@ import { StressSlider } from "./StressSlider"
 export function MealSettings() {
   const meal = useHista(state => state.meal)
 
-  const setDate = (dateString: string) => mealService.patchMealDate(meal.id, dateString)
-  const setStressLevel = (stressLevel: number) => mealService.patchMealStressLevel(meal.id, stressLevel)
-  const setFreshness = (freshness: Freshness) => mealService.patchMealFreshness(meal.id, freshness)
-  const setAloneness = (isAlone: boolean) => mealService.patchMealIsAlone(meal.id, isAlone)
+  const setDate = (dateString: string) => actions.meals.patchDate(meal.id, dateString)
+  const setStressLevel = (stressLevel: number) => actions.meals.patchStressLevel(meal.id, stressLevel)
+  const setFreshness = (freshness: Freshness) => actions.meals.patchFreshness(meal.id, freshness)
+  const setAloneness = (isAlone: boolean) => actions.meals.patchIsAlone(meal.id, isAlone)
 
   const handleToggleOptionChange = async (value: boolean | null) => {
     if (value == null) return

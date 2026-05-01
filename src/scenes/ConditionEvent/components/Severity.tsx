@@ -1,9 +1,10 @@
 import Slider from "@mui/material/Slider"
 import { useState } from "react"
 
+import { actions } from "../../../actions"
 import useDebounce from "../../../hooks/useDebounce"
 import { useDidUpdateEffect } from "../../../hooks/useDidUpdateEffect"
-import { colorFromSeverity, services } from "../../../store"
+import { colorFromSeverity } from "../../../store"
 
 export default function Severity(props: {
   severity: number
@@ -14,7 +15,7 @@ export default function Severity(props: {
   const debouncedSeverity = useDebounce(severity, 750)
 
   useDidUpdateEffect(() => {
-    services.conditions.patchSeverity(props.conditionId, severity)
+    actions.conditions.patchSeverity(props.conditionId, severity)
   }, [debouncedSeverity])
 
   const onChangeSeverity = (_event: unknown, value: number | number[]) => {

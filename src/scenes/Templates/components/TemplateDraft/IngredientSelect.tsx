@@ -8,6 +8,7 @@ export const IngredientSelect = ({ ingredient, onChange }: {ingredient: Ingredie
 
   return (
     <Autocomplete 
+      data-testid="ingredient-select"
       sx={{ width: "75%" }}
       options={ingredients} 
       renderInput={(params) => <TextField {...params} /> } 

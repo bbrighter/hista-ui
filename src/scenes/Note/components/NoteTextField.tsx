@@ -1,9 +1,10 @@
 import TextField from "@mui/material/TextField"
 import { useState } from "react"
 
+import { actions } from "../../../actions"
 import useDebounce from "../../../hooks/useDebounce"
 import { useDidUpdateEffect } from "../../../hooks/useDidUpdateEffect"
-import { services, useNote } from "../../../store"
+import { useNote } from "../../../store"
 
 export const NoteTextField = ({ noteId  }: { noteId: number}) => {
   const [isUpToDate, setIsUpToDate] = useState(true)
@@ -12,7 +13,7 @@ export const NoteTextField = ({ noteId  }: { noteId: number}) => {
   const debouncedInputValue = useDebounce(value, 1000)
 
   useDidUpdateEffect(() => {
-    services.notes.patchText(noteId, debouncedInputValue).then(
+    actions.notes.patchText(noteId, debouncedInputValue).then(
       () => setIsUpToDate(true),
     )
   }, [debouncedInputValue])

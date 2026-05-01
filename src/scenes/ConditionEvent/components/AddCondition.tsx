@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField"
 import { FilterOptionsState } from "@mui/material/useAutocomplete"
 import { useEffect, useState } from "react"
 
-import { services } from "../../../store"
+import { actions } from "../../../actions"
 import useHista from "../../../store/store"
 import AddOrSelectCategory from "./AddOrSelectCategory"
 
@@ -31,7 +31,7 @@ export default function AddCondition() {
   const symptoms = useHista(state => state.symptoms)
 
   useEffect(() => {
-    services.symptoms.list()
+    actions.symptoms.list()
   }, [])
 
   const options = symptoms.flatMap(cat => (
@@ -47,7 +47,7 @@ export default function AddCondition() {
       setValue(v)
     }
     else if (!isNewOption(v) && reason == "selectOption") {
-      await services.conditions.postById(v.symptomId)
+      await actions.conditions.postById(v.symptomId)
       setInputValue("")
     }
   }
@@ -89,8 +89,9 @@ export default function AddCondition() {
           const key = isNewOption(option) ? 0 : option.symptomId
           const primary = isNewOption(option) ? option : option.symptomName
           const secondary = isNewOption(option) ? "hinzufügen" : option.categoryName
+          const { key: _ignored, ...rest } = props
           return (
-            <ListItem {...props} key={key}>
+            <ListItem key={key} {...rest} >
               <ListItemText
                 primary={primary}
                 secondary={secondary}

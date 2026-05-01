@@ -1,7 +1,8 @@
 import List from "@mui/material/List"
 import { useState } from "react"
 
-import { medicinesService, useMedicine } from "../../../store"
+import { actions } from "../../../actions"
+import useHista from "../../../store/store"
 import { NoData } from "../../components"
 import { MedicineListItem } from "./MedicineListItem"
 
@@ -9,7 +10,7 @@ import { MedicineListItem } from "./MedicineListItem"
 export const MedicineList = () => {
   const [dropIndicator, setDropIndicator] = useState<{overId?: number, nextId?: number, prevId?: number, edge: "top" | "bottom"} | null>(null)
   const [draggedId, setDraggedId] = useState<null | number>(null)
-  const medicines = useMedicine()
+  const medicines = useHista(state => state.medicines)
 
   const onDragOverItem = (overId: number, edge: "bottom" | "top") => {
     const medIndex = medicines.findIndex(m => m.id == overId)
@@ -22,7 +23,7 @@ export const MedicineList = () => {
   const onDrop = async () => {
     if (draggedId == null) return
 
-    await medicinesService.reorderMedicine(draggedId, dropIndicator.prevId, dropIndicator.nextId)
+    await actions.medicines.reorder(draggedId, dropIndicator?.prevId, dropIndicator?.nextId)
     setDraggedId(null)
     setDropIndicator(null)
   }

@@ -7,7 +7,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton"
 import { useState } from "react";
 
-import { ingredientsService, Nutrition } from "../../../store";
+import { actions } from "../../../actions";
+import { Nutrition } from "../../../store";
 import { Icons } from "../../components/Icons";
 import { NumberDecimalInput } from "../../components/NumberDecimalInput";
 
@@ -27,7 +28,7 @@ export const EditNutritionButton = ({ ingredientId, nutrition, ...other }: IconB
 
   const onSave = async () => {
     setLoading(true)
-    await ingredientsService.updateNutrition(ingredientId, { carbohydrate, protein, fat, fiber })
+    await actions.ingredients.updateNutrition(ingredientId, { carbohydrate, protein, fat, fiber })
     setLoading(false)
     setOpen(false)
   }

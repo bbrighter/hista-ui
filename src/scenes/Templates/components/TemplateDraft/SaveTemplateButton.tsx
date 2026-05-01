@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button"
 import { useState } from "react";
 
-import { services } from "../../../../store";
+import { actions } from "../../../../actions";
 import { Icons } from "../../../components/Icons";
 import { DraftStateType } from "./useTemplateDraft";
 
@@ -21,9 +21,9 @@ export const SaveTemplateButton = ({ name, draft, canBeSaved, onSaved, id }: Sav
       ))
     setLoading(true)
     if (!id) { 
-      await services.template.add(name, items)
+      await actions.templates.add(name, items)
     } else {
-      await services.template.change(id, name, items)
+      await actions.templates.change(id, name, items)
     }
     
     setLoading(false)
@@ -32,6 +32,7 @@ export const SaveTemplateButton = ({ name, draft, canBeSaved, onSaved, id }: Sav
 
   return (
     <Button 
+      data-testid="save-button"
       color="success" 
       startIcon={<Icons.actions.save/>} 
       variant="contained"

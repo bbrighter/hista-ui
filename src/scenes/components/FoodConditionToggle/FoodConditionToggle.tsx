@@ -14,6 +14,7 @@ export const FoodConditionToggle = ({ condition, onClick }:{ condition: FoodCond
     setTimeout(() => setClicked(false), 250) // duration of flash
   }
 
+
   return (
     <Button 
       data-testid="food-condition-chip"

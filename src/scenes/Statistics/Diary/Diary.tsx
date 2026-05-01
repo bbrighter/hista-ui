@@ -1,12 +1,12 @@
 import Box from "@mui/material/Box"
 import { useEffect } from "react"
 
-import { statisticsService } from "../../../store"
+import { actions } from "../../../actions"
 import { DiaryDownloadButton, DiaryGrid } from "./components"
 
 export function Diary() {
   useEffect(() => {
-    statisticsService.getDiaries()
+    actions.statistics.getDiaries()
   }, [])
 
   return (

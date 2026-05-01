@@ -5,9 +5,10 @@ import Typography from "@mui/material/Typography"
 import { useState } from "react"
 import { SwipeableListItem } from "react-swipeable-list"
 
+import { actions } from "../../../actions"
 import useDebounce from "../../../hooks/useDebounce"
 import { useDidUpdateEffect } from "../../../hooks/useDidUpdateEffect"
-import { Food, mealService } from "../../../store"
+import { Food } from "../../../store"
 import { FoodConditionToggle } from "../../components"
 import NumberField from "../../components/NumberField"
 import { swipeDeleteFood } from "./SwipeFoodActions"
@@ -22,7 +23,7 @@ export function FoodItem({ food }: {food: FoodItemType}) {
 
   useDidUpdateEffect(() => {
     setIsPatchAmountLoading(food.id)
-    mealService.patchFoodAmount(food.id, amount ?? 0).finally(() => {
+    actions.meals.patchFoodAmount(food.id, amount ?? 0).finally(() => {
       setIsPatchAmountLoading(undefined)
     })
   }, [debouncedInputValue])
@@ -38,7 +39,7 @@ export function FoodItem({ food }: {food: FoodItemType}) {
 
 
   const onConditionClick = () => {
-    mealService.patchFoodCondition(food.id, food.condition == "raw" ? "cooked" : "raw")
+    actions.meals.patchFoodCondition(food.id, food.condition == "raw" ? "cooked" : "raw")
   }
 
   return (

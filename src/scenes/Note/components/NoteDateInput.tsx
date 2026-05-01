@@ -1,6 +1,7 @@
 import dayjs from "dayjs"
 
-import { services, useNote } from "../../../store"
+import { actions } from "../../../actions"
+import { useNote } from "../../../store"
 import DateInput from "../../components/DateInput"
 
 export const NoteDateInput = ({ noteId }: {noteId: number}) => {
@@ -8,7 +9,7 @@ export const NoteDateInput = ({ noteId }: {noteId: number}) => {
   const date = note.date
 
   const onDateChange = (e: dayjs.Dayjs | null) => {
-    services.notes.patchDate(noteId, e.toDate())
+    actions.notes.patchDate(noteId, e.toDate())
   }
 
   return (

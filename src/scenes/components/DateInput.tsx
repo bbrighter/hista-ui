@@ -18,17 +18,17 @@ export default function DateInput(props: {
 }) {
   const [inputValue, setInputValue] = useState(dayjs(props.date))
   const debouncedInputValue = useDebounce(inputValue, 500)
-  const isUserInteraction = useRef(false)
+  const isUserInteractionRef = useRef(false)
 
   useEffect(() => {
-    if (!isUserInteraction.current) {
+    if (!isUserInteractionRef.current) {
       setInputValue(dayjs(props.date))
     }
-    isUserInteraction.current = false
+    isUserInteractionRef.current = false
   }, [props.date])
 
   useDidUpdateEffect(() => {
-    if (isUserInteraction.current) {
+    if (isUserInteractionRef.current) {
       props.onChange(debouncedInputValue)
     }
     
@@ -36,7 +36,7 @@ export default function DateInput(props: {
 
   const handleInputChange = (value: dayjs.Dayjs | null) => {
     if (value != null) {
-      isUserInteraction.current = true
+      isUserInteractionRef.current = true
       setInputValue(value)
     }
   }

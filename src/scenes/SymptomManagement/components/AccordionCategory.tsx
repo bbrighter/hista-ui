@@ -5,7 +5,8 @@ import IconButton from "@mui/material/IconButton"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
 
-import { services, SymptomCategory, useIsCategoryNameAvailable } from "../../../store"
+import { actions } from "../../../actions"
+import { SymptomCategory, useIsCategoryNameAvailable } from "../../../store"
 import { Icons } from "../../components/Icons"
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
 
@@ -20,7 +21,7 @@ export default function AccordionCategory(props: {
   const isDeletable = props.category.symptoms.length == 0
   const onSave = async (v: string) => {
     setIsLoading(true)
-    await services.symptoms.patchCategoryName(props.category.categoryId, v)
+    await actions.symptoms.patchCategoryName(props.category.categoryId, v)
     setIsLoading(false)
     setMode("default")
   }
@@ -28,7 +29,7 @@ export default function AccordionCategory(props: {
   const onDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     setIsLoading(true)
-    await services.symptoms.deleteCategory(props.category.categoryId)
+    await actions.symptoms.deleteCategory(props.category.categoryId)
     setIsLoading(false)
     setMode("default")
   }

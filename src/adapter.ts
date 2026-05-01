@@ -1,3 +1,4 @@
+/* eslint-disable @eslint-react/no-unnecessary-use-prefix */
 import { AuthStateAdapter, ProductKeys } from "@bbrighter/auth-module/auth"
 import { UserStateAdapter } from "@bbrighter/auth-module/users"
 import { Location, NavigateFunction } from "react-router-dom"

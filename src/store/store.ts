@@ -5,7 +5,6 @@ import { injectPiidGetter } from "../api/api";
 import {  createAuthSlice } from "./auth/authStore";
 import { createConditionsSlice } from "./conditionEvents/conditionEventsStore";
 import {  createConditionSlice } from "./conditionEvents/conditionEventStore";
-import { wrapActionsWithErrorHandler } from "./error/errorHandler";
 import { createHeadacheSlice } from "./headaches/headacheStore";
 import { createLoadingSlice } from "./loading/loadingStore";
 import { createIngredientSlice } from "./meal/ingredientStore";
@@ -38,8 +37,9 @@ const useHista = create<StoreType>()(
       ...createMedicineSlice(...a),
       ...createTemplateSlice(...a),
       ...createLoadingSlice(...a),
+      ...createAuthSlice(...a),
     };
-    return wrapActionsWithErrorHandler(store, createAuthSlice(...a));
+    return store
   }),
 );
 

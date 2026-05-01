@@ -3,8 +3,9 @@ import Container from "@mui/material/Container"
 import List from "@mui/material/List"
 import { useMemo, useState } from "react"
 
+import { actions } from "../../actions"
 import { usePiidEffect } from "../../hooks/usePiidEffect"
-import { ingredientsService, selectIsLoadingAny, useAllIngredients, useNonArchivedIngredients } from "../../store"
+import { selectIsLoadingAny, useAllIngredients, useNonArchivedIngredients } from "../../store"
 import useHista from "../../store/store"
 import { Loading } from "../components"
 import { IngredientListItem, ToggleVisibility } from "./IngredientListItem"
@@ -19,7 +20,7 @@ export const IngredientManagement = () => {
 
 
   usePiidEffect(() => {
-    ingredientsService.getIngredients()
+    actions.ingredients.list()
   }, [])
 
   return (

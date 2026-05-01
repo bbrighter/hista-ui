@@ -3,7 +3,8 @@ import Container from "@mui/material/Container"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { selectIsLoadingAny, services, useHeadaches } from "../../store"
+import { actions } from "../../actions"
+import { selectIsLoadingAny, useHeadaches } from "../../store"
 import useHista from "../../store/store"
 import { Loading, OverviewList } from "../components"
 import { Icons } from "../components/Icons"
@@ -17,7 +18,7 @@ export default function Headaches() {
 
   const onCreate = async () => {
     setPostLoading(true)
-    const id = await services.headaches.post()
+    const id = await actions.headaches.post()
     setPostLoading(false)
     if (id) {
       navigate(`${id}`)
@@ -40,10 +41,10 @@ export default function Headaches() {
           Neuer Kopfschmerz
         </Button>
         <OverviewList
-          getData={services.headaches.list}
+          getData={actions.headaches.list}
           items={headaches}
           onClick={onClick}
-          onDelete={services.headaches.delete}
+          onDelete={actions.headaches.delete}
           showSeverity
           severityColorMapping={getColor}
         />

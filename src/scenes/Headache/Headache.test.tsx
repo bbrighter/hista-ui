@@ -7,7 +7,7 @@ import { MemoryRouter, Route, Routes } from "react-router-dom"
 import { describe, expect, it, vi } from "vitest"
 
 import { server } from "../../__tests__/setupTest"
-import { services } from "../../store"
+import { actions } from "../../actions"
 import Headache from "./Headache"
 
 const getTagByText = (text: string): HTMLElement => {
@@ -21,10 +21,10 @@ const isTagActive = (text: string): boolean => {
 }
 
 describe("A headache can be edited and displayed", () => {
-  const patchHeadacheSeverity = vi.spyOn(services.headaches, "patchSeverity")
-  const patchHeadachePositions = vi.spyOn(services.headaches, "patchPositions")
-  const patchHeadacheTypes = vi.spyOn(services.headaches, "patchTypes")
-  const patchHeadacheSymptoms = vi.spyOn(services.headaches, "patchSymptoms")
+  const patchHeadacheSeverity = vi.spyOn(actions.headaches, "patchSeverity")
+  const patchHeadachePositions = vi.spyOn(actions.headaches, "patchPositions")
+  const patchHeadacheTypes = vi.spyOn(actions.headaches, "patchTypes")
+  const patchHeadacheSymptoms = vi.spyOn(actions.headaches, "patchSymptoms")
 
   beforeEach(() => {
     vi.resetAllMocks()

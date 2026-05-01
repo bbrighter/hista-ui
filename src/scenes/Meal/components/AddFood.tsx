@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField"
 import React from "react"
 import { useEffect, useState } from "react"
 
-import { ingredientsService,mealService, services } from "../../../store"
+import { actions } from "../../../actions"
 import useHista from "../../../store/store"
 import { Icons } from "../../components/Icons";
 import { useOptions } from "./useOptions"
@@ -36,8 +36,8 @@ export function AddFood() {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    ingredientsService.getIngredients()
-    services.template.list()
+    actions.ingredients.list()
+    actions.templates.list()
   }, [])
 
 
@@ -46,11 +46,11 @@ export function AddFood() {
     setValue(value)
     setIsLoading(true)
     if (isNewOption(value)) {
-      await mealService.postFoodByName(mealId, value)
+      await actions.meals.postFoodByName(mealId, value)
     } else if (isFoodOption(value)) {
-      await mealService.postFoodById(mealId, value.id)
+      await actions.meals.postFoodById(mealId, value.id)
     } else {
-      await mealService.postFoodsByTemplate(mealId, value.id)
+      await actions.meals.postFoodsByTemplate(mealId, value.id)
     }
     setIsLoading(false)
     setInputValue("")
@@ -72,8 +72,9 @@ export function AddFood() {
       renderOption={(props, option) => {
         const key = isNewOption(option) ? 0 : option.id + option.type
         const label = isNewOption(option) ? option : option.name
+        const { key: _ignored, ...rest } = props
         return (
-          <ListItem {...props} key={key}>
+          <ListItem key={key} {...rest}>
             <ListItemText primary={label} />
             {!isNewOption(option) && option.type == "template" && <ListItemIcon><Icons.template/></ListItemIcon>}
           </ListItem>

@@ -1,8 +1,8 @@
 import Button from "@mui/material/Button"
 import { useState } from "react"
 
+import { actions } from "../../../actions"
 import { useAppNavigate } from "../../../hooks/useNavigate"
-import { services } from "../../../store"
 import { Icons } from "../../components/Icons"
 
 export const AddNoteButton = () => {
@@ -11,7 +11,7 @@ export const AddNoteButton = () => {
 
   const onCreate = async () => {
     setLoading(true)
-    const id = await services.notes.post()
+    const id = await actions.notes.post()
     setLoading(false)
     if (id) {
       navigate.to.noteDetails(id)

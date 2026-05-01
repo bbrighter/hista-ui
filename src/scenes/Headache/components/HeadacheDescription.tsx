@@ -2,13 +2,13 @@ import Divider from "@mui/material/Divider"
 import TextField from "@mui/material/TextField"
 import { useEffect, useRef, useState } from "react"
 
+import { actions } from "../../../actions"
 import useDebounce from "../../../hooks/useDebounce"
 import { useDidUpdateEffect } from "../../../hooks/useDidUpdateEffect"
-import { services } from "../../../store"
 import useHista from "../../../store/store"
 
 export default function HeadacheDescription() {
-  const firstUpdate = useRef(true)
+  const firstUpdateRef = useRef(true)
   const description = useHista(state => state.headache.description)
   const id = useHista(state => state.headache.id)
 
@@ -17,17 +17,17 @@ export default function HeadacheDescription() {
   const debouncedValue = useDebounce(textInput, 1000)
 
   useEffect(() => {
-    if (firstUpdate.current) {
+    if (firstUpdateRef.current) {
       setTextInput(description)
     }
   }, [description])
 
   useDidUpdateEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false
+    if (firstUpdateRef.current) {
+      firstUpdateRef.current = false
       return
     }
-    services.headaches.patchDescription(id, debouncedValue).then(() => setIsDirty(false))
+    actions.headaches.patchDescription(id, debouncedValue).then(() => setIsDirty(false))
   }, [debouncedValue])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

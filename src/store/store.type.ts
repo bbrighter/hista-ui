@@ -1,7 +1,7 @@
 import { User } from "@bbrighter/auth-module/users";
 
 import { Instance } from "./auth/instance";
-import { BaseArrayStore, BaseRecordStore, ResetAction, SetAction, SetSingleAction, UpdateAction } from "./genericTypes";
+import { AddAction, BaseArrayStore, BaseRecordStore, ResetAction, SetAction, SetSingleAction, UpdateAction } from "./genericTypes";
 import * as types from "./types"
 
 export type StoreType = AuthStore &
@@ -56,26 +56,6 @@ export type ConditionEventStore = {
   updateCondition: (id: number, part: Partial<types.Condition>) => void 
 }
 
-// export type HeadacheStore = {
-//   headaches: Array<types.Headache>
-//   headache: types.Headache
-      
-//   isHeadacheLoaded: boolean
-//   resetHeadaches: () => void
-    
-//   getHeadaches(): Promise<Array<types.Headache>>
-//   getHeadache(id: number): Promise<void>
-//   postHeadache(): Promise<number>
-//   deleteHeadache(id: number): Promise<void>
-    
-//   patchHeadacheSeverity(newSeverity: number): Promise<void>
-//   patchHeadacheDate(date: Date): Promise<void>
-//   patchHeadachePositions(pos: types.HeadachePositions): Promise<void>
-//   patchHeadacheTypes(types: types.HeadacheTypes): Promise<void>
-//   patchHeadacheSymptoms(symptoms: types.HeadacheSymptoms): Promise<void>
-//   patchHeadacheDescription(description: string): Promise<void>
-// }
-
 export const loadingEntities = [
   "templates",
   "statuses", 
@@ -106,14 +86,19 @@ export type IngredientStore = BaseArrayStore<types.Ingredient, "ingredients", "i
 export type StatusStore = BaseArrayStore<types.Status, "statuses", "status">
 export type ConditionEventsStore = BaseArrayStore<types.MetaConditionEvent, "metaConditionEvents", "metaConditionEvent">
 export type TemplateStore = BaseRecordStore<types.Template, "templates", "template">
-export type MedicineStore = 
-    Omit<BaseArrayStore<types.Medicine, "medicines", "medicine">, "removeMedicine"> & 
-    {
-      intakes: Array<types.Intake>
-      setIntakes: (intakes: Array<types.Intake>) => void
-      changeMedicineIntake: (id: number, date: Date, value: number) => void;
-      changeOrder: (id: number, targetIndex: number) => void;
-    }
+
+type MedicineActions = 
+    SetAction<types.Medicine,"medicines"> & 
+    ResetAction<"medicines"> & 
+    AddAction<types.Medicine, "medicine"> & 
+    UpdateAction<types.Medicine, "medicine"> 
+export type MedicineState = {medicines: Array<types.Medicine>}
+type IntakeState = {intakes: Array<types.Intake>}
+type IntakeActions = SetAction<types.Intake, "intakes"> & {  changeMedicineIntake: (id: number, date: Date, value: number) => void;
+  changeOrder: (id: number, targetIndex: number) => void;
+}
+export type MedicineStore =  MedicineState & MedicineActions & IntakeState & IntakeActions
+
 export type NotesStore = BaseRecordStore<types.Note, "notes", "note">
 export type SymptomStore = 
     BaseArrayStore<types.SymptomCategory, "symptoms", "category"> & 

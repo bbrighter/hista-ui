@@ -1,4 +1,4 @@
-import { ingredientsService } from "../../../store"
+import { actions } from "../../../actions"
 import useHista from "../../../store/store"
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
 
@@ -11,7 +11,7 @@ export const EditIngredientName = ({ id, name, onCancel }:
 }) => {
   const ingredients = useHista(state => state.ingredients)
   const onSave = async (v: string) => {
-    await ingredientsService.changeName(id, v)
+    await actions.ingredients.changeName(id, v)
     onCancel()
   }
 

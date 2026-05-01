@@ -1,11 +1,11 @@
 import IconButton from "@mui/material/IconButton"
 
-import { ingredientsService } from "../../../store"
+import { actions } from "../../../actions"
 import { Icons } from "../../components/Icons"
 
 export const ArchiveButton = ({ id, isArchived }: { id: number, isArchived: boolean }) => {
   const onClick = () => {
-    ingredientsService.archive(id)
+    actions.ingredients.archive(id)
   }
 
   return (
