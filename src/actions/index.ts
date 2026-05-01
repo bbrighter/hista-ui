@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { conditionEvents } from "./conditionEvents.actions";
+import { errorBus,withErrorHandling } from "./errorHandler";
 import { headaches }  from "./headhaches.actions"
 import { ingredients } from "./ingredients.actions";
 import { meals } from "./meals.actions";
@@ -10,18 +12,27 @@ import { status } from "./status.actions"
 import { conditions,symptoms } from "./symptoms.actions";
 import { templates } from "./templates.actions";
 
+const createActions = <T extends Record<string, (...args: Array<any>) => Promise<any>>>(service: T): T => {
+  const wrappedService: any = {}
+  for (const [key, fn] of Object.entries(service)) {
+    wrappedService[key] = (...args: Array<any>) => withErrorHandling(() => fn(...args))
+  }
+  return wrappedService
+}
+
 export const actions = {
-  symptoms,
-  conditions,
-  conditionEvents,
-  notes,
-  templates,
-  meals,
-  ingredients,
-  pollens,
-  headaches,
-  medicines,
-  intakes,
-  status,
-  statistics,
+  symptoms: createActions(symptoms),
+  conditions: createActions(conditions),
+  conditionEvents: createActions(conditionEvents),
+  notes: createActions(notes),
+  templates: createActions(templates),
+  meals: createActions(meals),
+  ingredients: createActions(ingredients),
+  pollens: createActions(pollens),
+  headaches: createActions(headaches),
+  medicines: createActions(medicines),
+  intakes: createActions(intakes),
+  status: createActions(status),
+  statistics: createActions(statistics),
+  error: errorBus,
 }

@@ -7,8 +7,8 @@ import Button from "@mui/material/Button"
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
 
+import { toAppError } from "../../actions/errorHandler"
 import { useAppNavigate } from "../../hooks/useNavigate"
-import { toAppError } from "../../store"
 import { Icons } from "../components/Icons"
 
 export function ErrorFallback({ error, resetErrorBoundary }: { error: unknown, resetErrorBoundary: () => void }) {
@@ -21,7 +21,7 @@ export function ErrorFallback({ error, resetErrorBoundary }: { error: unknown, r
   const appError = toAppError(error)
 
   let header = appError.text
-  if (appError.status) header += ` - ${appError.status}`
+  if (appError.status) header = `${header} - ${appError.status}`
 
   return (
     <Container sx={{ padding: "2rem" }}>

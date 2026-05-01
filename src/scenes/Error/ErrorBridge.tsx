@@ -1,16 +1,18 @@
 import { useEffect } from "react"
 import { useErrorBoundary } from "react-error-boundary"
 
-import { errorBus } from "./errorBus"
+import { actions } from "../../actions"
+
+
 
 export function ErrorBridge() {
   const { showBoundary } = useErrorBoundary()
   useEffect(() => {
-    const listener = (err: Error) => showBoundary(err)
-    errorBus.on("error", listener)
+    const listener = (err: unknown) => showBoundary(err)
+    actions.error.on("error", listener)
 
     return () => {
-      errorBus.off("error", listener)
+      actions.error.off("error", listener)
     }
   }, [showBoundary])
 

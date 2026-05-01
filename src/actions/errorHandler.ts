@@ -1,7 +1,33 @@
-/* eslint-disable no-console */
 import { isRouteErrorResponse } from "react-router-dom"
 
-import { isAPIError } from "../../api/generatedApi"
+import { isAPIError } from "../api/generatedApi"
+
+export const withErrorHandling = async<T>(
+  fn: () => Promise<T>,
+): Promise<T | null> => {
+  try {
+    return await fn()
+  } catch (error) {
+    if (error) onError(error)
+    return null
+  }
+}
+
+const onError = (err: unknown) => {
+  if (isAPIError(err)) {
+    switch (err.status) {
+      case 401: 
+      case 404:
+        break
+      default:
+        errorBus.emit("error", err,
+        )
+    }
+    return
+  }
+  errorBus.emit("error",err)
+  
+}
 
 type AppError = {
   text: string
@@ -13,7 +39,6 @@ type AppError = {
 
 export const toAppError = (error: unknown): AppError => {
   if (isRouteErrorResponse(error)) {
-    console.warn("isRouteError")
     return {
       text: error.statusText,
       status: error.status,
@@ -22,28 +47,33 @@ export const toAppError = (error: unknown): AppError => {
     }
   }
   if (isAPIError(error)) {
-    console.warn("isAPIError")
     return {
       status: error.status,
       text: error.message,
       details: error.details,
       stack: error.stack,
       source: "api",
-
     }
   }
   if (error instanceof Error) {
-    console.warn("isError")
     return {
       stack: error.stack,
       text: error.name,
       source: "unknown",
     }
   }
-  console.warn("isUnknown")
   return {
     source: "unknown",
     text: "Unbekannter Fehler",
     details: JSON.stringify(error),
   }
 }
+
+
+import mitt from "mitt"
+
+type Events = {
+  error: unknown
+}
+
+export const errorBus = mitt<Events>()
