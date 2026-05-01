@@ -34,9 +34,9 @@ export const status = {
   patch: async (id: number, params: PutStatusParams) => {
     await client.PatchStatus(id, {
       date: params.date.toISOString(),
-      eveningFitness: params.eveningFitness,
-      morningFitness: params.morningFitness,
-      morningSleep: params.morningSleep,
+      eveningFitness: params.eveningFitness ? params.eveningFitness : null,
+      morningFitness: params.morningFitness ? params.morningFitness : null,
+      morningSleep: params.morningSleep ? params.morningSleep : null,
     })
 
     const { updateStatus } = useHista.getState()

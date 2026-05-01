@@ -13,9 +13,9 @@ export const respToStatuses = (resp: hista.StatusListResponse): Array<Status> =>
 export interface Status {
   id: number
   date: Dayjs
-  morningFitness?: number
-  morningSleep?: number
-  eveningFitness?: number
+  morningFitness: number | null
+  morningSleep: number | null
+  eveningFitness: number | null
   locked?: boolean
 }
 
@@ -23,9 +23,9 @@ export const respToStatus = (resp: hista.StatusResponse, locked?: boolean): Stat
   return {
     id: resp.id,
     date: dayjs(resp.date),
-    morningFitness: resp?.morningFitness ?? undefined,
-    morningSleep: resp?.morningSleep ?? undefined,
-    eveningFitness: resp?.eveningFitness ?? undefined,
+    morningFitness: resp?.morningFitness ?? null,
+    morningSleep: resp?.morningSleep ?? null,
+    eveningFitness: resp?.eveningFitness ?? null,
     locked: locked,
   }
 }

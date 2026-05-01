@@ -17,8 +17,8 @@ import { PutStatusParams, Status } from "../../../store";
 type StatusProps = {status: Status}
 
 export const Morning = ({ status }: StatusProps) => {
-  const [morningFitness, setMorningFitness] = useState<number | undefined>(status.morningFitness)
-  const [morningSleep, setMorningSleep] = useState<number | undefined>(status.morningSleep)
+  const [morningFitness, setMorningFitness] = useState<number>(status.morningFitness || 0)
+  const [morningSleep, setMorningSleep] = useState<number>(status.morningSleep || 0)
 
   const debouncedUpdate = useRef(debounce(async (params) => {
     await actions.status.patch(status.id, params)
@@ -28,7 +28,7 @@ export const Morning = ({ status }: StatusProps) => {
     const params: PutStatusParams = {
       date: status.date,
       statusId: status.id,
-      morningFitness: morningFitness,
+      morningFitness: morningFitness ,
       morningSleep: morningSleep,
     }
     debouncedUpdate(params)
@@ -48,7 +48,7 @@ export const Morning = ({ status }: StatusProps) => {
             data-testid="morning-sleep-slider"
             min={1}
             max={5}
-            value={morningSleep}
+            value={morningSleep ?? 0}
             onChange={(_, v) => setMorningSleep(v)}
             sx={{ color: colorMapping(morningSleep) }}
           />
@@ -72,7 +72,7 @@ export const Morning = ({ status }: StatusProps) => {
 
 
 export const Evening = ({ status } : StatusProps) => {
-  const [eveningFitness, setEveningFitness] = useState<number | undefined>(status.eveningFitness)
+  const [eveningFitness, setEveningFitness] = useState<number>(status.eveningFitness || 0)
 
   const debouncedUpdate = useRef(debounce(async (params) => {
     await actions.status.patch(status.id, params)
@@ -104,7 +104,6 @@ export const Evening = ({ status } : StatusProps) => {
               max={5}
               value={eveningFitness}
               onChange={(_, v) => setEveningFitness(v)}
-              // color={colorMapping(eveningFitness)}
               sx={{ color: colorMapping(eveningFitness) }}
             />
           </Stack>
@@ -116,14 +115,14 @@ export const Evening = ({ status } : StatusProps) => {
 }
 
 
-const SleepIcon = ({ sleep }: {sleep?: number}) => {
+const SleepIcon = ({ sleep }: {sleep: number}) => {
   return <HotelIcon sx={{ margin: "4px", color: colorMapping(sleep) }} titleAccess="Schlaf" />
 }
-const FitnessIcon = ({ fitness } :{fitness?: number}) => {
+const FitnessIcon = ({ fitness } :{fitness: number}) => {
   return <FitnessCenterIcon sx={{ margin: "4px", color: colorMapping(fitness) }} titleAccess="Fitness" />
 }
 
-const colorMapping = (v: number | undefined): string => {
+const colorMapping = (v: number): string => {
   const colors = ["rgb(255, 0, 0)", "rgb(255, 128, 0)", "rgb(255, 255, 0)", "rgb(99, 199, 0)", "rgb(0, 131, 0)"]
-  return v == undefined ? "rgb(160, 160, 160)" : colors[v - 1]
+  return v == 0 ? "rgb(160, 160, 160)" : colors[v - 1]
 }
