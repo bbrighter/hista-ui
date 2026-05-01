@@ -8,7 +8,7 @@ import { services } from "../../../store"
 import useHista from "../../../store/store"
 
 export default function HeadacheDescription() {
-  const firstUpdate = useRef(true)
+  const firstUpdateRef = useRef(true)
   const description = useHista(state => state.headache.description)
   const id = useHista(state => state.headache.id)
 
@@ -17,14 +17,14 @@ export default function HeadacheDescription() {
   const debouncedValue = useDebounce(textInput, 1000)
 
   useEffect(() => {
-    if (firstUpdate.current) {
+    if (firstUpdateRef.current) {
       setTextInput(description)
     }
   }, [description])
 
   useDidUpdateEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false
+    if (firstUpdateRef.current) {
+      firstUpdateRef.current = false
       return
     }
     services.headaches.patchDescription(id, debouncedValue).then(() => setIsDirty(false))

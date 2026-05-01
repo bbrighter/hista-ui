@@ -72,8 +72,9 @@ export function AddFood() {
       renderOption={(props, option) => {
         const key = isNewOption(option) ? 0 : option.id + option.type
         const label = isNewOption(option) ? option : option.name
+        const { key: _ignored, ...rest } = props
         return (
-          <ListItem {...props} key={key}>
+          <ListItem key={key} {...rest}>
             <ListItemText primary={label} />
             {!isNewOption(option) && option.type == "template" && <ListItemIcon><Icons.template/></ListItemIcon>}
           </ListItem>

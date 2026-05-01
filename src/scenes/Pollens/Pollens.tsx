@@ -25,6 +25,7 @@ export default function PollenView() {
         <Divider />
         <List>
           {pollens.map((pollen, i) =>
+            // eslint-disable-next-line @eslint-react/no-array-index-key
             <PollenRow key={i} pollen={pollen} />,
           )}
         </List>

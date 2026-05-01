@@ -4,9 +4,7 @@ export * from "./headache.selectors"
 export * from "./ingredients.selectors";
 export * from "./loading.selectors"
 export * from "./meal.selectors"
-export * from "./medicines.selectors"
 export * from "./notes.selectors"
 export * from "./statistics.selectors";
 export * from "./status.selectors"
 export * from "./symptom.selectors"
-export * from "./templates.selectors"

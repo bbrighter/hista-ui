@@ -79,8 +79,9 @@ export default function AddOrSelectCategory(props: {
           renderOption={(props, option) => {
             const value = isNewOption(option) ? option : option.name
             const key = isNewOption(option) ? 0 : option.id
+            const { key: _ignored, ...rest } = props
             return (
-              <ListItem {...props} key={key}>
+              <ListItem key={key} {...rest}>
                 <ListItemText primary={value} />
               </ListItem>
             )

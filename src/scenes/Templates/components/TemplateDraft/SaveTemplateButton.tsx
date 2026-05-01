@@ -32,6 +32,7 @@ export const SaveTemplateButton = ({ name, draft, canBeSaved, onSaved, id }: Sav
 
   return (
     <Button 
+      data-testid="save-button"
       color="success" 
       startIcon={<Icons.actions.save/>} 
       variant="contained"

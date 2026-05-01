@@ -89,8 +89,9 @@ export default function AddCondition() {
           const key = isNewOption(option) ? 0 : option.symptomId
           const primary = isNewOption(option) ? option : option.symptomName
           const secondary = isNewOption(option) ? "hinzufügen" : option.categoryName
+          const { key: _ignored, ...rest } = props
           return (
-            <ListItem {...props} key={key}>
+            <ListItem key={key} {...rest} >
               <ListItemText
                 primary={primary}
                 secondary={secondary}

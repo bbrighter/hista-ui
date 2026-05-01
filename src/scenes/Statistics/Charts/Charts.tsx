@@ -6,7 +6,8 @@ import { IngredientChart, StatisticsDateInput } from "./components"
 
 export function Charts() {
   const today = new Date()
-  const [fromDate, setFromDate] = useState(new Date("2024-05-10"))
+  const initialFromDate = new Date("2024-05-10")
+  const [fromDate, setFromDate] = useState(initialFromDate)
   const [toDate, setToDate] = useState(today)
 
   const handleFromDateChange = (value: dayjs.Dayjs | null) => {

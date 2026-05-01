@@ -3,7 +3,7 @@ import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListSubheader from "@mui/material/ListSubheader";
 
-import { useOldIntakes, useTodaysIntakes } from "../../../store";
+import { useOldIntakes, useTodaysIntakes } from "./intakeHooks";
 import { IntakeListItem } from "./IntakeListItem";
 
 export const IntakeList = () => {

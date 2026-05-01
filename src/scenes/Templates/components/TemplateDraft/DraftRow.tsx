@@ -21,7 +21,10 @@ export const DraftRow = ({ index, draft, onChangeIngredient, onChangeCondition, 
     >
       <IngredientSelect ingredient={ingredient} onChange={(ing) => onChangeIngredient(index, ing)} />
       <FoodConditionToggle condition={condition} onClick={() => onChangeCondition(index)}/>
-      <IconButton onClick={() => onDelete(index)}><Icons.actions.delete/></IconButton>
+      <IconButton 
+        data-testid="delete-row-button"
+        onClick={() => onDelete(index)}
+      ><Icons.actions.delete/></IconButton>
     </Stack>
   )
 }

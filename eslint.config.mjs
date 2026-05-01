@@ -1,4 +1,5 @@
 import jseslint from "@eslint/js";
+import eslintReact from "@eslint-react/eslint-plugin";
 import stylistic from "@stylistic/eslint-plugin";
 import { defineConfig } from "eslint/config";
 import prettierConfig from "eslint-config-prettier";
@@ -16,6 +17,7 @@ export default defineConfig([
   tseslint.configs.recommended,
   stylistic.configs.recommended,
   reactCompiler.configs.recommended,
+  eslintReact.configs.recommended,
   prettierConfig,
 
   {

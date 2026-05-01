@@ -6,10 +6,11 @@ import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
 import { useEffect, useRef, useState } from "react"
 
-import { Medicine, medicinesService, useIsNameUnique } from "../../../store"
+import { Medicine, medicinesService } from "../../../store"
 import { ArchiveButton } from "../../components/ArchiveButton"
 import { Icons } from "../../components/Icons";
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
+import { useIsNameUnique } from "./useIsNameUnique";
 
 type DropIndicator = 
   {overId?: number, nextId?: number, prevId?: number, edge: "bottom" | "top"}
@@ -111,6 +112,7 @@ export const MedicineListItem = ({ medicine, dropIndicator, onDragOverItem, onDr
 
 const EditMedicineName = ({ id, name, onCancel }: Partial<Medicine> & {onCancel: () => void}) => {
   const isSaveable = useIsNameUnique()
+  if (!id || !name) return
   const onSave = async (v: string) => {
     await medicinesService.renameMedicine(id, v)
     onCancel()

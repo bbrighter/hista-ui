@@ -14,7 +14,7 @@ type SetRecordAction<T, K extends string> = {
   [P in `set${Capitalize<K>}`]: (items: Record<number,T>) => void
 }
 
-type AddAction<T, K extends string> = {
+export type AddAction<T, K extends string> = {
   [P in `add${Capitalize<K>}`]: (item: T) => void
 }
 
@@ -29,10 +29,6 @@ export type UpdateAction<T, K extends string> = {
 type RemoveAction<K extends string> = {
   [P in `remove${Capitalize<K>}`]: (id: number) => void
 }
-
-// type LoadedAction<K extends string> = {
-//   [P in `set${Capitalize<K>}Loaded`]: (loaded: boolean) => void
-// }
 
 export type BaseArrayStore<T, K extends string, S extends string> = {
   [P in K]: Array<T> 

@@ -1,13 +1,43 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import { Ingredient, useTemplate } from "../../../../store";
+import { Ingredient } from "../../../../store";
+import useHista from "../../../../store/store";
 import { DraftTemplate } from "./draftTemplate.type";
 
+
+export const useTemplate = (id: number | null | undefined) => {
+  const templates = useHista(state => state.templates)
+  const ingredients = useHista(state => state.ingredients)
+
+  return useMemo(() => {  
+    if (!id) return null
+
+    const ingredientMap = new Map(ingredients.map(i => [i.id, i]))
+  
+    const template = templates[id]  
+    if (!template) return null
+    return {
+      name: template.name,
+      items: template.items.map(i => {
+        const id = i.ingredientId
+        const ingredient = ingredientMap.get(i.ingredientId)
+        return {
+          ingredient: {
+            id: id,
+            isArchived: ingredient?.isArchived ?? true,
+            name: ingredient?.name ?? "",
+          } satisfies Ingredient,
+          condition: i.condition,
+        }}),
+    }}, [id, templates, ingredients])
+
+}
+
+
 export const useTemplateDraft = (id?: number | null) => {
+  const template = useTemplate(id)
   const [name, setName] = useState("")
   const [draft, setDraft] = useState<DraftTemplate>([{ ingredient: null, condition: "cooked" }])
-
-  const template = useTemplate(id)
 
   useEffect(() => {
     if (template) {
