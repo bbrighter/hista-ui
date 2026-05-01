@@ -3,7 +3,8 @@ import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
 
-import { services, useConditionsWithSymptoms } from "../../../store"
+import { actions } from "../../../actions"
+import { useConditionsWithSymptoms } from "../../../store"
 import { Icons } from "../../components/Icons"
 import Severity from "./Severity"
 
@@ -11,7 +12,7 @@ export default function ConditionList() {
   const conditionsAndCategories = useConditionsWithSymptoms()
 
   const onDelete = (conditionId: number) => {
-    services.conditions.delete(conditionId)
+    actions.conditions.delete(conditionId)
   }
 
   return (

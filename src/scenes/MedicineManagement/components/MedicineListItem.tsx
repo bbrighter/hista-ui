@@ -6,7 +6,8 @@ import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
 import { useEffect, useRef, useState } from "react"
 
-import { Medicine, medicinesService } from "../../../store"
+import { actions } from "../../../actions";
+import { Medicine } from "../../../store"
 import { ArchiveButton } from "../../components/ArchiveButton"
 import { Icons } from "../../components/Icons";
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
@@ -30,7 +31,7 @@ export const MedicineListItem = ({ medicine, dropIndicator, onDragOverItem, onDr
   const [isEditing, setIsEditing] = useState(false)
   const onEdit = () => setIsEditing(true)
 
-  const onArchive =(id: number) =>  medicinesService.archiveMedicine(id)
+  const onArchive =(id: number) =>  actions.medicines.archive(id)
 
   useEffect(() => {
     const el = ref.current
@@ -114,7 +115,7 @@ const EditMedicineName = ({ id, name, onCancel }: Partial<Medicine> & {onCancel:
   const isSaveable = useIsNameUnique()
   if (!id || !name) return
   const onSave = async (v: string) => {
-    await medicinesService.renameMedicine(id, v)
+    await actions.medicines.rename(id, v)
     onCancel()
   }
 

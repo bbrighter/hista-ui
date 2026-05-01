@@ -4,8 +4,9 @@ import FormGroup from "@mui/material/FormGroup"
 import dayjs from "dayjs"
 import { useParams } from "react-router-dom"
 
+import { actions } from "../../actions"
 import { usePiidEffect } from "../../hooks/usePiidEffect"
-import { conditionEvents, selectIsLoadingAny } from "../../store"
+import { selectIsLoadingAny } from "../../store"
 import useHista from "../../store/store"
 import { Loading } from "../components"
 import DateInput from "../components/DateInput"
@@ -18,14 +19,14 @@ export default function ConditionEvent() {
   const params = useParams<{ eventId: string }>()
 
   usePiidEffect(() => {
-    conditionEvents.get(Number(params.eventId))
+    actions.conditionEvents.get(Number(params.eventId))
   },
   [params.eventId])
 
   const onChange = (v: dayjs.Dayjs | null) => {
     if (!params.eventId) return
     if (v === null) return
-    conditionEvents.patchDate(Number(params.eventId), v.toDate())
+    actions.conditionEvents.patchDate(Number(params.eventId), v.toDate())
   }
 
   return (

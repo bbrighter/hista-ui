@@ -10,8 +10,9 @@ import Typography from "@mui/material/Typography";
 import debounce from "lodash.debounce";
 import { useRef, useState } from "react";
 
+import { actions } from "../../../actions";
 import { useDidUpdateEffect } from "../../../hooks/useDidUpdateEffect";
-import { PutStatusParams, Status, statusService } from "../../../store";
+import { PutStatusParams, Status } from "../../../store";
 
 type StatusProps = {status: Status}
 
@@ -20,7 +21,7 @@ export const Morning = ({ status }: StatusProps) => {
   const [morningSleep, setMorningSleep] = useState<number | undefined>(status.morningSleep)
 
   const debouncedUpdate = useRef(debounce(async (params) => {
-    await statusService.patchStatus(status.id, params)
+    await actions.status.patch(status.id, params)
   }, 1000)).current
   
   useDidUpdateEffect(() => {
@@ -74,7 +75,7 @@ export const Evening = ({ status } : StatusProps) => {
   const [eveningFitness, setEveningFitness] = useState<number | undefined>(status.eveningFitness)
 
   const debouncedUpdate = useRef(debounce(async (params) => {
-    await statusService.patchStatus(status.id, params)
+    await actions.status.patch(status.id, params)
   }, 1000)).current
   
   useDidUpdateEffect(() => {

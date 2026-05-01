@@ -1,7 +1,8 @@
 import Container from "@mui/material/Container";
 
+import { actions } from "../../actions";
 import { usePiidEffect } from "../../hooks/usePiidEffect";
-import { medicinesService, selectIsLoadingAny } from "../../store";
+import { selectIsLoadingAny } from "../../store";
 import useHista from "../../store/store";
 import { Loading } from "../components";
 import { IntakeList, ManagementButton } from "./components";
@@ -9,8 +10,8 @@ import { IntakeList, ManagementButton } from "./components";
 export const Medicines = () => {
   const isLoading = useHista(selectIsLoadingAny(["medicines", "intakes"]))
   usePiidEffect(() => {
-    medicinesService.getMedicines();
-    medicinesService.listIntakes();
+    actions.medicines.list()
+    actions.intakes.list()
   }, []);
 
   return (

@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import React, { useState } from "react"
 
-import { services } from "../../../store"
+import { actions } from "../../../actions"
 import useHista from "../../../store/store"
 
 interface InputOption {
@@ -39,12 +39,12 @@ export default function AddOrSelectCategory(props: {
 
   const onChange = async (_e: React.SyntheticEvent, value: Option | null) => {
     if (value == null) return
-    const catId = isNewOption(value) ? await services.symptoms.postCategory(value) : value.id
+    const catId = isNewOption(value) ? await actions.symptoms.postCategory(value) : value.id
     if (catId == 0) {
       setIsError(true)
       return
     }
-    await services.conditions.postByName(props.symptomName, catId)
+    await actions.conditions.postByName(props.symptomName, catId)
     setIsError(false)
     props.onClose()
   }

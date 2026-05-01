@@ -1,7 +1,7 @@
 import List from "@mui/material/List"
 import { useState } from "react"
 
-import { medicinesService } from "../../../store"
+import { actions } from "../../../actions"
 import useHista from "../../../store/store"
 import { NoData } from "../../components"
 import { MedicineListItem } from "./MedicineListItem"
@@ -23,7 +23,7 @@ export const MedicineList = () => {
   const onDrop = async () => {
     if (draggedId == null) return
 
-    await medicinesService.reorderMedicine(draggedId, dropIndicator?.prevId, dropIndicator?.nextId)
+    await actions.medicines.reorder(draggedId, dropIndicator?.prevId, dropIndicator?.nextId)
     setDraggedId(null)
     setDropIndicator(null)
   }

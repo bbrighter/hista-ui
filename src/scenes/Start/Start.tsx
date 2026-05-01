@@ -1,8 +1,9 @@
 import Grid from "@mui/material/Grid"
 import dayjs from "dayjs"
 
+import { actions } from "../../actions"
 import { usePiidEffect } from "../../hooks/usePiidEffect"
-import { statusService, useStatusExistsOnDay } from "../../store"
+import { useStatusExistsOnDay } from "../../store"
 import StartPageCard, { CardType } from "./components/StartPageCard"
 
 export default function Start() {
@@ -18,7 +19,7 @@ export default function Start() {
   ]
 
   usePiidEffect(() => {
-    statusService.getStatuses()
+    actions.status.list()
   },[])
 
   const statusForTodayExists = useStatusExistsOnDay(dayjs())

@@ -1,9 +1,10 @@
 import { Dayjs } from "dayjs"
 
-import { client } from "../../api/api"
-import { hista } from "../../api/generatedApi"
-import useHista from "../store"
-import { Headache, HeadachePositions, HeadacheSymptoms, HeadacheTypes } from "../types"
+import { client } from "../api/api"
+import { hista } from "../api/generatedApi"
+import { Headache, HeadachePositions, HeadacheSymptoms, HeadacheTypes } from "../store"
+import useHista from "../store/store"
+
 
 
 const validHeadachePositions: Record<string, string> = {

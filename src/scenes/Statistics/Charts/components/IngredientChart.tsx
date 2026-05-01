@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid"
 import { useEffect, useState } from "react"
 
-import { services, statisticsService } from "../../../../store"
+import { actions } from "../../../../actions"
 import useHista from "../../../../store/store"
 import { IngredientBarChart } from "./IngredientBarChart"
 import IngredientSelect from "./IngredientSelect"
@@ -18,7 +18,7 @@ export const IngredientChart = ({
   
   const resetStatistics = useHista(state => state.resetStatistics)
   useEffect(() => {
-    services.symptoms.list()
+    actions.symptoms.list()
   })
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export const IngredientChart = ({
       resetStatistics()
     }
     else {
-      statisticsService.getMealStatistics(from, to, id)
+      actions.statistics.getMealStatistics(from, to, id)
     }
   }, [from, to, id])
 

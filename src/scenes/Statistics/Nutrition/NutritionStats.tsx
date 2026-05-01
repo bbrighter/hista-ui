@@ -5,7 +5,7 @@ import Paper from "@mui/material/Paper"
 import Typography from "@mui/material/Typography"
 import { useEffect, useState } from "react"
 
-import { statisticsService } from "../../../store"
+import { actions } from "../../../actions"
 import useHista from "../../../store/store"
 import { computeCalories } from "../../../utils/nutrition"
 import { HideFiberButton } from "../../components/NutritionChart"
@@ -24,7 +24,7 @@ export const NutritionStats = () => {
   }
 
   useEffect(() => {
-    statisticsService.getNutritionStatistics(interval)
+    actions.statistics.getNutritionStatistics(interval)
   }, [interval])
 
   const width = 500

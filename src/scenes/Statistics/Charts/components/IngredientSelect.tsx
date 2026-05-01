@@ -2,7 +2,7 @@ import MenuItem from "@mui/material/MenuItem"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import { useEffect, useState } from "react"
 
-import { ingredientsService } from "../../../../store"
+import { actions } from "../../../../actions"
 import useHista from "../../../../store/store"
 
 export default function IngredientSelect({ onChange }: {
@@ -13,7 +13,7 @@ export default function IngredientSelect({ onChange }: {
   const [value, setValue] = useState(0)
 
   useEffect(() => {
-    ingredientsService.getIngredients()
+    actions.ingredients.list()
   }, [])
 
   const handleChange = (e: SelectChangeEvent<number>) => {

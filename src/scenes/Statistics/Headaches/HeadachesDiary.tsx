@@ -1,12 +1,12 @@
 import Box from "@mui/material/Box"
 import { useEffect } from "react"
 
-import { services } from "../../../store"
+import { actions } from "../../../actions"
 import { HeadacheDownloadButton, HeadacheGrid } from "./components"
 
 export function HeadacheDiary() {
   useEffect(() => {
-    services.headaches.list()
+    actions.headaches.list()
   }, [])
 
   return (

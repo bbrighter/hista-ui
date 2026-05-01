@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import { useState } from "react";
 
-import { medicinesService } from "../../../store";
+import { actions } from "../../../actions";
 import useHista from "../../../store/store";
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort";
 
@@ -23,7 +23,7 @@ export const AddMedicineButton = () => {
   };
 
   const onSave = async (v: string) => {
-    await medicinesService.createMedicine(v);
+    await actions.medicines.create(v);
     onCancel();
   };
 

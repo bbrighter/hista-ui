@@ -3,8 +3,9 @@ import Container from "@mui/material/Container"
 import Divider from "@mui/material/Divider"
 import List from "@mui/material/List"
 
+import { actions } from "../../actions"
 import { usePiidEffect } from "../../hooks/usePiidEffect"
-import { selectIsLoadingAny, services } from "../../store"
+import { selectIsLoadingAny } from "../../store"
 import useHista from "../../store/store"
 import { Loading } from "../components"
 import PollenHeader from "./components/PollenHeader"
@@ -15,7 +16,7 @@ export default function PollenView() {
   const isLoading = useHista(selectIsLoadingAny(["pollens"]))
 
   usePiidEffect(() => {
-    services.pollens.get()
+    actions.pollens.list()
   }, [])
 
   return (

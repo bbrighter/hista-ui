@@ -1,7 +1,7 @@
-import { client } from "../../api/api"
-import useHista from "../store"
-import { respToConditionEvent } from "../types/conditionEvent"
-import { respToConditionEvents } from "../types/conditionEvents"
+import { client } from "../api/api"
+import { respToConditionEvent, respToConditionEvents } from "../store"
+import useHista from "../store/store"
+
 
 export const conditionEvents = {
   list: async () => {

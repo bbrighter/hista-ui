@@ -1,8 +1,8 @@
 import Button from "@mui/material/Button"
 import { useState } from "react"
 
+import { actions } from "../../../actions"
 import { useAppNavigate } from "../../../hooks/useNavigate"
-import { services } from "../../../store"
 import { Icons } from "../../components/Icons"
 
 export const AddMealButton = () => {
@@ -11,7 +11,7 @@ export const AddMealButton = () => {
   
   const onCreate = async () => {
     setLoading(true)
-    const id = await services.meal.postMeal()
+    const id = await actions.meals.post()
     setLoading(false)
     if (id) {
       navigate.to.mealDetail(id)

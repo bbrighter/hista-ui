@@ -1,13 +1,13 @@
 import dayjs from "dayjs";
 import { beforeEach, describe, expect, it } from "vitest";
 
-import useHista from "../../store";
-import { statusService } from "../status.service";
+import useHista from "../../store/store";
+import { actions } from "..";
 
 describe("status service", () => {
 
   beforeEach( async () => {
-    await statusService.getStatuses()
+    await actions.status.list()
   })
 
   it("get", async () => {
@@ -33,7 +33,7 @@ describe("status service", () => {
   })
 
   it("delete", async () => {
-    await statusService.deleteStatus(1)
+    await actions.status.delete(1)
 
     const { statuses } = useHista.getState()
     expect(statuses).toHaveLength(1)
@@ -41,7 +41,7 @@ describe("status service", () => {
   })
 
   it("create", async () => {
-    await statusService.postStatus(dayjs())
+    await actions.status.post(dayjs())
 
     const { statuses } = useHista.getState()
     expect(statuses).toHaveLength(3)
@@ -49,7 +49,7 @@ describe("status service", () => {
   })
 
   it("patch", async () => {
-    await statusService.patchStatus(2, { date: dayjs(),eveningFitness: 2,statusId: 2 })
+    await actions.status.patch(2, { date: dayjs(),eveningFitness: 2,statusId: 2 })
     
     const { statuses } = useHista.getState()
     expect(statuses).toHaveLength(2)

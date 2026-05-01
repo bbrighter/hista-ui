@@ -1,13 +1,14 @@
 import Button from "@mui/material/Button"
 import {  SwipeAction, TrailingActions } from "react-swipeable-list"
 
-import { Food, mealService } from "../../../store"
+import { actions } from "../../../actions"
+import { Food } from "../../../store"
 import { Icons } from "../../components/Icons"
 
 export const swipeDeleteFood = (food: Food) => {
 
   const onDelete = async () => {
-    await mealService.deleteFood(food.id)
+    await actions.meals.deleteFood(food.id)
   }
 
   return (  

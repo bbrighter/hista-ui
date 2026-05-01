@@ -4,8 +4,9 @@ import IconButton from "@mui/material/IconButton"
 import Stack from "@mui/material/Stack";
 import { useState } from "react"
 
+import { actions } from "../../actions";
 import { useAppNavigate } from "../../hooks/useNavigate"
-import { conditionEvents, selectIsLoadingAny } from "../../store"
+import { selectIsLoadingAny } from "../../store"
 import useHista from "../../store/store";
 import { Loading } from "../components";
 import { Icons } from "../components/Icons";
@@ -18,7 +19,7 @@ export default function ConditionEvents() {
 
   const onClickAddSymptom = async () => {
     setLoading(true)
-    const id = await conditionEvents.post()
+    const id = await actions.conditionEvents.post()
     setLoading(false)
     if (id) {
       navigate.to.conditionEventDetails(id)

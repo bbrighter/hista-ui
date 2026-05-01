@@ -3,8 +3,9 @@ import Typography from "@mui/material/Typography"
 import { Dayjs } from "dayjs"
 import { useParams } from "react-router-dom"
 
+import { actions } from "../../actions"
 import { usePiidEffect } from "../../hooks/usePiidEffect"
-import { selectIsLoadingAny, services } from "../../store"
+import { selectIsLoadingAny } from "../../store"
 import useHista from "../../store/store"
 import { Loading } from "../components"
 import DateInput from "../components/DateInput"
@@ -22,18 +23,18 @@ export default function Headache() {
   const headache = useHista(state => state.headache)
 
   usePiidEffect(() => {
-    services.headaches.get(id)
+    actions.headaches.get(id)
   }, [headacheId])
 
   const onSeverityChange = (v: number) => {
     if (v != headache.severity) {
-      services.headaches.patchSeverity(id, v)
+      actions.headaches.patchSeverity(id, v)
     }
   }
 
   const onDateChange = (v: Dayjs | null) => {
     if (!v) return
-    services.headaches.patchDate(id, v)
+    actions.headaches.patchDate(id, v)
   }
 
   const iconMapping = (value: number) => {

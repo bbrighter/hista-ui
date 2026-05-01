@@ -1,9 +1,10 @@
-import { client } from "../../api/api";
-import useHista from "../store";
-import { respToIntakeList, respToMedicineList } from "../types/medicines.types";
+import { client } from "../api/api";
+import { hista } from "../api/generatedApi";
+import { Intake, Medicine } from "../store";
+import useHista from "../store/store";
 
-export const medicinesService = {
-  getMedicines: async () => {
+export const medicines = {
+  list: async () => {
     const { loaded, setMedicines, setLoaded } = useHista.getState()
     if (loaded["medicines"]) return
 
@@ -13,14 +14,14 @@ export const medicinesService = {
     setLoaded("medicines")
   },
 
-  createMedicine: async (name: string) => {
+  create: async (name: string) => {
     const idResp = await client.CreateMedicine({ name: name });
 
     const { addMedicine } = useHista.getState();
     addMedicine({ id: idResp.id, isArchived: false, name: name });
   },
 
-  archiveMedicine: async (id: number) => {
+  archive: async (id: number) => {
     const { medicines } = useHista.getState()
     const medicine = medicines.find(m => m.id == id)
     if (!medicine) return
@@ -31,14 +32,14 @@ export const medicinesService = {
     updateMedicine(id, { isArchived: newArchive });
   },
 
-  renameMedicine: async (id: number, name: string) => {
+  rename: async (id: number, name: string) => {
     await client.PatchMedicine(id, { name: name });
 
     const { updateMedicine } = useHista.getState();
     updateMedicine(id, { name: name });
   },
 
-  reorderMedicine: async (id: number,  prevId?: number, nextId?: number) => {
+  reorder: async (id: number,  prevId?: number, nextId?: number) => {
     const { medicines, changeOrder } = useHista.getState()
 
     await client.ReorderMedicine(id, { nextId: nextId, previousId: prevId })
@@ -52,8 +53,10 @@ export const medicinesService = {
     }
     changeOrder(id, targetIndex)
   },
+}
 
-  listIntakes: async () => {
+export const intakes = {
+  list: async () => {
     const { setIntakes, loaded , setLoaded } = useHista.getState()
     if (loaded["intakes"]) return
     const resp = await client.ListIntakes();
@@ -62,17 +65,47 @@ export const medicinesService = {
     setLoaded("intakes")
   },
 
-  incrementIntake: async (medicineId: number) => {
+  increment: async (medicineId: number) => {
     await client.IncrementIntake(medicineId);
 
     const { changeMedicineIntake } = useHista.getState();
     changeMedicineIntake(medicineId, new Date(), 1);
   },
 
-  decrementIntake: async (medicineId: number) => {
+  decrement: async (medicineId: number) => {
     await client.DecrementIntake(medicineId);
 
     const { changeMedicineIntake } = useHista.getState();
     changeMedicineIntake(medicineId, new Date(), -1);
   },
+};
+
+
+const respToMedicine = (resp: hista.MedicineResponse): Medicine => {
+  return {
+    id: resp.id,
+    isArchived: resp.isArchived,
+    name: resp.name,
+  };
+};
+
+const respToMedicineList = (
+  resp: hista.MedicineListResponse,
+): Array<Medicine> => {
+  return resp.medicines.sort((a,b) => a.sortOrder - b.sortOrder).map((m) => respToMedicine(m));
+};
+
+
+const respToIntake = (resp: hista.IntakeResponse): Intake => {
+  return {
+    count: resp.count,
+    date: new Date(resp.date),
+    medicineId: resp.medicineId,
+  };
+};
+
+const respToIntakeList = (
+  resp: hista.IntakeListResponse,
+): Array<Intake> => {
+  return resp.intakes.map((i) => respToIntake(i));
 };

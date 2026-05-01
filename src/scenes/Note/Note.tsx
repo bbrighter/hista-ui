@@ -2,8 +2,8 @@ import Container from "@mui/material/Container"
 import FormGroup from "@mui/material/FormGroup"
 import { useParams } from "react-router-dom"
 
+import { actions } from "../../actions"
 import { usePiidEffect } from "../../hooks/usePiidEffect"
-import { services } from "../../store"
 import { NoteDateInput, NoteTextField } from "./components"
 
 export const Note = () => {
@@ -11,7 +11,7 @@ export const Note = () => {
   const noteId = Number(params.noteId)
 
   usePiidEffect(() => {
-    services.notes.list()
+    actions.notes.list()
   }, [params.noteId])
 
 

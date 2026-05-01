@@ -1,9 +1,9 @@
-import { client } from "../../api/api"
-import useHista from "../store"
-import { respToPollens } from "../types"
+import { client } from "../api/api"
+import { respToPollens } from "../store"
+import useHista from "../store/store"
 
 export const pollens = {
-  get: async () => {
+  list: async () => {
     const { setPollens, loaded, setLoaded } = useHista.getState()
     if (loaded["pollens"]) return
 

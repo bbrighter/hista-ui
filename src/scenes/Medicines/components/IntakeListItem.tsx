@@ -3,7 +3,8 @@ import ButtonGroup from "@mui/material/ButtonGroup"
 import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
 
-import { medicinesService } from "../../../store"
+import { actions } from "../../../actions"
+
 
 type IntakeListProp = {
   id: number
@@ -16,8 +17,8 @@ type IntakeListProp = {
 export const IntakeListItem = ({ id, name, count, isOld, isArchived }: IntakeListProp) => {
   const decreaseIsDisabled = count == 0
 
-  const onIncrease = () =>    medicinesService.incrementIntake(id)
-  const onDecrease = () =>    medicinesService.decrementIntake(id)
+  const onIncrease = () => actions.intakes.increment(id)
+  const onDecrease = () => actions.intakes.decrement(id)
 
   const secondaryAction = isOld ? (<></>) : (
     <ButtonGroup>

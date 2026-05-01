@@ -1,8 +1,9 @@
-import { client } from "../../api/api"
-import useHista from "../store"
-import { repoToTemplates, TemplateItem } from "../types"
+import { client } from "../api/api"
+import { repoToTemplates, TemplateItem } from "../store"
+import useHista from "../store/store"
 
-export const template = {
+
+export const templates = {
   list: async () => {
     const { setTemplates, setLoaded } = useHista.getState()
 

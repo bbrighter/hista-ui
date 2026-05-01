@@ -1,6 +1,6 @@
-import { client } from "../../api/api"
-import useHista from "../store"
-import { respToNote, respToNotes } from "../types"
+import { client } from "../api/api"
+import { respToNote, respToNotes } from "../store"
+import useHista from "../store/store"
 
 export const notes = {
   list: async () => {

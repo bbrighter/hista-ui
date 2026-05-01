@@ -1,10 +1,9 @@
-import { client } from "../../api/api";
-import useHista from "../store";
-import { FoodCondition, Freshness, respToFood, respToIngredients, respToMeal, respToMetaMeals } from "../types";
+import { client } from "../api/api"
+import { FoodCondition, Freshness, respToFood, respToIngredients, respToMeal, respToMetaMeals } from "../store"
+import useHista from "../store/store"
 
-
-export const mealService = {
-  listMeals: async () => {
+export const meals = {
+  list: async () => {
     const { setMeals, meals, setLoaded } = useHista.getState()
     if (meals.length > 0) return
 
@@ -14,7 +13,7 @@ export const mealService = {
     setLoaded("meals")
   },
 
-  postMeal: async () => {
+  post: async () => {
     const now = new Date()
     const resp = await client.PostMeal({ date: now.toISOString() })
     const {  meals, setMeal, setMeals } = useHista.getState()
@@ -28,7 +27,7 @@ export const mealService = {
     return newMeal.id
   },
 
-  getMeal: async (id: number) => {
+  get: async (id: number) => {
     const resp = await client.GetMeal(id)
     
     const { setMeal, setLoaded } = useHista.getState()
@@ -36,7 +35,7 @@ export const mealService = {
     setLoaded("meal")
   },
 
-  deleteMeal: async (id: number) => {
+  delete: async (id: number) => {
     const resp = await client.DeleteMeal(id)
 
     const { removeMeal, setIngredients } = useHista.getState()
@@ -44,7 +43,7 @@ export const mealService = {
     setIngredients(respToIngredients(resp))
   },
 
-  patchMealDate: async (id: number, dateIsoString: string) => {
+  patchDate: async (id: number, dateIsoString: string) => {
     await client.PatchMeal(id, { date: dateIsoString })
 
     const { updateMeal, setMetaMeal } = useHista.getState()
@@ -52,7 +51,7 @@ export const mealService = {
     setMetaMeal(id, { date: new Date(dateIsoString) })
   },
 
-  patchMealFreshness: async (id: number, freshness: Freshness) => {
+  patchFreshness: async (id: number, freshness: Freshness) => {
     const params = { freshness: freshness }
     await client.PatchMeal(id, params)
 
@@ -60,7 +59,7 @@ export const mealService = {
     updateMeal(params)
   },
 
-  patchMealIsAlone: async (id: number, isAlone: boolean) => {
+  patchIsAlone: async (id: number, isAlone: boolean) => {
     const params = { isAlone: isAlone }
     await client.PatchMeal(id, params)
 
@@ -68,7 +67,7 @@ export const mealService = {
     updateMeal(params)
   },
 
-  patchMealStressLevel: async (id: number, stressLevel: number) => {
+  patchStressLevel: async (id: number, stressLevel: number) => {
     const params = { stressLevel: stressLevel }
     await client.PatchMeal(id, params)
 

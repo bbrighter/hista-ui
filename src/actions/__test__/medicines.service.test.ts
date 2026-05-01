@@ -1,8 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { client } from "../../../api/api";
-import useHista from "../../store";
-import { medicinesService } from "../medicines.service";
+import { client } from "../../api/api";
+import useHista from "../../store/store";
+import { actions } from "..";
+
 
 describe("medicines service, manage medicines", () => {
   const spyPatch = vi.spyOn(client, "PatchMedicine");
@@ -14,7 +15,7 @@ describe("medicines service, manage medicines", () => {
   });
 
   it("list medicines", async () => {
-    await medicinesService.getMedicines();
+    await actions.medicines.list();
     const { medicines, loaded } = useHista.getState();
     expect(medicines).toHaveLength(2)
     expect(loaded["medicines"]).toBeTruthy()
@@ -31,14 +32,14 @@ describe("medicines service, manage medicines", () => {
   });
 
   it("list medicines only called once", async () => {
-    await medicinesService.getMedicines()
-    await medicinesService.getMedicines()
+    await actions.medicines.list()
+    await actions.medicines.list()
 
     expect(spyListMeds).toHaveBeenCalledOnce()
   })
 
   it("create medicine", async () => {
-    await medicinesService.createMedicine("new medicine");
+    await actions.medicines.create("new medicine");
 
     const { medicines } = useHista.getState();
     expect(medicines).toHaveLength(2);
@@ -60,7 +61,7 @@ describe("medicines service, manage medicines", () => {
       ]);
     })
     it("reorder to first", async () => {
-      await medicinesService.reorderMedicine(2, undefined, 1)
+      await actions.medicines.reorder(2, undefined, 1)
 
       const { medicines } = useHista.getState();
       expect(medicines[0].id).toBe(2)
@@ -68,7 +69,7 @@ describe("medicines service, manage medicines", () => {
       expect(medicines[2].id).toBe(3)
     })
     it("reorder to last", async () => {
-      await medicinesService.reorderMedicine(2, 3)
+      await actions.medicines.reorder(2, 3)
 
       const { medicines } = useHista.getState();
       expect(medicines[0].id).toBe(1)
@@ -76,7 +77,7 @@ describe("medicines service, manage medicines", () => {
       expect(medicines[2].id).toBe(2)
     })
     it("reorder", async () => {
-      await medicinesService.reorderMedicine(1, 2, 3)
+      await actions.medicines.reorder(1, 2, 3)
 
       const { medicines } = useHista.getState();
       expect(medicines[0].id).toBe(2)
@@ -84,7 +85,7 @@ describe("medicines service, manage medicines", () => {
       expect(medicines[2].id).toBe(3)
     })
     it("reorder with no effect", async () => {
-      await medicinesService.reorderMedicine(2, 1, 3)
+      await actions.medicines.reorder(2, 1, 3)
 
       const { medicines } = useHista.getState();
       expect(medicines[0].id).toBe(1)
@@ -95,7 +96,7 @@ describe("medicines service, manage medicines", () => {
 
 
   it("archive medicine", async () => {
-    await medicinesService.archiveMedicine(1);
+    await actions.medicines.archive(1);
     expect(spyPatch).toHaveBeenCalledWith(
       "7b3047c2-d56d-4942-abc4-39eb85e785f2",
       1,
@@ -107,7 +108,7 @@ describe("medicines service, manage medicines", () => {
   });
 
   it("rename medicine", async () => {
-    await medicinesService.renameMedicine(1, "new name");
+    await actions.medicines.rename(1, "new name");
     expect(spyPatch).toHaveBeenCalledWith(
       "7b3047c2-d56d-4942-abc4-39eb85e785f2",
       1,
@@ -123,15 +124,15 @@ describe("medicines service, edit intakes", () => {
   const sypListIntakes = vi.spyOn(client, "ListIntakes")
 
   it("List intakes", async () => {
-    await medicinesService.listIntakes();
+    await actions.intakes.list();
 
     const { intakes } = useHista.getState();
     expect(intakes).toHaveLength(3);
   });
 
   it("List intakes is called only once", async () => {
-    await medicinesService.listIntakes();
-    await medicinesService.listIntakes();
+    await actions.intakes.list();
+    await actions.intakes.list();
 
     expect(sypListIntakes).toHaveBeenCalledOnce()  
   })
@@ -145,7 +146,7 @@ describe("medicines service, edit intakes", () => {
       { medicineId: 1, count: 1, date: oldDate },
     ]);
 
-    await medicinesService.incrementIntake(1);
+    await actions.intakes.increment(1);
 
     const { intakes } = useHista.getState();
     expect(intakes).toContainEqual({ medicineId: 1, count: 4, date: now });
@@ -163,7 +164,7 @@ describe("medicines service, edit intakes", () => {
       { medicineId: 1, count: 10, date: oldDate },
     ]);
 
-    await medicinesService.incrementIntake(1)
+    await actions.intakes.increment(1)
     
     const { intakes } = useHista.getState()
     expect(intakes).toContainEqual({ medicineId: 1, count:1, date: fixedDate })
@@ -179,7 +180,7 @@ describe("medicines service, edit intakes", () => {
       { medicineId: 1, count: 1, date: oldDate },
     ]);
 
-    await medicinesService.decrementIntake(1);
+    await actions.intakes.decrement(1);
 
     const { intakes } = useHista.getState();
     expect(intakes).toContainEqual({ medicineId: 1, count: 2, date: now });

@@ -1,12 +1,13 @@
+import { actions } from "../../../actions"
 import { useAppNavigate } from "../../../hooks/useNavigate"
-import { services, useConditionEvents } from "../../../store"
+import { useConditionEvents } from "../../../store"
 import { OverviewList } from "../../components"
 
 
 
 export default function EventList() {
-  const getConditionEvents = services.conditionEvents.list
-  const deleteConditionEvent = services.conditionEvents.delete
+  const getConditionEvents = actions.conditionEvents.list
+  const deleteConditionEvent = actions.conditionEvents.delete
   const events = useConditionEvents()
   const navigate = useAppNavigate()
 

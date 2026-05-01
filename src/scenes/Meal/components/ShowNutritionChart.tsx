@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useState } from "react"
 
-import { statisticsService } from "../../../store"
+import { actions } from "../../../actions";
 import useHista from "../../../store/store";
 import { Icons } from "../../components/Icons";
 import { SingleNutritionChart } from "./SingleNutritionChart";
@@ -26,7 +26,7 @@ export const ShowNutritionChart = () => {
   useEffect(() => {
     if (!open) return
     setIsLoading(true)
-    statisticsService.getNutritionStatistics(
+    actions.statistics.getNutritionStatistics(
       "day", 
       mealDayJs.startOf("day").toDate(), 
       mealDayJs.endOf("day").toDate(),

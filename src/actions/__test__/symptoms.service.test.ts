@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
-import useHista from "../../store";
-import { conditionEvents } from "../conditionEvents.service";
-import { conditions as serviceConditions,symptoms as serviceSymptoms } from "../symptoms.service";
+import useHista from "../../store/store";
+import { conditionEvents } from "../conditionEvents.actions";
+import { conditions as serviceConditions,symptoms as serviceSymptoms } from "../symptoms.actions";
 
 describe("symptoms service", () => {
   beforeEach(async () => {

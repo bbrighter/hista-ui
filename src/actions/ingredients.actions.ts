@@ -1,9 +1,10 @@
-import { client } from "../../api/api";
-import useHista from "../store";
-import { Nutrition, respToIngredients } from "../types";
+import { client } from "../api/api";
+import { Nutrition, respToIngredients } from "../store";
+import useHista from "../store/store";
 
-export const ingredientsService = {
-  getIngredients: async () => {
+
+export const ingredients = {
+  list: async () => {
     const { setIngredients, loaded, setLoaded } = useHista.getState();
     if (loaded["ingredients"]) return
     

@@ -1,16 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { client } from "../../../api/api";
-import useHista from "../../store";
-import { services } from "..";
-import { ingredientsService } from "../ingredients.service";
-import { mealService } from "../meal.service";
+import { client } from "../../api/api";
+import useHista from "../../store/store";
+import { actions } from "..";
+
 
 describe("meal service, meals", () => {
   const spyListMeals = vi.spyOn(client, "ListMeals")
 
   beforeEach(async () => {
-    await mealService.listMeals()
+    await actions.meals.list()
   })
 
   it("list meals", async () => {
@@ -19,13 +18,13 @@ describe("meal service, meals", () => {
   })
 
   it("list meals only called once", async () => {
-    await mealService.listMeals()
+    await actions.meals.list()
 
     expect(spyListMeals).toHaveBeenCalledOnce()
   })
 
   it("post meal", async () => {
-    const id = await mealService.postMeal()
+    const id = await actions.meals.post()
     expect(id).toBe(2)
 
     const { meals } = useHista.getState()
@@ -33,14 +32,14 @@ describe("meal service, meals", () => {
   })
 
   it("get meal", async () => {
-    await mealService.getMeal(1)
+    await actions.meals.get(1)
 
     const { meal } = useHista.getState()
     expect(meal).toBeDefined()
   })
 
   it("delete meal", async () => {
-    await mealService.deleteMeal(1)
+    await actions.meals.delete(1)
 
     const { meals } = useHista.getState()
     expect(meals).toHaveLength(0)
@@ -49,19 +48,19 @@ describe("meal service, meals", () => {
 
 describe("meal service, single meal", () => {
   beforeEach(async () => {
-    await mealService.getMeal(1)
+    await actions.meals.get(1)
   })
 
   it("patchMealDate", async () => {
     const now = new Date()
-    await mealService.patchMealDate(1, now.toISOString()) 
+    await actions.meals.patchDate(1, now.toISOString()) 
 
     const { meal } = useHista.getState()
     expect(meal.date).toStrictEqual(now)
   })
 
   it("post food by name", async () => {
-    await mealService.postFoodByName(1, "name")
+    await actions.meals.postFoodByName(1, "name")
 
     const { meal, ingredients } = useHista.getState()
     expect(meal.foods).toContainEqual({ ingredientId: 3, condition: "raw", id: 1, amount: undefined })
@@ -69,15 +68,15 @@ describe("meal service, single meal", () => {
   })
 
   it("post food by id", async () => {
-    await mealService.postFoodById(1, 1)
+    await actions.meals.postFoodById(1, 1)
 
     const { meal } = useHista.getState()
     expect(meal.foods).toContainEqual({ ingredientId: 1, condition: "raw", id: 1, amount: undefined })
   })
 
   it("delete food", async () => {
-    await ingredientsService.getIngredients()
-    await mealService.deleteFood(20)
+    await actions.ingredients.list()
+    await actions.meals.deleteFood(20)
 
     const { ingredients, meal } = useHista.getState()
     expect(meal.foods).toHaveLength(1)
@@ -87,7 +86,7 @@ describe("meal service, single meal", () => {
   })
 
   it("patch food condition", async () => {
-    await mealService.patchFoodCondition(10, "cooked")
+    await actions.meals.patchFoodCondition(10, "cooked")
 
     const { meal } = useHista.getState()
     const changedFood = meal.foods.find(f => f.id == 10)!
@@ -95,7 +94,7 @@ describe("meal service, single meal", () => {
   })
 
   it("patch food amount", async () => {
-    await mealService.patchFoodAmount(10, 100)
+    await actions.meals.patchFoodAmount(10, 100)
 
     const { meal } = useHista.getState()
     const changedFood = meal.foods.find(f => f.id == 10)!
@@ -104,7 +103,7 @@ describe("meal service, single meal", () => {
 
 
   it("patch food amount to undefined", async () => {
-    await mealService.patchFoodAmount(10, 0)
+    await actions.meals.patchFoodAmount(10, 0)
 
     const { meal } = useHista.getState()
     const changedFood = meal.foods.find(f => f.id == 10)!
@@ -112,9 +111,9 @@ describe("meal service, single meal", () => {
   })
 
   it("post foods by template", async () => {
-    await services.template.list()
+    await actions.templates.list()
 
-    await mealService.postFoodsByTemplate(1, 1)
+    await actions.meals.postFoodsByTemplate(1, 1)
 
     const { meal } = useHista.getState()
     expect(meal.foods).toHaveLength(4)

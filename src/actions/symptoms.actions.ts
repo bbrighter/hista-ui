@@ -1,7 +1,6 @@
-import { client } from "../../api/api"
-import useHista from "../store"
-import { respToCondition } from "../types/condition.types"
-import { respToSymptoms } from "../types/symptom.types"
+import { client } from "../api/api"
+import { respToCondition, respToSymptoms } from "../store"
+import useHista from "../store/store"
 
 export const symptoms = {
   list: async () => {

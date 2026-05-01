@@ -1,10 +1,10 @@
 import { expect, test } from "vitest"
 
-import useHista from "../../store"
-import { statisticsService } from "../statistics.service"
+import useHista from "../../store/store"
+import { actions } from ".."
 
 test("get meal statistics", async () => {
-  await statisticsService.getMealStatistics(new Date(), new Date(), 1)
+  await actions.statistics.getMealStatistics(new Date(), new Date(), 1)
 
   const { statistics, mealCount } = useHista.getState()
   expect(mealCount).toBe(5)
@@ -15,7 +15,7 @@ test("get meal statistics", async () => {
 })
 
 test("get diaries", async () => {
-  await statisticsService.getDiaries()
+  await actions.statistics.getDiaries()
 
   const { diaryEntries } = useHista.getState()
   expect(diaryEntries).toHaveLength(4)
@@ -27,7 +27,7 @@ test("get diaries", async () => {
 
 
 test("get nutrition stats", async () => {
-  await statisticsService.getNutritionStatistics("day")
+  await actions.statistics.getNutritionStatistics("day")
 
   const { nutritionStatistics } = useHista.getState()
   expect(nutritionStatistics.statistics).toHaveLength(2)

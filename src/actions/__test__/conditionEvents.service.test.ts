@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import useHista from "../../store";
-import { conditionEvents as service } from "../conditionEvents.service";
+import useHista from "../../store/store";
+import { conditionEvents as service } from "../conditionEvents.actions";
 
 describe("condition events service", () => {
   it("list events", async () => {

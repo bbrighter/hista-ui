@@ -2,9 +2,9 @@ import Divider from "@mui/material/Divider"
 import TextField from "@mui/material/TextField"
 import { useEffect, useRef, useState } from "react"
 
+import { actions } from "../../../actions"
 import useDebounce from "../../../hooks/useDebounce"
 import { useDidUpdateEffect } from "../../../hooks/useDidUpdateEffect"
-import { services } from "../../../store"
 import useHista from "../../../store/store"
 
 export default function HeadacheDescription() {
@@ -27,7 +27,7 @@ export default function HeadacheDescription() {
       firstUpdateRef.current = false
       return
     }
-    services.headaches.patchDescription(id, debouncedValue).then(() => setIsDirty(false))
+    actions.headaches.patchDescription(id, debouncedValue).then(() => setIsDirty(false))
   }, [debouncedValue])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {

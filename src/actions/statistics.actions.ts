@@ -1,9 +1,9 @@
-import { client } from "../../api/api"
-import { hista } from "../../api/generatedApi"
-import useHista from "../store"
-import { respToNutritionStatistics, respToRawDiary, respToSymptomStatistics } from "../types"
+import { client } from "../api/api"
+import { hista } from "../api/generatedApi"
+import { respToNutritionStatistics, respToRawDiary, respToSymptomStatistics } from "../store"
+import useHista from "../store/store"
 
-export const statisticsService = {
+export const statistics = {
   getMealStatistics: async (from: Date, to: Date, ingredientId: number | undefined) => {
     if (!ingredientId || ingredientId == 0) return
     const resp = await client.GetStatisticsByIngredientId({ fromDate: from.toISOString(), toDate: to.toISOString(), id: ingredientId })

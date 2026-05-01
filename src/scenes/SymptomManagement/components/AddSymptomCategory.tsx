@@ -3,7 +3,8 @@ import Fab from "@mui/material/Fab"
 import Modal from "@mui/material/Modal"
 import { useState } from "react"
 
-import { services, useIsCategoryNameAvailable } from "../../../store"
+import { actions } from "../../../actions"
+import { useIsCategoryNameAvailable } from "../../../store"
 import { Icons } from "../../components/Icons"
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
 
@@ -26,7 +27,7 @@ export default function AddSymptomCategory() {
   }
 
   const onSave = async (v: string) => {
-    await services.symptoms.postCategory(v)
+    await actions.symptoms.postCategory(v)
     closeModal()
   }
 

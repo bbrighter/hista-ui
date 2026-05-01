@@ -2,7 +2,8 @@ import Container from "@mui/material/Container"
 import Grid from "@mui/material/Grid"
 import { useEffect } from "react"
 
-import { selectIsLoadingAny, statusService, useStatus } from "../../store"
+import { actions } from "../../actions"
+import { selectIsLoadingAny, useStatus } from "../../store"
 import useHista from "../../store/store"
 import { Loading } from "../components"
 import { AddStatus, StatusCard } from "./components"
@@ -12,7 +13,7 @@ export default function Status() {
   const isLoading = useHista(selectIsLoadingAny(["statuses"]))
 
   useEffect(() => {
-    statusService.getStatuses()
+    actions.status.list()
   }, [])
 
   return (

@@ -4,8 +4,9 @@ import FormControl from "@mui/material/FormControl"
 import FormGroup from "@mui/material/FormGroup"
 import { useParams } from "react-router-dom"
 
+import { actions } from "../../actions"
 import { usePiidEffect } from "../../hooks/usePiidEffect"
-import { mealService, selectIsLoadingAny } from "../../store"
+import {  selectIsLoadingAny } from "../../store"
 import useHista from "../../store/store"
 import { Loading } from "../components"
 import { AddFood, FoodList, MealNutritionResult, MealSettings, ShowNutritionChart } from "./components"
@@ -15,7 +16,7 @@ export default function Meal() {
   const params = useParams<{ mealId: string }>()
 
   usePiidEffect(() => {
-    mealService.getMeal(Number(params.mealId))
+    actions.meals.get(Number(params.mealId))
   }, [params.mealId])
 
   return (

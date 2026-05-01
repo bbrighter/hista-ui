@@ -11,7 +11,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
 
-import { services, Symptom, SymptomCategory, useIsSymptomNameAvailable } from "../../../store"
+import { actions } from "../../../actions"
+import { Symptom, SymptomCategory, useIsSymptomNameAvailable } from "../../../store"
 import useHista from "../../../store/store"
 import { Icons } from "../../components/Icons"
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
@@ -44,10 +45,10 @@ function SymptomAccordionEntry(props: {
   const categories = useHista(state => state.symptoms)
 
   const isSymptomNameAvailable = useIsSymptomNameAvailable()
-  const changeSymptomCategory = services.symptoms.patchSymptomCategory
+  const changeSymptomCategory = actions.symptoms.patchSymptomCategory
   
   const onSave = async (v: string) => {
-    await services.symptoms.patchName(props.symptom.id, v)
+    await actions.symptoms.patchName(props.symptom.id, v)
     setMode("default")
   }
 

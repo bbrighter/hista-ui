@@ -1,11 +1,13 @@
 import { describe, expect, it } from "vitest";
 
-import useHista from "../../store";
-import { template } from "../template.service";
+import useHista from "../../store/store";
+import { actions } from "..";
+
+
 
 describe("templates service", () => {
   it("List templates", async () => {
-    await template.list()
+    await actions.templates.list()
 
     const { templates, loaded } = useHista.getState()
     expect(loaded.templates).toBeTruthy()
@@ -17,7 +19,7 @@ describe("templates service", () => {
   })
 
   it("Add template", async () => {
-    await template.add("new name", [{ ingredientId: 2, condition: "cooked" }])
+    await actions.templates.add("new name", [{ ingredientId: 2, condition: "cooked" }])
 
     const { templates } = useHista.getState()
     expect(templates[2]).toBeDefined()
@@ -28,17 +30,17 @@ describe("templates service", () => {
   })
 
   it("Remove template", async () => {
-    await template.list()
-    await template.delete(1)
+    await actions.templates.list()
+    await actions.templates.delete(1)
 
     const { templates } = useHista.getState()
     expect(templates[1]).not.toBeDefined()
   })
 
   it("Update template", async () => {
-    await template.list()
+    await actions.templates.list()
 
-    await template.change(1, "new name", [{ condition: "cooked", ingredientId: 1 }, { condition: "raw", ingredientId: 4 }] )
+    await actions.templates.change(1, "new name", [{ condition: "cooked", ingredientId: 1 }, { condition: "raw", ingredientId: 4 }] )
 
     const { templates } = useHista.getState()
     expect(templates[1].name).toBe("new name")

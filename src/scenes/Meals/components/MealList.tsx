@@ -1,5 +1,5 @@
+import { actions } from "../../../actions"
 import { useAppNavigate } from "../../../hooks/useNavigate"
-import { mealService } from "../../../store"
 import useHista from "../../../store/store"
 import { OverviewList } from "../../components"
 
@@ -12,11 +12,11 @@ export default function MealList() {
   }
 
   const onDelete = async (id: number) => {
-    await mealService.deleteMeal(id)
+    await actions.meals.delete(id)
   }
 
   const onSetNow = async (id: number) => {
-    await mealService.patchMealDate(id, new Date().toISOString())
+    await actions.meals.patchDate(id, new Date().toISOString())
   }
 
   return (
@@ -24,7 +24,7 @@ export default function MealList() {
       items={meals}
       onClick={onClick}
       onDelete={onDelete}
-      getData={mealService.listMeals}
+      getData={actions.meals.list}
       onSetNow={onSetNow}
     />
   )

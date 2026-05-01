@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor, within } from "@testing-library/rea
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
 
-import { statusService } from "../../store"
+import { actions } from "../../actions"
 import Status from "./Status"
 
 describe("Status.tsx", async () => {
@@ -60,7 +60,7 @@ describe("Status.tsx", async () => {
 
   it("Edit", async () => {
     vi.resetAllMocks()
-    const patchSpy = vi.spyOn(statusService, "patchStatus")
+    const patchSpy = vi.spyOn(actions.status, "patch")
 
     render(<Status />)
     

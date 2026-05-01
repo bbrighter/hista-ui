@@ -1,10 +1,10 @@
 import { expect, it } from "vitest";
 
-import useHista from "../../store";
-import { services } from "..";
+import useHista from "../../store/store";
+import { actions } from "..";
 
 it("list pollens", async () => {
-  await services.pollens.get()
+  await actions.pollens.list()
 
   const { pollens, loaded } = useHista.getState()
   expect(pollens).toHaveLength(2)
