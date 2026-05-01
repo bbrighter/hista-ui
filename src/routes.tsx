@@ -8,7 +8,7 @@ import { createBrowserRouter, RouteObject, RouterProvider } from "react-router-d
 
 import AppProvider from "./AppProvider";
 import { appRoutes } from "./constants";
-import { ErrorBridge, ErrorFallback } from "./scenes/Error";
+import { ErrorBridge, ErrorFallback } from "./errors";
 import Start from "./scenes/Start";
 import { useIsAppReady } from "./store";
 

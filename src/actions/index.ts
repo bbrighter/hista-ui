@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { withErrorHandling } from "../errors";
 import { conditionEvents } from "./conditionEvents.actions";
-import { errorBus,withErrorHandling } from "./errorHandler";
 import { headaches }  from "./headhaches.actions"
 import { ingredients } from "./ingredients.actions";
 import { meals } from "./meals.actions";
@@ -34,5 +34,4 @@ export const actions = {
   intakes: createActions(intakes),
   status: createActions(status),
   statistics: createActions(statistics),
-  error: errorBus,
 }

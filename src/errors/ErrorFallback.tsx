@@ -7,9 +7,11 @@ import Button from "@mui/material/Button"
 import Container from "@mui/material/Container"
 import Typography from "@mui/material/Typography"
 
-import { toAppError } from "../../actions/errorHandler"
-import { useAppNavigate } from "../../hooks/useNavigate"
-import { Icons } from "../components/Icons"
+import { useAppNavigate } from "../hooks/useNavigate"
+import { Icons } from "../scenes/components/Icons"
+import { toAppError } from "./errorHandler"
+
+
 
 export function ErrorFallback({ error, resetErrorBoundary }: { error: unknown, resetErrorBoundary: () => void }) {
   const navigate = useAppNavigate()

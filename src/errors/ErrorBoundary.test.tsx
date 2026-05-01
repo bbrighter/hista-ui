@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event"
 import { MemoryRouter } from "react-router-dom"
 import { describe, expect, it, vi } from "vitest"
 
-import { APIError, ErrCode } from "../../api/generatedApi"
+import { APIError, ErrCode } from "../api/generatedApi"
 import { ErrorFallback } from "./ErrorFallback"
 
 const mockNavigate = vi.fn()
