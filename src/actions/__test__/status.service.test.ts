@@ -27,6 +27,7 @@ describe("status service", () => {
       date: dayjs("2023-01-01T14:00:00Z"),
       morningFitness: 3, 
       morningSleep: 1, 
+      eveningFitness: null,
       locked: true,
     })
     expect(loaded["statuses"]).toBeTruthy()
