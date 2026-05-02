@@ -8,7 +8,7 @@ import { useStatus, useStatusExistsOnDay } from "../status.selectors";
 test("useStatus", () => {
   const { setStatuses } = useHista.getState()
   setStatuses([
-    { id: 10, date: dayjs() , eveningFitness: null, morningFitness: null, morningSleep: null },
+    { id: 10, date: dayjs(), eveningFitness: null, morningFitness: null, morningSleep: null },
     { id: 2, date: dayjs().add(1, "day"), eveningFitness: null, morningFitness: null, morningSleep: null },
     { id: 3, date: dayjs().add(-1, "day"), eveningFitness: null, morningFitness: null, morningSleep: null },
   ])
@@ -25,6 +25,7 @@ describe("useStatusExistsOnDay", () => {
   const existingDay = dayjs()
   beforeEach(() => {
     const { setStatuses, setLoaded } = useHista.getState()
+    setStatuses([{ id: 10, date: existingDay, eveningFitness: null, morningFitness: null, morningSleep: null }])
     setStatuses([{ id: 10, date: existingDay, eveningFitness: null, morningFitness: null, morningSleep: null }])
     setLoaded("statuses")
   })

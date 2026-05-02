@@ -20,8 +20,8 @@ describe("Charts", () => {
     expect(filter).toBeInTheDocument()
     const sliderValues = within(filter).queryAllByRole("slider")
     expect(sliderValues).toHaveLength(2)
-    expect(sliderValues[0].ariaValueNow).toBe("1")
-    expect(sliderValues[1].ariaValueNow).toBe("5")
+    expect(sliderValues[0]).toHaveValue("1")
+    expect(sliderValues[1]).toHaveValue("5")
   })
 
   it("select ingredient", async () => {

@@ -53,9 +53,9 @@ describe("Everything is rendered", () => {
       const secondRow = screen.getByText("1.1.2024").closest("li") as HTMLElement
       expect(secondRow).toBeInTheDocument()
 
-      expect(within(firstRow).getByTestId("pollen-cell-erle")).toHaveStyle({ "background-color": "rgb(173,255,47)" })
-      expect(within(firstRow).getByTestId("pollen-cell-birke")).toHaveStyle({ "background-color": "rgb(255,165,0)" })
-      expect(within(secondRow).getByTestId("pollen-cell-erle")).toHaveStyle({ "background-color": "rgb(0,128,0)" })
+      expect(within(firstRow).getByTestId("pollen-cell-erle")).toHaveStyle({ "background-color": "greenyellow" })
+      expect(within(firstRow).getByTestId("pollen-cell-birke")).toHaveStyle({ "background-color": "orange" })
+      expect(within(secondRow).getByTestId("pollen-cell-erle")).toHaveStyle({ "background-color": "green" })
     })
 
     const columns = ["Ambrosia", "Beifuss", "Birke", "Erle", "Esche", "Gräser", "Hasel", "Roggen"]
@@ -79,8 +79,8 @@ describe("Everything is rendered", () => {
       expect(screen.getByTestId(`${c.toLowerCase()}-icon`)).toBeInTheDocument()
     })
 
-    expect(within(firstRow).getByTestId("pollen-cell-erle")).toHaveStyle({ "background-color": "rgb(173,255,47)" })
-    expect(within(firstRow).getByTestId("pollen-cell-birke")).toHaveStyle({ "background-color": "rgb(255,165,0)" })
-    expect(within(secondRow).getByTestId("pollen-cell-erle")).toHaveStyle({ "background-color": "rgb(0,128,0)" })
+    expect(within(firstRow).getByTestId("pollen-cell-erle")).toHaveStyle({ "background-color": "greenyellow" })
+    expect(within(firstRow).getByTestId("pollen-cell-birke")).toHaveStyle({ "background-color": "orange" })
+    expect(within(secondRow).getByTestId("pollen-cell-erle")).toHaveStyle({ "background-color": "green" })
   })
 })
