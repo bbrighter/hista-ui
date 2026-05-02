@@ -7,6 +7,8 @@ export const usePiidEffect = (fn: () => void, inputs: Array<any>) => {
   const piid = useHista(state => state.piid)
 
   useEffect(() => {
-    fn()
+    if (piid) {
+      fn()
+    }
   }, [piid, ...inputs])
 }
