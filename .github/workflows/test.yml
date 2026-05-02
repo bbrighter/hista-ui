@@ -13,7 +13,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v6
         with:
-          run_install: false
+          cache: true
 
       - name: Node
         uses: actions/setup-node@v6
