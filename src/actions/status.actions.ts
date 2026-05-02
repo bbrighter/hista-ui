@@ -1,7 +1,8 @@
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 import { client } from "../api/api";
-import { PutStatusParams, respToStatus, respToStatuses } from "../store";
+import { hista } from "../api/generatedApi";
+import { PutStatusParams, Status } from "../store";
 import useHista from "../store/store";
 
 
@@ -42,4 +43,26 @@ export const status = {
     const { updateStatus } = useHista.getState()
     updateStatus(id, params)
   },
+}
+
+
+export const respToStatuses = (resp: hista.StatusListResponse): Array<Status> => {
+  if (!resp?.statuses) return [] // This ensure that the initial loading works
+  return resp.statuses.map(s => {
+    const isToday = dayjs(s.date).isSame(dayjs(), "date")
+    return respToStatus(s, !isToday)    
+  })
+}
+
+
+
+const respToStatus = (resp: hista.StatusResponse, locked?: boolean): Status => {
+  return {
+    id: resp.id,
+    date: dayjs(resp.date),
+    morningFitness: resp?.morningFitness ?? null,
+    morningSleep: resp?.morningSleep ?? null,
+    eveningFitness: resp?.eveningFitness ?? null,
+    locked: locked,
+  }
 }
