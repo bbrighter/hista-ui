@@ -80,6 +80,20 @@ describe("response to status", () => {
     expect(status.eveningFitness).toBeNull()
     expect(status.morningFitness).toBeNull()
     expect(status.morningSleep).toBe(2)
+    expect(status.locked).toBeTruthy()
+  })
+
+  it("today is not locked, others are", () => {
+    const today = dayjs()
+    const resp = { statuses: [
+      { id: 1,  date: today.toISOString() },
+      { id: 2,  date: "2026-05-01T19:18:25.227+02:00" },
+    ] } satisfies hista.StatusListResponse
+
+    const statuses = respToStatuses(resp)
+    expect(statuses).toHaveLength(2)
+    expect(statuses.find(s => s.id === 1)?.locked).toBeFalsy()
+    expect(statuses.find(s => s.id === 2)?.locked).toBeTruthy()
   })
 
   it("empty response handled", () => {
