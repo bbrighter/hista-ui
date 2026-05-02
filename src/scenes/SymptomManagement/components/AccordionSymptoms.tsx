@@ -12,10 +12,11 @@ import Typography from "@mui/material/Typography"
 import { useState } from "react"
 
 import { actions } from "../../../actions"
-import { Symptom, SymptomCategory, useIsSymptomNameAvailable } from "../../../store"
+import { Symptom, SymptomCategory } from "../../../store"
 import useHista from "../../../store/store"
 import { Icons } from "../../components/Icons"
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
+import { useIsSymptomNameAvailable } from "./useNamesAvailable"
 
 export default function AccordionSymptoms(props: {
   category: SymptomCategory

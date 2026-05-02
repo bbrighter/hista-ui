@@ -4,9 +4,9 @@ import Modal from "@mui/material/Modal"
 import { useState } from "react"
 
 import { actions } from "../../../actions"
-import { useIsCategoryNameAvailable } from "../../../store"
 import { Icons } from "../../components/Icons"
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
+import { useIsCategoryNameAvailable } from "./useNamesAvailable"
 
 export default function AddSymptomCategory() {
   const [open, setOpen] = useState(false)

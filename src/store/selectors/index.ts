@@ -7,4 +7,3 @@ export * from "./meal.selectors"
 export * from "./notes.selectors"
 export * from "./statistics.selectors";
 export * from "./status.selectors"
-export * from "./symptom.selectors"
