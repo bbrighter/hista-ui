@@ -24,11 +24,12 @@ export function OverviewList(props: {
   onSetNow?: (id: number) => Promise<void>
 }) {
   const [loading, setLoading] = useState(false)
+  const { items, showSeverity, onClick, onDelete, getData, severityColorMapping, onSetNow } = props
 
   usePiidEffect(() => {
-    setLoading(true)
     const fetchData = async () => {
-      props.getData()
+      setLoading(true)
+      await getData()
       setLoading(false)
     }
     fetchData()
@@ -38,17 +39,17 @@ export function OverviewList(props: {
     <>
       {loading && <CircularProgress sx={{ position: "absolute", left: "50%", top: "50%" }} />}
       <SwipeableList>
-        {props.items.map(i => (
+        {items.map(i => (
           <OverviewListItem
             key={i.id}
             date={i.date}
-            onClick={() => props.onClick(i.id)}
-            onDelete={() => props.onDelete(i.id)}
-            showSeverity={props.showSeverity}
+            onClick={() => onClick(i.id)}
+            onDelete={() => onDelete(i.id)}
+            showSeverity={showSeverity}
             severity={i.severity}
             secondary={i.secondary}
-            severityColorMapping={props.severityColorMapping}
-            {...(props.onSetNow && { onSetNow: () => props.onSetNow(i.id) })}
+            severityColorMapping={severityColorMapping}
+            {...(onSetNow && { onSetNow: () => onSetNow(i.id) } )}
           />
         ))}
       </SwipeableList>

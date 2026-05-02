@@ -13,21 +13,21 @@ export function OverviewListItem(props: {
   date: Date | string
   secondary?: string
   severity?: number
-  showSeverity: boolean
+  showSeverity?: boolean
   onClick: () => void
   onDelete: () => Promise<void>
   onSetNow?: () => Promise<void>
   severityColorMapping?: (severity: number) => string
 }) {
+  const { date, secondary, severity, showSeverity, onClick, onDelete, onSetNow, severityColorMapping } = props
   const [swiped, setSwiped] = useState(false)
-  const onDelete = async () => await props.onDelete()
   
   return (
     <SwipeableListItem
       threshold={0.5}
       trailingActions={swipeDeleteItem(onDelete)}
       onSwipeStart={() => setSwiped(true)}
-      {...(props.onSetNow && { leadingActions: swipeSetNow(props.onSetNow) })}
+      {...(onSetNow && { leadingActions: swipeSetNow(onSetNow) })}
     >
       <ListItem
         sx={{
@@ -41,18 +41,18 @@ export function OverviewListItem(props: {
             setSwiped(false)
             return
           }
-          props.onClick()
+          onClick()
         }}
       >
         <ListItemText
-          primary={typeof(props.date) == "string" ? props.date : formatDate(props.date, "withTime")}
-          secondary={props.secondary}
+          primary={typeof(date) == "string" ? date : formatDate(date, "withTime")}
+          secondary={secondary}
         />
-        {props.showSeverity && props.severity !== undefined
+        {showSeverity && severity !== undefined
         && (
           <ListItemIcon title="Schwere">
             <Icons.circle
-              sx={{ color: props.severityColorMapping(props.severity) }}
+              sx={ severityColorMapping ? { color: severityColorMapping(severity) } : {}}
               data-testid="circle-icon"
             />
             {" "}

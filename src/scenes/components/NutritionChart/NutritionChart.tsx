@@ -21,12 +21,13 @@ export const NutritionChart = ({ nutrition, hideFiber, showLegend } : NutritionC
   useEffect(() => {
     const update = () => {
       if (ref.current) {
+        // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
         setSize(ref.current.offsetWidth)
       }
     }
     update()
     window.addEventListener("resize", update)
-    return () => window.removeEventListener("reize", update)
+    return () => window.removeEventListener("resize", update)
   })
 
   const colors = NUTRITION_COLORS
