@@ -1,3 +1,5 @@
+import { useCallback } from "react"
+
 import useHista from "../../../store/store"
 
 export const useIsSymptomNameAvailable = () =>  {
@@ -12,7 +14,7 @@ export const useIsSymptomNameAvailable = () =>  {
 
 export const useIsCategoryNameAvailable = () => {
   const symptoms = useHista(state => state.symptoms)
-  return (name: string) => {
+  return useCallback((name: string) => {
     return !symptoms.some(c => c.categoryName.trim() === name.trim())
-  }
+  }, [symptoms])
 }

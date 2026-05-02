@@ -8,5 +8,5 @@ export const usePiidEffect = (fn: () => void, inputs: Array<any>) => {
 
   useEffect(() => {
     fn()
-  }, [piid, fn, ...inputs])
+  }, [piid, ...inputs])
 }

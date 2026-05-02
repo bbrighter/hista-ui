@@ -6,9 +6,10 @@ import Typography from "@mui/material/Typography"
 import { useState } from "react"
 
 import { actions } from "../../../actions"
-import { SymptomCategory, useIsCategoryNameAvailable } from "../../../store"
+import { SymptomCategory } from "../../../store"
 import { Icons } from "../../components/Icons"
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort"
+import { useIsCategoryNameAvailable } from "./useNamesAvailable"
 
 export default function AccordionCategory(props: {
   category: SymptomCategory

@@ -4,8 +4,8 @@ import ListItem from "@mui/material/ListItem"
 import ListItemText from "@mui/material/ListItemText"
 
 import { actions } from "../../../actions"
-import { useConditionsWithSymptoms } from "../../../store"
 import { Icons } from "../../components/Icons"
+import { useConditionsWithSymptoms } from "./hooks"
 import Severity from "./Severity"
 
 export default function ConditionList() {
