@@ -26,6 +26,7 @@ describe("useStatusExistsOnDay", () => {
   beforeEach(() => {
     const { setStatuses, setLoaded } = useHista.getState()
     setStatuses([{ id: 10, date: existingDay, eveningFitness: null, morningFitness: null, morningSleep: null }])
+    setStatuses([{ id: 10, date: existingDay, eveningFitness: null, morningFitness: null, morningSleep: null }])
     setLoaded("statuses")
   })
 
