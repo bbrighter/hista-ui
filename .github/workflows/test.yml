@@ -4,7 +4,7 @@ on:
   push:
 
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
@@ -15,11 +15,12 @@ jobs:
         with:
           cache: true
 
-      - name: Node
+      - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version-file: "package.json"
           cache: "pnpm"
+          cache-dependency-path: "pnpm-lock.yaml"
 
       - name: Get packages
         run: pnpm install --frozen-lockfile
@@ -30,10 +31,14 @@ jobs:
       - name: Knip
         run: pnpm run knip
 
+      - name: Typescript
+        run: pnpm run tsc
+
       - name: Dependencies
         run: pnpm run dependencies:ci
 
       - name: Test
-        run: pnpm test
+        run: pnpm run test:nowatch
         env:
+          CI: true
           TZ: Europe/Berlin
