@@ -43,7 +43,7 @@ describe("condition event is rendered and can be edited", () => {
     const input = await waitFor(() => {
       return getSlider("symptom1")
     })
-    expect(input.ariaValueNow).toBe("3")
+    expect(input).toHaveValue("3")
   })
 
   it("Change severity of symptom", async () => {
@@ -52,11 +52,11 @@ describe("condition event is rendered and can be edited", () => {
     const input = await waitFor(() => {
       return getSlider("symptom1")
     })
-    expect(input.ariaValueNow).toBe("3")
+    expect(input).toHaveValue("3")
     expect(sliderHasColor("symptom1", "Secondary")).toBeTruthy()
 
     fireEvent.change(input, { target: { value: 5 } })
-    expect(input.ariaValueNow).toBe("5")
+    expect(input).toHaveValue("5")
     expect(sliderHasColor("symptom1", "Error")).toBeTruthy()
   })
 

@@ -11,6 +11,10 @@ expect.extend(matchers)
 export const server = setupServer(...handlers)
 
 beforeAll(() => {
+  Storage.prototype.setItem = vi.fn()
+  Storage.prototype.getItem = vi.fn(() => "test-token")
+  Storage.prototype.clear = vi.fn()
+
   server.listen({ onUnhandledRequest: "error" })
 
   if (process.env.DEBUG) {
@@ -39,12 +43,11 @@ beforeEach(() => {
   store.resetTemplates()
   store.resetLoaded()
   store.setPiid("7b3047c2-d56d-4942-abc4-39eb85e785f2")
-  Storage.prototype.setItem = vi.fn()
-  Storage.prototype.getItem = vi.fn(() => "test-token")
-  Storage.prototype.clear = vi.fn()
 })
 afterEach(() => {
   server.resetHandlers()
   cleanup()
 })
-afterAll(() => server.close())
+afterAll(() => {   
+  server.close()
+})

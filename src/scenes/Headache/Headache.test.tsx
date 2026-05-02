@@ -45,10 +45,10 @@ describe("A headache can be edited and displayed", () => {
     const symptom = await screen.findByText("Schwere")
     const listItem = symptom.closest("div")!
     const slider = within(listItem).getByRole("slider")
-    expect(slider.ariaValueNow).toBe("3")
+    expect(slider).toHaveValue("3")
 
     fireEvent.change(slider, { target: { value: "1" } })
-    expect(slider.ariaValueNow).toBe("1")
+    expect(slider).toHaveValue("1")
     expect(screen.getByTestId("slider-icon")).toHaveStyle({ backgroundColor: "rgb(51,255,0)" })
     await waitFor(() => {
       expect(patchHeadacheSeverity).toHaveBeenCalledOnce()

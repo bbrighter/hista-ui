@@ -2,7 +2,7 @@ import { render, screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { delay, http, HttpResponse } from "msw"
 import { MemoryRouter } from "react-router-dom"
-import { beforeAll, describe, expect, it, vi } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 
 import { server } from "../../__tests__/setupTest"
 import ConditionEvents from "./ConditionEvents"
@@ -20,9 +20,6 @@ vi.mock("react-router-dom", async () => {
   }
 })
 
-beforeAll(() => {
-  vi.spyOn(window, "alert").mockImplementation(() => { })
-})
 
 describe("Manage condition events", () => {
   it("Events are rendered", async () => {

@@ -20,16 +20,14 @@ export default defineConfig({
       treeshake: true,
       output: {
         manualChunks: (id) => {
-          if (id.includes("xlsx")) {
-            return "xlsx"
-          }
+          if (id.includes("xlsx")) return "xlsx"
         },
       },
     },
   },
   test: {
     globals: true,
-    environment: "jsdom",
+    environment: "happy-dom",
     setupFiles: [
       "vitest-localstorage-mock",
       "src/__tests__/setupTest.ts",
@@ -41,6 +39,7 @@ export default defineConfig({
     },
     coverage: {
       provider: "v8",
+      enabled: false,
     },
   },
 })
