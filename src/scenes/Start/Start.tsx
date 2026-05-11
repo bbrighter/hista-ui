@@ -4,11 +4,9 @@ import dayjs from "dayjs"
 import { actions } from "../../actions"
 import { usePiidEffect } from "../../hooks/usePiidEffect"
 import { useStatusExistsOnDay } from "../../store"
-import useHista from "../../store/store"
 import StartPageCard, { CardType } from "./components/StartPageCard"
 
 export default function Start() {
-  const piid = useHista(state => state.piid)
   const types: Array<CardType> = [
     "status",
     "meals",
@@ -21,7 +19,6 @@ export default function Start() {
   ]
 
   usePiidEffect(() => {
-    console.log(`Triggering usePiidEffect with piid ${piid}`)
     actions.status.list()
   },[])
 
