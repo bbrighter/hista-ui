@@ -86,6 +86,43 @@ describe("condition event is rendered and can be edited", () => {
     expect(newListItem).toHaveTextContent("symptom2")
   })
 
+  it("Add new symptom", async () => {
+    const user = userEvent.setup()
+    server.use(http.post("http://localhost:4444/piid/:piid/condition-events/:id/conditions", async () => {
+      return HttpResponse.json({ 
+        condition: { id: 4, severity: 1, symptomId: 3 },
+        symptoms: { Categories: [{ id: 1, name: "cat", 
+          symptoms: [
+            { id: 1, name: "symptom1", categoryId: 1 },
+            { id: 2, name: "symptom2", categoryId: 1 },
+          ] },
+        { id: 2, name: "cat with no symptoms",
+          symptoms: [
+            { id: 3, name: "new symptom", categoryId: 2 },
+          ] },
+        ] },
+      })
+    }))
+    renderConditionEvent()
+
+    const symptomInput = await screen.findByRole("combobox")
+    expect(symptomInput).toBeInTheDocument()
+    await user.type(symptomInput, "new symptom") 
+    await user.keyboard("{Enter}")
+
+    expect(screen.getByRole("presentation")).toBeVisible()
+    const categoryInput = await screen.findByLabelText("Kategorie")
+    expect(categoryInput).toBeInTheDocument()
+    await user.type(categoryInput, "cat with no symptom")
+    await user.keyboard("{ArrowDown}")
+    await user.keyboard("{Enter}")
+
+    expect(screen.queryByRole("presentation")).not.toBeInTheDocument()    
+    const conditionList = screen.getByRole("list")
+    expect(within(conditionList).getByText("symptom1")).toBeInTheDocument()
+    expect(within(conditionList).getByText("new symptom")).toBeInTheDocument()
+  })
+
   it("Show loading indicator", async () => {
     server.use(
       http.get("http://localhost:4444/piid/:piid/condition-events/:id", async () => {

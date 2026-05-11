@@ -67,8 +67,7 @@ export default function AddOrSelectCategory(props: {
       }}
       >
         <Typography sx={{ paddingBottom: "1rem" }}>
-          Wähle eine Kategorie für
-          <b>{props.symptomName}</b>
+          Wähle eine Kategorie für <b>{props.symptomName}</b>
         </Typography>
         <Autocomplete
           freeSolo
