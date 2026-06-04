@@ -27,12 +27,12 @@ test("headache workbook", async () => {
 		{ cell: "A2", header: "Zeit" },
 		{ cell: "B2", header: "Schwere" },
 		{ cell: "C1", header: "Position" },
-		{ cell: "M1", header: "Position" },
-		{ cell: "N1", header: "Typen" },
-		{ cell: "P1", header: "Typen" },
-		{ cell: "Q1", header: "Symptome" },
-		{ cell: "AC1", header: "Symptome" },
-		{ cell: "AD2", header: "Beschreibung" },
+		{ cell: "N1", header: "Position" },
+		{ cell: "O1", header: "Typen" },
+		{ cell: "Q1", header: "Typen" },
+		{ cell: "R1", header: "Symptome" },
+		{ cell: "AD1", header: "Symptome" },
+		{ cell: "AE2", header: "Beschreibung" },
 	];
 	expectedColumnHeaders.forEach((h) => {
 		expect(sheet[h.cell].v).toBe(h.header);
@@ -44,12 +44,12 @@ test("headache workbook", async () => {
 		{ cell: "B3", value: 3 }, // Severity
 		{ cell: "C3", value: "✓" }, // Position left
 		{ cell: "D3", value: null }, // Position right
-		{ cell: "N3", value: null }, // Type pulsating-pounding
-		{ cell: "P3", value: "✓" }, // Type stabbing
-		{ cell: "Q3", value: "✓" }, // Symptom short-term-memory
-		{ cell: "R3", value: "✓" }, // Symptom tinnitus
-		{ cell: "T3", value: null }, // Symptom light-sensitive
-		{ cell: "AD3", value: "desc" }, // Description
+		{ cell: "O3", value: null }, // Type pulsating-pounding
+		{ cell: "Q3", value: "✓" }, // Type stabbing
+		{ cell: "R3", value: "✓" }, // Symptom short-term-memory
+		{ cell: "S3", value: "✓" }, // Symptom tinnitus
+		{ cell: "U3", value: null }, // Symptom light-sensitive
+		{ cell: "AE3", value: "desc" }, // Description
 	];
 	expectedColumnValues.forEach((v) => {
 		const cellValue = sheet[v.cell] ? sheet[v.cell][v.getter ?? "v"] : null;
