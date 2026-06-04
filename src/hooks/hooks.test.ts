@@ -35,6 +35,8 @@ describe("usePiidEffect", () => {
 		const { setPiid } = useHista.getState();
 		act(() => setPiid("test-piid"));
 
+		renderHook(() => usePiidEffect(fn, []));
+
 		await waitFor(() => expect(fn).toHaveBeenCalledOnce());
 
 		act(() => setPiid("new-piid"));
