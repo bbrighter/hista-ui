@@ -1,5 +1,10 @@
-import { fireEvent, screen, waitFor, within } from "@testing-library/dom";
-import { render } from "@testing-library/react";
+import {
+	fireEvent,
+	render,
+	screen,
+	waitFor,
+	within,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { delay, HttpResponse, http } from "msw";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
