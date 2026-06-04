@@ -34,7 +34,7 @@ describe("Nutrition stats are displayed", () => {
 
 		// Verify list item with date and chart
 		const listItem = getListItem("14.2.2026");
-		expect(listItem.querySelector("svg")).toBeInTheDocument();
+		expect(listItem?.querySelector("svg")).toBeInTheDocument();
 
 		// Verify legend
 		const legend = screen.getByTestId("nutrition-legend");
@@ -50,15 +50,15 @@ describe("Nutrition stats are displayed", () => {
 		const dayButton = await findToggleButton("T");
 		expect(dayButton).toBeInTheDocument();
 		const firstDayListItem = getListItem("14.2.2026");
-		expect(firstDayListItem.querySelector("svg")).toBeInTheDocument();
+		expect(firstDayListItem?.querySelector("svg")).toBeInTheDocument();
 		const secondDayListItem = getListItem("15.2.2026");
-		expect(secondDayListItem.querySelector("svg")).toBeInTheDocument();
+		expect(secondDayListItem?.querySelector("svg")).toBeInTheDocument();
 
 		const weekButton = await findToggleButton("W");
 		await userEvent.click(weekButton);
 		expect(weekButton).toBeInTheDocument();
 		const weekListItem = getListItem("Woche 5");
-		expect(weekListItem.querySelector("svg")).toBeInTheDocument();
+		expect(weekListItem?.querySelector("svg")).toBeInTheDocument();
 	});
 
 	it("Toggle fiber", async () => {

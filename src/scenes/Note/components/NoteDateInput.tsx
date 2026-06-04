@@ -9,6 +9,7 @@ export const NoteDateInput = ({ noteId }: { noteId: number }) => {
 	const date = note.date;
 
 	const onDateChange = (e: dayjs.Dayjs | null) => {
+		if (e === null) return;
 		actions.notes.patchDate(noteId, e.toDate());
 	};
 

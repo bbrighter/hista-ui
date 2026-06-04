@@ -1,4 +1,4 @@
-import { screen, within } from "@testing-library/dom";
+import { screen, within } from "@testing-library/react";
 
 export const getIngredientSelect = () => {
 	return within(screen.getByTestId("ingredientSelect")).getByRole(
