@@ -6,7 +6,8 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-
+import { useEffect } from "react";
+import { errApi } from "../api/api";
 import { useAppNavigate } from "../hooks/useNavigate";
 import { Icons } from "../scenes/components/Icons";
 import { toAppError } from "./errorHandler";
@@ -23,6 +24,16 @@ export function ErrorFallback({
 		navigate.to.home();
 		setTimeout(() => resetErrorBoundary(), 0);
 	};
+
+	useEffect(() => {
+		const appErr = toAppError(error);
+		errApi.LogError({
+			text: appErr.text,
+			details: appErr.details,
+			status: appErr.status,
+			stack: appErr.stack,
+		});
+	}, [error]);
 
 	const appError = toAppError(error);
 

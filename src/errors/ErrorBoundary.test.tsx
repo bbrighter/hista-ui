@@ -2,11 +2,12 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
-
+import { errApi } from "../api/api";
 import { APIError, ErrCode } from "../api/generatedApi";
 import { ErrorFallback } from "./ErrorFallback";
 
 const mockNavigate = vi.fn();
+const spyErrorFn = vi.spyOn(errApi, "LogError");
 vi.mock("react-router-dom", async () => {
 	const actual =
 		await vi.importActual<typeof import("react-router-dom")>(
@@ -35,6 +36,7 @@ describe("error fallback", () => {
 		expect(screen.getByText("Zur Homepage")).toBeInTheDocument();
 		expect(screen.getByText("details")).toBeInTheDocument();
 		expect(screen.getByText("message - 400")).toBeInTheDocument();
+		expect(spyErrorFn).toHaveBeenCalled();
 	});
 
 	it("clicking home button redirects to homepage", async () => {

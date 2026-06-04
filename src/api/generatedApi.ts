@@ -33,6 +33,7 @@ const BROWSER = typeof globalThis === "object" && ("window" in globalThis);
  */
 export default class Client {
     public readonly authentication: authentication.ServiceClient
+    public readonly errors: errors.ServiceClient
     public readonly hista: hista.ServiceClient
     private readonly options: ClientOptions
     private readonly target: string
@@ -49,6 +50,7 @@ export default class Client {
         this.options = options ?? {}
         const base = new BaseClient(this.target, this.options)
         this.authentication = new authentication.ServiceClient(base)
+        this.errors = new errors.ServiceClient(base)
         this.hista = new hista.ServiceClient(base)
     }
 
@@ -152,6 +154,28 @@ export namespace authentication {
 
         public async RemoveUserFromProductInstance(productInstanceId: string, name: string): Promise<void> {
             await this.baseClient.callTypedAPI("DELETE", `/piid/${encodeURIComponent(productInstanceId)}/users/${encodeURIComponent(name)}`)
+        }
+    }
+}
+
+export namespace errors {
+    export interface ErrorParams {
+        text: string
+        status?: number | null
+        details?: string | null
+        stack?: string | null
+    }
+
+    export class ServiceClient {
+        private baseClient: BaseClient
+
+        constructor(baseClient: BaseClient) {
+            this.baseClient = baseClient
+            this.LogError = this.LogError.bind(this)
+        }
+
+        public async LogError(params: ErrorParams): Promise<void> {
+            await this.baseClient.callTypedAPI("POST", `/error`, JSON.stringify(params))
         }
     }
 }
