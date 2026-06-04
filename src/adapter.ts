@@ -1,4 +1,3 @@
-/* eslint-disable @eslint-react/no-unnecessary-use-prefix */
 import {
 	type AuthStateAdapter,
 	ProductKeys,
@@ -54,7 +53,7 @@ export const useUserManagementAdapter = (): UserStateAdapter => {
 
 	const useUsers = () => ({ users, setUsers });
 	const useApi = () => authApi;
-	const usePiid = () => piid;
+	const usePiid = () => piid ?? "";
 
 	return {
 		useUsers,

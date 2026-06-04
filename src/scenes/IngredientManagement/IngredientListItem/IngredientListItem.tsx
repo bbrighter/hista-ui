@@ -65,7 +65,7 @@ export const IngredientListItem = ({
 					secondary={
 						nutrition
 							? nutritions
-									.map((n) => `${n.label}: ${n.value.toLocaleString("de-DE")}`)
+									.map((n) => `${n.label}: ${n.value?.toLocaleString("de-DE")}`)
 									.join(" | ")
 							: undefined
 					}

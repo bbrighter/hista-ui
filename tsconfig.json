@@ -1,19 +1,21 @@
 {
 	"compilerOptions": {
-		"lib": ["ES2021", "DOM", "DOM.Iterable"],
-		"target": "es2015",
+		"target": "esnext",
 		"module": "esnext",
 		"moduleResolution": "bundler",
+		"jsx": "react-jsx",
+
 		"skipLibCheck": true,
 		"noEmit": true,
-		"jsx": "react-jsx",
-		"types": ["node", "@testing-library/jest-dom"],
-		"forceConsistentCasingInFileNames": true
+		"types": ["@testing-library/jest-dom"],
+
+		"forceConsistentCasingInFileNames": true,
+
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true
 	},
-	"include": ["src"],
-	"references": [
-		{
-			"path": "./tsconfig.node.json"
-		}
-	]
+	"include": ["src/**/*"]
 }

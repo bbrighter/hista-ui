@@ -31,5 +31,7 @@ export const colorFromSeverity = (
 			return "warning";
 		case 5:
 			return "error";
+		default:
+			return "info";
 	}
 };
