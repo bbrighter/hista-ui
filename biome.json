@@ -6,7 +6,13 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"includes": ["src/**", "*.ts", "!**/generatedApi.ts", "*.json"]
+		"includes": [
+			"src/**",
+			"*.ts",
+			"!**/generatedApi.ts",
+			"*.json",
+			"!vercel.json"
+		]
 	},
 	"formatter": {
 		"enabled": true,
