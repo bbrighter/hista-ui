@@ -1,27 +1,34 @@
-import { StateCreator } from "zustand"
+import type { StateCreator } from "zustand";
 
-import { loadingEntities, LoadingEntity, LoadingStore, NonFunctionProperties, StoreType } from "../store.type"
+import {
+	type LoadingEntity,
+	type LoadingStore,
+	loadingEntities,
+	type NonFunctionProperties,
+	type StoreType,
+} from "../store.type";
 
-
-type State = NonFunctionProperties<LoadingStore>
+type State = NonFunctionProperties<LoadingStore>;
 
 const initialState = (): State => ({
-  loaded: Object.fromEntries(
-    loadingEntities.map(k => [k, false]),
-  ) as Record<LoadingEntity, boolean> , 
-})
+	loaded: Object.fromEntries(loadingEntities.map((k) => [k, false])) as Record<
+		LoadingEntity,
+		boolean
+	>,
+});
 
 export const createLoadingSlice: StateCreator<
-  StoreType,
-  [["zustand/immer", never]],
-  [],
-  LoadingStore
+	StoreType,
+	[["zustand/immer", never]],
+	[],
+	LoadingStore
 > = (set) => ({
-  ...initialState(),
+	...initialState(),
 
-  resetLoaded: () => set(initialState()),
+	resetLoaded: () => set(initialState()),
 
-  setLoaded: (k :LoadingEntity, loaded?: boolean) => set((state: State) => {
-    state.loaded[k] = loaded != undefined ? loaded : true
-  }),
-})
+	setLoaded: (k: LoadingEntity, loaded?: boolean) =>
+		set((state: State) => {
+			state.loaded[k] = loaded !== undefined ? loaded : true;
+		}),
+});

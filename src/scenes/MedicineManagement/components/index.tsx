@@ -1,2 +1,2 @@
 export * from "./AddMedicineButton";
-export * from "./MedicineList"
+export * from "./MedicineList";

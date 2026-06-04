@@ -1,103 +1,128 @@
-import { render, screen, waitFor, within } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
-import { MemoryRouter, Route, Routes } from "react-router-dom"
-import { describe, expect, it, vi } from "vitest"
+import { render, screen, waitFor, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { describe, expect, it, vi } from "vitest";
 
-import Meals from "./Meals"
+import Meals from "./Meals";
 
 describe("meal list items", () => {
-  const findDeleteButton = () => screen.findByTestId("delete-button")
-  const getSetNowButton = () => screen.getByTestId("set-now-button")
-  
-  it("everything is rendered", async () => {
-    render(<MemoryRouter><Meals /></MemoryRouter>)
+	const findDeleteButton = () => screen.findByTestId("delete-button");
+	const getSetNowButton = () => screen.getByTestId("set-now-button");
 
-    expect(await screen.findByTestId("add-meal-button")).toBeInTheDocument()
-    expect(await screen.findByText("01.01.2024 01:00")).toBeInTheDocument()
-    expect(await findDeleteButton()).toBeInTheDocument()
-    expect(getSetNowButton()).toBeInTheDocument()
-  })
+	it("everything is rendered", async () => {
+		render(
+			<MemoryRouter>
+				<Meals />
+			</MemoryRouter>,
+		);
 
-  it("deletion works", async () => {
-    render(<MemoryRouter><Meals /></MemoryRouter>)
+		expect(await screen.findByTestId("add-meal-button")).toBeInTheDocument();
+		expect(await screen.findByText("01.01.2024 01:00")).toBeInTheDocument();
+		expect(await findDeleteButton()).toBeInTheDocument();
+		expect(getSetNowButton()).toBeInTheDocument();
+	});
 
-    const deleteButton = await findDeleteButton()
-    await userEvent.click(deleteButton)
-    const modal = screen.getByRole("dialog")
-    expect(modal).toBeInTheDocument()
-    const confirmDeleteButton = within(modal).getByRole("button", { name: "Löschen" })
-    await userEvent.click(confirmDeleteButton)
-    expect(screen.queryByText("01.01.2024 01:00")).not.toBeInTheDocument()
-  })
+	it("deletion works", async () => {
+		render(
+			<MemoryRouter>
+				<Meals />
+			</MemoryRouter>,
+		);
 
-  it("set date to now",async () => {
-    vi.useFakeTimers()
-    vi.setSystemTime(new Date("2020-12-15T12:00:00")) 
-    render(<MemoryRouter><Meals/></MemoryRouter>)
+		const deleteButton = await findDeleteButton();
+		await userEvent.click(deleteButton);
+		const modal = screen.getByRole("dialog");
+		expect(modal).toBeInTheDocument();
+		const confirmDeleteButton = within(modal).getByRole("button", {
+			name: "Löschen",
+		});
+		await userEvent.click(confirmDeleteButton);
+		expect(screen.queryByText("01.01.2024 01:00")).not.toBeInTheDocument();
+	});
 
-    const setNowButton = await waitFor(() => {
-      vi.advanceTimersByTimeAsync(1000)
-      return getSetNowButton()
-    })
-    await userEvent.click(setNowButton)
+	it("set date to now", async () => {
+		vi.useFakeTimers();
+		vi.setSystemTime(new Date("2020-12-15T12:00:00"));
+		render(
+			<MemoryRouter>
+				<Meals />
+			</MemoryRouter>,
+		);
 
-    await waitFor(() => {
-      vi.advanceTimersByTimeAsync(1000)
-      expect(screen.getByText("15.12.2020 12:00")).toBeInTheDocument()
-    })
+		const setNowButton = await waitFor(() => {
+			vi.advanceTimersByTimeAsync(1000);
+			return getSetNowButton();
+		});
+		await userEvent.click(setNowButton);
 
-    vi.useRealTimers()
-  })
+		await waitFor(() => {
+			vi.advanceTimersByTimeAsync(1000);
+			expect(screen.getByText("15.12.2020 12:00")).toBeInTheDocument();
+		});
 
-  it("navigation to managament", async () => {
-    render(
-      <MemoryRouter initialEntries={["/123/meals"]}>
-        <Routes>
-          <Route    path="/:piid/meals" element={<Meals/>} />
-          <Route    path="/:piid/manage-ingredients" element={<>Management scene</>} />
-        </Routes>
-      </MemoryRouter>,
-    )
+		vi.useRealTimers();
+	});
 
-    const manageButton = await screen.findByTestId("manage-ingredients-button")
-    expect(manageButton).toBeInTheDocument()
-    await userEvent.click(manageButton)
-    expect(screen.getByText("Management scene")).toBeInTheDocument()
-  })
-})
+	it("navigation to managament", async () => {
+		render(
+			<MemoryRouter initialEntries={["/123/meals"]}>
+				<Routes>
+					<Route path="/:piid/meals" element={<Meals />} />
+					<Route
+						path="/:piid/manage-ingredients"
+						element={<>Management scene</>}
+					/>
+				</Routes>
+			</MemoryRouter>,
+		);
+
+		const manageButton = await screen.findByTestId("manage-ingredients-button");
+		expect(manageButton).toBeInTheDocument();
+		await userEvent.click(manageButton);
+		expect(screen.getByText("Management scene")).toBeInTheDocument();
+	});
+});
 
 describe("header actions", () => {
-  it("adding a meal navigates to it", async () => {
-    render(
-      <MemoryRouter initialEntries={["/123/meals"]}>
-        <Routes>
-          <Route path="/:piid/meals" element={<Meals/>} />
-          <Route path="/:piid/manage-ingredients" element={<>Management scene</>} />
-          <Route path="/:piid/meals/:id" element={<>Meal scene</>}/>
-        </Routes>
-      </MemoryRouter>,
-    )
+	it("adding a meal navigates to it", async () => {
+		render(
+			<MemoryRouter initialEntries={["/123/meals"]}>
+				<Routes>
+					<Route path="/:piid/meals" element={<Meals />} />
+					<Route
+						path="/:piid/manage-ingredients"
+						element={<>Management scene</>}
+					/>
+					<Route path="/:piid/meals/:id" element={<>Meal scene</>} />
+				</Routes>
+			</MemoryRouter>,
+		);
 
-    const addMealButton = await screen.findByTestId("add-meal-button")
-    await userEvent.click(addMealButton)
+		const addMealButton = await screen.findByTestId("add-meal-button");
+		await userEvent.click(addMealButton);
 
-    expect(screen.getByText("Meal scene")).toBeInTheDocument()
-  })
+		expect(screen.getByText("Meal scene")).toBeInTheDocument();
+	});
 
-  it("navigate to management", async () => {
-    render(
-      <MemoryRouter initialEntries={["/123/meals"]}>
-        <Routes>
-          <Route path="/:piid/meals" element={<Meals/>} />
-          <Route path="/:piid/manage-ingredients" element={<>Management scene</>} />
-          <Route path="/:piid/meals/:id" element={<>Meal scene</>}/>
-        </Routes>
-      </MemoryRouter>,
-    )
+	it("navigate to management", async () => {
+		render(
+			<MemoryRouter initialEntries={["/123/meals"]}>
+				<Routes>
+					<Route path="/:piid/meals" element={<Meals />} />
+					<Route
+						path="/:piid/manage-ingredients"
+						element={<>Management scene</>}
+					/>
+					<Route path="/:piid/meals/:id" element={<>Meal scene</>} />
+				</Routes>
+			</MemoryRouter>,
+		);
 
-    const managementButton = await screen.findByTestId("manage-ingredients-button")
-    await userEvent.click(managementButton)
+		const managementButton = await screen.findByTestId(
+			"manage-ingredients-button",
+		);
+		await userEvent.click(managementButton);
 
-    expect(screen.getByText("Management scene")).toBeInTheDocument()
-  })
-})
+		expect(screen.getByText("Management scene")).toBeInTheDocument();
+	});
+});

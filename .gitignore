@@ -4,9 +4,6 @@ dist
 coverage
 false
 
-# VSCode folder
-.vscode/*
-
 # Different things
 bundle-stats.html
 tsconfig.node.tsbuildinfo

@@ -6,73 +6,87 @@ import { describe, expect, it } from "vitest";
 import { Templates } from "./Templates";
 
 describe("Template management", () => {
-  const getAddTemplateButton = () => {
-    const button = screen.getByText("Neue Vorlage", { selector: "button" })
-    expect(button).toBeVisible()
-    return button!
-  }
+	const getAddTemplateButton = () => {
+		const button = screen.getByText("Neue Vorlage", { selector: "button" });
+		expect(button).toBeVisible();
+		return button as HTMLElement;
+	};
 
-  const getTemplateRowByName = (name: string) => {
-    const row = screen.getByText(name).closest("li")
-    expect(row).toBeVisible()
-    return row!
-  }
+	const getTemplateRowByName = (name: string) => {
+		const row = screen.getByText(name).closest("li");
+		expect(row).toBeVisible();
+		return row as HTMLElement;
+	};
 
-  const getNameInput = () => within(screen.getByTestId("name-input")).getByRole("textbox")
-  const getSaveButton = () => screen.getByTestId("save-button")
-  const getIngredientSelect = () => within(screen.getByTestId("ingredient-select")).getByRole("combobox")
+	const getNameInput = () =>
+		within(screen.getByTestId("name-input")).getByRole("textbox");
+	const getSaveButton = () => screen.getByTestId("save-button");
+	const getIngredientSelect = () =>
+		within(screen.getByTestId("ingredient-select")).getByRole("combobox");
 
-  it("Render", async () => {
-    render(<MemoryRouter><Templates/></MemoryRouter>)
+	it("Render", async () => {
+		render(
+			<MemoryRouter>
+				<Templates />
+			</MemoryRouter>,
+		);
 
-    expect(await screen.findByText("Vorlagen")).toBeVisible()
-    expect(getAddTemplateButton()).toBeDefined()
+		expect(await screen.findByText("Vorlagen")).toBeVisible();
+		expect(getAddTemplateButton()).toBeDefined();
 
-    expect(getTemplateRowByName("Template")).toBeDefined()
-  })
+		expect(getTemplateRowByName("Template")).toBeDefined();
+	});
 
-  it("Add a template", async () => {
-    render(<MemoryRouter><Templates/></MemoryRouter>)
+	it("Add a template", async () => {
+		render(
+			<MemoryRouter>
+				<Templates />
+			</MemoryRouter>,
+		);
 
-    const addButton = await waitFor(() => getAddTemplateButton())
-    await userEvent.click(addButton)
+		const addButton = await waitFor(() => getAddTemplateButton());
+		await userEvent.click(addButton);
 
-    expect(screen.getByText("Vorlage erstellen")).toBeVisible()
-    expect(getSaveButton()).toBeDisabled()
+		expect(screen.getByText("Vorlage erstellen")).toBeVisible();
+		expect(getSaveButton()).toBeDisabled();
 
-    const nameInput = getNameInput()
-    await userEvent.type(nameInput, "new template")
-    expect(nameInput).toHaveValue("new template")
-    expect(getSaveButton()).toBeDisabled()
+		const nameInput = getNameInput();
+		await userEvent.type(nameInput, "new template");
+		expect(nameInput).toHaveValue("new template");
+		expect(getSaveButton()).toBeDisabled();
 
-    const ingredientSelect = getIngredientSelect()
-    expect(ingredientSelect).toBeVisible()
-    await userEvent.type(ingredientSelect, "ingredient1{enter}")
-    const option = screen.getByText("ingredient1")
-    await userEvent.click(option)
-    expect(screen.getByDisplayValue("ingredient1")).toBeDefined()
-    expect(getSaveButton()).not.toBeDisabled()
+		const ingredientSelect = getIngredientSelect();
+		expect(ingredientSelect).toBeVisible();
+		await userEvent.type(ingredientSelect, "ingredient1{enter}");
+		const option = screen.getByText("ingredient1");
+		await userEvent.click(option);
+		expect(screen.getByDisplayValue("ingredient1")).toBeDefined();
+		expect(getSaveButton()).not.toBeDisabled();
 
-    const foodConditionToggle = screen.getByTestId("food-condition-chip")
-    expect(foodConditionToggle).toHaveTextContent("Gar")
-    expect(foodConditionToggle).toBeVisible()
-    await userEvent.click(foodConditionToggle)
-    expect(screen.getByTestId("food-condition-chip")).toHaveTextContent("Roh")
+		const foodConditionToggle = screen.getByTestId("food-condition-chip");
+		expect(foodConditionToggle).toHaveTextContent("Gar");
+		expect(foodConditionToggle).toBeVisible();
+		await userEvent.click(foodConditionToggle);
+		expect(screen.getByTestId("food-condition-chip")).toHaveTextContent("Roh");
 
-    await userEvent.click(getSaveButton())
-    expect(screen.queryByText("Vorlage erstellen")).not.toBeVisible()
-    expect(getTemplateRowByName("new template")).toBeVisible()
-  })
+		await userEvent.click(getSaveButton());
+		expect(screen.queryByText("Vorlage erstellen")).not.toBeVisible();
+		expect(getTemplateRowByName("new template")).toBeVisible();
+	});
 
-  it("Delete a row", async () => {
-    render(<MemoryRouter><Templates/></MemoryRouter>)
+	it("Delete a row", async () => {
+		render(
+			<MemoryRouter>
+				<Templates />
+			</MemoryRouter>,
+		);
 
-    const addButton = await waitFor(() => getAddTemplateButton())
-    await userEvent.click(addButton)
+		const addButton = await waitFor(() => getAddTemplateButton());
+		await userEvent.click(addButton);
 
-    const deleteButton = screen.getByTestId("delete-row-button")
-    expect(deleteButton).toBeInTheDocument()
-    await userEvent.click(deleteButton)
-    expect(screen.queryAllByTestId("delete-row-button")).toHaveLength(0)
-  })
-})
+		const deleteButton = screen.getByTestId("delete-row-button");
+		expect(deleteButton).toBeInTheDocument();
+		await userEvent.click(deleteButton);
+		expect(screen.queryAllByTestId("delete-row-button")).toHaveLength(0);
+	});
+});

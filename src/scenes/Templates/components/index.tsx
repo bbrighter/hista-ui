@@ -1,2 +1,2 @@
-export * from "./AddTemplate"
-export * from "./TemplateList"
+export * from "./AddTemplate";
+export * from "./TemplateList";

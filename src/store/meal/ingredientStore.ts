@@ -1,39 +1,44 @@
-import { StateCreator } from "zustand"
+import type { StateCreator } from "zustand";
 
-import { IngredientStore, NonFunctionProperties, StoreType } from "../store.type"
-import { Ingredient } from "./../types"
+import type {
+	IngredientStore,
+	NonFunctionProperties,
+	StoreType,
+} from "../store.type";
+import type { Ingredient } from "./../types";
 
-type State = NonFunctionProperties<IngredientStore>
+type State = NonFunctionProperties<IngredientStore>;
 
 const initialState = (): State => ({
-  ingredients: [],
-})
+	ingredients: [],
+});
 
 export const createIngredientSlice: StateCreator<
-  StoreType,
-  [["zustand/immer", never]],
-  [],
-  IngredientStore> = set => ({
-  ...initialState(),
+	StoreType,
+	[["zustand/immer", never]],
+	[],
+	IngredientStore
+> = (set) => ({
+	...initialState(),
 
-  addIngredient(_ing: Ingredient) {},
-  removeIngredient(_id: number) {},
-  
-  resetIngredients() {
-    set(initialState())
-  },
+	addIngredient(_ing: Ingredient) {},
+	removeIngredient(_id: number) {},
 
-  setIngredients: (ingredients) => {
-    set(state => {
-      state.ingredients = ingredients
-    })
-  },
-  updateIngredient: (id: number, update: Partial<Ingredient>) => {
-    set(state => {
-      const index = state.ingredients.findIndex(ing => ing.id === id)
-      if (index !== -1) {
-        state.ingredients[index] = { ...state.ingredients[index], ...update }
-      }
-    })
-  },
-})
+	resetIngredients() {
+		set(initialState());
+	},
+
+	setIngredients: (ingredients) => {
+		set((state) => {
+			state.ingredients = ingredients;
+		});
+	},
+	updateIngredient: (id: number, update: Partial<Ingredient>) => {
+		set((state) => {
+			const index = state.ingredients.findIndex((ing) => ing.id === id);
+			if (index !== -1) {
+				state.ingredients[index] = { ...state.ingredients[index], ...update };
+			}
+		});
+	},
+});

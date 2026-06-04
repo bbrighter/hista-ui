@@ -1,19 +1,18 @@
-import { useEffect, useRef } from "react"
+import { type DependencyList, useEffect, useRef } from "react";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function useDidUpdateEffect(fn: () => void, inputs: Array<any>) {
-  const isMountingRef = useRef(false)
+export function useDidUpdateEffect(fn: () => void, inputs: DependencyList) {
+	const isMountingRef = useRef(false);
 
-  useEffect(() => {
-    isMountingRef.current = true
-  }, [])
+	useEffect(() => {
+		isMountingRef.current = true;
+	}, []);
 
-  useEffect(() => {
-    if (!isMountingRef.current) {
-      return fn()
-    }
-    else {
-      isMountingRef.current = false
-    }
-  }, inputs)
+	// biome-ignore lint/correctness/useExhaustiveDependencies: fn is not memoized
+	useEffect(() => {
+		if (!isMountingRef.current) {
+			return fn();
+		} else {
+			isMountingRef.current = false;
+		}
+	}, [...inputs]);
 }

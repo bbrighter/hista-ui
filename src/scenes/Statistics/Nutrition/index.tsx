@@ -1,1 +1,1 @@
-export * from "./NutritionStats"
+export * from "./NutritionStats";

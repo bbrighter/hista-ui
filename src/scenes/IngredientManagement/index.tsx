@@ -1,3 +1,3 @@
-import { IngredientManagement } from "./IngredientManagement"
+import { IngredientManagement } from "./IngredientManagement";
 
-export default IngredientManagement
+export default IngredientManagement;

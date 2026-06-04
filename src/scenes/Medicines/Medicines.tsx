@@ -8,18 +8,18 @@ import { Loading } from "../components";
 import { IntakeList, ManagementButton } from "./components";
 
 export const Medicines = () => {
-  const isLoading = useHista(selectIsLoadingAny(["medicines", "intakes"]))
-  usePiidEffect(() => {
-    actions.medicines.list()
-    actions.intakes.list()
-  }, []);
+	const isLoading = useHista(selectIsLoadingAny(["medicines", "intakes"]));
+	usePiidEffect(() => {
+		actions.medicines.list();
+		actions.intakes.list();
+	}, []);
 
-  return (
-    <Loading show={isLoading}>
-      <Container sx={{ mt: "2rem" }}>
-        <ManagementButton />
-        <IntakeList/>
-      </Container>
-    </Loading>
-  );
+	return (
+		<Loading show={isLoading}>
+			<Container sx={{ mt: "2rem" }}>
+				<ManagementButton />
+				<IntakeList />
+			</Container>
+		</Loading>
+	);
 };

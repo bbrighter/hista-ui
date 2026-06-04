@@ -5,12 +5,16 @@ import { intakeHandlers, medicineHandlers } from "./medicineHandlers";
 import { noteHandlers } from "./noteHandlers";
 import { permissionsHandler } from "./permissionsHandler";
 import { pollenHandlers } from "./pollenHandlers";
-import { getDiariesHandler, getNutritionStatisticsHandler, getStatisticsHandler } from "./statisticsHandler";
+import {
+	getDiariesHandler,
+	getNutritionStatisticsHandler,
+	getStatisticsHandler,
+} from "./statisticsHandler";
 import { statusHandlers } from "./statusHandler";
 import {
-  conditionEventHandlers,
-  conditionHandlers,
-  symptomHandlers,
+	conditionEventHandlers,
+	conditionHandlers,
+	symptomHandlers,
 } from "./symptomHandlers";
 import { templateHandlers } from "./templateHander";
 
@@ -18,24 +22,24 @@ const baseUrl = "http://localhost:4444";
 const baseUrlWithPiid = `${baseUrl}/piid/:piid`;
 
 const handlers = [
-  ...symptomHandlers(baseUrlWithPiid),
-  ...conditionEventHandlers(baseUrlWithPiid),
-  ...conditionHandlers(baseUrlWithPiid),
-  ...mealHandlers(baseUrlWithPiid),
-  ...ingredientHandlers(baseUrlWithPiid),
-  ...foodHandlers(baseUrlWithPiid),
-  ...noteHandlers(baseUrlWithPiid),
-  ...headacheHandlers(baseUrlWithPiid),
-  ...pollenHandlers(baseUrlWithPiid),
-  ...statusHandlers(baseUrlWithPiid),
-  ...permissionsHandler(baseUrl),
-  ...authHandlers(baseUrl),
-  getStatisticsHandler(baseUrlWithPiid),
-  getDiariesHandler(baseUrlWithPiid),
-  getNutritionStatisticsHandler(baseUrlWithPiid),
-  ...medicineHandlers(baseUrlWithPiid),
-  ...intakeHandlers(baseUrlWithPiid),
-  ...templateHandlers(baseUrlWithPiid),
+	...symptomHandlers(baseUrlWithPiid),
+	...conditionEventHandlers(baseUrlWithPiid),
+	...conditionHandlers(baseUrlWithPiid),
+	...mealHandlers(baseUrlWithPiid),
+	...ingredientHandlers(baseUrlWithPiid),
+	...foodHandlers(baseUrlWithPiid),
+	...noteHandlers(baseUrlWithPiid),
+	...headacheHandlers(baseUrlWithPiid),
+	...pollenHandlers(baseUrlWithPiid),
+	...statusHandlers(baseUrlWithPiid),
+	...permissionsHandler(baseUrl),
+	...authHandlers(baseUrl),
+	getStatisticsHandler(baseUrlWithPiid),
+	getDiariesHandler(baseUrlWithPiid),
+	getNutritionStatisticsHandler(baseUrlWithPiid),
+	...medicineHandlers(baseUrlWithPiid),
+	...intakeHandlers(baseUrlWithPiid),
+	...templateHandlers(baseUrlWithPiid),
 ];
 
 export default handlers;

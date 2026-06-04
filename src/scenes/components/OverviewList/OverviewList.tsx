@@ -1,51 +1,56 @@
 import "react-swipeable-list/dist/styles.css";
 
-import {  SwipeableList } from "react-swipeable-list"
+import { SwipeableList } from "react-swipeable-list";
 
-import { usePiidEffect } from "../../../hooks/usePiidEffect"
+import { usePiidEffect } from "../../../hooks/usePiidEffect";
 import { OverviewListItem } from "./OverviewListItem";
 
 interface ListItemInterface {
-  id: number
-  date: Date | string
-  secondary?: string
-  severity?: number
+	id: number;
+	date: Date | string;
+	secondary?: string;
+	severity?: number;
 }
 
 export function OverviewList(props: {
-  items: Array<ListItemInterface>
-  showSeverity?: boolean
-  onClick: (id: number) => void
-  onDelete: (id: number) => Promise<void>
-  getData: () => Promise<void | Array<unknown>>
-  severityColorMapping?: (severity: number) => string
-  onSetNow?: (id: number) => Promise<void>
+	items: Array<ListItemInterface>;
+	showSeverity?: boolean;
+	onClick: (id: number) => void;
+	onDelete: (id: number) => Promise<void>;
+	// biome-ignore lint/suspicious/noConfusingVoidType: That's true. Some functions return nothing
+	getData: () => Promise<void | Array<unknown>>;
+	severityColorMapping?: (severity: number) => string;
+	onSetNow?: (id: number) => Promise<void>;
 }) {
-  const { items, showSeverity, onClick, onDelete, getData, severityColorMapping, onSetNow } = props
+	const {
+		items,
+		showSeverity,
+		onClick,
+		onDelete,
+		getData,
+		severityColorMapping,
+		onSetNow,
+	} = props;
 
-  usePiidEffect(() => {
-    getData()
-  }, [])
+	usePiidEffect(() => {
+		getData();
+	}, []);
 
-  return (
-    <SwipeableList>
-      {items.map(i => (
-        <OverviewListItem
-          key={i.id}
-          date={i.date}
-          onClick={() => onClick(i.id)}
-          onDelete={() => onDelete(i.id)}
-          showSeverity={showSeverity}
-          severity={i.severity}
-          secondary={i.secondary}
-          severityColorMapping={severityColorMapping}
-          {...(onSetNow && { onSetNow: () => onSetNow(i.id) } )}
-        />
-      ))}
-    </SwipeableList>
-  )
+	return (
+		<SwipeableList>
+			{items.map((i) => (
+				<OverviewListItem
+					key={i.id}
+					date={i.date}
+					onClick={() => onClick(i.id)}
+					onDelete={() => onDelete(i.id)}
+					showSeverity={showSeverity}
+					severity={i.severity}
+					secondary={i.secondary}
+					severityColorMapping={severityColorMapping}
+					{...(onSetNow && { onSetNow: () => onSetNow(i.id) })}
+				/>
+			))}
+		</SwipeableList>
+	);
 }
-
-
-
-

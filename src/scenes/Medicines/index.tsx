@@ -1,3 +1,3 @@
-import { Medicines } from "./Medicines"
+import { Medicines } from "./Medicines";
 
-export default Medicines
+export default Medicines;

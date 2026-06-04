@@ -1,61 +1,66 @@
-import { StateCreator } from "zustand"
+import type { StateCreator } from "zustand";
 
-import { AuthStore, NonFunctionProperties, StoreType } from "../store.type"
-import { Instance } from "./instance"
-import { User } from "./users"
+import type {
+	AuthStore,
+	NonFunctionProperties,
+	StoreType,
+} from "../store.type";
+import type { Instance } from "./instance";
+import type { User } from "./users";
 
-type State = NonFunctionProperties<AuthStore>
+type State = NonFunctionProperties<AuthStore>;
 
 const initialState = {
-  instances: [],
-  token: window.localStorage.getItem("token") || "",
-  piid: null,
-  userName: "",
-  users: [],
-  instancesAreLoaded: false,
-} satisfies State
+	instances: [],
+	token: window.localStorage.getItem("token") || "",
+	piid: null,
+	userName: "",
+	users: [],
+	instancesAreLoaded: false,
+} satisfies State;
 
 export const createAuthSlice: StateCreator<
-  StoreType,
-  [["zustand/immer", never]],
-  [],
-  AuthStore> = set => ({
-  ...initialState,
+	StoreType,
+	[["zustand/immer", never]],
+	[],
+	AuthStore
+> = (set) => ({
+	...initialState,
 
-  setPiid(piid: string) {
-    set((state: State) => {
-      state.piid = piid
-    })
-  },
+	setPiid(piid: string) {
+		set((state: State) => {
+			state.piid = piid;
+		});
+	},
 
-  setToken(token: string) {
-    window.localStorage.setItem("token", token)
-    set((state: State) => {
-      state.token = token
-    })
-  },
+	setToken(token: string) {
+		window.localStorage.setItem("token", token);
+		set((state: State) => {
+			state.token = token;
+		});
+	},
 
-  setUserName: (name: string) => {
-    set((state: State) => {
-      state.userName = name
-    })
-  },
+	setUserName: (name: string) => {
+		set((state: State) => {
+			state.userName = name;
+		});
+	},
 
-  setUsers: (users: Array<User>) => {
-    set((state: State) => {
-      state.users = users
-    })
-  },
+	setUsers: (users: Array<User>) => {
+		set((state: State) => {
+			state.users = users;
+		});
+	},
 
-  setInstances: async (instances: Array<Instance>) => {
-    set((state: State) => {
-      state.instances = instances
-    })
-  },
+	setInstances: async (instances: Array<Instance>) => {
+		set((state: State) => {
+			state.instances = instances;
+		});
+	},
 
-  setInstancesLoaded: (isLoaded: boolean) => {
-    set((state: State) => {
-      state.instancesAreLoaded = isLoaded
-    })
-  },
-})
+	setInstancesLoaded: (isLoaded: boolean) => {
+		set((state: State) => {
+			state.instancesAreLoaded = isLoaded;
+		});
+	},
+});

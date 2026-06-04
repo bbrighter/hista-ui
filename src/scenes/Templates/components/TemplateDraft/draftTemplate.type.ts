@@ -1,8 +1,8 @@
-import { FoodCondition, Ingredient } from "../../../../store"
+import type { FoodCondition, Ingredient } from "../../../../store";
 
 type DraftTemplateRow = {
-  ingredient: Ingredient | null
-  condition: FoodCondition
-}
+	ingredient: Ingredient | null;
+	condition: FoodCondition;
+};
 
-export type DraftTemplate = Array<DraftTemplateRow>
+export type DraftTemplate = Array<DraftTemplateRow>;

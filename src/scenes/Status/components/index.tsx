@@ -1,2 +1,2 @@
-export * from "./AddStatus"
-export * from "./StatusCard"
+export * from "./AddStatus";
+export * from "./StatusCard";

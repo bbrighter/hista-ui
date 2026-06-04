@@ -1,111 +1,128 @@
-import Autocomplete, { AutocompleteChangeReason } from "@mui/material/Autocomplete"
-import ListItem from "@mui/material/ListItem"
-import ListItemText from "@mui/material/ListItemText"
-import TextField from "@mui/material/TextField"
-import { FilterOptionsState } from "@mui/material/useAutocomplete"
-import { useEffect, useState } from "react"
+import Autocomplete, {
+	type AutocompleteChangeReason,
+} from "@mui/material/Autocomplete";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import TextField from "@mui/material/TextField";
+import type { FilterOptionsState } from "@mui/material/useAutocomplete";
+import { useEffect, useState } from "react";
 
-import { actions } from "../../../actions"
-import useHista from "../../../store/store"
-import AddOrSelectCategory from "./AddOrSelectCategory"
+import { actions } from "../../../actions";
+import useHista from "../../../store/store";
+import AddOrSelectCategory from "./AddOrSelectCategory";
 
 interface SymptomOption {
-  categoryId: number
-  categoryName: string
-  symptomId: number
-  symptomName: string
+	categoryId: number;
+	categoryName: string;
+	symptomId: number;
+	symptomName: string;
 }
 
-type NewOption = string
+type NewOption = string;
 
-type Option = SymptomOption | NewOption
+type Option = SymptomOption | NewOption;
 
 const isNewOption = (opt: unknown): opt is NewOption => {
-  return typeof (opt) == "string"
-}
+	return typeof opt === "string";
+};
 
 export default function AddCondition() {
-  const [open, setOpen] = useState(false)
-  const [value, setValue] = useState<Option | null>(null)
-  const [inputValue, setInputValue] = useState("")
-  const symptoms = useHista(state => state.symptoms)
+	const [open, setOpen] = useState(false);
+	const [value, setValue] = useState<Option | null>(null);
+	const [inputValue, setInputValue] = useState("");
+	const symptoms = useHista((state) => state.symptoms);
 
-  useEffect(() => {
-    actions.symptoms.list()
-  }, [])
+	useEffect(() => {
+		actions.symptoms.list();
+	}, []);
 
-  const options = symptoms.flatMap(cat => (
-    cat.symptoms.map(sym => (
-      { categoryId: cat.categoryId, categoryName: cat.categoryName, symptomId: sym.id, symptomName: sym.name }
-    ))
-  ))
+	const options = symptoms.flatMap((cat) =>
+		cat.symptoms.map((sym) => ({
+			categoryId: cat.categoryId,
+			categoryName: cat.categoryName,
+			symptomId: sym.id,
+			symptomName: sym.name,
+		})),
+	);
 
-  const onChange = async (_e: React.SyntheticEvent, v: Option | null, reason: AutocompleteChangeReason) => {
-    if (v == null) return
-    if (isNewOption(v) && (reason == "selectOption" || reason == "createOption")) {
-      setOpen(true)
-      setValue(v)
-    }
-    else if (!isNewOption(v) && reason == "selectOption") {
-      await actions.conditions.postById(v.symptomId)
-      setInputValue("")
-    }
-  }
+	const onChange = async (
+		_e: React.SyntheticEvent,
+		v: Option | null,
+		reason: AutocompleteChangeReason,
+	) => {
+		if (v == null) return;
+		if (
+			isNewOption(v) &&
+			(reason === "selectOption" || reason === "createOption")
+		) {
+			setOpen(true);
+			setValue(v);
+		} else if (!isNewOption(v) && reason === "selectOption") {
+			await actions.conditions.postById(v.symptomId);
+			setInputValue("");
+		}
+	};
 
-  const filterOptions = (options: Array<Option>, params: FilterOptionsState<Option>) => {
-    const { inputValue } = params
-    const filtered = options.filter((o) => {
-      if (!isNewOption(o)) {
-        return o.categoryName.toLowerCase().includes(inputValue.toLowerCase()) || o.symptomName.toLowerCase().includes(inputValue.toLowerCase())
-      }
-    })
-    if (inputValue != "") {
-      filtered.push(inputValue)
-    }
-    return filtered
-  }
+	const filterOptions = (
+		options: Array<Option>,
+		params: FilterOptionsState<Option>,
+	) => {
+		const { inputValue } = params;
+		const filtered = options.filter((o) => {
+			if (!isNewOption(o)) {
+				return (
+					o.categoryName.toLowerCase().includes(inputValue.toLowerCase()) ||
+					o.symptomName.toLowerCase().includes(inputValue.toLowerCase())
+				);
+			}
+			return false;
+		});
+		if (inputValue !== "") {
+			filtered.push(inputValue);
+		}
+		return filtered;
+	};
 
-  const onCloseModal = () => {
-    setOpen(false)
-    setInputValue("")
-    setValue(null)
-  }
+	const onCloseModal = () => {
+		setOpen(false);
+		setInputValue("");
+		setValue(null);
+	};
 
-  return (
-    <>
-      <Autocomplete
-        sx={{ paddingTop: "20px" }}
-        freeSolo
-        inputValue={inputValue}
-        onInputChange={(_e, v) => setInputValue(v)}
-        value={value}
-        onChange={onChange}
-        options={options}
-        getOptionLabel={s => typeof (s) == "string" ? s : s.symptomName}
-        selectOnFocus
-        clearOnBlur
-        filterOptions={filterOptions}
-        renderOption={(props, option) => {
-          const key = isNewOption(option) ? 0 : option.symptomId
-          const primary = isNewOption(option) ? option : option.symptomName
-          const secondary = isNewOption(option) ? "hinzufügen" : option.categoryName
-          const { key: _ignored, ...rest } = props
-          return (
-            <ListItem key={key} {...rest} >
-              <ListItemText
-                primary={primary}
-                secondary={secondary}
-              />
-            </ListItem>
-          )
-        }}
-        renderInput={params => (<TextField {...params} label="Symptom" />)}
-      />
-      <AddOrSelectCategory
-        open={open}
-        symptomName={isNewOption(value) ? value : value?.symptomName || ""}
-        onClose={onCloseModal}
-      />
-    </>
-  )
+	return (
+		<>
+			<Autocomplete
+				sx={{ paddingTop: "20px" }}
+				freeSolo
+				inputValue={inputValue}
+				onInputChange={(_e, v) => setInputValue(v)}
+				value={value}
+				onChange={onChange}
+				options={options}
+				getOptionLabel={(s) => (typeof s === "string" ? s : s.symptomName)}
+				selectOnFocus
+				clearOnBlur
+				filterOptions={filterOptions}
+				renderOption={(props, option) => {
+					const key = isNewOption(option) ? 0 : option.symptomId;
+					const primary = isNewOption(option) ? option : option.symptomName;
+					const secondary = isNewOption(option)
+						? "hinzufügen"
+						: option.categoryName;
+					const { key: _ignored, ...rest } = props;
+					return (
+						<ListItem key={key} {...rest}>
+							<ListItemText primary={primary} secondary={secondary} />
+						</ListItem>
+					);
+				}}
+				renderInput={(params) => <TextField {...params} label="Symptom" />}
+			/>
+			<AddOrSelectCategory
+				open={open}
+				symptomName={isNewOption(value) ? value : value?.symptomName || ""}
+				onClose={onCloseModal}
+			/>
+		</>
+	);
 }

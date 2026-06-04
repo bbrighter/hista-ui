@@ -1,16 +1,19 @@
-import Accordion from "@mui/material/Accordion"
+import Accordion from "@mui/material/Accordion";
 
-import { SymptomCategory } from "../../../store"
-import AccordionCategory from "./AccordionCategory"
-import AccordionSymptoms from "./AccordionSymptoms"
+import type { SymptomCategory } from "../../../store";
+import AccordionCategory from "./AccordionCategory";
+import AccordionSymptoms from "./AccordionSymptoms";
 
 export default function SymptomCategoryAccordion(props: {
-  symptom: SymptomCategory
+	symptom: SymptomCategory;
 }) {
-  return (
-    <Accordion key={props.symptom.categoryId} slotProps={{ transition: { unmountOnExit: true } }}>
-      <AccordionCategory category={props.symptom} />
-      <AccordionSymptoms category={props.symptom} />
-    </Accordion>
-  )
+	return (
+		<Accordion
+			key={props.symptom.categoryId}
+			slotProps={{ transition: { unmountOnExit: true } }}
+		>
+			<AccordionCategory category={props.symptom} />
+			<AccordionSymptoms category={props.symptom} />
+		</Accordion>
+	);
 }

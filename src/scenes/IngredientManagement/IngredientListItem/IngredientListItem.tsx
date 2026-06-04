@@ -1,44 +1,79 @@
-import ButtonGroup from "@mui/material/ButtonGroup"
-import IconButton from "@mui/material/IconButton"
-import ListItem from "@mui/material/ListItem"
-import ListItemText from "@mui/material/ListItemText"
-import { useState } from "react"
+import ButtonGroup from "@mui/material/ButtonGroup";
+import IconButton from "@mui/material/IconButton";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import { useState } from "react";
 
-import { Nutrition } from "../../../store"
-import { Icons } from "../../components/Icons"
-import { ArchiveButton } from "./ArchiveButton"
-import { EditIngredientName } from "./EditIngredientName"
-import { EditNutritionButton } from "./EditNutritionButton"
+import type { Nutrition } from "../../../store";
+import { Icons } from "../../components/Icons";
+import { ArchiveButton } from "./ArchiveButton";
+import { EditIngredientName } from "./EditIngredientName";
+import { EditNutritionButton } from "./EditNutritionButton";
 
-export const IngredientListItem = ({ name, id, isArchived, nutrition }: { name: string, id: number, isArchived: boolean, nutrition?: Nutrition }) => {
-  const [isEditing, setIsEditing] = useState(false)
+export const IngredientListItem = ({
+	name,
+	id,
+	isArchived,
+	nutrition,
+}: {
+	name: string;
+	id: number;
+	isArchived: boolean;
+	nutrition?: Nutrition;
+}) => {
+	const [isEditing, setIsEditing] = useState(false);
 
-  const onEdit = () => setIsEditing(!isEditing)
+	const onEdit = () => setIsEditing(!isEditing);
 
-  const nutritions = [
-    { label: "F", value: nutrition?.fat },
-    { label: "K", value: nutrition?.carbohydrate },
-    { label: "B", value: nutrition?.fiber },
-    { label: "E", value: nutrition?.protein },
-  ]
+	const nutritions = [
+		{ label: "F", value: nutrition?.fat },
+		{ label: "K", value: nutrition?.carbohydrate },
+		{ label: "B", value: nutrition?.fiber },
+		{ label: "E", value: nutrition?.protein },
+	];
 
-  return (
-    <ListItem secondaryAction={(
-      <ButtonGroup>
-        <IconButton onClick={onEdit} data-testid="editButton" disabled={isArchived}>
-          <Icons.actions.edit />
-        </IconButton>
-        <EditNutritionButton ingredientId={id} nutrition={nutrition} disabled={isArchived}/>
-        <ArchiveButton id={id} isArchived={isArchived} />
-      </ButtonGroup>
-    )}
-    >
-      {isEditing && <EditIngredientName id={id} name={name} onCancel={() => setIsEditing(false)} />}
-      {!isEditing && <ListItemText 
-        primary={name} 
-        secondary={nutrition ? nutritions.map(n => `${n.label}: ${n.value.toLocaleString("de-DE")}`).join(" | ") :undefined }
-        slotProps={{ primary: { color: isArchived ? "textDisabled"  : "textPrimary" } }}
-      />}
-    </ListItem>
-  )
-}
+	return (
+		<ListItem
+			secondaryAction={
+				<ButtonGroup>
+					<IconButton
+						onClick={onEdit}
+						data-testid="editButton"
+						disabled={isArchived}
+					>
+						<Icons.actions.edit />
+					</IconButton>
+					<EditNutritionButton
+						ingredientId={id}
+						nutrition={nutrition}
+						disabled={isArchived}
+					/>
+					<ArchiveButton id={id} isArchived={isArchived} />
+				</ButtonGroup>
+			}
+		>
+			{isEditing && (
+				<EditIngredientName
+					id={id}
+					name={name}
+					onCancel={() => setIsEditing(false)}
+				/>
+			)}
+			{!isEditing && (
+				<ListItemText
+					primary={name}
+					secondary={
+						nutrition
+							? nutritions
+									.map((n) => `${n.label}: ${n.value.toLocaleString("de-DE")}`)
+									.join(" | ")
+							: undefined
+					}
+					slotProps={{
+						primary: { color: isArchived ? "textDisabled" : "textPrimary" },
+					}}
+				/>
+			)}
+		</ListItem>
+	);
+};

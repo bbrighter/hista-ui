@@ -1,17 +1,13 @@
-import { DataGrid } from "@mui/x-data-grid/DataGrid"
+import { DataGrid } from "@mui/x-data-grid/DataGrid";
 
-import { diaryGridColumns, useDiaryRows } from "./diaryColumns"
+import { diaryGridColumns, useDiaryRows } from "./diaryColumns";
 
 export function DiaryGrid() {
-  const rows = useDiaryRows()
+	const rows = useDiaryRows();
 
-  return (
-    <div style={{ display: "flex", flexDirection: "column", maxHeight: 1000 }}>
-      <DataGrid
-        columns={diaryGridColumns}
-        rows={rows}
-        disableColumnMenu
-      />
-    </div>
-  )
+	return (
+		<div style={{ display: "flex", flexDirection: "column", maxHeight: 1000 }}>
+			<DataGrid columns={diaryGridColumns} rows={rows} disableColumnMenu />
+		</div>
+	);
 }

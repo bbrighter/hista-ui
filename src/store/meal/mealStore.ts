@@ -1,76 +1,95 @@
-import { StateCreator } from "zustand"
+import type { StateCreator } from "zustand";
 
-import { MealStore, NonFunctionProperties, StoreType } from "../store.type"
-import { Food,Freshness, Meal, Meals, MetaMeal } from "../types"
+import type {
+	MealStore,
+	NonFunctionProperties,
+	StoreType,
+} from "../store.type";
+import {
+	type Food,
+	Freshness,
+	type Meal,
+	type Meals,
+	type MetaMeal,
+} from "../types";
 
-type State = NonFunctionProperties<MealStore>
+type State = NonFunctionProperties<MealStore>;
 
 const initialState: State = {
-  meals: [],
-  meal: {
-    id: 0,
-    date: new Date(),
-    freshness: Freshness.fresh,
-    isAlone: true,
-    stressLevel: 0,
-    foods: [],
-  },
-}
+	meals: [],
+	meal: {
+		id: 0,
+		date: new Date(),
+		freshness: Freshness.fresh,
+		isAlone: true,
+		stressLevel: 0,
+		foods: [],
+	},
+};
 
 export const createMealSlice: StateCreator<
-  StoreType,
-  [["zustand/immer", never]],
-  [],
-  MealStore> = (set) => ({
-  ...initialState,
+	StoreType,
+	[["zustand/immer", never]],
+	[],
+	MealStore
+> = (set) => ({
+	...initialState,
 
-  resetMeals: () => set(initialState),
+	resetMeals: () => set(initialState),
 
-  setMeals: (meals: Meals) => set(state => {
-    state.meals = meals
-  }),
+	setMeals: (meals: Meals) =>
+		set((state) => {
+			state.meals = meals;
+		}),
 
-  setMetaMeal: (id: number, partial: Partial<MetaMeal>) => set(state => {
-    const idx = state.meals.findIndex(m => m.id === id)
-    if (idx !== -1) Object.assign(state.meals[idx], partial)
-  }),
+	setMetaMeal: (id: number, partial: Partial<MetaMeal>) =>
+		set((state) => {
+			const idx = state.meals.findIndex((m) => m.id === id);
+			if (idx !== -1) Object.assign(state.meals[idx], partial);
+		}),
 
-  setMeal: (meal: Meal) => set(state => {
-    state.meal = meal
-  }),
+	setMeal: (meal: Meal) =>
+		set((state) => {
+			state.meal = meal;
+		}),
 
-  removeMeal: (id: number) => set(state => {
-    state.meals = removeItemById(id, state.meals)
-  }),
+	removeMeal: (id: number) =>
+		set((state) => {
+			state.meals = removeItemById(id, state.meals);
+		}),
 
+	updateMeal: (partial: Partial<Meal>) =>
+		set((state) => {
+			Object.assign(state.meal, partial);
+		}),
 
-  updateMeal: (partial: Partial<Meal>) => set(state => {
-    Object.assign(state.meal, partial)
-  }),
+	addFood: (food: Food | Array<Food>) =>
+		set((state) => {
+			if (Array.isArray(food)) {
+				state.meal.foods = [...state.meal.foods, ...food];
+			} else {
+				state.meal.foods.unshift(food);
+			}
+		}),
 
-  addFood: (food: Food | Array<Food>) => set(state => {
-    if (Array.isArray(food)) {
-      state.meal.foods = [...state.meal.foods, ...food]
-    } else {
-      state.meal.foods.unshift(food)
-    }
-    
-  }),
+	removeFood: (id: number) =>
+		set((state) => {
+			state.meal.foods = removeItemById(id, state.meal.foods);
+		}),
 
-
-  removeFood: (id: number) => set(state => {
-    state.meal.foods = removeItemById(id, state.meal.foods)
-  }),
-
-  updateFood: (id: number, partial: Partial<Food>) => set(state => {
-    const idx = state.meal.foods.findIndex(f => f.id === id)
-    if (idx !== -1) Object.assign(state.meal.foods[idx], partial)
-  }),
-})
+	updateFood: (id: number, partial: Partial<Food>) =>
+		set((state) => {
+			const idx = state.meal.foods.findIndex((f) => f.id === id);
+			if (idx !== -1) Object.assign(state.meal.foods[idx], partial);
+		}),
+});
 
 interface Items {
-  id: number
+	id: number;
 }
-function removeItemById<T extends Items>(id: number, items: Array<T>): Array<T> {
-  return items.filter(it => it.id != id)
+function removeItemById<T extends Items>(
+	id: number,
+	items: Array<T>,
+): Array<T> {
+	return items.filter((it) => it.id !== id);
 }

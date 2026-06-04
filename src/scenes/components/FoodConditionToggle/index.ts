@@ -1,1 +1,1 @@
-export * from "./FoodConditionToggle"
+export * from "./FoodConditionToggle";
