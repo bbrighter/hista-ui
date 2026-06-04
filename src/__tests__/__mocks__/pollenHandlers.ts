@@ -1,23 +1,31 @@
-import { http, HttpResponse } from "msw"
+import { HttpResponse, http } from "msw";
 
-import { hista } from "../../api/generatedApi"
+import type { hista } from "../../api/generatedApi";
 
-const pollenHandlers = (baseUrl: string) => ([
-  http.get(baseUrl + "/pollen", () => HttpResponse.json({
-    pollens: [
-      {
-        date: "2024-01-01T12:00:00Z",
-        pollens: [{ type: "Erle", intensity: 2, intensityString: "Keine bis geringe" }],
-      },
-      {
-        date: "2024-01-02T12:00:00Z",
-        pollens: [
-          { type: "Erle", intensity: 3, intensityString: "Geringe" },
-          { type: "Birke", intensity: 5, intensityString: "Mittlere" },
-        ],
-      },
-    ],
-  } satisfies hista.PollenEventListResponse)),
-])
+const pollenHandlers = (baseUrl: string) => [
+	http.get(`${baseUrl}/pollen`, () =>
+		HttpResponse.json({
+			pollens: [
+				{
+					date: "2024-01-01T12:00:00Z",
+					pollens: [
+						{
+							type: "Erle",
+							intensity: 2,
+							intensityString: "Keine bis geringe",
+						},
+					],
+				},
+				{
+					date: "2024-01-02T12:00:00Z",
+					pollens: [
+						{ type: "Erle", intensity: 3, intensityString: "Geringe" },
+						{ type: "Birke", intensity: 5, intensityString: "Mittlere" },
+					],
+				},
+			],
+		} satisfies hista.PollenEventListResponse),
+	),
+];
 
-export { pollenHandlers }
+export { pollenHandlers };

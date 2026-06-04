@@ -1,6 +1,6 @@
 export type Instance = {
-  id: string
-  productId: string
-  productName: string
-  url: string
-}
+	id: string;
+	productId: string;
+	productName: string;
+	url: string;
+};

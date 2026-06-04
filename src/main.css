@@ -1,3 +1,6 @@
-input, textarea, select {
-  font-size: 17px !important; /* Try to trick iOS + Safari to not zoom in */
+input,
+textarea,
+select {
+	/* biome-ignore lint/complexity/noImportantStyles: iOS + Safari should NOT zoom in in input fields */
+	font-size: 17px !important; /* Try to trick iOS + Safari to not zoom in */
 }

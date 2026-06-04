@@ -1,18 +1,18 @@
-import Box from "@mui/material/Box"
-import { useEffect } from "react"
+import Box from "@mui/material/Box";
+import { useEffect } from "react";
 
-import { actions } from "../../../actions"
-import { DiaryDownloadButton, DiaryGrid } from "./components"
+import { actions } from "../../../actions";
+import { DiaryDownloadButton, DiaryGrid } from "./components";
 
 export function Diary() {
-  useEffect(() => {
-    actions.statistics.getDiaries()
-  }, [])
+	useEffect(() => {
+		actions.statistics.getDiaries();
+	}, []);
 
-  return (
-    <Box>
-      <DiaryDownloadButton />
-      <DiaryGrid />
-    </Box>
-  )
+	return (
+		<Box>
+			<DiaryDownloadButton />
+			<DiaryGrid />
+		</Box>
+	);
 }

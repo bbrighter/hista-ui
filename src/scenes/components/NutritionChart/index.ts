@@ -1,3 +1,3 @@
-export * from "./HideFiberButton"
-export * from "./NutritionChart"
-export * from "./nutritionColors"
+export * from "./HideFiberButton";
+export * from "./NutritionChart";
+export * from "./nutritionColors";

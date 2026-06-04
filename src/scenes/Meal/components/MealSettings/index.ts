@@ -1,1 +1,1 @@
-export * from "./MealSettings"
+export * from "./MealSettings";

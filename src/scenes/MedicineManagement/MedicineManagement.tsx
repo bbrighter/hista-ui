@@ -8,17 +8,17 @@ import { Loading } from "../components";
 import { AddMedicineButton, MedicineList } from "./components";
 
 export const MedicineManagement = () => {
-  const isLoading = useHista(selectIsLoadingAny(["medicines"]))
-  usePiidEffect(() => {
-    actions.medicines.list();
-  }, []);
+	const isLoading = useHista(selectIsLoadingAny(["medicines"]));
+	usePiidEffect(() => {
+		actions.medicines.list();
+	}, []);
 
-  return (
-    <Loading show={isLoading}>
-      <Container sx={{ mt: "2rem" }}>
-        <AddMedicineButton />
-        <MedicineList/>
-      </Container>
-    </Loading>
-  );
+	return (
+		<Loading show={isLoading}>
+			<Container sx={{ mt: "2rem" }}>
+				<AddMedicineButton />
+				<MedicineList />
+			</Container>
+		</Loading>
+	);
 };

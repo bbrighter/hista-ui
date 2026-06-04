@@ -1,2 +1,2 @@
-export * from "./IntakeList"
-export * from "./ManagementButton"
+export * from "./IntakeList";
+export * from "./ManagementButton";

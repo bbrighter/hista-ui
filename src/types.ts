@@ -1,3 +1,3 @@
-import { SliderProps } from "@mui/material/Slider"
+import type { SliderProps } from "@mui/material/Slider";
 
-export type MuiSliderColor = SliderProps["color"]
+export type MuiSliderColor = SliderProps["color"];

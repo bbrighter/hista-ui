@@ -5,29 +5,29 @@ import { describe, expect, it, vi } from "vitest";
 import { FoodConditionToggle } from "./FoodConditionToggle";
 
 describe("Food condition toggle", () => {
-  const onClick = vi.fn()
+	const onClick = vi.fn();
 
-  it("Cooked is shown", async () => {
-    render(<FoodConditionToggle condition="cooked" onClick={onClick}/>)   
+	it("Cooked is shown", async () => {
+		render(<FoodConditionToggle condition="cooked" onClick={onClick} />);
 
-    const button = await screen.findByTestId("food-condition-chip")
-    expect(button).toBeVisible()
-    expect(button).toHaveTextContent("Gar")
-  })
+		const button = await screen.findByTestId("food-condition-chip");
+		expect(button).toBeVisible();
+		expect(button).toHaveTextContent("Gar");
+	});
 
-  it("Raw is shown", async () => {
-    render(<FoodConditionToggle condition="raw" onClick={onClick}/>)   
+	it("Raw is shown", async () => {
+		render(<FoodConditionToggle condition="raw" onClick={onClick} />);
 
-    const button = await screen.findByTestId("food-condition-chip")
-    expect(button).toBeVisible()
-    expect(button).toHaveTextContent("Roh")
-  })
+		const button = await screen.findByTestId("food-condition-chip");
+		expect(button).toBeVisible();
+		expect(button).toHaveTextContent("Roh");
+	});
 
-  it("Can be clicked", async () => {
-    render(<FoodConditionToggle condition="raw" onClick={onClick}/>)   
+	it("Can be clicked", async () => {
+		render(<FoodConditionToggle condition="raw" onClick={onClick} />);
 
-    const button = await screen.findByTestId("food-condition-chip")
-    await userEvent.click(button)
-    expect(onClick).toHaveBeenCalled()
-  })
-})
+		const button = await screen.findByTestId("food-condition-chip");
+		await userEvent.click(button);
+		expect(onClick).toHaveBeenCalled();
+	});
+});

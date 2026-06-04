@@ -1,5 +1,5 @@
-import { MedicineState } from "../store.type";
+import type { MedicineState } from "../store.type";
 
 export const selectNonArchivedMedicines = (s: MedicineState) => {
-  return s.medicines.filter(m => !m.isArchived)
-}
+	return s.medicines.filter((m) => !m.isArchived);
+};

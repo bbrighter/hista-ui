@@ -1,14 +1,14 @@
-import { useEffect } from "react"
+import { type DependencyList, useEffect } from "react";
 
-import useHista from "../store/store"
+import useHista from "../store/store";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const usePiidEffect = (fn: () => void, inputs: Array<any>) => {
-  const piid = useHista(state => state.piid)
+export const usePiidEffect = (fn: () => void, inputs: DependencyList) => {
+	const piid = useHista((state) => state.piid);
 
-  useEffect(() => {
-    if (piid) {
-      fn()
-    }
-  }, [piid, ...inputs])
-}
+	// biome-ignore lint/correctness/useExhaustiveDependencies: Otherwise, fn changes on every render
+	useEffect(() => {
+		if (piid) {
+			fn();
+		}
+	}, [piid, ...inputs]);
+};

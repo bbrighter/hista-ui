@@ -1,2 +1,2 @@
-export * from "./IngredientListItem"
-export * from "./ToggleVisibility"
+export * from "./IngredientListItem";
+export * from "./ToggleVisibility";

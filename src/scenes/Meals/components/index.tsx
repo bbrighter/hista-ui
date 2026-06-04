@@ -1,2 +1,2 @@
-export * from "./MealButtonGroup"
-export * from "./MealList"
+export * from "./MealButtonGroup";
+export * from "./MealList";

@@ -1,69 +1,70 @@
 import PieChartIcon from "@mui/icons-material/PieChart";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box"
-import Dialog from "@mui/material/Dialog"
-import DialogContent from "@mui/material/DialogContent"
-import IconButton from "@mui/material/IconButton"
+import Box from "@mui/material/Box";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import dayjs from "dayjs";
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react";
 
 import { actions } from "../../../actions";
 import useHista from "../../../store/store";
 import { Icons } from "../../components/Icons";
 import { SingleNutritionChart } from "./SingleNutritionChart";
-import { useMealDaysNutrition } from "./useMealDaysNutrition"
+import { useMealDaysNutrition } from "./useMealDaysNutrition";
 
 export const ShowNutritionChart = () => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [open, setOpen] = useState(false)
-  const mealDate = useHista(state => state.meal.date)
-  const nutrition = useMealDaysNutrition()
+	const [isLoading, setIsLoading] = useState(false);
+	const [open, setOpen] = useState(false);
+	const mealDate = useHista((state) => state.meal.date);
+	const nutrition = useMealDaysNutrition();
 
-  const mealDayJs = useMemo(() => dayjs(mealDate), [mealDate])
+	const mealDayJs = useMemo(() => dayjs(mealDate), [mealDate]);
 
-  useEffect(() => {
-    if (!open) return
-    setIsLoading(true)
-    actions.statistics.getNutritionStatistics(
-      "day", 
-      mealDayJs.startOf("day").toDate(), 
-      mealDayJs.endOf("day").toDate(),
-    ).finally(() => setIsLoading(false))
-  }, [open, mealDayJs])
+	useEffect(() => {
+		if (!open) return;
+		setIsLoading(true);
+		actions.statistics
+			.getNutritionStatistics(
+				"day",
+				mealDayJs.startOf("day").toDate(),
+				mealDayJs.endOf("day").toDate(),
+			)
+			.finally(() => setIsLoading(false));
+	}, [open, mealDayJs]);
 
-
-
-  return (
-    <Box>
-      <IconButton onClick={() => setOpen(true)}><PieChartIcon/></IconButton>
-      <Dialog 
-        open={open} 
-        onClose={() => setOpen(false)}
-        fullScreen
-      >
-        <AppBar >
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={() => setOpen(false)}
-            >
-              <Icons.actions.close />
-            </IconButton>
-            <Typography variant="h6">{mealDate.toLocaleDateString("de-DE")}</Typography>
-          </Toolbar>
-        </AppBar>
-        <DialogContent
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}> 
-          <SingleNutritionChart nutrition={nutrition} isLoading={isLoading}/>
-        </DialogContent>
-      </Dialog>
-    </Box>
-  )
-}
+	return (
+		<Box>
+			<IconButton onClick={() => setOpen(true)}>
+				<PieChartIcon />
+			</IconButton>
+			<Dialog open={open} onClose={() => setOpen(false)} fullScreen>
+				<AppBar>
+					<Toolbar>
+						<IconButton
+							edge="start"
+							color="inherit"
+							onClick={() => setOpen(false)}
+						>
+							<Icons.actions.close />
+						</IconButton>
+						<Typography variant="h6">
+							{mealDate.toLocaleDateString("de-DE")}
+						</Typography>
+					</Toolbar>
+				</AppBar>
+				<DialogContent
+					sx={{
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "center",
+					}}
+				>
+					<SingleNutritionChart nutrition={nutrition} isLoading={isLoading} />
+				</DialogContent>
+			</Dialog>
+		</Box>
+	);
+};

@@ -1,1 +1,1 @@
-export * from "./computeCalories"
+export * from "./computeCalories";

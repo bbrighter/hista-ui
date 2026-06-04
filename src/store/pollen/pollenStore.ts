@@ -1,27 +1,30 @@
-import { StateCreator } from "zustand"
+import type { StateCreator } from "zustand";
 
-import { NonFunctionProperties, PollenStore, StoreType } from "../store.type"
-import { Pollen } from "../types"
+import type {
+	NonFunctionProperties,
+	PollenStore,
+	StoreType,
+} from "../store.type";
+import type { Pollen } from "../types";
 
-type State = NonFunctionProperties<PollenStore>
-
-
+type State = NonFunctionProperties<PollenStore>;
 
 const initialState: State = {
-  pollens: [],
-}
+	pollens: [],
+};
 
 export const createPollensSlice: StateCreator<
-  StoreType,
-  [["zustand/immer", never]],
-  [],
-  PollenStore> = (set) => ({
-  ...initialState,
+	StoreType,
+	[["zustand/immer", never]],
+	[],
+	PollenStore
+> = (set) => ({
+	...initialState,
 
-  setPollens: (pollens: Array<Pollen>) => {set(state => {
-    state.pollens = pollens
-  })
-
-  },
-  resetPollens: () => set(initialState),
-})
+	setPollens: (pollens: Array<Pollen>) => {
+		set((state) => {
+			state.pollens = pollens;
+		});
+	},
+	resetPollens: () => set(initialState),
+});
