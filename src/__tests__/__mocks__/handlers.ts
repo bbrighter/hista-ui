@@ -1,4 +1,5 @@
 import { authHandlers } from "./authHandler";
+import { errorHandler } from "./errorHandlers";
 import { headacheHandlers } from "./headacheHandlers";
 import { foodHandlers, ingredientHandlers, mealHandlers } from "./mealHandlers";
 import { intakeHandlers, medicineHandlers } from "./medicineHandlers";
@@ -40,6 +41,7 @@ const handlers = [
 	...medicineHandlers(baseUrlWithPiid),
 	...intakeHandlers(baseUrlWithPiid),
 	...templateHandlers(baseUrlWithPiid),
+	errorHandler(baseUrl),
 ];
 
 export default handlers;
