@@ -27,6 +27,7 @@ export const validHeadachePositions: HeadachePositions = [
 	{ value: "ear", label: "Ohr" },
 	{ value: "neck", label: "Nacken" },
 	{ value: "eye", label: "Auge" },
+	{ value: "face", label: "Gesicht" },
 ];
 
 export type HeadacheTypes = Array<ValueLabelPair>;
