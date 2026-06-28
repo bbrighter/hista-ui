@@ -1,9 +1,9 @@
+import DoneAllIcon from "@mui/icons-material/DoneAll";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { useState } from "react";
 import { SwipeableListItem } from "react-swipeable-list";
-
 import { formatDate } from "../../../utils/formatDate";
 import { Icons } from "../Icons";
 import { swipeDeleteItem, swipeSetNow } from "./ListActions";
@@ -17,6 +17,7 @@ export function OverviewListItem(props: {
 	onDelete: () => Promise<void>;
 	onSetNow?: () => Promise<void>;
 	severityColorMapping?: (severity: number) => string;
+	checked?: boolean;
 }) {
 	const {
 		date,
@@ -68,6 +69,11 @@ export function OverviewListItem(props: {
 							}
 							data-testid="circle-icon"
 						/>{" "}
+					</ListItemIcon>
+				)}
+				{props.checked && (
+					<ListItemIcon>
+						<DoneAllIcon color="success" />
 					</ListItemIcon>
 				)}
 			</ListItem>

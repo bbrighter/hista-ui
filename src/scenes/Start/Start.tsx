@@ -16,6 +16,7 @@ export default function Start() {
 		"notes",
 		"pollens",
 		"statistics",
+		"newStatus",
 	];
 
 	usePiidEffect(() => {

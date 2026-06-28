@@ -10,6 +10,7 @@ interface ListItemInterface {
 	date: Date | string;
 	secondary?: string;
 	severity?: number;
+	checked?: boolean;
 }
 
 export function OverviewList(props: {
@@ -48,6 +49,7 @@ export function OverviewList(props: {
 					severity={i.severity}
 					secondary={i.secondary}
 					severityColorMapping={severityColorMapping}
+					checked={i.checked}
 					{...(onSetNow && { onSetNow: () => onSetNow(i.id) })}
 				/>
 			))}
