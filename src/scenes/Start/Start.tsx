@@ -24,7 +24,8 @@ export default function Start() {
 	}, []);
 
 	const statusForTodayExists = useStatusExistsOnDay(dayjs());
-	const highlight = (t: CardType) => t === "status" && !statusForTodayExists;
+	const highlight = (t: CardType) =>
+		(t === "status" || t === "newStatus") && !statusForTodayExists;
 
 	return (
 		<Grid
