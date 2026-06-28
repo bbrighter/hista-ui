@@ -39,6 +39,7 @@ export const createStatusSlice: StateCreator<
 	addStatus(status: Status) {
 		set((state) => {
 			state.statuses.push(status);
+			state.statuses.sort((a, b) => b.date.diff(a.date));
 		});
 	},
 

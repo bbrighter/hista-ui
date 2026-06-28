@@ -103,4 +103,10 @@ const CARD_CONFIG = {
 		icon: Icons.medicines,
 		onClick: navigate.to.medicine,
 	}),
+	newStatus: (navigate: ReturnType<typeof useAppNavigate>) => ({
+		title: "Neuer Status",
+		content: "Wie geht's heute - nur in neu",
+		icon: Icons.status,
+		onClick: navigate.to.newStatus,
+	}),
 } as const;
