@@ -1,3 +1,3 @@
-import { StatusList } from "./StatusList";
+import { StatusOverview } from "./StatusOverview";
 
-export default StatusList;
+export default StatusOverview;
