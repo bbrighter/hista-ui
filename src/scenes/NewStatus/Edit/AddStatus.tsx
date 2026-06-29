@@ -4,9 +4,9 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import dayjs from "dayjs";
 import { useState } from "react";
-import { actions } from "../../actions";
-import { useStatusExistsOnDay } from "../../store";
-import { Icons } from "../components/Icons";
+import { actions } from "../../../actions";
+import { useStatusExistsOnDay } from "../../../store";
+import { Icons } from "../../components/Icons";
 
 export function AddStatus(props: { disabled: boolean }) {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);

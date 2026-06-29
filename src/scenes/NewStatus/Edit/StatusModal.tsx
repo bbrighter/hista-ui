@@ -5,7 +5,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import type { Status } from "../../store";
+import type { Status } from "../../../store";
 import { Evening, Morning } from "./Sliders";
 
 export const StatusModal = ({

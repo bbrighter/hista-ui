@@ -4,9 +4,9 @@ import Slider from "@mui/material/Slider";
 import Stack from "@mui/material/Stack";
 import debounce from "lodash.debounce";
 import { useRef, useState } from "react";
-import { actions } from "../../actions";
-import { useDidUpdateEffect } from "../../hooks/useDidUpdateEffect";
-import type { PutStatusParams, Status } from "../../store";
+import { actions } from "../../../actions";
+import { useDidUpdateEffect } from "../../../hooks/useDidUpdateEffect";
+import type { PutStatusParams, Status } from "../../../store";
 
 type StatusProps = { status: Status };
 
