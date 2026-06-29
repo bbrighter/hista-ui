@@ -57,7 +57,7 @@ const rawRoutes: Array<RawRoute> = [
 	},
 	{
 		path: appRoutes.statuses,
-		element: lazy(() => import("./scenes/Status")),
+		element: lazy(() => import("./scenes/OldStatus")),
 		name: "Status",
 	},
 	{

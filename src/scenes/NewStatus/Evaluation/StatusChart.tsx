@@ -1,7 +1,9 @@
-import Container from "@mui/material/Container";
-import type { Status } from "../../store";
-
-type StatusMetricKey = "morningFitness" | "eveningFitness" | "morningSleep";
+import type { Status } from "../../../store";
+import {
+	type ActiveEntries,
+	SERIES_CONFIG,
+	type StatusMetricKey,
+} from "./config";
 
 type ChartSeries = Readonly<{ key: StatusMetricKey; color: string }>;
 
@@ -12,11 +14,7 @@ const CHART_CONFIG = {
 	ySpacing: 60,
 	lineWidth: 1,
 	circleRadius: 2,
-	series: [
-		{ key: "morningFitness", color: "rgb(240, 205, 64)" },
-		{ key: "eveningFitness", color: "rgb(218, 80, 0)" },
-		{ key: "morningSleep", color: "rgb(63, 0, 211)" },
-	] as const,
+	series: SERIES_CONFIG,
 };
 
 const computeX = (value: number | null | undefined) => {
@@ -35,9 +33,10 @@ const buildPointString = (statuses: Array<Status>, key: StatusMetricKey) =>
 const renderSeries = (
 	statuses: Array<Status>,
 	series: ReadonlyArray<ChartSeries>,
+	active: ActiveEntries,
 ) =>
 	series.map(({ key, color }) => {
-		return (
+		return active[key] ? (
 			<polyline
 				key={key}
 				points={buildPointString(statuses, key)}
@@ -45,46 +44,53 @@ const renderSeries = (
 				strokeWidth={CHART_CONFIG.lineWidth}
 				fill="none"
 			/>
-		);
+		) : null;
 	});
 
 const renderPoints = (
 	statuses: Array<Status>,
 	series: ReadonlyArray<ChartSeries>,
+	active: ActiveEntries,
 ) =>
 	statuses.map((status, index) => (
 		<g key={status.id}>
-			{series.map(({ key, color }) => (
-				<circle
-					key={`${status.id}-${key}`}
-					cx={computeX(status[key])}
-					cy={computeY(index)}
-					r={CHART_CONFIG.circleRadius}
-					fill={color}
-				/>
-			))}
+			{series.map(({ key, color }) => {
+				return active[key] ? (
+					<circle
+						key={`${status.id}-${key}`}
+						cx={computeX(status[key])}
+						cy={computeY(index)}
+						r={CHART_CONFIG.circleRadius}
+						fill={color}
+					/>
+				) : null;
+			})}
 		</g>
 	));
 
-export const StatusEvaluation = ({ statuses }: { statuses: Array<Status> }) => {
+export const StatusChart = ({
+	statuses,
+	active,
+}: {
+	statuses: Array<Status>;
+	active: ActiveEntries;
+}) => {
 	const height =
 		statuses.length * CHART_CONFIG.ySpacing + 2 * CHART_CONFIG.yOffset;
 
 	return (
-		<Container sx={{ padding: "2rem" }}>
-			<svg
-				viewBox={`0 0 ${CHART_CONFIG.width} ${height}`}
-				aria-label="chart"
-				style={{
-					width: "100%",
-					height: "auto",
-					margin: "4rem",
-					display: "block",
-				}}
-			>
-				{renderSeries(statuses, CHART_CONFIG.series)}
-				{renderPoints(statuses, CHART_CONFIG.series)}
-			</svg>
-		</Container>
+		<svg
+			viewBox={`0 0 ${CHART_CONFIG.width} ${height}`}
+			aria-label="chart"
+			style={{
+				width: "100%",
+				height: "auto",
+				margin: "4rem",
+				display: "block",
+			}}
+		>
+			{renderSeries(statuses, CHART_CONFIG.series, active)}
+			{renderPoints(statuses, CHART_CONFIG.series, active)}
+		</svg>
 	);
 };

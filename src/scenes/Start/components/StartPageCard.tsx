@@ -86,7 +86,7 @@ const CARD_CONFIG = {
 		onClick: navigate.to.pollens,
 	}),
 	status: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Status",
+		title: "Status (alt)",
 		content: "Wie geht's denn heute?",
 		icon: Icons.status,
 		onClick: navigate.to.statuses,
@@ -104,8 +104,8 @@ const CARD_CONFIG = {
 		onClick: navigate.to.medicine,
 	}),
 	newStatus: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Neuer Status",
-		content: "Wie geht's heute - nur in neu",
+		title: "Status",
+		content: "Wie geht's heute? Und wie ging's gestern?",
 		icon: Icons.status,
 		onClick: navigate.to.newStatus,
 	}),

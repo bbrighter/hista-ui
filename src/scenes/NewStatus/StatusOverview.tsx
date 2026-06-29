@@ -3,8 +3,8 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import { useState } from "react";
 import useHista from "../../store/store";
-import { StatusEvaluation } from "./StatusEvaluation";
-import { StatusList } from "./StatusList";
+import { StatusList } from "./Edit";
+import { StatusEvaluation } from "./Evaluation";
 
 export const StatusOverview = () => {
 	const statuses = useHista((state) => state.statuses);

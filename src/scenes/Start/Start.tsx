@@ -8,7 +8,7 @@ import StartPageCard, { type CardType } from "./components/StartPageCard";
 
 export default function Start() {
 	const types: Array<CardType> = [
-		"status",
+		"newStatus",
 		"meals",
 		"medicines",
 		"conditionEvents",
@@ -16,7 +16,7 @@ export default function Start() {
 		"notes",
 		"pollens",
 		"statistics",
-		"newStatus",
+		"status",
 	];
 
 	usePiidEffect(() => {
