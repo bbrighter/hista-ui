@@ -11,7 +11,7 @@ const CHART_CONFIG = {
 	width: 200,
 	xOffset: 5,
 	yOffset: 5,
-	ySpacing: 60,
+	ySpacing: 10,
 	lineWidth: 1,
 	circleRadius: 2,
 	series: SERIES_CONFIG,
