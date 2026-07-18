@@ -1,10 +1,8 @@
 # Hista UI
 
-The Hista UI runs together with the Hista API.
+The Hista UI runs together with the corresponding [API](https://github.com/bbrighter/hista-api) only.
 
-## Install and run
-
-Use `npm ci` to install dependencies, and `npm start` to start a local version.
+It serves as a management surface for various health tracking apps, among other: create a food, symptom and headache diary. Collect your daily status. Track your medicine intake.
 
 ## Deploy
 
@@ -12,3 +10,19 @@ Every branch is deployed to a staging environment.
 Master is automatically deployed to production.
 
 [Vercel](https://vercel.com/bbrighters-projects/hista-ui) takes care of all deployments.
+
+## License
+Copyright (C) 2026 Benjamin Heller
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
