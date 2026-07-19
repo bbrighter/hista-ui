@@ -34,7 +34,7 @@ describe("errors are transformed into app errors", () => {
 
 		const appError = toAppError(error);
 		expect(appError.source).toBe("unknown");
-		expect(appError.text).toBe("Error");
+		expect(appError.text).toBe("message");
 		expect(appError.stack).toContain("Error: message");
 	});
 

@@ -56,7 +56,8 @@ export const toAppError = (error: unknown): AppError => {
 	if (error instanceof Error) {
 		return {
 			stack: error.stack,
-			text: error.name,
+			text: error.message,
+			details: error.name,
 			source: "unknown",
 		};
 	}
