@@ -14,10 +14,10 @@ export type TemplateItem = {
 };
 
 export const repoToTemplates = (
-	resp: hista.TemplateListResponse,
+	resp?: hista.TemplateListResponse,
 ): Templates => {
 	return Object.fromEntries(
-		resp.templates.map((t) => [
+		(resp?.templates ?? []).map((t) => [
 			t.id,
 			{ name: t.name, items: t.items.map((i) => itemRespToItem(i)) },
 		]),
