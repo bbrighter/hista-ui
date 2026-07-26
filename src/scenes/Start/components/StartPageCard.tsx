@@ -85,12 +85,6 @@ const CARD_CONFIG = {
 		icon: Icons.pollens,
 		onClick: navigate.to.pollens,
 	}),
-	status: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Status (alt)",
-		content: "Wie geht's denn heute?",
-		icon: Icons.status,
-		onClick: navigate.to.statuses,
-	}),
 	headaches: (navigate: ReturnType<typeof useAppNavigate>) => ({
 		title: "Kopfweh",
 		content: "Kopfschmerztagebuch",
@@ -103,10 +97,10 @@ const CARD_CONFIG = {
 		icon: Icons.medicines,
 		onClick: navigate.to.medicine,
 	}),
-	newStatus: (navigate: ReturnType<typeof useAppNavigate>) => ({
+	status: (navigate: ReturnType<typeof useAppNavigate>) => ({
 		title: "Status",
 		content: "Wie geht's heute? Und wie ging's gestern?",
 		icon: Icons.status,
-		onClick: navigate.to.newStatus,
+		onClick: navigate.to.status,
 	}),
 } as const;

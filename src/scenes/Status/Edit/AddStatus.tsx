@@ -4,11 +4,23 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import dayjs from "dayjs";
 import { useState } from "react";
-import { actions } from "../../../actions";
-import { useStatusExistsOnDay } from "../../../store";
 import { Icons } from "../../components/Icons";
 
-export function AddStatus(props: { disabled: boolean }) {
+type AddStatusButtonsType = {
+	disabled: boolean;
+	onAddStatus: (date: dayjs.Dayjs) => Promise<void>;
+	statusExistsToday: boolean;
+	statusExistsYesterday: boolean;
+	statusExistsDayBeforeYesterday: boolean;
+};
+
+export function AddStatus({
+	disabled,
+	onAddStatus,
+	statusExistsDayBeforeYesterday,
+	statusExistsToday,
+	statusExistsYesterday,
+}: AddStatusButtonsType) {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 
@@ -16,18 +28,13 @@ export function AddStatus(props: { disabled: boolean }) {
 	const yesterday = today.subtract(1, "day");
 	const dayBeforeYesterday = today.subtract(2, "day");
 
-	const todaysStatusExists = useStatusExistsOnDay(today);
-	const yesterdaysStatusExists = useStatusExistsOnDay(yesterday);
-	const dayBeforeYesterdaysStatusExists =
-		useStatusExistsOnDay(dayBeforeYesterday);
-
-	const handleClickToday = () => actions.status.post(today);
+	const handleClickToday = () => onAddStatus(today);
 	const handleClickYesterday = () => {
-		actions.status.post(yesterday);
+		onAddStatus(yesterday);
 		closeMenu();
 	};
 	const handleClickDayBeforeYesterday = () => {
-		actions.status.post(dayBeforeYesterday);
+		onAddStatus(dayBeforeYesterday);
 		closeMenu();
 	};
 
@@ -45,14 +52,14 @@ export function AddStatus(props: { disabled: boolean }) {
 				<Button
 					variant="contained"
 					onClick={handleClickToday}
-					disabled={todaysStatusExists || props.disabled}
+					disabled={statusExistsToday || disabled}
 					title="Heutigen Status hinzufügen"
 				>
 					+ Status heute
 				</Button>
 				<Button
 					onClick={handleClickCalendar}
-					disabled={props.disabled}
+					disabled={disabled}
 					title="Status hinzufügen"
 				>
 					<Icons.status />
@@ -60,13 +67,13 @@ export function AddStatus(props: { disabled: boolean }) {
 			</ButtonGroup>
 			<Menu open={open} onClose={closeMenu} anchorEl={anchorEl}>
 				<MenuItem
-					disabled={yesterdaysStatusExists}
+					disabled={statusExistsYesterday}
 					onClick={handleClickYesterday}
 				>
 					Gestern
 				</MenuItem>
 				<MenuItem
-					disabled={dayBeforeYesterdaysStatusExists}
+					disabled={statusExistsDayBeforeYesterday}
 					onClick={handleClickDayBeforeYesterday}
 				>
 					Vorgestern

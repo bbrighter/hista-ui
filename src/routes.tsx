@@ -56,11 +56,6 @@ const rawRoutes: Array<RawRoute> = [
 		name: "SymptomManagement",
 	},
 	{
-		path: appRoutes.statuses,
-		element: lazy(() => import("./scenes/OldStatus")),
-		name: "Status",
-	},
-	{
 		path: appRoutes.statistics,
 		element: lazy(() => import("./scenes/Statistics")),
 		name: "Statistics",
@@ -121,9 +116,9 @@ const rawRoutes: Array<RawRoute> = [
 		name: "Templates",
 	},
 	{
-		path: appRoutes.newStatus,
-		element: lazy(() => import("./scenes/NewStatus")),
-		name: "New status",
+		path: appRoutes.status,
+		element: lazy(() => import("./scenes/Status")),
+		name: "Status",
 	},
 ];
 

@@ -16,11 +16,12 @@ export const status = {
 		setLoaded("statuses");
 	},
 
-	post: async (date: Dayjs) => {
+	post: async (date: Dayjs): Promise<number> => {
 		const resp = await client.PostStatus({ date: date.toISOString() });
 
 		const { addStatus } = useHista.getState();
 		addStatus(respToStatus(resp));
+		return resp.id;
 	},
 
 	delete: async (id: number) => {
