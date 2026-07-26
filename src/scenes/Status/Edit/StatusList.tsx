@@ -1,16 +1,18 @@
 import Container from "@mui/material/Container";
+import dayjs from "dayjs";
 import { useState } from "react";
 import { actions } from "../../../actions";
-import { selectIsLoadingAny } from "../../../store";
-import useHista from "../../../store/store";
+import { type Status, useStatusExistsOnDays } from "../../../store";
 import { OverviewList } from "../../components";
 import { AddStatus } from "./AddStatus";
 import { StatusModal } from "./StatusModal";
 
-export const StatusList = () => {
-	const statuses = useHista((state) => state.statuses);
-	const isLoading = useHista(selectIsLoadingAny(["statuses"]));
+type StatusListProps = {
+	statuses: Array<Status>;
+	isLoading: boolean;
+};
 
+export const StatusList = ({ statuses, isLoading }: StatusListProps) => {
 	const items = statuses.map((s) => ({
 		id: s.id,
 		date: s.date.toDate(),
@@ -30,9 +32,28 @@ export const StatusList = () => {
 		setId(null);
 	};
 
+	const today = dayjs();
+	const yesterday = today.subtract(1, "day");
+	const dayBefore = today.subtract(2, "day");
+	const onAddStatus = async (date: dayjs.Dayjs) => {
+		const id = await actions.status.post(date);
+		setId(id);
+		setOpen(true);
+	};
+
+	const [existsToday, existsYesterday, existsDayBefore] = useStatusExistsOnDays(
+		[today, yesterday, dayBefore],
+	);
+
 	return (
 		<Container sx={{ padding: "2rem" }}>
-			<AddStatus disabled={isLoading} />
+			<AddStatus
+				disabled={isLoading}
+				onAddStatus={onAddStatus}
+				statusExistsDayBeforeYesterday={existsDayBefore}
+				statusExistsToday={existsToday}
+				statusExistsYesterday={existsYesterday}
+			/>
 			<OverviewList
 				items={items}
 				getData={actions.status.list}

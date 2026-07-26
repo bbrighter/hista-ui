@@ -33,9 +33,6 @@ export const useAppNavigate = () => {
 			noteDetails: (noteId: number) =>
 				navigateWithPiid(appRoutes.noteDetails, { noteId }),
 			pollens: () => navigateWithPiid(appRoutes.pollens),
-			statuses: () => navigateWithPiid(appRoutes.statuses),
-			statusDetails: (statusId: number) =>
-				navigateWithPiid(appRoutes.statusDetails, { statusId }),
 			headaches: () => navigateWithPiid(appRoutes.headaches),
 			headacheDetails: (headacheId: number) =>
 				navigateWithPiid(appRoutes.headacheDetails, { headacheId }),
@@ -44,7 +41,7 @@ export const useAppNavigate = () => {
 			medicine: () => navigateWithPiid(appRoutes.medicines),
 			manageMedicine: () => navigateWithPiid(appRoutes.manageMedicines),
 			templates: () => navigateWithPiid(appRoutes.templates),
-			newStatus: () => navigateWithPiid(appRoutes.newStatus),
+			status: () => navigateWithPiid(appRoutes.status),
 		},
 	};
 };

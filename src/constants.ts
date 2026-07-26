@@ -20,15 +20,13 @@ const piidRoutes = {
 	notes: "/notes",
 	noteDetails: "/notes/:noteId",
 	pollens: "/pollens",
-	statuses: "/statuses",
-	statusDetails: "/statuses/:statusId",
 	headaches: "/headaches",
 	headacheDetails: "/headaches/:headacheId",
 	manageSymptoms: "/manage-symptoms",
 	manageIngredients: "/manage-ingredients",
 	medicines: "/medicines",
 	manageMedicines: "/manage-medicines",
-	newStatus: "/new-status",
+	status: "/status",
 };
 
 const addPiid = (route: string): string => {

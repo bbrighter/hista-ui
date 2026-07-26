@@ -8,7 +8,7 @@ import StartPageCard, { type CardType } from "./components/StartPageCard";
 
 export default function Start() {
 	const types: Array<CardType> = [
-		"newStatus",
+		"status",
 		"meals",
 		"medicines",
 		"conditionEvents",
@@ -16,7 +16,6 @@ export default function Start() {
 		"notes",
 		"pollens",
 		"statistics",
-		"status",
 	];
 
 	usePiidEffect(() => {
@@ -24,8 +23,7 @@ export default function Start() {
 	}, []);
 
 	const statusForTodayExists = useStatusExistsOnDay(dayjs());
-	const highlight = (t: CardType) =>
-		(t === "status" || t === "newStatus") && !statusForTodayExists;
+	const highlight = (t: CardType) => t === "status" && !statusForTodayExists;
 
 	return (
 		<Grid
