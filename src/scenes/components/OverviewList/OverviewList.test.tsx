@@ -129,4 +129,30 @@ describe("OverviewList", () => {
 
 		vi.useRealTimers();
 	});
+
+	it("Only show top 20, button shows more", async () => {
+		const manyItems = Array.from({ length: 100 }, (_, i) => ({
+			id: i,
+			date: new Date(Date.now() - i * 60 * 60 * 24),
+		}));
+		render(
+			<OverviewList
+				items={manyItems}
+				onClick={onClick}
+				onDelete={onDelete}
+				getData={getData}
+				onSetNow={onSetNow}
+			/>,
+		);
+
+		const showMoreButton = await screen.findByRole("button", {
+			name: "Alle anzeigen",
+		});
+		expect(showMoreButton).toBeVisible();
+
+		expect(screen.queryAllByRole("listitem")).toHaveLength(20);
+
+		await userEvent.click(showMoreButton);
+		expect(screen.queryAllByRole("listitem")).toHaveLength(99);
+	});
 });
