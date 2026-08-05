@@ -50,7 +50,7 @@ export const StatusList = ({ statuses, isLoading }: StatusListProps) => {
 			<AddStatus
 				disabled={isLoading}
 				onAddStatus={onAddStatus}
-				statusExistsDayBeforeYesterday={existsDayBefore}
+				statusExistsDayBefore={existsDayBefore}
 				statusExistsToday={existsToday}
 				statusExistsYesterday={existsYesterday}
 			/>

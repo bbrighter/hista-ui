@@ -11,13 +11,13 @@ type AddStatusButtonsType = {
 	onAddStatus: (date: dayjs.Dayjs) => Promise<void>;
 	statusExistsToday: boolean;
 	statusExistsYesterday: boolean;
-	statusExistsDayBeforeYesterday: boolean;
+	statusExistsDayBefore: boolean;
 };
 
 export function AddStatus({
 	disabled,
 	onAddStatus,
-	statusExistsDayBeforeYesterday,
+	statusExistsDayBefore,
 	statusExistsToday,
 	statusExistsYesterday,
 }: AddStatusButtonsType) {
@@ -54,6 +54,7 @@ export function AddStatus({
 					onClick={handleClickToday}
 					disabled={statusExistsToday || disabled}
 					title="Heutigen Status hinzufügen"
+					data-testid="addStatusButton"
 				>
 					+ Status heute
 				</Button>
@@ -61,6 +62,7 @@ export function AddStatus({
 					onClick={handleClickCalendar}
 					disabled={disabled}
 					title="Status hinzufügen"
+					data-testid="statusMenuButton"
 				>
 					<Icons.status />
 				</Button>
@@ -73,7 +75,7 @@ export function AddStatus({
 					Gestern
 				</MenuItem>
 				<MenuItem
-					disabled={statusExistsDayBeforeYesterday}
+					disabled={statusExistsDayBefore}
 					onClick={handleClickDayBeforeYesterday}
 				>
 					Vorgestern
