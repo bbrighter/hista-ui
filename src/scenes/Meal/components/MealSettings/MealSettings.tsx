@@ -1,25 +1,34 @@
 import Grid from "@mui/material/Grid";
 
-import { actions } from "../../../../actions";
-import type { Freshness } from "../../../../store";
-import useHista from "../../../../store/store";
 import DateInput from "../../../components/DateInput";
 import { FreshnessSlider } from "./FreshnessSlider";
 import { PeopleToggleButton } from "./PeopleToggleButton";
 import { StressSlider } from "./StressSlider";
 
-export function MealSettings() {
-	const meal = useHista((state) => state.meal);
+type MealSettingAttributes = {
+	date: Date;
+	stressLevel: number;
+	freshness: number;
+	isAlone: boolean;
+};
 
-	const setDate = (dateString: string) =>
-		actions.meals.patchDate(meal.id, dateString);
-	const setStressLevel = (stressLevel: number) =>
-		actions.meals.patchStressLevel(meal.id, stressLevel);
-	const setFreshness = (freshness: Freshness) =>
-		actions.meals.patchFreshness(meal.id, freshness);
-	const setAloneness = (isAlone: boolean) =>
-		actions.meals.patchIsAlone(meal.id, isAlone);
+type MealSettingActions = {
+	setDate: (dateString: string) => Promise<void>;
+	setStressLevel: (v: number) => Promise<void>;
+	setFreshness: (v: number) => Promise<void>;
+	setAloneness: (v: boolean) => Promise<void>;
+};
 
+export function MealSettings({
+	date,
+	freshness,
+	isAlone,
+	stressLevel,
+	setDate,
+	setFreshness,
+	setStressLevel,
+	setAloneness,
+}: MealSettingActions & MealSettingAttributes) {
 	const handleToggleOptionChange = async (value: boolean | null) => {
 		if (value == null) return;
 		await setAloneness(value);
@@ -37,7 +46,7 @@ export function MealSettings() {
 			<Grid size={{ xs: 12 }}>
 				<DateInput
 					title="Mahlzeit"
-					date={meal.date}
+					date={date}
 					onChange={(e) =>
 						setDate(e?.toISOString() || new Date().toISOString())
 					}
@@ -46,18 +55,15 @@ export function MealSettings() {
 			<Grid size={{ xs: 12 }}>
 				<StressSlider
 					setStressLevel={setStressLevel}
-					stressLevel={meal.stressLevel}
+					stressLevel={stressLevel}
 				/>
 			</Grid>
 			<Grid size={{ xs: 8 }}>
-				<FreshnessSlider
-					setFreshness={setFreshness}
-					freshness={meal.freshness}
-				/>
+				<FreshnessSlider setFreshness={setFreshness} freshness={freshness} />
 			</Grid>
 			<Grid size={{ xs: 4 }} sx={{ textAlign: "center" }}>
 				<PeopleToggleButton
-					isAlone={meal.isAlone}
+					isAlone={isAlone}
 					handleToggleOptionChange={handleToggleOptionChange}
 				/>
 			</Grid>

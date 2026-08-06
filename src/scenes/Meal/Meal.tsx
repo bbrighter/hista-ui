@@ -3,7 +3,6 @@ import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import { useParams } from "react-router-dom";
-
 import { actions } from "../../actions";
 import { usePiidEffect } from "../../hooks/usePiidEffect";
 import { selectIsLoadingAny } from "../../store";
@@ -15,6 +14,7 @@ import {
 	MealNutritionResult,
 	MealSettings,
 	ShowNutritionChart,
+	useMealSettings,
 } from "./components";
 
 export default function Meal() {
@@ -27,6 +27,8 @@ export default function Meal() {
 		actions.meals.get(Number(params.mealId));
 	}, [params.mealId]);
 
+	const mealSettings = useMealSettings();
+
 	return (
 		<Loading show={isLoading}>
 			<Container sx={{ padding: "2rem" }}>
@@ -35,7 +37,7 @@ export default function Meal() {
 					<ShowNutritionChart />
 				</Box>
 				<FormGroup>
-					<MealSettings />
+					<MealSettings {...mealSettings} />
 					<FormControl>
 						<AddFood />
 					</FormControl>

@@ -153,10 +153,6 @@ describe("test meals list", () => {
 		expect(isButtonPressed({ title: "Zusammen" })).toBeFalsy();
 	});
 
-	it("stress slider", { skip: true }, async () => {});
-
-	it("freshness slider", { skip: true }, async () => {});
-
 	it("date changes", async () => {
 		render(
 			<MemoryRouter>
