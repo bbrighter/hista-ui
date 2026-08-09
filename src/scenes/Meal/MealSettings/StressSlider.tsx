@@ -5,7 +5,7 @@ import SentimentNeutralIcon from "@mui/icons-material/SentimentNeutral";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
 import Skeleton from "@mui/material/Skeleton";
 import type { JSX } from "react";
-import DebouncedSlider from "@/scenes/components/DebouncedSlider";
+import DebouncedSlider from "@/scenes/components/DebouncedSlider/DebouncedSlider";
 
 type StressSliderProps = {
 	isLoading?: boolean;

@@ -4,8 +4,8 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { type JSX, useEffect, useState } from "react";
 
-import useDebounce from "../../hooks/useDebounce";
-import { useDidUpdateEffect } from "../../hooks/useDidUpdateEffect";
+import useDebounce from "../../../hooks/useDebounce";
+import { useDidUpdateEffect } from "../../../hooks/useDidUpdateEffect";
 
 export default function DebouncedSlider(props: {
 	initialValue: number;
@@ -17,9 +17,7 @@ export default function DebouncedSlider(props: {
 		value: number,
 	) => "primary" | "secondary" | "error" | "info" | "success" | "warning";
 	colorMapping?: (value: number) => string;
-	icon?: JSX.Element;
 	iconMapping?: (value: number) => JSX.Element;
-	debounceTimeMs?: number;
 }) {
 	const [value, setValue] = useState(props.initialValue);
 	useEffect(() => {
@@ -29,7 +27,7 @@ export default function DebouncedSlider(props: {
 	const handleSliderChange = (_: Event, v: number | Array<number>) => {
 		setValue(v as number);
 	};
-	const debouncedSliderValue = useDebounce(value, props.debounceTimeMs ?? 300);
+	const debouncedSliderValue = useDebounce(value, 300);
 
 	useDidUpdateEffect(() => {
 		props.onChange(debouncedSliderValue);
@@ -39,7 +37,6 @@ export default function DebouncedSlider(props: {
 		<Box sx={{ width: "100%" }}>
 			<Typography gutterBottom>{props.label}</Typography>
 			<Stack spacing={3} direction="row" sx={{ alignItems: "center" }}>
-				{props.icon}
 				{props.iconMapping ? props.iconMapping(value) : null}
 				<Slider
 					marks

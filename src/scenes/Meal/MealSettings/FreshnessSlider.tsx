@@ -1,6 +1,6 @@
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import Skeleton from "@mui/material/Skeleton";
-import DebouncedSlider from "@/scenes/components/DebouncedSlider";
+import DebouncedSlider from "@/scenes/components/DebouncedSlider/DebouncedSlider";
 import { Freshness } from "@/store";
 
 type FreshnessSliderProps = {

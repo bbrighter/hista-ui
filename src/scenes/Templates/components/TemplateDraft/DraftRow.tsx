@@ -1,7 +1,6 @@
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
-
-import { FoodConditionToggle } from "../../../components";
+import { FoodConditionToggle } from "@/scenes/components/FoodConditionToggle/FoodConditionToggle";
 import { Icons } from "../../../components/Icons";
 import { IngredientSelect } from "./IngredientSelect";
 import type { DraftStateType } from "./useTemplateDraft";

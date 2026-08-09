@@ -9,7 +9,7 @@ import { selectIsLoadingAny } from "../../store";
 import useHista from "../../store/store";
 import { Loading } from "../components";
 import DateInput from "../components/DateInput";
-import DebouncedSlider from "../components/DebouncedSlider";
+import DebouncedSlider from "../components/DebouncedSlider/DebouncedSlider";
 import { getColor } from "./components/colorMapping";
 import HeadacheDescription from "./components/HeadacheDescription";
 import HeadachePositionsButtons from "./components/HeadachePositions";

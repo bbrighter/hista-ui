@@ -6,7 +6,7 @@ import { useState } from "react";
 import { SwipeableListItem } from "react-swipeable-list";
 import useDebounce from "@/hooks/useDebounce";
 import { useDidUpdateEffect } from "@/hooks/useDidUpdateEffect";
-import { FoodConditionToggle } from "@/scenes/components";
+import { FoodConditionToggle } from "@/scenes/components/FoodConditionToggle/FoodConditionToggle";
 import NumberField from "@/scenes/components/NumberField";
 import { swipeDeleteFood } from "./SwipeFoodActions";
 import type { FoodListProps } from "./useFoodList";

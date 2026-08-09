@@ -20,7 +20,6 @@ import {
 import AppProvider from "./AppProvider";
 import { appRoutes } from "./constants";
 import { ErrorBridge, ErrorFallback } from "./errors";
-import Start from "./scenes/Start";
 import { useIsAppReady } from "./store";
 
 type RawRoute = {
@@ -28,6 +27,8 @@ type RawRoute = {
 	element: LazyExoticComponent<() => JSX.Element>;
 	name: string;
 };
+
+const Start = lazy(() => import("@/scenes/Start"));
 
 const rawRoutes: Array<RawRoute> = [
 	{
@@ -92,12 +93,12 @@ const rawRoutes: Array<RawRoute> = [
 	},
 	{
 		path: appRoutes.homepage,
-		element: lazy(() => import("./scenes/Start")),
+		element: Start,
 		name: "Start",
 	},
 	{
 		path: appRoutes.homepagePiid,
-		element: lazy(() => import("./scenes/Start")),
+		element: Start,
 		name: "Start",
 	},
 	{
