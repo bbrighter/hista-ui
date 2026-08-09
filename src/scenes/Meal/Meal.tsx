@@ -8,14 +8,16 @@ import { usePiidEffect } from "../../hooks/usePiidEffect";
 import { selectIsLoadingAny } from "../../store";
 import useHista from "../../store/store";
 import { Loading } from "../components";
-import {
-	AddFood,
-	FoodList,
-	MealNutritionResult,
-	MealSettings,
-	ShowNutritionChart,
-	useMealSettings,
-} from "./components";
+import { FoodInput } from "./AddFood/FoodInput";
+import { useFoodInput } from "./AddFood/useFoodInput";
+import { FoodList } from "./FoodList/FoodList";
+import { useFoodList } from "./FoodList/useFoodList";
+import { MealNutrition } from "./MealNutrition/MealNutrition";
+import { useTotalMealNutrition } from "./MealNutrition/useMealNutrition";
+import { MealSettings } from "./MealSettings/MealSettings";
+import { useMealSettings } from "./MealSettings/useMealSettings";
+import { NutritionChartButton } from "./NutritionChart/NutritionChartButton";
+import { useNutritionChart } from "./NutritionChart/useNutritionChart";
 
 export default function Meal() {
 	const isLoading = useHista(
@@ -28,21 +30,25 @@ export default function Meal() {
 	}, [params.mealId]);
 
 	const mealSettings = useMealSettings();
+	const foodInputSettings = useFoodInput();
+	const foodListSettings = useFoodList();
+	const nutrition = useTotalMealNutrition();
+	const nutritionChart = useNutritionChart();
 
 	return (
 		<Loading show={isLoading}>
 			<Container sx={{ padding: "2rem" }}>
 				<Box sx={{ display: "flex", justifyContent: "space-between" }}>
-					<MealNutritionResult />
-					<ShowNutritionChart />
+					<MealNutrition {...nutrition} />
+					<NutritionChartButton {...nutritionChart} />
 				</Box>
 				<FormGroup>
 					<MealSettings {...mealSettings} />
 					<FormControl>
-						<AddFood />
+						<FoodInput {...foodInputSettings} />
 					</FormControl>
 				</FormGroup>
-				<FoodList />
+				<FoodList {...foodListSettings} />
 			</Container>
 		</Loading>
 	);

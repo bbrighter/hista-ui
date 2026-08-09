@@ -1,18 +1,15 @@
 import Button from "@mui/material/Button";
 import { SwipeAction, TrailingActions } from "react-swipeable-list";
 
-import { actions } from "../../../actions";
-import type { Food } from "../../../store";
-import { Icons } from "../../components/Icons";
+import { Icons } from "@/scenes/components/Icons";
 
-export const swipeDeleteFood = (food: Food) => {
-	const onDelete = async () => {
-		await actions.meals.deleteFood(food.id);
-	};
-
+export const swipeDeleteFood = (
+	id: number,
+	onDelete: (id: number) => Promise<void>,
+) => {
 	return (
 		<TrailingActions>
-			<SwipeAction onClick={onDelete} destructive>
+			<SwipeAction onClick={() => onDelete(id)} destructive>
 				<Button
 					data-testid="delete-food-button"
 					variant="contained"

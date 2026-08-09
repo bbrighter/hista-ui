@@ -1,6 +1,5 @@
 import Grid from "@mui/material/Grid";
-
-import DateInput from "../../../components/DateInput";
+import DateInput from "@/scenes/components/DateInput";
 import { FreshnessSlider } from "./FreshnessSlider";
 import { PeopleToggleButton } from "./PeopleToggleButton";
 import { StressSlider } from "./StressSlider";

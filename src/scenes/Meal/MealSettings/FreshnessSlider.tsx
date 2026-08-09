@@ -1,8 +1,7 @@
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import Skeleton from "@mui/material/Skeleton";
-
-import { Freshness } from "../../../../store";
-import DebouncedSlider from "../../../components/DebouncedSlider";
+import DebouncedSlider from "@/scenes/components/DebouncedSlider";
+import { Freshness } from "@/store";
 
 type FreshnessSliderProps = {
 	isLoading?: boolean;

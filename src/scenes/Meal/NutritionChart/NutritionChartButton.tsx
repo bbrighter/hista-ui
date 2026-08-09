@@ -6,38 +6,33 @@ import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import dayjs from "dayjs";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { actions } from "../../../actions";
-import useHista from "../../../store/store";
 import { Icons } from "../../components/Icons";
 import { SingleNutritionChart } from "./SingleNutritionChart";
-import { useMealDaysNutrition } from "./useMealDaysNutrition";
+import type { NutritionChartProps } from "./useNutritionChart";
 
-export const ShowNutritionChart = () => {
+export const NutritionChartButton = ({
+	nutrition,
+	date,
+	getStatistics,
+}: NutritionChartProps) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [open, setOpen] = useState(false);
-	const mealDate = useHista((state) => state.meal.date);
-	const nutrition = useMealDaysNutrition();
-
-	const mealDayJs = useMemo(() => dayjs(mealDate), [mealDate]);
 
 	useEffect(() => {
 		if (!open) return;
 		setIsLoading(true);
-		actions.statistics
-			.getNutritionStatistics(
-				"day",
-				mealDayJs.startOf("day").toDate(),
-				mealDayJs.endOf("day").toDate(),
-			)
-			.finally(() => setIsLoading(false));
-	}, [open, mealDayJs]);
+		getStatistics(
+			"day",
+			date.startOf("day").toDate(),
+			date.endOf("day").toDate(),
+		).finally(() => setIsLoading(false));
+	}, [open, date, getStatistics]);
 
 	return (
 		<Box>
-			<IconButton onClick={() => setOpen(true)}>
+			<IconButton onClick={() => setOpen(true)} data-testid="open-chart-button">
 				<PieChartIcon />
 			</IconButton>
 			<Dialog open={open} onClose={() => setOpen(false)} fullScreen>
@@ -50,9 +45,7 @@ export const ShowNutritionChart = () => {
 						>
 							<Icons.actions.close />
 						</IconButton>
-						<Typography variant="h6">
-							{mealDate.toLocaleDateString("de-DE")}
-						</Typography>
+						<Typography variant="h6">{date.format("DD.MM.YYYY")}</Typography>
 					</Toolbar>
 				</AppBar>
 				<DialogContent

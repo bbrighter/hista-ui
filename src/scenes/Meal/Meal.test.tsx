@@ -53,7 +53,7 @@ describe("test meals list", () => {
 		);
 
 		expect(
-			await screen.findByDisplayValue("01.01.2024 01:00"),
+			await screen.findByDisplayValue("01.01.2024 00:00"),
 		).toBeInTheDocument();
 
 		expect(isButtonPressed({ title: "Alleine" })).toBeTruthy();

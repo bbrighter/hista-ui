@@ -1,6 +1,6 @@
-import { actions } from "../../../../actions";
-import type { Freshness } from "../../../../store";
-import useHista from "../../../../store/store";
+import { actions } from "@/actions";
+import type { Freshness } from "@/store";
+import useHista from "@/store/store";
 
 export const useMealSettings = () => {
 	const { date, id, stressLevel, freshness, isAlone } = useHista(
