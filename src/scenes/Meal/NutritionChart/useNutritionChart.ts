@@ -8,14 +8,15 @@ export type NutritionChartProps = ReturnType<typeof useNutritionChart>;
 export const useNutritionChart = () => {
 	const nutrition = useHista((state) => state.nutritionStatistics.statistics);
 	const mealDate = useHista((state) => state.meal.date);
+	const date = useMemo(() => dayjs(mealDate), [mealDate]);
 	return useMemo(
 		() => ({
 			nutrition: nutrition.find(
 				(n) => n.date.toDateString() === mealDate.toDateString(),
 			)?.nutrition ?? { carbohydrate: 0, fat: 0, fiber: 0, protein: 0 },
-			date: dayjs(mealDate),
+			date: date,
 			getStatistics: actions.statistics.getNutritionStatistics,
 		}),
-		[mealDate, nutrition],
+		[mealDate, nutrition, date],
 	);
 };
