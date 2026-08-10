@@ -34,16 +34,15 @@ export function OverviewList(props: {
 		onSetNow,
 	} = props;
 
-	const [limit, setLimit] = useState(20);
+	const totalNumberOfItems = items.length;
+	const minNumberOfItems = 20;
+	const [limit, setLimit] = useState(minNumberOfItems);
+
 	const visibleItems = useMemo(() => items.slice(0, limit), [limit, items]);
 
 	usePiidEffect(() => {
 		getData();
 	}, []);
-
-	const onShowAll = () => {
-		setLimit(items.length - 1);
-	};
 
 	return (
 		<>
@@ -63,9 +62,18 @@ export function OverviewList(props: {
 					/>
 				))}
 			</SwipeableList>
-			<Button sx={{ mt: "1rem" }} onClick={onShowAll}>
-				Alle anzeigen
-			</Button>
+			{limit === minNumberOfItems ? (
+				<Button
+					sx={{ mt: "1rem" }}
+					onClick={() => setLimit(totalNumberOfItems)}
+				>
+					Alle anzeigen
+				</Button>
+			) : (
+				<Button sx={{ mt: "1rem" }} onClick={() => setLimit(minNumberOfItems)}>
+					Weniger anzeigen
+				</Button>
+			)}
 		</>
 	);
 }

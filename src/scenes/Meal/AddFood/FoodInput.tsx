@@ -5,14 +5,11 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import TextField from "@mui/material/TextField";
 import React, { useEffect, useState } from "react";
-
-import { actions } from "../../../actions";
-import useHista from "../../../store/store";
-import { Icons } from "../../components/Icons";
-import { useOptions } from "./useOptions";
+import { Icons } from "@/scenes/components/Icons";
+import type { useFoodInput } from "./useFoodInput";
 
 type NewOption = string;
-type InputOption = ReturnType<typeof useOptions>[0];
+type InputOption = ReturnType<typeof useFoodInput>["options"][0];
 
 type Option = InputOption | NewOption;
 
@@ -24,29 +21,36 @@ const isFoodOption = (v: InputOption) => {
 	return v.type === "food";
 };
 
-export function AddFood() {
-	const mealId = useHista((state) => state.meal.id);
-	const options = useOptions();
+type FoodInputProps = ReturnType<typeof useFoodInput>;
 
+export function FoodInput({
+	mealId,
+	options,
+	listIngredients,
+	listTemplates,
+	postFoodById,
+	postFoodByName,
+	postFoodsByTemplate,
+}: FoodInputProps) {
 	const [inputValue, setInputValue] = useState<string | undefined>("");
 	const [value, setValue] = useState<Option | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
-		actions.ingredients.list();
-		actions.templates.list();
-	}, []);
+		listIngredients();
+		listTemplates();
+	}, [listIngredients, listTemplates]);
 
 	const onChange = async (_e: React.SyntheticEvent, value: Option | null) => {
 		if (value == null) return;
 		setValue(value);
 		setIsLoading(true);
 		if (isNewOption(value)) {
-			await actions.meals.postFoodByName(mealId, value);
+			await postFoodByName(mealId, value);
 		} else if (isFoodOption(value)) {
-			await actions.meals.postFoodById(mealId, value.id);
+			await postFoodById(mealId, value.id);
 		} else {
-			await actions.meals.postFoodsByTemplate(mealId, value.id);
+			await postFoodsByTemplate(mealId, value.id);
 		}
 		setIsLoading(false);
 		setInputValue("");

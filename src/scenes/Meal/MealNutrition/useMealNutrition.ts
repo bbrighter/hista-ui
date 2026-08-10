@@ -1,5 +1,5 @@
-import useHista from "../store";
-import type { Nutrition } from "../types";
+import type { Nutrition } from "@/store";
+import useHista from "@/store/store";
 
 export const useTotalMealNutrition = (): Nutrition => {
 	const foods = useFoodAmountsAndNutritionsForMeal();
@@ -24,14 +24,4 @@ const useFoodAmountsAndNutritionsForMeal = () => {
 		amount: f.amount,
 		...ingredients.find((i) => i.id === f.ingredientId)?.nutrition,
 	}));
-};
-
-export const useFoodForMeal = () => {
-	const foods = useHista((state) => state.meal.foods);
-	const ingredients = useHista((state) => state.ingredients);
-	return foods.map((f) => {
-		const name =
-			ingredients.find((i) => i.id === f.ingredientId)?.name ?? "Unbenannt";
-		return { ...f, ingredientName: name };
-	});
 };

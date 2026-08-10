@@ -1,4 +1,6 @@
 /// <reference types="vitest/config"/>
+
+import path from "node:path";
 import react from "@vitejs/plugin-react";
 import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig } from "vite";
@@ -21,6 +23,11 @@ export default defineConfig({
 			open: true,
 		}),
 	],
+	resolve: {
+		alias: {
+			"@": path.resolve(__dirname, "./src"),
+		},
+	},
 	build: {
 		chunkSizeWarningLimit: 700,
 		rollupOptions: {
@@ -36,6 +43,9 @@ export default defineConfig({
 		globals: true,
 		environment: "happy-dom",
 		setupFiles: ["vitest-localstorage-mock", "src/__tests__/setupTest.ts"],
+		env: {
+			TZ: "utc",
+		},
 		server: {
 			deps: {
 				inline: ["@mui/x-data-grid"],

@@ -50,6 +50,9 @@ export const createMealSlice: StateCreator<
 
 	setMeal: (meal: Meal) =>
 		set((state) => {
+			if (!Array.isArray(meal.foods)) {
+				throw Error("Invalid setMeal: meal.foods is no array");
+			}
 			state.meal = meal;
 		}),
 

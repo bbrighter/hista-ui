@@ -1,9 +1,8 @@
 import { renderHook } from "@testing-library/react";
 import { expect, test } from "vitest";
-
-import useHista from "../../store";
-import { Freshness } from "../../types";
-import { useTotalMealNutrition } from "../meal.selectors";
+import { Freshness } from "@/store";
+import useHista from "@/store/store";
+import { useTotalMealNutrition } from "./useMealNutrition";
 
 test("useTotalNutrition", () => {
 	const { setIngredients, setMeal } = useHista.getState();

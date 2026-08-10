@@ -4,6 +4,9 @@
 		"module": "esnext",
 		"moduleResolution": "bundler",
 		"jsx": "react-jsx",
+		"paths": {
+			"@/*": ["./src/*"]
+		},
 
 		"skipLibCheck": true,
 		"noEmit": true,

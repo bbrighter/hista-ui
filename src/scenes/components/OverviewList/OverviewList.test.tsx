@@ -153,6 +153,11 @@ describe("OverviewList", () => {
 		expect(screen.queryAllByRole("listitem")).toHaveLength(20);
 
 		await userEvent.click(showMoreButton);
-		expect(screen.queryAllByRole("listitem")).toHaveLength(99);
+		expect(screen.queryAllByRole("listitem")).toHaveLength(100);
+		const showLessButton = screen.getByRole("button", {
+			name: "Weniger anzeigen",
+		});
+		await userEvent.click(showLessButton);
+		expect(screen.queryAllByRole("listitem")).toHaveLength(20);
 	});
 });

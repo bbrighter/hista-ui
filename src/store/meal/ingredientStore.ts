@@ -30,6 +30,9 @@ export const createIngredientSlice: StateCreator<
 
 	setIngredients: (ingredients) => {
 		set((state) => {
+			if (!Array.isArray(ingredients)) {
+				throw Error("Invalid setIngredients: ingredients is no array");
+			}
 			state.ingredients = ingredients;
 		});
 	},

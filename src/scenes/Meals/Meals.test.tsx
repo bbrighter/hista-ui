@@ -17,7 +17,7 @@ describe("meal list items", () => {
 		);
 
 		expect(await screen.findByTestId("add-meal-button")).toBeInTheDocument();
-		expect(await screen.findByText("01.01.2024 01:00")).toBeInTheDocument();
+		expect(await screen.findByText("01.01.2024 00:00")).toBeInTheDocument();
 		expect(await findDeleteButton()).toBeInTheDocument();
 		expect(getSetNowButton()).toBeInTheDocument();
 	});

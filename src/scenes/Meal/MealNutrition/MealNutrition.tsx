@@ -3,16 +3,19 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import { useTotalMealNutrition } from "../../../store";
+import type { Nutrition } from "@/store";
 
-export const MealNutritionResult = () => {
-	const nutrition = useTotalMealNutrition();
-
+export const MealNutrition = ({
+	protein,
+	fat,
+	carbohydrate,
+	fiber,
+}: Nutrition) => {
 	const indicators = [
-		{ label: "F", value: nutrition.fat },
-		{ label: "K", value: nutrition.carbohydrate },
-		{ label: "B", value: nutrition.fiber },
-		{ label: "E", value: nutrition.protein },
+		{ label: "F", value: fat },
+		{ label: "K", value: carbohydrate },
+		{ label: "B", value: fiber },
+		{ label: "E", value: protein },
 	];
 
 	return (

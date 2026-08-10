@@ -1,8 +1,7 @@
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-
-import { NUTRITION_COLORS } from "../../components/NutritionChart";
+import { NUTRITION_COLORS } from "@/scenes/components/NutritionChart/nutritionColors";
 
 export const NutritionLegend = ({ hideFiber }: { hideFiber: boolean }) => {
 	const nutrition_legend = [
