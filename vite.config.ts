@@ -54,6 +54,8 @@ export default defineConfig({
 		coverage: {
 			provider: "v8",
 			enabled: false,
+			reporter: ["text", "json-summary", "json"],
+			reportOnFailure: true,
 		},
 	},
 });

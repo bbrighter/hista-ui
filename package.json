@@ -14,7 +14,7 @@
 		"lint": "biome ci",
 		"test": "vitest",
 		"test:debug": "DEBUG=true vitest",
-		"test:nowatch": "vitest run",
+		"test:ci": "vitest run --coverage",
 		"typecheck": "tsc",
 		"knip": "knip",
 		"prepare": "husky",
