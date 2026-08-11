@@ -1,4 +1,9 @@
+allowBuilds:
+  esbuild: false
+  msw: false
+# pnpm-workspace.yaml
 blockExoticSubdeps: true
 minimumReleaseAge: 2880
 minimumReleaseAgeExclude:
- - '@bbrighter/auth-module'
+  - '@bbrighter/auth-module'
+preferFrozenLockfile: true
