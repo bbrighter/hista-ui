@@ -37,8 +37,3 @@ jobs:
         env:
           CI: true
           TZ: Europe/Berlin
-
-      - name: 'notify vercel'
-        uses: 'vercel/repository-dispatch/actions/status@v1'
-        with:
-            name: Vercel - hista-ui Test
