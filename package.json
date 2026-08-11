@@ -3,6 +3,8 @@
 	"private": true,
 	"version": "1.0.0",
 	"type": "module",
+	"//packageManagerComment": "remove once Vercel supports devEngines.packageManager",
+	"packageManager": "pnpm@11.21.0",
 	"scripts": {
 		"start": "vite --open",
 		"dev": "vite",
