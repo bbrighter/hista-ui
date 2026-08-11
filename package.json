@@ -3,7 +3,6 @@
 	"private": true,
 	"version": "1.0.0",
 	"type": "module",
-	"packageManager": "pnpm@10.22.0",
 	"scripts": {
 		"start": "vite --open",
 		"dev": "vite",
@@ -18,14 +17,22 @@
 		"knip": "knip",
 		"prepare": "husky",
 		"install:local-package": "pnpm install ../auth-module/bbrighter-auth-module-0.1.1.tgz --no-cache",
-		"dependencies:ci": "npx depcruise src  --include-only \"^src\"",
-		"dependencies:table": "npx depcruise src  --include-only \"^src\" --output-type html > graph.html",
-		"dependencies:graph": "npx depcruise --include-only \"^src\" --output-type dot src | dot -T svg > graph.svg",
+		"dependencies:ci": "pnpm exec depcruise src  --include-only \"^src\"",
+		"dependencies:table": "pnpm exec depcruise src  --include-only \"^src\" --output-type html > graph.html",
+		"dependencies:graph": "pnpm exec depcruise --include-only \"^src\" --output-type dot src | dot -T svg > graph.svg",
 		"validate": "knip & tsc & pnpm dependencies:ci & pnpm lint"
 	},
-	"engines": {
-		"node": "24.x",
-		"pnpm": ">=10.0.0"
+	"devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "11.21.0",
+			"onFail": "error"
+		},
+		"runtime": {
+			"name": "node",
+			"version": "24",
+			"onFail": "error"
+		}
 	},
 	"dependencies": {
 		"@atlaskit/pragmatic-drag-and-drop": "^2.0.2",
@@ -70,7 +77,7 @@
 		"msw": "^2.15.0",
 		"rollup-plugin-visualizer": "^7.0.1",
 		"source-map": "^0.7.6",
-		"typescript": "^7.0.2",
+		"typescript": "npm:@typescript/typescript6@^6.0.2",
 		"vite": "^8.2.1",
 		"vite-plugin-checker": "^0.14.5",
 		"vitest": "^4.1.10"
