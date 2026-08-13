@@ -1,11 +1,10 @@
 import Container from "@mui/material/Container";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useAppNavigate } from "@/hooks/useNavigate";
 import { actions } from "../../../actions";
 import { type Status, useStatusExistsOnDays } from "../../../store";
 import { OverviewList } from "../../components";
 import { AddStatus } from "./AddStatus";
-import { StatusModal } from "./StatusModal";
 
 type StatusListProps = {
 	statuses: Array<Status>;
@@ -19,17 +18,10 @@ export const StatusList = ({ statuses, isLoading }: StatusListProps) => {
 		checked: Boolean(s.eveningFitness && s.morningFitness && s.morningSleep),
 	}));
 
-	const [id, setId] = useState<number | null>(null);
-	const [open, setOpen] = useState(false);
+	const navigate = useAppNavigate();
 
 	const onClick = (statusId: number) => {
-		setOpen(true);
-		setId(statusId);
-	};
-
-	const onClose = () => {
-		setOpen(false);
-		setId(null);
+		navigate.to.statusSingle(statusId);
 	};
 
 	const today = dayjs();
@@ -37,8 +29,7 @@ export const StatusList = ({ statuses, isLoading }: StatusListProps) => {
 	const dayBefore = today.subtract(2, "day");
 	const onAddStatus = async (date: dayjs.Dayjs) => {
 		const id = await actions.status.post(date);
-		setId(id);
-		setOpen(true);
+		navigate.to.statusSingle(id);
 	};
 
 	const [existsToday, existsYesterday, existsDayBefore] = useStatusExistsOnDays(
@@ -59,11 +50,6 @@ export const StatusList = ({ statuses, isLoading }: StatusListProps) => {
 				getData={actions.status.list}
 				onClick={onClick}
 				onDelete={actions.status.delete}
-			/>
-			<StatusModal
-				open={open}
-				onClose={onClose}
-				status={id !== null ? statuses.find((s) => s.id === id) : undefined}
 			/>
 		</Container>
 	);

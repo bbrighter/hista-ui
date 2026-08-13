@@ -42,6 +42,8 @@ export const useAppNavigate = () => {
 			manageMedicine: () => navigateWithPiid(appRoutes.manageMedicines),
 			templates: () => navigateWithPiid(appRoutes.templates),
 			status: () => navigateWithPiid(appRoutes.status),
+			statusSingle: (id: number) =>
+				navigateWithPiid(appRoutes.statusSingle, { id }),
 		},
 	};
 };
