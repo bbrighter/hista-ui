@@ -121,6 +121,11 @@ const rawRoutes: Array<RawRoute> = [
 		element: lazy(() => import("./scenes/Status")),
 		name: "Status",
 	},
+	{
+		path: appRoutes.statusSingle,
+		element: lazy(() => import("./scenes/StatusSingle/Status")),
+		name: "Status",
+	},
 ];
 
 const withSuspense = (Component: LazyExoticComponent<() => JSX.Element>) => {

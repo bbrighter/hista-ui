@@ -50,7 +50,6 @@ describe("MealSettings component", () => {
 		expect(stressSlider).toHaveValue("1");
 
 		const freshnessSlider = await findSliderValue("Frische");
-		screen.debug(freshnessSlider);
 		expect(freshnessSlider).toHaveValue("2");
 
 		expect(getIsAloneButton()).toBePressed();

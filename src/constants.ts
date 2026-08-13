@@ -27,6 +27,7 @@ const piidRoutes = {
 	medicines: "/medicines",
 	manageMedicines: "/manage-medicines",
 	status: "/status",
+	statusSingle: "/status/:id",
 };
 
 const addPiid = (route: string): string => {
