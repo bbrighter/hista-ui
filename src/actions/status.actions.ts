@@ -34,9 +34,19 @@ export const status = {
 	patch: async (id: number, params: PutStatusParams) => {
 		await client.PatchStatus(id, {
 			date: params.date.toISOString(),
-			eveningFitness: params.eveningFitness ? params.eveningFitness : null,
-			morningFitness: params.morningFitness ? params.morningFitness : null,
-			morningSleep: params.morningSleep ? params.morningSleep : null,
+			eveningFitness: params.eveningFitness,
+			morningFitness: params.morningFitness,
+			morningSleep: params.morningSleep,
+			depressive: params.depressive,
+			tense: params.tense,
+			moodSwings: params.moodSwings,
+			irritable: params.irritable,
+			lossOfInterest: params.lossOfInterest,
+			concentrationProblems: params.concentrationProblems,
+			lackOfDrive: params.lackOfDrive,
+			appetiteChanges: params.appetiteChanges,
+			sleepProblems: params.sleepProblems,
+			overwhelmed: params.overwhelmed,
 		});
 
 		const { updateStatus } = useHista.getState();
@@ -49,18 +59,26 @@ export const respToStatuses = (
 ): Array<Status> => {
 	if (!resp?.statuses) return []; // This ensure that the initial loading works
 	return resp.statuses.map((s) => {
-		const isToday = dayjs(s.date).isSame(dayjs(), "date");
-		return respToStatus(s, !isToday);
+		return respToStatus(s);
 	});
 };
 
-const respToStatus = (resp: hista.StatusResponse, locked?: boolean): Status => {
+const respToStatus = (resp: hista.StatusResponse): Status => {
 	return {
 		id: resp.id,
 		date: dayjs(resp.date),
 		morningFitness: resp?.morningFitness ?? null,
 		morningSleep: resp?.morningSleep ?? null,
 		eveningFitness: resp?.eveningFitness ?? null,
-		locked: locked,
+		depressive: resp?.depressive ?? null,
+		tense: resp?.tense ?? null,
+		moodSwings: resp?.moodSwings ?? null,
+		irritable: resp?.irritable ?? null,
+		lossOfInterest: resp?.lossOfInterest ?? null,
+		concentrationProblems: resp?.concentrationProblems ?? null,
+		lackOfDrive: resp?.lackOfDrive ?? null,
+		appetiteChanges: resp?.appetiteChanges ?? null,
+		sleepProblems: resp?.sleepProblems ?? null,
+		overwhelmed: resp?.overwhelmed ?? null,
 	};
 };

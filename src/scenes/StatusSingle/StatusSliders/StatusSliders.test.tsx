@@ -11,6 +11,16 @@ describe("StatusSliders component", () => {
 		id: 1,
 		morningFitness: 2,
 		morningSleep: null,
+		appetiteChanges: null,
+		concentrationProblems: null,
+		depressive: null,
+		irritable: null,
+		lackOfDrive: null,
+		lossOfInterest: null,
+		moodSwings: null,
+		overwhelmed: null,
+		sleepProblems: null,
+		tense: null,
 	};
 	const onChange = vi.fn().mockResolvedValue(undefined);
 	const labels = [
@@ -62,6 +72,16 @@ describe("StatusSliders component", () => {
 			morningFitness: 1,
 			morningSleep: 2,
 			statusId: 1,
+			appetiteChanges: null,
+			concentrationProblems: null,
+			depressive: null,
+			irritable: null,
+			lackOfDrive: null,
+			lossOfInterest: null,
+			moodSwings: null,
+			overwhelmed: null,
+			sleepProblems: null,
+			tense: null,
 		});
 	});
 

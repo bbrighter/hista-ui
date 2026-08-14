@@ -1,4 +1,5 @@
 import {
+	act,
 	fireEvent,
 	render,
 	screen,
@@ -63,7 +64,7 @@ describe("condition event is rendered and can be edited", () => {
 		expect(input).toHaveValue("3");
 		expect(sliderHasColor("symptom1", "Secondary")).toBeTruthy();
 
-		fireEvent.change(input, { target: { value: 5 } });
+		await act(async () => fireEvent.change(input, { target: { value: 5 } }));
 		expect(input).toHaveValue("5");
 		expect(sliderHasColor("symptom1", "Error")).toBeTruthy();
 	});
@@ -95,7 +96,6 @@ describe("condition event is rendered and can be edited", () => {
 	});
 
 	it("Add new symptom", async () => {
-		const user = userEvent.setup();
 		server.use(
 			http.post(
 				"http://localhost:4444/piid/:piid/condition-events/:id/conditions",
@@ -127,15 +127,15 @@ describe("condition event is rendered and can be edited", () => {
 
 		const symptomInput = await screen.findByRole("combobox");
 		expect(symptomInput).toBeInTheDocument();
-		await user.type(symptomInput, "new symptom");
-		await user.keyboard("{Enter}");
+		await userEvent.type(symptomInput, "new symptom");
+		await userEvent.keyboard("{Enter}");
 
 		expect(screen.getByRole("presentation")).toBeVisible();
 		const categoryInput = await screen.findByLabelText("Kategorie");
 		expect(categoryInput).toBeInTheDocument();
-		await user.type(categoryInput, "cat with no symptom");
-		await user.keyboard("{ArrowDown}");
-		await user.keyboard("{Enter}");
+		await userEvent.type(categoryInput, "cat with no symptom");
+		await userEvent.keyboard("{ArrowDown}");
+		await userEvent.keyboard("{Enter}");
 
 		expect(screen.queryByRole("presentation")).not.toBeInTheDocument();
 		const conditionList = screen.getByRole("list");

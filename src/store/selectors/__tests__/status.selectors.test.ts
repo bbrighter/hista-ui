@@ -5,29 +5,39 @@ import { beforeEach, describe, expect, it, test } from "vitest";
 import useHista from "../../store";
 import { useStatus, useStatusExistsOnDay } from "../status.selectors";
 
+const nullSliderValuers = {
+	eveningFitness: null,
+	morningFitness: null,
+	morningSleep: null,
+	appetiteChanges: null,
+	concentrationProblems: null,
+	depressive: null,
+	irritable: null,
+	lackOfDrive: null,
+	lossOfInterest: null,
+	moodSwings: null,
+	overwhelmed: null,
+	sleepProblems: null,
+	tense: null,
+};
+
 test("useStatus", () => {
 	const { setStatuses } = useHista.getState();
 	setStatuses([
 		{
 			id: 10,
 			date: dayjs(),
-			eveningFitness: null,
-			morningFitness: null,
-			morningSleep: null,
+			...nullSliderValuers,
 		},
 		{
 			id: 2,
 			date: dayjs().add(1, "day"),
-			eveningFitness: null,
-			morningFitness: null,
-			morningSleep: null,
+			...nullSliderValuers,
 		},
 		{
 			id: 3,
 			date: dayjs().add(-1, "day"),
-			eveningFitness: null,
-			morningFitness: null,
-			morningSleep: null,
+			...nullSliderValuers,
 		},
 	]);
 
@@ -47,18 +57,14 @@ describe("useStatusExistsOnDay", () => {
 			{
 				id: 10,
 				date: existingDay,
-				eveningFitness: null,
-				morningFitness: null,
-				morningSleep: null,
+				...nullSliderValuers,
 			},
 		]);
 		setStatuses([
 			{
 				id: 10,
 				date: existingDay,
-				eveningFitness: null,
-				morningFitness: null,
-				morningSleep: null,
+				...nullSliderValuers,
 			},
 		]);
 		setLoaded("statuses");
