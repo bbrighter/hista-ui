@@ -1,8 +1,13 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { HttpResponse, http } from "msw";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
-
+import {
+	createIngredient,
+	createIngredients,
+} from "@/__tests__/__mocks__/fixtures/meal";
+import { server } from "@/__tests__/setupTest";
 import { IngredientManagement } from "./IngredientManagement";
 
 const getIngredientRow = (ingredient: string): HTMLElement => {
@@ -114,6 +119,23 @@ describe("IngredientManagement", () => {
 	});
 
 	it("Manage nutrition", async () => {
+		server.use(
+			http.get("/piid/:piid/ingredients", () =>
+				HttpResponse.json(
+					createIngredients([
+						createIngredient({
+							name: "ingredient1",
+							nutrition: { carbohydrate: 20, fat: 5, fiber: 0, protein: 3 },
+						}),
+						createIngredient({
+							id: 2,
+							name: "ingredient2",
+							nutrition: undefined,
+						}),
+					]),
+				),
+			),
+		);
 		render(
 			<MemoryRouter>
 				<IngredientManagement />

@@ -1,7 +1,8 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { FoodInput } from "./FoodInput";
+import { FoodInput } from "../AddFood/FoodInput";
+import { getFoodInput } from "./selectors";
 
 describe("FoodInput component", () => {
 	const listIngredients = vi.fn();
@@ -33,7 +34,7 @@ describe("FoodInput component", () => {
 			/>,
 		);
 
-		const input = screen.getByRole("combobox");
+		const input = getFoodInput();
 		expect(input).toBeVisible();
 
 		await userEvent.click(input);
@@ -53,7 +54,7 @@ describe("FoodInput component", () => {
 			/>,
 		);
 
-		const input = screen.getByRole("combobox");
+		const input = getFoodInput();
 		await userEvent.type(input, "new{enter}");
 
 		expect(postFoodByName).toHaveBeenCalledWith(1, "new");
@@ -73,7 +74,7 @@ describe("FoodInput component", () => {
 			/>,
 		);
 
-		const input = screen.getByRole("combobox");
+		const input = getFoodInput();
 		await userEvent.type(input, "op");
 		await userEvent.click(screen.getByText("opt1"));
 
@@ -93,7 +94,7 @@ describe("FoodInput component", () => {
 			/>,
 		);
 
-		const input = screen.getByRole("combobox");
+		const input = getFoodInput();
 		await userEvent.type(input, "tem");
 		const option = screen.getByText("temp1");
 		expect(option.closest("li")).toContainElement(
@@ -122,7 +123,7 @@ describe("FoodInput component", () => {
 			/>,
 		);
 
-		const input = screen.getByRole("combobox");
+		const input = getFoodInput();
 		await act(async () => {
 			fireEvent.change(input, { target: { value: "op" } });
 			fireEvent.click(screen.getByText("opt1"));

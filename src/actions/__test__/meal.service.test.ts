@@ -1,5 +1,11 @@
+import { HttpResponse, http } from "msw";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-
+import {
+	createIngredient,
+	createIngredients,
+	createMeal,
+} from "@/__tests__/__mocks__/fixtures/meal";
+import { server } from "@/__tests__/setupTest";
 import { client } from "../../api/api";
 import useHista from "../../store/store";
 import { actions } from "..";
@@ -47,6 +53,27 @@ describe("meal service, meals", () => {
 
 describe("meal service, single meal", () => {
 	beforeEach(async () => {
+		server.use(
+			http.get("/piid/:piid/ingredients", () =>
+				HttpResponse.json(
+					createIngredients([
+						createIngredient({ id: 1, name: "Ingredient1" }),
+						createIngredient({ id: 2, name: "Ingredient2" }),
+					]),
+				),
+			),
+			http.get("/piid/:piid/meals/:id", () =>
+				HttpResponse.json(
+					createMeal({
+						id: 1,
+						foods: [
+							{ id: 20, foodCondition: "raw", ingredientId: 2 },
+							{ id: 10, foodCondition: "cooked", ingredientId: 1 },
+						],
+					}),
+				),
+			),
+		);
 		await actions.meals.get(1);
 	});
 
@@ -84,6 +111,11 @@ describe("meal service, single meal", () => {
 	});
 
 	it("delete food", async () => {
+		server.use(
+			http.delete("/piid/:piid/foods/:id", () =>
+				HttpResponse.json(createIngredients([createIngredient({ id: 1 })])),
+			),
+		);
 		await actions.ingredients.list();
 		await actions.meals.deleteFood(20);
 

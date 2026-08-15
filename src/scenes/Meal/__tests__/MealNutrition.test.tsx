@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { expect, test } from "vitest";
-import { MealNutrition } from "./MealNutrition";
+import { MealNutrition } from "../MealNutrition/MealNutrition";
 
 test("MealNutrition component", () => {
 	render(<MealNutrition carbohydrate={10} fat={5} fiber={3} protein={0} />);

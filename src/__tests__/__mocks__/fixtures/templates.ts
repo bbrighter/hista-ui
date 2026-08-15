@@ -15,5 +15,7 @@ export const createTemplate = (
 	...overrides,
 });
 
-export const createTemplates = (replaces?: Array<hista.TemplateResponse>) =>
-	replaces ? { templates: replaces } : { templates: createTemplate() };
+export const createTemplates = (
+	replaces?: Array<hista.TemplateResponse>,
+): hista.TemplateListResponse =>
+	replaces ? { templates: replaces } : { templates: [createTemplate()] };

@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { Freshness } from "@/store";
 import useHista from "@/store/store";
-import { useNutritionChart } from "./useNutritionChart";
+import { useNutritionChart } from "../NutritionChart/useNutritionChart";
 
 describe("useNutritionChart", () => {
 	const date1 = new Date("2022-04-13");

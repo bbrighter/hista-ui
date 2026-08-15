@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import dayjs from "dayjs";
 import { expect, test, vi } from "vitest";
-import { NutritionChartButton } from "./NutritionChartButton";
+import { NutritionChartButton } from "../NutritionChart/NutritionChartButton";
 
 test("NutritionChartButton component", async () => {
 	const getStatistics = vi.fn();

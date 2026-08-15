@@ -1,7 +1,8 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { MealSettings } from "./MealSettings";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { MealSettings } from "../MealSettings/MealSettings";
+import { getIsAloneButtons, getSlider } from "./selectors";
 
 describe("MealSettings component", () => {
 	const setDate = vi.fn();
@@ -9,28 +10,7 @@ describe("MealSettings component", () => {
 	const setFreshness = vi.fn();
 	const setAloneness = vi.fn();
 
-	beforeEach(() => vi.resetAllMocks());
-
 	afterEach(() => vi.useRealTimers());
-
-	const findSliderValue = async (label: string) => {
-		const sliderLabel = await screen.findByText(label);
-		const box = sliderLabel.closest("div") as HTMLElement;
-		expect(box).not.toBeNull();
-
-		const input = box.querySelector("input");
-		expect(input).not.toBeNull();
-		return input as HTMLElement;
-	};
-
-	const getIsAloneButton = () =>
-		screen.getByRole("button", {
-			description: "Alleine",
-		});
-	const getIsNotAloneButton = () =>
-		screen.getByRole("button", {
-			description: "Zusammen",
-		});
 
 	it("Data is displayed", async () => {
 		render(
@@ -46,15 +26,15 @@ describe("MealSettings component", () => {
 			/>,
 		);
 
-		const stressSlider = await findSliderValue("Stress");
+		const stressSlider = getSlider("Stress");
 		expect(stressSlider).toHaveValue("1");
 
-		const freshnessSlider = await findSliderValue("Frische");
+		const freshnessSlider = getSlider("Frische");
 		expect(freshnessSlider).toHaveValue("2");
 
-		expect(getIsAloneButton()).toBePressed();
+		expect(getIsAloneButtons("Alleine")).toBePressed();
 
-		expect(getIsNotAloneButton()).not.toBePressed();
+		expect(getIsAloneButtons("Zusammen")).not.toBePressed();
 	});
 
 	it("Toggle button isNotAlone", async () => {
@@ -71,10 +51,10 @@ describe("MealSettings component", () => {
 			/>,
 		);
 
-		await userEvent.click(getIsAloneButton());
+		await userEvent.click(getIsAloneButtons("Alleine"));
 		expect(setAloneness).not.toHaveBeenCalled();
 
-		await userEvent.click(getIsNotAloneButton());
+		await userEvent.click(getIsAloneButtons("Zusammen"));
 		expect(setAloneness).toHaveBeenCalledWith(false);
 	});
 
@@ -92,10 +72,10 @@ describe("MealSettings component", () => {
 			/>,
 		);
 
-		await userEvent.click(getIsNotAloneButton());
+		await userEvent.click(getIsAloneButtons("Zusammen"));
 		expect(setAloneness).not.toHaveBeenCalled();
 
-		await userEvent.click(getIsAloneButton());
+		await userEvent.click(getIsAloneButtons("Alleine"));
 		expect(setAloneness).toHaveBeenCalledWith(true);
 	});
 
@@ -114,12 +94,7 @@ describe("MealSettings component", () => {
 			/>,
 		);
 
-		const label = screen.getByText("Stress");
-		const sliderBox = label.closest("div") as HTMLElement;
-		expect(sliderBox).not.toBeNull();
-
-		const stressSlider = sliderBox.querySelector("input") as HTMLElement;
-		expect(stressSlider).not.toBeNull();
+		const stressSlider = getSlider("Stress");
 		fireEvent.change(stressSlider, { target: { value: 3 } });
 
 		expect(setStressLevel).not.toHaveBeenCalled();
@@ -144,12 +119,7 @@ describe("MealSettings component", () => {
 			/>,
 		);
 
-		const label = screen.getByText("Frische");
-		const sliderBox = label.closest("div") as HTMLElement;
-		expect(sliderBox).not.toBeNull();
-
-		const freshnessSlider = sliderBox.querySelector("input") as HTMLElement;
-		expect(freshnessSlider).not.toBeNull();
+		const freshnessSlider = getSlider("Frische");
 		fireEvent.change(freshnessSlider, { target: { value: 0 } });
 
 		expect(setFreshness).not.toHaveBeenCalled();

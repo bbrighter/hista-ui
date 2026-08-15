@@ -1,8 +1,13 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { HttpResponse, http } from "msw";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
-
+import {
+	createTemplate,
+	createTemplates,
+} from "@/__tests__/__mocks__/fixtures/templates";
+import { server } from "@/__tests__/setupTest";
 import { Templates } from "./Templates";
 
 describe("Template management", () => {
@@ -25,6 +30,13 @@ describe("Template management", () => {
 		within(screen.getByTestId("ingredient-select")).getByRole("combobox");
 
 	it("Render", async () => {
+		server.use(
+			http.get("/piid/:piid/templates", () =>
+				HttpResponse.json(
+					createTemplates([createTemplate({ name: "Template" })]),
+				),
+			),
+		);
 		render(
 			<MemoryRouter>
 				<Templates />

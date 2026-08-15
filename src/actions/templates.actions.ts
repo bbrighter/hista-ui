@@ -4,7 +4,8 @@ import useHista from "../store/store";
 
 export const templates = {
 	list: async () => {
-		const { setTemplates, setLoaded } = useHista.getState();
+		const { setTemplates, setLoaded, loaded } = useHista.getState();
+		if (loaded.templates) return;
 
 		const resp = await client.ListTemplates();
 		const templates = repoToTemplates(resp);
