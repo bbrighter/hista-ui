@@ -1,4 +1,6 @@
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import Grid from "@mui/material/Grid";
+import Icon from "@mui/material/Icon";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
@@ -12,42 +14,18 @@ type StatusSlidersProps = {
 };
 
 export const StatusSliders = ({ status, onChange }: StatusSlidersProps) => {
-	// const pendingRef = useRef<PutStatusParams | null>(null);
-	// const savingRef = useRef(false);
 	const [symptoms, setSymptoms] = useState<Record<SymptomKey, number | null>>(
 		Object.fromEntries(
 			SYMPTOM_FIELDS.map((key) => [key, status[key] ?? null]),
 		) as Record<SymptomKey, number | null>,
 	);
 
+	const isDirty = (key: SymptomKey) => status[key] !== symptoms[key];
+
 	const debouncedSave = useDebouncedSave(
 		(params: PutStatusParams) => onChange(status.id, params),
 		1000,
 	);
-
-	// const save = async (params: PutStatusParams) => {
-	// 	pendingRef.current = params;
-
-	// 	if (savingRef.current) return;
-
-	// 	savingRef.current = true;
-	// 	try {
-	// 		while (pendingRef.current) {
-	// 			const next = pendingRef.current;
-	// 			pendingRef.current = null;
-
-	// 			await onChange(status.id, next);
-	// 		}
-	// 	} finally {
-	// 		savingRef.current = false;
-	// 	}
-	// };
-
-	// const debouncedUpdate = useRef(
-	// 	debounce((params: PutStatusParams) => {
-	// 		void save(params);
-	// 	}, 1000),
-	// ).current;
 
 	useDidUpdateEffect(() => {
 		debouncedSave({
@@ -55,12 +33,6 @@ export const StatusSliders = ({ status, onChange }: StatusSlidersProps) => {
 			date: status.date,
 			statusId: status.id,
 		});
-		// const params: PutStatusParams = {
-		// 	...symptoms,
-		// 	date: status.date,
-		// 	statusId: status.id,
-		// };
-		// debouncedUpdate(params);
 	}, [symptoms]);
 
 	const colorMapping = (v: number | null, direction: "up" | "down"): string => {
@@ -82,7 +54,7 @@ export const StatusSliders = ({ status, onChange }: StatusSlidersProps) => {
 		<Grid container spacing={2}>
 			{symptomSliders.map(({ key, label, positiveDirection }) => (
 				<Grid key={key} size={12} container>
-					<Grid size={{ xs: 6, sm: 12 }}>
+					<Grid size={{ xs: 5, sm: 12 }}>
 						<Typography
 							id="input-slider"
 							gutterBottom
@@ -92,7 +64,7 @@ export const StatusSliders = ({ status, onChange }: StatusSlidersProps) => {
 							{label}
 						</Typography>
 					</Grid>
-					<Grid size={{ xs: 6, sm: 12 }}>
+					<Grid size={{ xs: 6, sm: 11 }}>
 						<Slider
 							value={symptoms[key] ?? 0}
 							min={1}
@@ -105,6 +77,17 @@ export const StatusSliders = ({ status, onChange }: StatusSlidersProps) => {
 								maxWidth: "200px",
 							}}
 						/>
+					</Grid>
+					<Grid size={1}>
+						{isDirty(key) && (
+							<Icon
+								color="disabled"
+								sx={{ mt: "0.4rem" }}
+								data-testid="dirty-status-icon"
+							>
+								<HourglassBottomIcon />
+							</Icon>
+						)}
 					</Grid>
 				</Grid>
 			))}

@@ -66,6 +66,7 @@ describe("StatusSliders component", () => {
 			fireEvent.change(sliders[1], { target: { value: 1 } });
 		});
 		expect(onChange).not.toHaveBeenCalled();
+		expect(screen.queryAllByTestId("dirty-status-icon")).toHaveLength(2);
 		await act(async () => vi.advanceTimersByTime(debounceTimeout));
 		expect(onChange).toHaveBeenCalledExactlyOnceWith(1, {
 			date: dayjs(new Date("2022-11-12")),
