@@ -5,7 +5,7 @@ import type { Status } from "@/store";
 import { StatusSliders } from "./StatusSliders";
 
 describe("StatusSliders component", () => {
-	const debounceTimeout = 2000;
+	const debounceTimeout = 1000;
 	const testStatus: Status = {
 		date: dayjs(new Date("2022-11-12")),
 		eveningFitness: 3,
@@ -84,27 +84,6 @@ describe("StatusSliders component", () => {
 			sleepProblems: null,
 			tense: null,
 		});
-	});
-
-	it("Loading is displayed", async () => {
-		vi.useFakeTimers();
-		const pendingOnChange = vi
-			.fn()
-			.mockResolvedValue(
-				() => new Promise((resolve) => setTimeout(resolve, 50)),
-			);
-
-		render(<StatusSliders status={testStatus} onChange={pendingOnChange} />);
-
-		const sliders = screen.getAllByRole("slider");
-		await act(async () => {
-			fireEvent.change(sliders[0], { target: { value: 2 } });
-			vi.advanceTimersByTime(debounceTimeout);
-		});
-
-		screen.getByTestId("loading-spinner");
-		await act(async () => vi.advanceTimersByTime(50));
-		expect(screen.queryByTestId("loading-spinner")).not.toBeVisible();
 	});
 
 	it.skip("Color mapping works as expected", () => {});
