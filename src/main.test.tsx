@@ -19,7 +19,7 @@ describe("Error handling in notes", () => {
 			}),
 		);
 		server.use(
-			http.get("http://localhost:4444/piid/:piid/notes", async () => {
+			http.get("/piid/:piid/notes", async () => {
 				return HttpResponse.json(
 					{
 						code: ErrCode.Internal,

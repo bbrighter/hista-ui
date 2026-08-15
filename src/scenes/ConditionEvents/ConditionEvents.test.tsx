@@ -118,13 +118,10 @@ describe("Manage condition events", () => {
 
 	it("Show loading indicator", async () => {
 		server.use(
-			http.get(
-				"http://localhost:4444/piid/:piid/condition-events",
-				async () => {
-					await delay(100);
-					return HttpResponse.json({ conditionEvents: [] });
-				},
-			),
+			http.get("/piid/:piid/condition-events", async () => {
+				await delay(100);
+				return HttpResponse.json({ conditionEvents: [] });
+			}),
 		);
 		render(
 			<MemoryRouter>

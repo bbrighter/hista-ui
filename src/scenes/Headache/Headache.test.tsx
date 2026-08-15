@@ -184,7 +184,7 @@ describe("A headache can be edited and displayed", () => {
 
 	it("Show loading indicator", async () => {
 		server.use(
-			http.get("http://localhost:4444/piid/:piid/headaches/:id", async () => {
+			http.get("/piid/:piid/headaches/:id", async () => {
 				await delay(100);
 				return HttpResponse.json({
 					id: 1,
