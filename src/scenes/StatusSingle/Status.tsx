@@ -20,7 +20,7 @@ const Status = () => {
 	if (!status) return <>Kein Status gefunden</>;
 
 	return (
-		<Container sx={{ pt: "2rem" }}>
+		<Container sx={{ padding: "2rem" }}>
 			<Typography variant="h6">
 				{status.date.format("dd, DD.MM.YYYY")}
 			</Typography>

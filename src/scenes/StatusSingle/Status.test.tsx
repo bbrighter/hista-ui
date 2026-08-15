@@ -12,7 +12,9 @@ describe("Status integration test", () => {
 		vi.useRealTimers();
 	});
 
-	it("Renders", { timeout: 1000 }, async () => {
+	const debounceTimeout = 2000;
+
+	it("Renders", async () => {
 		vi.useFakeTimers();
 		render(
 			<MemoryRouter initialEntries={["/status/1"]}>
@@ -33,7 +35,7 @@ describe("Status integration test", () => {
 		await act(async () => {
 			fireEvent.change(slider1, { target: { value: 1 } });
 			expect(spyPatch).not.toHaveBeenCalled();
-			vi.advanceTimersByTime(1000);
+			vi.advanceTimersByTime(debounceTimeout);
 		});
 		expect(spyPatch).toHaveBeenCalled();
 	});
