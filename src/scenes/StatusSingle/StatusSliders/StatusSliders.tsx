@@ -1,11 +1,12 @@
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import Grid from "@mui/material/Grid";
+import Icon from "@mui/material/Icon";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
-import debounce from "lodash.debounce";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useDidUpdateEffect } from "@/hooks/useDidUpdateEffect";
-import { Loading } from "@/scenes/components";
 import type { PutStatusParams, Status } from "@/store";
+import { useDebouncedSave } from "./useDebouncedSave";
 
 type StatusSlidersProps = {
 	status: Status;
@@ -13,31 +14,25 @@ type StatusSlidersProps = {
 };
 
 export const StatusSliders = ({ status, onChange }: StatusSlidersProps) => {
-	const [loading, setLoading] = useState(false);
 	const [symptoms, setSymptoms] = useState<Record<SymptomKey, number | null>>(
 		Object.fromEntries(
-			SYMPTOM_FIELDS.map((key: SymptomKey) => [
-				key,
-				status[key as SymptomKey] ?? null,
-			]),
+			SYMPTOM_FIELDS.map((key) => [key, status[key] ?? null]),
 		) as Record<SymptomKey, number | null>,
 	);
 
-	const debouncedUpdate = useRef(
-		debounce(async (params: PutStatusParams) => {
-			setLoading(true);
-			await onChange(status.id, params);
-			setLoading(false);
-		}, 2000),
-	).current;
+	const isDirty = (key: SymptomKey) => status[key] !== symptoms[key];
+
+	const debouncedSave = useDebouncedSave(
+		(params: PutStatusParams) => onChange(status.id, params),
+		1000,
+	);
 
 	useDidUpdateEffect(() => {
-		const params: PutStatusParams = {
+		debouncedSave({
 			...symptoms,
 			date: status.date,
 			statusId: status.id,
-		};
-		debouncedUpdate(params);
+		});
 	}, [symptoms]);
 
 	const colorMapping = (v: number | null, direction: "up" | "down"): string => {
@@ -56,42 +51,47 @@ export const StatusSliders = ({ status, onChange }: StatusSlidersProps) => {
 	};
 
 	return (
-		<Loading show={loading}>
-			<Grid container spacing={2}>
-				{symptomSliders.map(({ key, label, positiveDirection }) => (
-					<Grid key={key} size={12} container>
-						<Grid size={{ xs: 6, sm: 12 }}>
-							<Typography
-								id="input-slider"
-								gutterBottom
-								noWrap
-								sx={{ pt: "0.75rem" }}
-								onClick={() => console.log("click")}
-							>
-								{label}
-							</Typography>
-						</Grid>
-						<Grid size={{ xs: 6, sm: 12 }}>
-							<Slider
-								value={symptoms[key as SymptomKey] ?? 0}
-								min={1}
-								max={5}
-								onChange={(_, v) => {
-									setSymptoms((prev) => ({ ...prev, [key]: v }));
-								}}
-								sx={{
-									color: colorMapping(
-										symptoms[key as SymptomKey],
-										positiveDirection,
-									),
-									maxWidth: "200px",
-								}}
-							/>
-						</Grid>
+		<Grid container spacing={2}>
+			{symptomSliders.map(({ key, label, positiveDirection }) => (
+				<Grid key={key} size={12} container>
+					<Grid size={{ xs: 5, sm: 12 }}>
+						<Typography
+							id="input-slider"
+							gutterBottom
+							noWrap
+							sx={{ pt: "0.75rem" }}
+						>
+							{label}
+						</Typography>
 					</Grid>
-				))}
-			</Grid>
-		</Loading>
+					<Grid size={{ xs: 6, sm: 11 }}>
+						<Slider
+							value={symptoms[key] ?? 0}
+							min={1}
+							max={5}
+							onChange={(_, v) => {
+								setSymptoms((prev) => ({ ...prev, [key]: v }));
+							}}
+							sx={{
+								color: colorMapping(symptoms[key], positiveDirection),
+								maxWidth: "200px",
+							}}
+						/>
+					</Grid>
+					<Grid size={1}>
+						{isDirty(key) && (
+							<Icon
+								color="disabled"
+								sx={{ mt: "0.4rem" }}
+								data-testid="dirty-status-icon"
+							>
+								<HourglassBottomIcon />
+							</Icon>
+						)}
+					</Grid>
+				</Grid>
+			))}
+		</Grid>
 	);
 };
 
