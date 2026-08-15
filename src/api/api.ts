@@ -4,11 +4,7 @@ import Client, { type ClientOptions, Local } from "./generatedApi";
 
 const baseUrl =
 	// `https://prod-hista-api-dpc2.encr.app`;
-	import.meta.env.MODE === "test"
-		? "http://localhost:4444"
-		: import.meta.env.PROD
-			? "/api"
-			: Local;
+	import.meta.env.MODE === "test" ? "" : import.meta.env.PROD ? "/api" : Local;
 
 const options: ClientOptions = {
 	fetcher: fetcher,

@@ -1,6 +1,6 @@
-import { render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MealSettings } from "./MealSettings";
 
 describe("MealSettings component", () => {
@@ -9,9 +9,9 @@ describe("MealSettings component", () => {
 	const setFreshness = vi.fn();
 	const setAloneness = vi.fn();
 
-	beforeEach(() => {
-		vi.resetAllMocks();
-	});
+	beforeEach(() => vi.resetAllMocks());
+
+	afterEach(() => vi.useRealTimers());
 
 	const findSliderValue = async (label: string) => {
 		const sliderLabel = await screen.findByText(label);
@@ -99,9 +99,65 @@ describe("MealSettings component", () => {
 		expect(setAloneness).toHaveBeenCalledWith(true);
 	});
 
-	it.skip("Change freshness", async () => {});
+	it("Change stress", async () => {
+		vi.useFakeTimers();
+		render(
+			<MealSettings
+				setDate={setDate}
+				setAloneness={setAloneness}
+				setFreshness={setFreshness}
+				setStressLevel={setStressLevel}
+				date={new Date("2024-12-03")}
+				freshness={2}
+				isAlone={true}
+				stressLevel={1}
+			/>,
+		);
 
-	it.skip("Change stress", async () => {});
+		const label = screen.getByText("Stress");
+		const sliderBox = label.closest("div") as HTMLElement;
+		expect(sliderBox).not.toBeNull();
+
+		const stressSlider = sliderBox.querySelector("input") as HTMLElement;
+		expect(stressSlider).not.toBeNull();
+		fireEvent.change(stressSlider, { target: { value: 3 } });
+
+		expect(setStressLevel).not.toHaveBeenCalled();
+		await act(async () => {
+			vi.advanceTimersByTime(300);
+		});
+		expect(setStressLevel).toHaveBeenCalledExactlyOnceWith(3);
+	});
+
+	it("Change freshness", async () => {
+		vi.useFakeTimers();
+		render(
+			<MealSettings
+				setDate={setDate}
+				setAloneness={setAloneness}
+				setFreshness={setFreshness}
+				setStressLevel={setStressLevel}
+				date={new Date("2024-12-03")}
+				freshness={2}
+				isAlone={true}
+				stressLevel={1}
+			/>,
+		);
+
+		const label = screen.getByText("Frische");
+		const sliderBox = label.closest("div") as HTMLElement;
+		expect(sliderBox).not.toBeNull();
+
+		const freshnessSlider = sliderBox.querySelector("input") as HTMLElement;
+		expect(freshnessSlider).not.toBeNull();
+		fireEvent.change(freshnessSlider, { target: { value: 0 } });
+
+		expect(setFreshness).not.toHaveBeenCalled();
+		await act(async () => {
+			vi.advanceTimersByTime(400);
+		});
+		expect(setFreshness).toHaveBeenCalledExactlyOnceWith(0);
+	});
 
 	it.skip("Change date", async () => {});
 });

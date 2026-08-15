@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { FoodInput } from "./FoodInput";
@@ -103,5 +103,33 @@ describe("FoodInput component", () => {
 
 		expect(postFoodsByTemplate).toHaveBeenCalledWith(1, 3);
 		expect(input).toHaveValue("");
+	});
+
+	it("Is loading is shown", async () => {
+		vi.useFakeTimers();
+		const postFoodById = vi
+			.fn()
+			.mockImplementation(
+				() => new Promise((resolve) => setTimeout(resolve, 100)),
+			);
+
+		render(
+			<FoodInput
+				mealId={1}
+				options={[{ id: 1, name: "opt1", type: "food" }]}
+				{...fns}
+				postFoodById={postFoodById}
+			/>,
+		);
+
+		const input = screen.getByRole("combobox");
+		await act(async () => {
+			fireEvent.change(input, { target: { value: "op" } });
+			fireEvent.click(screen.getByText("opt1"));
+		});
+
+		screen.getByRole("progressbar");
+		await act(async () => vi.advanceTimersByTime(100));
+		expect(screen.queryByRole("progressbar")).toBeNull();
 	});
 });
