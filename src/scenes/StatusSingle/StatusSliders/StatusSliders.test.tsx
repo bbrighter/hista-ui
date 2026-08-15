@@ -5,6 +5,7 @@ import type { Status } from "@/store";
 import { StatusSliders } from "./StatusSliders";
 
 describe("StatusSliders component", () => {
+	const debounceTimeout = 2000;
 	const testStatus: Status = {
 		date: dayjs(new Date("2022-11-12")),
 		eveningFitness: 3,
@@ -65,7 +66,7 @@ describe("StatusSliders component", () => {
 			fireEvent.change(sliders[1], { target: { value: 1 } });
 		});
 		expect(onChange).not.toHaveBeenCalled();
-		await act(async () => vi.advanceTimersByTime(1000));
+		await act(async () => vi.advanceTimersByTime(debounceTimeout));
 		expect(onChange).toHaveBeenCalledExactlyOnceWith(1, {
 			date: dayjs(new Date("2022-11-12")),
 			eveningFitness: 3,
@@ -98,7 +99,7 @@ describe("StatusSliders component", () => {
 		const sliders = screen.getAllByRole("slider");
 		await act(async () => {
 			fireEvent.change(sliders[0], { target: { value: 2 } });
-			vi.advanceTimersByTime(1000);
+			vi.advanceTimersByTime(debounceTimeout);
 		});
 
 		screen.getByTestId("loading-spinner");

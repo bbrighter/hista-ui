@@ -28,7 +28,7 @@ export const StatusSliders = ({ status, onChange }: StatusSlidersProps) => {
 			setLoading(true);
 			await onChange(status.id, params);
 			setLoading(false);
-		}, 1000),
+		}, 2000),
 	).current;
 
 	useDidUpdateEffect(() => {
@@ -55,11 +55,6 @@ export const StatusSliders = ({ status, onChange }: StatusSlidersProps) => {
 		return v === 0 || v === null ? "rgb(160, 160, 160)" : colors[v - 1];
 	};
 
-	const color = (v: string) =>
-		["sleep", "morningFitness", "eveningFitness"].includes(v)
-			? "textPrimary"
-			: "textSecondary";
-
 	return (
 		<Loading show={loading}>
 			<Grid container spacing={2}>
@@ -69,7 +64,6 @@ export const StatusSliders = ({ status, onChange }: StatusSlidersProps) => {
 							<Typography
 								id="input-slider"
 								gutterBottom
-								color={color(key)}
 								noWrap
 								sx={{ pt: "0.75rem" }}
 								onClick={() => console.log("click")}
@@ -90,7 +84,7 @@ export const StatusSliders = ({ status, onChange }: StatusSlidersProps) => {
 										symptoms[key as SymptomKey],
 										positiveDirection,
 									),
-									maxWidth: "50%",
+									maxWidth: "200px",
 								}}
 							/>
 						</Grid>
