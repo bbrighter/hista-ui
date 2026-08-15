@@ -1,11 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-
 import { client } from "../../api/api";
 import useHista from "../../store/store";
 import { actions } from "..";
 
 describe("ingredient list service", () => {
 	const spy = vi.spyOn(client, "ListIngredients");
+
+	beforeEach(() => {
+		const store = useHista.getState();
+		store.resetIngredients();
+	});
 
 	it("List ingredients", async () => {
 		await actions.ingredients.list();

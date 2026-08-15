@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { FoodInput } from "../AddFood/FoodInput";
 import { getFoodInput } from "./selectors";
 
@@ -18,9 +18,7 @@ describe("FoodInput component", () => {
 		postFoodsByTemplate,
 	};
 
-	beforeEach(() => {
-		vi.resetAllMocks();
-	});
+	afterEach(() => vi.useRealTimers());
 
 	it("Renders", async () => {
 		render(

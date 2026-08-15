@@ -13,22 +13,28 @@ import { actions } from "..";
 describe("meal service, meals", () => {
 	const spyListMeals = vi.spyOn(client, "ListMeals");
 
-	beforeEach(async () => {
-		await actions.meals.list();
+	beforeEach(() => {
+		const store = useHista.getState();
+		store.resetMeals();
 	});
 
 	it("list meals", async () => {
+		await actions.meals.list();
+
 		const { meals } = useHista.getState();
 		expect(meals).toHaveLength(1);
 	});
 
 	it("list meals only called once", async () => {
 		await actions.meals.list();
+		await actions.meals.list();
 
 		expect(spyListMeals).toHaveBeenCalledOnce();
 	});
 
 	it("post meal", async () => {
+		await actions.meals.list();
+
 		const id = await actions.meals.post();
 		expect(id).toBe(2);
 
@@ -37,6 +43,7 @@ describe("meal service, meals", () => {
 	});
 
 	it("get meal", async () => {
+		await actions.meals.list();
 		await actions.meals.get(1);
 
 		const { meal } = useHista.getState();
@@ -44,6 +51,7 @@ describe("meal service, meals", () => {
 	});
 
 	it("delete meal", async () => {
+		await actions.meals.list();
 		await actions.meals.delete(1);
 
 		const { meals } = useHista.getState();

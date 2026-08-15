@@ -31,17 +31,6 @@ beforeAll(() => {
 beforeEach(() => {
 	vi.resetAllMocks();
 	const store = useHista.getState();
-	store.resetSymptoms();
-	store.resetMetaConditionEvents();
-	store.resetMeals();
-	store.resetHeadaches();
-	store.resetPollens();
-	store.resetStatistics();
-	store.resetStatuses();
-	store.resetMedicines();
-	store.resetIngredients();
-	store.resetNotes();
-	store.resetTemplates();
 	store.resetLoaded();
 	store.setPiid("7b3047c2-d56d-4942-abc4-39eb85e785f2");
 });

@@ -2,12 +2,13 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { HttpResponse, http } from "msw";
 import { MemoryRouter } from "react-router-dom";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import {
 	createIngredient,
 	createIngredients,
 } from "@/__tests__/__mocks__/fixtures/meal";
 import { server } from "@/__tests__/setupTest";
+import useHista from "@/store/store";
 import { IngredientManagement } from "./IngredientManagement";
 
 const getIngredientRow = (ingredient: string): HTMLElement => {
@@ -30,6 +31,11 @@ const getNutritionButton = (ingredient: string): HTMLElement => {
 };
 
 describe("IngredientManagement", () => {
+	beforeEach(() => {
+		const store = useHista.getState();
+		store.resetIngredients();
+	});
+
 	it("Everything renders", async () => {
 		render(
 			<MemoryRouter>
