@@ -1,14 +1,14 @@
 import ButtonGroup from "@mui/material/ButtonGroup";
 import IconButton from "@mui/material/IconButton";
 import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 import { useState } from "react";
-
+import { actions } from "@/actions";
 import type { Nutrition } from "../../../store";
 import { Icons } from "../../components/Icons";
 import { ArchiveButton } from "./ArchiveButton";
-import { EditIngredientName } from "./EditIngredientName";
 import { EditNutritionButton } from "./EditNutritionButton";
+import { IngredientName } from "./IngredientName";
+import { useIsSaveable } from "./useIsSaveable";
 
 export const IngredientListItem = ({
 	name,
@@ -22,15 +22,14 @@ export const IngredientListItem = ({
 	nutrition?: Nutrition;
 }) => {
 	const [isEditing, setIsEditing] = useState(false);
+	const onSave = async (v: string) => {
+		await actions.ingredients.changeName(id, v);
+	};
 
 	const onEdit = () => setIsEditing(!isEditing);
+	const onArchive = actions.ingredients.archive;
 
-	const nutritions = [
-		{ label: "F", value: nutrition?.fat },
-		{ label: "K", value: nutrition?.carbohydrate },
-		{ label: "B", value: nutrition?.fiber },
-		{ label: "E", value: nutrition?.protein },
-	];
+	const isSaveable = useIsSaveable();
 
 	return (
 		<ListItem
@@ -40,6 +39,7 @@ export const IngredientListItem = ({
 						onClick={onEdit}
 						data-testid="editButton"
 						disabled={isArchived}
+						title="Umbenennen"
 					>
 						<Icons.actions.edit />
 					</IconButton>
@@ -47,33 +47,21 @@ export const IngredientListItem = ({
 						ingredientId={id}
 						nutrition={nutrition}
 						disabled={isArchived}
+						updateNutrition={actions.ingredients.updateNutrition}
 					/>
-					<ArchiveButton id={id} isArchived={isArchived} />
+					<ArchiveButton id={id} isArchived={isArchived} onClick={onArchive} />
 				</ButtonGroup>
 			}
 		>
-			{isEditing && (
-				<EditIngredientName
-					id={id}
-					name={name}
-					onCancel={() => setIsEditing(false)}
-				/>
-			)}
-			{!isEditing && (
-				<ListItemText
-					primary={name}
-					secondary={
-						nutrition
-							? nutritions
-									.map((n) => `${n.label}: ${n.value?.toLocaleString("de-DE")}`)
-									.join(" | ")
-							: undefined
-					}
-					slotProps={{
-						primary: { color: isArchived ? "textDisabled" : "textPrimary" },
-					}}
-				/>
-			)}
+			<IngredientName
+				isArchived={isArchived}
+				name={name}
+				isSaveable={isSaveable}
+				onSave={onSave}
+				nutrition={nutrition}
+				setEditing={setIsEditing}
+				isEditing={isEditing}
+			/>
 		</ListItem>
 	);
 };

@@ -40,9 +40,7 @@ const mealHandlers = (baseUrl: string) => [
 
 const ingredientHandlers = (baseUrl: string) => [
 	http.get(`${baseUrl}/ingredients`, () =>
-		HttpResponse.json({
-			ingredients: [createIngredient(), createDefaultIngredient2()],
-		}),
+		HttpResponse.json({ ingredients: [] }),
 	),
 	http.delete(`${baseUrl}/ingredients/:id`, () => HttpResponse.json({})),
 	http.patch(`${baseUrl}/ingredients/:id`, () => HttpResponse.json({})),

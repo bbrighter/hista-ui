@@ -1,29 +1,23 @@
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import List from "@mui/material/List";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { actions } from "../../actions";
 import { usePiidEffect } from "../../hooks/usePiidEffect";
-import {
-	selectIsLoadingAny,
-	useAllIngredients,
-	useNonArchivedIngredients,
-} from "../../store";
+import { selectIsLoadingAny } from "../../store";
 import useHista from "../../store/store";
 import { Loading } from "../components";
-import { IngredientListItem, ToggleVisibility } from "./IngredientListItem";
+
+import {
+	IngredientList,
+	useIngredientList,
+} from "./IngredientList/IngredientList";
+import { ToggleVisibility } from "./IngredientList/ToggleVisibility";
 
 export const IngredientManagement = () => {
 	const isLoading = useHista(selectIsLoadingAny(["ingredients"]));
 	const [showArchived, setShowArchived] = useState(true);
-	const ingredients = useAllIngredients();
-	const nonArchivedIngredients = useNonArchivedIngredients();
-
-	const showIngredients = useMemo(
-		() => (showArchived ? nonArchivedIngredients : ingredients),
-		[ingredients, nonArchivedIngredients, showArchived],
-	);
+	const ingredientListProps = useIngredientList(showArchived);
 
 	usePiidEffect(() => {
 		actions.ingredients.list();
@@ -38,11 +32,7 @@ export const IngredientManagement = () => {
 						onChange={() => setShowArchived(!showArchived)}
 					/>
 				</Box>
-				<List>
-					{showIngredients.map((i) => (
-						<IngredientListItem key={i.id} {...i} />
-					))}
-				</List>
+				<IngredientList {...ingredientListProps} />
 			</Container>
 		</Loading>
 	);

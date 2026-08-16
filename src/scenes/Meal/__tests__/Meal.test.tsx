@@ -17,6 +17,7 @@ import { server } from "@/__tests__/setupTest";
 import Meal from "../Meal";
 import {
 	getDateInput,
+	getDeleteFoodButton,
 	getFoodInput,
 	getFoodRow,
 	getIsAloneButtons,
@@ -212,8 +213,7 @@ describe("Meal scene integration", () => {
 
 		renderMeal();
 
-		await waitFor(() => getFoodRow("Ingredient"));
-		const deleteButton = screen.getByTestId("delete-food-button");
+		const deleteButton = await waitFor(() => getDeleteFoodButton());
 		await userEvent.click(deleteButton);
 		expect(screen.queryByRole("listitem", { name: "Ingredient" })).toBeNull();
 		const foodInput = getFoodInput();

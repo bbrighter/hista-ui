@@ -7,7 +7,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import IconButton, { type IconButtonProps } from "@mui/material/IconButton";
 import { useState } from "react";
 
-import { actions } from "../../../actions";
 import type { Nutrition } from "../../../store";
 import { Icons } from "../../components/Icons";
 import { NumberDecimalInput } from "../../components/NumberDecimalInput";
@@ -15,8 +14,13 @@ import { NumberDecimalInput } from "../../components/NumberDecimalInput";
 export const EditNutritionButton = ({
 	ingredientId,
 	nutrition,
+	updateNutrition,
 	...other
-}: IconButtonProps & { ingredientId: number; nutrition?: Nutrition }) => {
+}: IconButtonProps & {
+	ingredientId: number;
+	nutrition?: Nutrition;
+	updateNutrition: (id: number, nutrition: Nutrition) => Promise<void>;
+}) => {
 	const [open, setOpen] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const onClose = () => setOpen(false);
@@ -41,7 +45,7 @@ export const EditNutritionButton = ({
 		if (!isFilled) return;
 
 		setLoading(true);
-		await actions.ingredients.updateNutrition(ingredientId, {
+		await updateNutrition(ingredientId, {
 			carbohydrate,
 			protein,
 			fat,

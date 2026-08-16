@@ -1,21 +1,18 @@
 import IconButton from "@mui/material/IconButton";
 
-import { actions } from "../../../actions";
 import { Icons } from "../../components/Icons";
 
 export const ArchiveButton = ({
 	id,
 	isArchived,
+	onClick,
 }: {
 	id: number;
 	isArchived: boolean;
+	onClick: (id: number) => Promise<void>;
 }) => {
-	const onClick = () => {
-		actions.ingredients.archive(id);
-	};
-
 	return (
-		<IconButton onClick={onClick} data-testid="archiveButton">
+		<IconButton onClick={() => onClick(id)} data-testid="archiveButton">
 			{isArchived ? (
 				<Icons.actions.unarchive color="disabled" />
 			) : (
