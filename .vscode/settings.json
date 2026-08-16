@@ -1,17 +1,17 @@
 {
-  "editor.defaultFormatter": "biomejs.biome",
-  "editor.formatOnSave": true,
-   "editor.codeActionsOnSave": {
-"source.fixAll.biome": "explicit",
+    "editor.defaultFormatter": "biomejs.biome",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "explicit",
         "source.organizeImports.biome": "explicit",
 	},
-  "js/ts.preferences.autoImportSpecifierExcludeRegexes": [
-    "^@mui/[^/]+$"
-  ],
-"cSpell.words": [
-    "Hista"
-],
-"[typescriptreact]": {
-    "editor.defaultFormatter": "biomejs.biome"
-},
+    "js/ts.preferences.autoImportSpecifierExcludeRegexes": [
+        "^@mui/[^/]+$"
+    ],
+    "cSpell.words": [
+        "Hista"
+    ],
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    },
 }
