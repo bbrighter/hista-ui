@@ -54,7 +54,7 @@ export const StatusSliders = ({ status, onChange }: StatusSlidersProps) => {
 		<Grid container spacing={2}>
 			{symptomSliders.map(({ key, label, positiveDirection }) => (
 				<Grid key={key} size={12} container>
-					<Grid size={{ xs: 5, sm: 12 }}>
+					<Grid size={12}>
 						<Typography
 							id="input-slider"
 							gutterBottom
@@ -64,7 +64,7 @@ export const StatusSliders = ({ status, onChange }: StatusSlidersProps) => {
 							{label}
 						</Typography>
 					</Grid>
-					<Grid size={{ xs: 6, sm: 11 }}>
+					<Grid size={11}>
 						<Slider
 							value={symptoms[key] ?? 0}
 							min={1}

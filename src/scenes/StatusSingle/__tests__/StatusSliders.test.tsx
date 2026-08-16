@@ -2,7 +2,7 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Status } from "@/store";
-import { StatusSliders } from "./StatusSliders";
+import { StatusSliders } from "../StatusSliders/StatusSliders";
 
 describe("StatusSliders component", () => {
 	const debounceTimeout = 1000;
@@ -87,5 +87,16 @@ describe("StatusSliders component", () => {
 		});
 	});
 
-	it.skip("Color mapping works as expected", () => {});
+	it("Queued requests appear", async () => {
+		render(<StatusSliders status={testStatus} onChange={onChange} />);
+
+		expect(screen.queryAllByTestId("dirty-status-icon")).toHaveLength(0);
+
+		const sliders = screen.getAllByRole("slider");
+		await act(async () => {
+			fireEvent.change(sliders[0], { target: { value: 2 } });
+		});
+		expect(screen.queryAllByTestId("dirty-status-icon")).toHaveLength(1);
+		// Test that they disappear in integration test, as onChange must apply the correct changes
+	});
 });
