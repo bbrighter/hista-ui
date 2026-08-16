@@ -1,16 +1,7 @@
 import { HttpResponse, http } from "msw";
 
 import type { hista } from "../../api/generatedApi";
-
-const ingredients = [
-	{
-		id: 1,
-		name: "ingredient1",
-		isArchived: false,
-		nutrition: { carbohydrate: 20, fat: 5, fiber: 0, protein: 3 },
-	},
-	{ id: 2, name: "ingredient2", isArchived: false },
-] satisfies Array<hista.IngredientResponse>;
+import { createDefaultIngredient2, createIngredient } from "./fixtures/meal";
 
 const mealHandlers = (baseUrl: string) => [
 	http.get(`${baseUrl}/meals`, () =>
@@ -49,7 +40,7 @@ const mealHandlers = (baseUrl: string) => [
 
 const ingredientHandlers = (baseUrl: string) => [
 	http.get(`${baseUrl}/ingredients`, () =>
-		HttpResponse.json({ ingredients: ingredients }),
+		HttpResponse.json({ ingredients: [] }),
 	),
 	http.delete(`${baseUrl}/ingredients/:id`, () => HttpResponse.json({})),
 	http.patch(`${baseUrl}/ingredients/:id`, () => HttpResponse.json({})),
@@ -57,9 +48,7 @@ const ingredientHandlers = (baseUrl: string) => [
 
 const foodHandlers = (baseUrl: string) => [
 	http.delete(`${baseUrl}/foods/:id`, () =>
-		HttpResponse.json({
-			ingredients: [ingredients[1]],
-		} as hista.IngredientListResponse),
+		HttpResponse.json([createIngredient(), createDefaultIngredient2()]),
 	),
 	http.patch(`${baseUrl}/foods/:id/condition`, () => HttpResponse.json({})),
 	http.patch(`${baseUrl}/foods/:id/amount`, () => HttpResponse.json({})),
@@ -71,12 +60,20 @@ const foodHandlers = (baseUrl: string) => [
 			const name = body.ingredientName;
 			return HttpResponse.json({
 				food: { id: 1, ingredientId: 3, foodCondition: "raw" },
-				ingredients: { ingredients: [{ id: 3, name: name }, ...ingredients] },
+				ingredients: {
+					ingredients: [
+						createIngredient(),
+						createDefaultIngredient2(),
+						createIngredient({ id: 3, name: name, isArchived: false }),
+					],
+				},
 			} as hista.PostFoodResponse);
 		}
 		return HttpResponse.json({
 			food: { id: 1, ingredientId: body.ingredientId, foodCondition: "raw" },
-			ingredients: { ingredients: ingredients },
+			ingredients: {
+				ingredients: [createIngredient(), createDefaultIngredient2()],
+			},
 		} as hista.PostFoodResponse);
 	}),
 	http.post(`${baseUrl}/meal/:id/foods/by-template/:templateId`, () =>

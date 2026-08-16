@@ -1,11 +1,20 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
-
+import { HttpResponse, http } from "msw";
+import { beforeEach, describe, expect, it } from "vitest";
+import {
+	createIngredient,
+	createIngredients,
+} from "@/__tests__/__mocks__/fixtures/meal";
+import { server } from "@/__tests__/setupTest";
+import useHista from "@/store/store";
 import { Charts } from "../Charts";
 import { getFilter, getIngredientSelect } from "./test.utils";
 
 describe("Charts", () => {
+	beforeEach(() => {
+		useHista.getState().resetIngredients();
+	});
 	it("render", async () => {
 		render(<Charts />);
 
@@ -25,6 +34,13 @@ describe("Charts", () => {
 	});
 
 	it("select ingredient", async () => {
+		server.use(
+			http.get("/piid/:piid/ingredients", () =>
+				HttpResponse.json(
+					createIngredients([createIngredient({ id: 1, name: "ingredient1" })]),
+				),
+			),
+		);
 		render(<Charts />);
 
 		const ingredientSelect = await waitFor(() => getIngredientSelect());

@@ -97,31 +97,28 @@ describe("condition event is rendered and can be edited", () => {
 
 	it("Add new symptom", async () => {
 		server.use(
-			http.post(
-				"http://localhost:4444/piid/:piid/condition-events/:id/conditions",
-				async () => {
-					return HttpResponse.json({
-						condition: { id: 4, severity: 1, symptomId: 3 },
-						symptoms: {
-							Categories: [
-								{
-									id: 1,
-									name: "cat",
-									symptoms: [
-										{ id: 1, name: "symptom1", categoryId: 1 },
-										{ id: 2, name: "symptom2", categoryId: 1 },
-									],
-								},
-								{
-									id: 2,
-									name: "cat with no symptoms",
-									symptoms: [{ id: 3, name: "new symptom", categoryId: 2 }],
-								},
-							],
-						},
-					});
-				},
-			),
+			http.post("/piid/:piid/condition-events/:id/conditions", async () => {
+				return HttpResponse.json({
+					condition: { id: 4, severity: 1, symptomId: 3 },
+					symptoms: {
+						Categories: [
+							{
+								id: 1,
+								name: "cat",
+								symptoms: [
+									{ id: 1, name: "symptom1", categoryId: 1 },
+									{ id: 2, name: "symptom2", categoryId: 1 },
+								],
+							},
+							{
+								id: 2,
+								name: "cat with no symptoms",
+								symptoms: [{ id: 3, name: "new symptom", categoryId: 2 }],
+							},
+						],
+					},
+				});
+			}),
 		);
 		renderConditionEvent();
 
@@ -145,17 +142,14 @@ describe("condition event is rendered and can be edited", () => {
 
 	it("Show loading indicator", async () => {
 		server.use(
-			http.get(
-				"http://localhost:4444/piid/:piid/condition-events/:id",
-				async () => {
-					await delay(100);
-					return HttpResponse.json({
-						id: 1,
-						date: "2024-01-01T00:00:00Z",
-						conditions: [{ id: 1, severity: 3, symptomId: 1 }],
-					});
-				},
-			),
+			http.get("/piid/:piid/condition-events/:id", async () => {
+				await delay(100);
+				return HttpResponse.json({
+					id: 1,
+					date: "2024-01-01T00:00:00Z",
+					conditions: [{ id: 1, severity: 3, symptomId: 1 }],
+				});
+			}),
 		);
 		renderConditionEvent();
 

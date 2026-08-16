@@ -1,9 +1,13 @@
-import { describe, expect, it } from "vitest";
-
+import { beforeEach, describe, expect, it } from "vitest";
 import useHista from "../../store/store";
 import { conditionEvents as service } from "../conditionEvents.actions";
 
 describe("condition events service", () => {
+	beforeEach(() => {
+		const store = useHista.getState();
+		store.resetConditionEvent();
+		store.resetMetaConditionEvents();
+	});
 	it("list events", async () => {
 		await service.list();
 

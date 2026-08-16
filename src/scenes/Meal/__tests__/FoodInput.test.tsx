@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
-import { FoodInput } from "./FoodInput";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { FoodInput } from "../AddFood/FoodInput";
+import { getFoodInput } from "./selectors";
 
 describe("FoodInput component", () => {
 	const listIngredients = vi.fn();
@@ -17,9 +18,7 @@ describe("FoodInput component", () => {
 		postFoodsByTemplate,
 	};
 
-	beforeEach(() => {
-		vi.resetAllMocks();
-	});
+	afterEach(() => vi.useRealTimers());
 
 	it("Renders", async () => {
 		render(
@@ -33,7 +32,7 @@ describe("FoodInput component", () => {
 			/>,
 		);
 
-		const input = screen.getByRole("combobox");
+		const input = getFoodInput();
 		expect(input).toBeVisible();
 
 		await userEvent.click(input);
@@ -53,7 +52,7 @@ describe("FoodInput component", () => {
 			/>,
 		);
 
-		const input = screen.getByRole("combobox");
+		const input = getFoodInput();
 		await userEvent.type(input, "new{enter}");
 
 		expect(postFoodByName).toHaveBeenCalledWith(1, "new");
@@ -73,7 +72,7 @@ describe("FoodInput component", () => {
 			/>,
 		);
 
-		const input = screen.getByRole("combobox");
+		const input = getFoodInput();
 		await userEvent.type(input, "op");
 		await userEvent.click(screen.getByText("opt1"));
 
@@ -93,7 +92,7 @@ describe("FoodInput component", () => {
 			/>,
 		);
 
-		const input = screen.getByRole("combobox");
+		const input = getFoodInput();
 		await userEvent.type(input, "tem");
 		const option = screen.getByText("temp1");
 		expect(option.closest("li")).toContainElement(
@@ -103,5 +102,33 @@ describe("FoodInput component", () => {
 
 		expect(postFoodsByTemplate).toHaveBeenCalledWith(1, 3);
 		expect(input).toHaveValue("");
+	});
+
+	it("Is loading is shown", async () => {
+		vi.useFakeTimers();
+		const postFoodById = vi
+			.fn()
+			.mockImplementation(
+				() => new Promise((resolve) => setTimeout(resolve, 100)),
+			);
+
+		render(
+			<FoodInput
+				mealId={1}
+				options={[{ id: 1, name: "opt1", type: "food" }]}
+				{...fns}
+				postFoodById={postFoodById}
+			/>,
+		);
+
+		const input = getFoodInput();
+		await act(async () => {
+			fireEvent.change(input, { target: { value: "op" } });
+			fireEvent.click(screen.getByText("opt1"));
+		});
+
+		screen.getByRole("progressbar");
+		await act(async () => vi.advanceTimersByTime(100));
+		expect(screen.queryByRole("progressbar")).toBeNull();
 	});
 });

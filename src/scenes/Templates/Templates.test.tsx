@@ -1,11 +1,25 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { HttpResponse, http } from "msw";
 import { MemoryRouter } from "react-router-dom";
-import { describe, expect, it } from "vitest";
-
+import { beforeEach, describe, expect, it } from "vitest";
+import {
+	createIngredient,
+	createIngredients,
+} from "@/__tests__/__mocks__/fixtures/meal";
+import {
+	createTemplate,
+	createTemplates,
+} from "@/__tests__/__mocks__/fixtures/templates";
+import { server } from "@/__tests__/setupTest";
+import useHista from "@/store/store";
 import { Templates } from "./Templates";
 
 describe("Template management", () => {
+	beforeEach(() => {
+		useHista.getState().resetIngredients();
+	});
+
 	const getAddTemplateButton = () => {
 		const button = screen.getByText("Neue Vorlage", { selector: "button" });
 		expect(button).toBeVisible();
@@ -25,6 +39,13 @@ describe("Template management", () => {
 		within(screen.getByTestId("ingredient-select")).getByRole("combobox");
 
 	it("Render", async () => {
+		server.use(
+			http.get("/piid/:piid/templates", () =>
+				HttpResponse.json(
+					createTemplates([createTemplate({ name: "Template" })]),
+				),
+			),
+		);
 		render(
 			<MemoryRouter>
 				<Templates />
@@ -38,6 +59,16 @@ describe("Template management", () => {
 	});
 
 	it("Add a template", async () => {
+		server.use(
+			http.get("/piid/:piid/ingredients", () =>
+				HttpResponse.json(
+					createIngredients([
+						createIngredient({ id: 1, name: "ingredient1" }),
+						createIngredient({ id: 2, name: "ingredient2" }),
+					]),
+				),
+			),
+		);
 		render(
 			<MemoryRouter>
 				<Templates />

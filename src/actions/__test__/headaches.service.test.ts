@@ -1,12 +1,14 @@
 import dayjs from "dayjs";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-
 import { client } from "../../api/api";
 import useHista from "../../store/store";
 import { actions } from "..";
 
 describe("headache service", () => {
 	beforeEach(async () => {
+		const store = useHista.getState();
+		store.resetHeadaches();
+
 		expect(useHista.getState().loaded.headaches).toBeFalsy();
 		await actions.headaches.list();
 		expect(useHista.getState().loaded.headaches).toBeTruthy();

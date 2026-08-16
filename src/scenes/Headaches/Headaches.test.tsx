@@ -94,7 +94,7 @@ describe("Headache management", () => {
 
 	it("Show loading indicator", async () => {
 		server.use(
-			http.get("http://localhost:4444/piid/:piid/headaches", async () => {
+			http.get("/piid/:piid/headaches", async () => {
 				await delay(100);
 				return HttpResponse.json({ headaches: [] });
 			}),

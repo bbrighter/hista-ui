@@ -1,8 +1,15 @@
-import { act, fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { FoodList } from "./FoodList";
-import type { FoodListProps } from "./useFoodList";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { FoodList } from "../FoodList/FoodList";
+import type { FoodListProps } from "../FoodList/useFoodList";
+import {
+	getAmountInput,
+	getDeleteFoodButton,
+	getFoodRow,
+	queryCookedButton,
+	queryRawButton,
+} from "./selectors";
 
 describe("FoodList component", () => {
 	const patchAmount = vi.fn();
@@ -27,17 +34,6 @@ describe("FoodList component", () => {
 			/>,
 		);
 
-	beforeEach(() => {
-		vi.resetAllMocks();
-	});
-
-	const getListItemByName = (name: string): HTMLElement => {
-		const listItems = screen.queryAllByRole("listitem");
-		const item = listItems.find((li) => li.contains(screen.getByText(name)));
-		expect(item).toBeDefined();
-		return item as HTMLElement;
-	};
-
 	it("Renders", async () => {
 		renderList({
 			foods: [
@@ -57,25 +53,21 @@ describe("FoodList component", () => {
 			],
 		});
 
-		const listItem1 = getListItemByName("ing");
-		expect(
-			within(listItem1).getByRole("button", { name: "Roh" }),
-		).toBeVisible();
-		expect(within(listItem1).queryByRole("button", { name: "Gar" })).toBeNull();
-		expect(within(listItem1).getByRole("spinbutton")).toHaveValue(null);
+		const listItem1 = getFoodRow("ing");
+		expect(queryRawButton(listItem1)).toBeVisible();
+		expect(queryCookedButton(listItem1)).toBeNull();
+		expect(getAmountInput(listItem1)).toHaveValue(null);
 
-		const listItem2 = getListItemByName("cooked ing");
-		expect(
-			within(listItem2).getByRole("button", { name: "Gar" }),
-		).toBeVisible();
-		expect(within(listItem2).queryByRole("button", { name: "Roh" })).toBeNull();
-		expect(within(listItem2).getByRole("spinbutton")).toHaveValue(30);
+		const listItem2 = getFoodRow("cooked ing");
+		expect(queryCookedButton(listItem2)).toBeVisible();
+		expect(queryRawButton(listItem2)).toBeNull();
+		expect(getAmountInput(listItem2)).toHaveValue(30);
 	});
 
 	it("Toggle raw/cooked", async () => {
 		renderList({});
 
-		const rawButton = screen.getByRole("button", { name: "Roh" });
+		const rawButton = queryRawButton(getFoodRow("ing")) as HTMLElement;
 		await userEvent.click(rawButton);
 		expect(patchCondition).toHaveBeenCalledExactlyOnceWith(1, "cooked");
 	});
@@ -89,7 +81,7 @@ describe("FoodList component", () => {
 			const currMock = vi.fn().mockResolvedValue(undefined);
 			vi.useFakeTimers();
 			renderList({ patchAmount: currMock });
-			const input = screen.getByRole("spinbutton");
+			const input = getAmountInput();
 			expect(input).toHaveValue(null);
 
 			act(() => fireEvent.change(input, { target: { value: 20 } }));
@@ -116,7 +108,7 @@ describe("FoodList component", () => {
 					},
 				],
 			});
-			const input = screen.getByRole("spinbutton");
+			const input = getAmountInput();
 			expect(input).toHaveValue(10);
 
 			act(() => fireEvent.change(input, { target: { value: 0 } }));
@@ -142,7 +134,7 @@ describe("FoodList component", () => {
 					},
 				],
 			});
-			const input = screen.getByRole("spinbutton");
+			const input = getAmountInput();
 			expect(input).toHaveValue(10);
 
 			act(() => fireEvent.change(input, { target: { value: 20 } }));
@@ -158,7 +150,7 @@ describe("FoodList component", () => {
 	it("delete item", async () => {
 		renderList();
 
-		const deleteButton = screen.getByTestId("delete-food-button");
+		const deleteButton = getDeleteFoodButton();
 		await userEvent.click(deleteButton);
 
 		expect(deleteFood).toHaveBeenCalledExactlyOnceWith(1);

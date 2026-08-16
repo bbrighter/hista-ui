@@ -1,5 +1,10 @@
+import { HttpResponse, http } from "msw";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-
+import {
+	createIngredient,
+	createIngredients,
+} from "@/__tests__/__mocks__/fixtures/meal";
+import { server } from "@/__tests__/setupTest";
 import { client } from "../../api/api";
 import useHista from "../../store/store";
 import { actions } from "..";
@@ -7,7 +12,22 @@ import { actions } from "..";
 describe("ingredient list service", () => {
 	const spy = vi.spyOn(client, "ListIngredients");
 
+	beforeEach(() => {
+		const store = useHista.getState();
+		store.resetIngredients();
+	});
+
 	it("List ingredients", async () => {
+		server.use(
+			http.get("/piid/:piid/ingredients", () =>
+				HttpResponse.json(
+					createIngredients([
+						createIngredient({ id: 1 }),
+						createIngredient({ id: 2 }),
+					]),
+				),
+			),
+		);
 		await actions.ingredients.list();
 
 		const { ingredients } = useHista.getState();

@@ -19,7 +19,7 @@ import {
 } from "./symptomHandlers";
 import { templateHandlers } from "./templateHander";
 
-const baseUrl = "http://localhost:4444";
+const baseUrl = "";
 const baseUrlWithPiid = `${baseUrl}/piid/:piid`;
 
 const handlers = [

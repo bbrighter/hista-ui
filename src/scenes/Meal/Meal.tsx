@@ -26,7 +26,9 @@ export default function Meal() {
 	const params = useParams<{ mealId: string }>();
 
 	usePiidEffect(() => {
+		actions.templates.list();
 		actions.meals.get(Number(params.mealId));
+		actions.ingredients.list();
 	}, [params.mealId]);
 
 	const mealSettings = useMealSettings();

@@ -100,7 +100,7 @@ describe("Medicine Management", () => {
 
 	it("no data, show no pills", async () => {
 		server.use(
-			http.get("http://localhost:4444/piid/:piid/medicines", () =>
+			http.get("/piid/:piid/medicines", () =>
 				HttpResponse.json({ medicines: [] }),
 			),
 		);

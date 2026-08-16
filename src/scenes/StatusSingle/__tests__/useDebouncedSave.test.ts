@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { useDebouncedSave } from "./useDebouncedSave";
+import { useDebouncedSave } from "../StatusSliders/useDebouncedSave";
 
 describe("useDebouncedSave", () => {
 	afterEach(() => {
