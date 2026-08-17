@@ -1,5 +1,6 @@
 import Container from "@mui/material/Container";
 import dayjs from "dayjs";
+import { useMemo } from "react";
 import { useAppNavigate } from "@/hooks/useNavigate";
 import { actions } from "../../../actions";
 import { type Status, useStatusExistsOnDays } from "../../../store";
@@ -12,11 +13,15 @@ type StatusListProps = {
 };
 
 export const StatusList = ({ statuses, isLoading }: StatusListProps) => {
-	const items = statuses.map((s) => ({
-		id: s.id,
-		date: s.date.toDate(),
-		checked: Boolean(s.eveningFitness && s.morningFitness && s.morningSleep),
-	}));
+	const items = useMemo(
+		() =>
+			statuses.map((s) => ({
+				id: s.id,
+				date: s.date.toDate(),
+				checked: Object.values(s).every(Boolean),
+			})),
+		[statuses],
+	);
 
 	const navigate = useAppNavigate();
 
