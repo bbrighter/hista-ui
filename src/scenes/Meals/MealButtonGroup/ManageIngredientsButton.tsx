@@ -1,7 +1,6 @@
 import IconButton from "@mui/material/IconButton";
-
-import { useAppNavigate } from "../../../hooks/useNavigate";
-import { Icons } from "../../components/Icons";
+import { useAppNavigate } from "@/hooks/useNavigate";
+import { Icons } from "@/scenes/components/Icons";
 
 export const ManageIngredientsButton = () => {
 	const navigate = useAppNavigate();

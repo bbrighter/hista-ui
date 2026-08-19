@@ -1,16 +1,14 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { HttpResponse, http } from "msw";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it } from "vitest";
-import {
-	createIngredient,
-	createIngredients,
-} from "@/__tests__/__mocks__/fixtures/meal";
+import { createIngredient, createIngredients } from "@/__tests__/fixtures/meal";
 import {
 	createTemplate,
 	createTemplates,
-} from "@/__tests__/__mocks__/fixtures/templates";
+} from "@/__tests__/fixtures/templates";
+import { getIngredientListHandler } from "@/__tests__/mocks/mealHandlers";
+import { getTemplateListHandler } from "@/__tests__/mocks/templateHander";
 import { server } from "@/__tests__/setupTest";
 import useHista from "@/store/store";
 import { Templates } from "./Templates";
@@ -40,10 +38,8 @@ describe("Template management", () => {
 
 	it("Render", async () => {
 		server.use(
-			http.get("/piid/:piid/templates", () =>
-				HttpResponse.json(
-					createTemplates([createTemplate({ name: "Template" })]),
-				),
+			getTemplateListHandler(
+				createTemplates([createTemplate({ name: "Template" })]),
 			),
 		);
 		render(
@@ -60,13 +56,11 @@ describe("Template management", () => {
 
 	it("Add a template", async () => {
 		server.use(
-			http.get("/piid/:piid/ingredients", () =>
-				HttpResponse.json(
-					createIngredients([
-						createIngredient({ id: 1, name: "ingredient1" }),
-						createIngredient({ id: 2, name: "ingredient2" }),
-					]),
-				),
+			getIngredientListHandler(
+				createIngredients([
+					createIngredient({ id: 1, name: "ingredient1" }),
+					createIngredient({ id: 2, name: "ingredient2" }),
+				]),
 			),
 		);
 		render(

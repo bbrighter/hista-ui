@@ -1,3 +1,4 @@
+import { createStatusList } from "../fixtures/status";
 import { authHandlers } from "./authHandler";
 import { errorHandler } from "./errorHandlers";
 import { headacheHandlers } from "./headacheHandlers";
@@ -11,7 +12,12 @@ import {
 	getNutritionStatisticsHandler,
 	getStatisticsHandler,
 } from "./statisticsHandler";
-import { statusHandlers } from "./statusHandler";
+import {
+	deleteStatusHandler,
+	getStatusListHandler,
+	patchStatusHandler,
+	postStatusHandler,
+} from "./statusHandler";
 import {
 	conditionEventHandlers,
 	conditionHandlers,
@@ -26,13 +32,12 @@ const handlers = [
 	...symptomHandlers(baseUrlWithPiid),
 	...conditionEventHandlers(baseUrlWithPiid),
 	...conditionHandlers(baseUrlWithPiid),
-	...mealHandlers(baseUrlWithPiid),
-	...ingredientHandlers(baseUrlWithPiid),
-	...foodHandlers(baseUrlWithPiid),
+	...mealHandlers,
+	...ingredientHandlers,
+	...foodHandlers,
 	...noteHandlers(baseUrlWithPiid),
 	...headacheHandlers(baseUrlWithPiid),
 	...pollenHandlers(baseUrlWithPiid),
-	...statusHandlers(baseUrlWithPiid),
 	...permissionsHandler(baseUrl),
 	...authHandlers(baseUrl),
 	getStatisticsHandler(baseUrlWithPiid),
@@ -40,8 +45,13 @@ const handlers = [
 	getNutritionStatisticsHandler(baseUrlWithPiid),
 	...medicineHandlers(baseUrlWithPiid),
 	...intakeHandlers(baseUrlWithPiid),
-	...templateHandlers(baseUrlWithPiid),
+	...templateHandlers,
 	errorHandler(baseUrl),
+
+	postStatusHandler(),
+	getStatusListHandler(createStatusList()),
+	patchStatusHandler(),
+	deleteStatusHandler(),
 ];
 
 export default handlers;

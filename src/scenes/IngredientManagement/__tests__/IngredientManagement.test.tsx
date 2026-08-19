@@ -1,13 +1,10 @@
 import { createTheme } from "@mui/material/styles";
 import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { delay, HttpResponse, http } from "msw";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import {
-	createIngredient,
-	createIngredients,
-} from "@/__tests__/__mocks__/fixtures/meal";
+import { createIngredient, createIngredients } from "@/__tests__/fixtures/meal";
+import { getIngredientListHandler } from "@/__tests__/mocks/mealHandlers";
 import { server } from "@/__tests__/setupTest";
 import useHista from "@/store/store";
 import { IngredientManagement } from "../IngredientManagement";
@@ -35,21 +32,19 @@ describe("Ingredient Management integration tests", () => {
 
 	it("Renders", async () => {
 		server.use(
-			http.get("/piid/:piid/ingredients", () =>
-				HttpResponse.json(
-					createIngredients([
-						createIngredient({
-							id: 1,
-							name: "No nutrition",
-							nutrition: undefined,
-						}),
-						createIngredient({
-							id: 2,
-							name: "Ingredient",
-							nutrition: { carbohydrate: 1, fat: 2, fiber: 3, protein: 0 },
-						}),
-					]),
-				),
+			getIngredientListHandler(
+				createIngredients([
+					createIngredient({
+						id: 1,
+						name: "No nutrition",
+						nutrition: undefined,
+					}),
+					createIngredient({
+						id: 2,
+						name: "Ingredient",
+						nutrition: { carbohydrate: 1, fat: 2, fiber: 3, protein: 0 },
+					}),
+				]),
 			),
 		);
 		render(
@@ -69,20 +64,18 @@ describe("Ingredient Management integration tests", () => {
 
 	it("Show archived", async () => {
 		server.use(
-			http.get("/piid/:piid/ingredients", () =>
-				HttpResponse.json(
-					createIngredients([
-						createIngredient({
-							id: 1,
-							name: "Archived",
-							isArchived: true,
-						}),
-						createIngredient({
-							id: 2,
-							name: "Ingredient",
-						}),
-					]),
-				),
+			getIngredientListHandler(
+				createIngredients([
+					createIngredient({
+						id: 1,
+						name: "Archived",
+						isArchived: true,
+					}),
+					createIngredient({
+						id: 2,
+						name: "Ingredient",
+					}),
+				]),
 			),
 		);
 
@@ -102,15 +95,13 @@ describe("Ingredient Management integration tests", () => {
 	it("Toggle archived", async () => {
 		const theme = createTheme();
 		server.use(
-			http.get("/piid/:piid/ingredients", () =>
-				HttpResponse.json(
-					createIngredients([
-						createIngredient({
-							name: "Archived",
-							isArchived: false,
-						}),
-					]),
-				),
+			getIngredientListHandler(
+				createIngredients([
+					createIngredient({
+						name: "Archived",
+						isArchived: false,
+					}),
+				]),
 			),
 		);
 
@@ -135,15 +126,13 @@ describe("Ingredient Management integration tests", () => {
 
 	it("Rename", async () => {
 		server.use(
-			http.get("/piid/:piid/ingredients", () =>
-				HttpResponse.json(
-					createIngredients([
-						createIngredient({
-							name: "Name",
-							isArchived: false,
-						}),
-					]),
-				),
+			getIngredientListHandler(
+				createIngredients([
+					createIngredient({
+						name: "Name",
+						isArchived: false,
+					}),
+				]),
 			),
 		);
 
@@ -165,16 +154,14 @@ describe("Ingredient Management integration tests", () => {
 	it("Edit nutrition", async () => {
 		const theme = createTheme();
 		server.use(
-			http.get("/piid/:piid/ingredients", () =>
-				HttpResponse.json(
-					createIngredients([
-						createIngredient({
-							name: "Name",
-							isArchived: false,
-							nutrition: undefined,
-						}),
-					]),
-				),
+			getIngredientListHandler(
+				createIngredients([
+					createIngredient({
+						name: "Name",
+						isArchived: false,
+						nutrition: undefined,
+					}),
+				]),
 			),
 		);
 
@@ -206,12 +193,7 @@ describe("Ingredient Management integration tests", () => {
 	it("Loading", async () => {
 		vi.useFakeTimers();
 
-		server.use(
-			http.get("/piid/:piid/ingredients", async () => {
-				await delay(100);
-				return HttpResponse.json(createIngredients());
-			}),
-		);
+		server.use(getIngredientListHandler(createIngredients(), 100));
 
 		render(
 			<MemoryRouter>

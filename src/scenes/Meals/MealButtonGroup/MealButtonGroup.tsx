@@ -1,5 +1,4 @@
 import Stack from "@mui/material/Stack";
-
 import { AddMealButton } from "./AddMealButton";
 import { ManageIngredientsButton } from "./ManageIngredientsButton";
 import { ManageTemplatesButton } from "./ManageTemplatesButton";

@@ -1,6 +1,5 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { delay, HttpResponse, http } from "msw";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
@@ -8,11 +7,17 @@ import {
 	createIngredient,
 	createIngredients,
 	createMeal,
-} from "@/__tests__/__mocks__/fixtures/meal";
+	createPostFoodResponse,
+} from "@/__tests__/fixtures/meal";
+import { createTemplates } from "@/__tests__/fixtures/templates";
 import {
-	createTemplate,
-	createTemplates,
-} from "@/__tests__/__mocks__/fixtures/templates";
+	deleteFoodHandler,
+	getIngredientListHandler,
+	getMealHandler,
+	postFoodByTemplateHandler,
+	postFoodHandler,
+} from "@/__tests__/mocks/mealHandlers";
+import { getTemplateListHandler } from "@/__tests__/mocks/templateHander";
 import { server } from "@/__tests__/setupTest";
 import Meal from "../Meal";
 import {
@@ -38,18 +43,9 @@ describe("Meal scene integration", () => {
 	it("Loading", async () => {
 		vi.useFakeTimers();
 		server.use(
-			http.get("/piid/:piid/meals/:id", async () => {
-				await delay(150);
-				return HttpResponse.json(createMeal());
-			}),
-			http.get("/piid/:piid/templates", async () => {
-				await delay(100);
-				return HttpResponse.json(createTemplates());
-			}),
-			http.get("/piid/:piid/ingredients", async () => {
-				await delay(200);
-				return HttpResponse.json(createIngredients());
-			}),
+			getMealHandler(createMeal(), 150),
+			getTemplateListHandler(createTemplates(), 100),
+			getIngredientListHandler(createIngredients(), 200),
 		);
 		renderMeal();
 
@@ -64,25 +60,19 @@ describe("Meal scene integration", () => {
 
 	it("Renders everything", async () => {
 		server.use(
-			http.get("/piid/:piid/meals/:id", () =>
-				HttpResponse.json(
-					createMeal({
-						foods: [
-							{ id: 1, ingredientId: 1, foodCondition: "raw", amount: 100 },
-						],
-					}),
-				),
+			getMealHandler(
+				createMeal({
+					foods: [
+						{ id: 1, ingredientId: 1, foodCondition: "raw", amount: 100 },
+					],
+				}),
 			),
-			http.get("/piid/:piid/ingredients", () =>
-				HttpResponse.json(
-					createIngredients([
-						createIngredient({
-							id: 1,
-							name: "ingredient1",
-							nutrition: { carbohydrate: 10, fat: 0, fiber: 3, protein: 1 },
-						}),
-					]),
-				),
+			getIngredientListHandler(
+				createIngredient({
+					id: 1,
+					name: "ingredient1",
+					nutrition: { carbohydrate: 10, fat: 0, fiber: 3, protein: 1 },
+				}),
 			),
 		);
 		renderMeal();
@@ -105,12 +95,11 @@ describe("Meal scene integration", () => {
 
 	it("Adding food by id adds food to list", async () => {
 		server.use(
-			http.get("/piid/:piid/meals/:id", () => HttpResponse.json(createMeal())),
-			http.get("/piid/:piid/ingredients", () =>
-				HttpResponse.json(
-					createIngredients([createIngredient({ id: 1, name: "ingredient1" })]),
-				),
+			getMealHandler(createMeal()),
+			getIngredientListHandler(
+				createIngredient({ id: 1, name: "ingredient1" }),
 			),
+			postFoodHandler(createPostFoodResponse({ id: 20, ingredientId: 1 })),
 		);
 		renderMeal();
 
@@ -124,17 +113,13 @@ describe("Meal scene integration", () => {
 
 	it("Adding food by name adds food to the list", async () => {
 		server.use(
-			http.get("/piid/:piid/meals/:id", () => HttpResponse.json(createMeal())),
-			http.get("/piid/:piid/ingredients", () =>
-				HttpResponse.json({ ingredients: [] }),
-			),
-			http.post("/piid/:piid/meals/:mealId/foods", () =>
-				HttpResponse.json({
-					food: createFood({ ingredientId: 1 }),
-					ingredients: createIngredients([
-						createIngredient({ id: 1, name: "ingredient1" }),
-					]),
-				}),
+			getMealHandler(createMeal()),
+			getIngredientListHandler({ ingredients: [] }),
+			postFoodHandler(
+				createPostFoodResponse(
+					createFood({ ingredientId: 1 }),
+					createIngredient({ id: 1, name: "ingredient1" }),
+				),
 			),
 		);
 
@@ -147,36 +132,29 @@ describe("Meal scene integration", () => {
 
 	it("Adding template adds multiple foods to list", async () => {
 		server.use(
-			http.get("/piid/:piid/meals/:id", () => HttpResponse.json(createMeal())),
-			http.get("/piid/:piid/ingredients", () =>
-				HttpResponse.json(
-					createIngredients([
-						createIngredient({ id: 1, name: "ingredient1" }),
-						createIngredient({ id: 2, name: "ingredient2" }),
-					]),
-				),
+			getMealHandler(createMeal()),
+			getIngredientListHandler(
+				createIngredients([
+					createIngredient({ id: 1, name: "ingredient1" }),
+					createIngredient({ id: 2, name: "ingredient2" }),
+				]),
 			),
-			http.get("/piid/:piid/templates", () =>
-				HttpResponse.json(
-					createTemplates([
-						createTemplate({
-							name: "Template",
-							items: [
-								{ ingredientId: 1, condition: "raw", item: 1 },
-								{ ingredientId: 2, condition: "cooked", item: 2 },
-							],
-						}),
-					]),
-				),
-			),
-			http.post("/piid/:piid/meal/:id/foods/by-template/:templateId", () =>
-				HttpResponse.json({
-					foods: [
-						{ id: 1, foodCondition: "raw", ingredientId: 1 },
-						{ id: 2, foodCondition: "cooked", ingredientId: 2 },
+			getTemplateListHandler(
+				createTemplates({
+					id: 1,
+					name: "Template",
+					items: [
+						{ ingredientId: 1, condition: "raw", item: 1 },
+						{ ingredientId: 2, condition: "cooked", item: 2 },
 					],
 				}),
 			),
+			postFoodByTemplateHandler({
+				foods: [
+					{ id: 1, foodCondition: "raw", ingredientId: 1 },
+					{ id: 2, foodCondition: "cooked", ingredientId: 2 },
+				],
+			}),
 		);
 
 		renderMeal();
@@ -194,21 +172,13 @@ describe("Meal scene integration", () => {
 
 	it("Deleting food removes it from the list", async () => {
 		server.use(
-			http.get("/piid/:piid/meals/:id", () =>
-				HttpResponse.json(
-					createMeal({
-						foods: [{ id: 1, ingredientId: 1, foodCondition: "raw" }],
-					}),
-				),
+			getMealHandler(
+				createMeal({
+					foods: [{ id: 1, ingredientId: 1, foodCondition: "raw" }],
+				}),
 			),
-			http.get("/piid/:piid/ingredients", () =>
-				HttpResponse.json(
-					createIngredients([createIngredient({ id: 1, name: "Ingredient" })]),
-				),
-			),
-			http.delete("/piid/:piid/foods/:id", () =>
-				HttpResponse.json(createIngredients([])),
-			),
+			getIngredientListHandler(createIngredient({ id: 1, name: "Ingredient" })),
+			deleteFoodHandler(createIngredients()),
 		);
 
 		renderMeal();

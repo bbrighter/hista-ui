@@ -1,10 +1,18 @@
 import { describe, expect, it } from "vitest";
-
+import { getTemplateListHandler } from "@/__tests__/mocks/templateHander";
+import { server } from "@/__tests__/setupTest";
 import useHista from "../../store/store";
 import { actions } from "..";
 
 describe("templates service", () => {
 	it("List templates", async () => {
+		server.use(
+			getTemplateListHandler({
+				id: 1,
+				name: "Template",
+				items: [{ condition: "raw", ingredientId: 20, item: 10 }],
+			}),
+		);
 		await actions.templates.list();
 
 		const { templates, loaded } = useHista.getState();
@@ -12,8 +20,10 @@ describe("templates service", () => {
 		expect(templates[1]).toBeDefined();
 		expect(templates[1].name).toBe("Template");
 		expect(templates[1].items).toHaveLength(1);
-		expect(templates[1].items[0].condition).toBe("raw");
-		expect(templates[1].items[0].ingredientId).toBe(1);
+		expect(templates[1].items[0]).toMatchObject({
+			condition: "raw",
+			ingredientId: 20,
+		});
 	});
 
 	it("Add template", async () => {
@@ -38,6 +48,7 @@ describe("templates service", () => {
 	});
 
 	it("Update template", async () => {
+		server.use(getTemplateListHandler({ id: 1, name: "old name", items: [] }));
 		await actions.templates.list();
 
 		await actions.templates.change(1, "new name", [
