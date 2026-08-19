@@ -1,4 +1,4 @@
-// import '../../__tests__/__mocks__/errorStoreMock'
+// import '../../__tests__/mocks/errorStoreMock'
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";

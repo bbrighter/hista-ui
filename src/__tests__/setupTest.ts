@@ -5,7 +5,7 @@ import { setupServer } from "msw/node";
 import { afterAll, afterEach, beforeAll, beforeEach, expect, vi } from "vitest";
 
 import useHista from "../store/store";
-import handlers from "./__mocks__/handlers";
+import handlers from "./mocks/handlers";
 
 expect.extend(matchers);
 

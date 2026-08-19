@@ -1,10 +1,19 @@
-import { HttpResponse, http } from "msw";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
 	createIngredient,
 	createIngredients,
 	createMeal,
-} from "@/__tests__/__mocks__/fixtures/meal";
+} from "@/__tests__/fixtures/meal";
+import { createTemplates } from "@/__tests__/fixtures/templates";
+import {
+	deleteFoodHandler,
+	getIngredientListHandler,
+	getMealHandler,
+	postFoodByTemplateHandler,
+	postFoodHandler,
+	postMealHandler,
+} from "@/__tests__/mocks/mealHandlers";
+import { getTemplateListHandler } from "@/__tests__/mocks/templateHander";
 import { server } from "@/__tests__/setupTest";
 import { client } from "../../api/api";
 import useHista from "../../store/store";
@@ -33,6 +42,8 @@ describe("meal service, meals", () => {
 	});
 
 	it("post meal", async () => {
+		server.use(postMealHandler(createMeal({ id: 2 })));
+
 		await actions.meals.list();
 
 		const id = await actions.meals.post();
@@ -60,32 +71,17 @@ describe("meal service, meals", () => {
 });
 
 describe("meal service, single meal", () => {
-	beforeEach(async () => {
+	beforeEach(() => {
 		server.use(
-			http.get("/piid/:piid/ingredients", () =>
-				HttpResponse.json(
-					createIngredients([
-						createIngredient({ id: 1, name: "Ingredient1" }),
-						createIngredient({ id: 2, name: "Ingredient2" }),
-					]),
-				),
-			),
-			http.get("/piid/:piid/meals/:id", () =>
-				HttpResponse.json(
-					createMeal({
-						id: 1,
-						foods: [
-							{ id: 20, foodCondition: "raw", ingredientId: 2 },
-							{ id: 10, foodCondition: "cooked", ingredientId: 1 },
-						],
-					}),
-				),
-			),
+			getMealHandler(createMeal()),
+			getIngredientListHandler(createIngredients()),
 		);
-		await actions.meals.get(1);
 	});
 
 	it("patchMealDate", async () => {
+		// server.use(getMealHandler(createMeal()));
+		await actions.meals.get(1);
+
 		const now = new Date();
 		await actions.meals.patchDate(1, now.toISOString());
 
@@ -94,19 +90,36 @@ describe("meal service, single meal", () => {
 	});
 
 	it("post food by name", async () => {
+		server.use(
+			getMealHandler(createMeal({ id: 1 })),
+			getIngredientListHandler({ id: 1, isArchived: false, name: "old" }),
+			postFoodHandler({
+				food: { id: 1, ingredientId: 2, foodCondition: "raw" },
+				ingredients: {
+					ingredients: [
+						{ id: 1, isArchived: false, name: "old" },
+						{ id: 2, isArchived: false, name: "name" },
+					],
+				},
+			}),
+		);
+		await actions.meals.get(1);
+
 		await actions.meals.postFoodByName(1, "name");
 
 		const { meal, ingredients } = useHista.getState();
 		expect(meal.foods).toContainEqual({
-			ingredientId: 3,
+			ingredientId: 2,
 			condition: "raw",
 			id: 1,
-			amount: undefined,
 		});
-		expect(ingredients).toHaveLength(3);
+		expect(ingredients).toHaveLength(2);
 	});
 
 	it("post food by id", async () => {
+		server.use(getIngredientListHandler(createIngredient({ id: 1 })));
+		await actions.meals.get(1);
+
 		await actions.meals.postFoodById(1, 1);
 
 		const { meal } = useHista.getState();
@@ -114,27 +127,39 @@ describe("meal service, single meal", () => {
 			ingredientId: 1,
 			condition: "raw",
 			id: 1,
-			amount: undefined,
 		});
 	});
 
 	it("delete food", async () => {
 		server.use(
-			http.delete("/piid/:piid/foods/:id", () =>
-				HttpResponse.json(createIngredients([createIngredient({ id: 1 })])),
+			getMealHandler(
+				createMeal({
+					foods: [{ id: 20, ingredientId: 1, foodCondition: "raw" }],
+				}),
 			),
+			getIngredientListHandler(createIngredients({ id: 1 })),
+			deleteFoodHandler({ ingredients: [] }),
 		);
+
+		await actions.meals.get(1);
 		await actions.ingredients.list();
 		await actions.meals.deleteFood(20);
 
 		const { ingredients, meal } = useHista.getState();
-		expect(meal.foods).toHaveLength(1);
-		expect(meal.foods[0].id).not.toBe(20);
-
-		expect(ingredients).toHaveLength(1);
+		expect(meal.foods).toHaveLength(0);
+		expect(ingredients).toHaveLength(0);
 	});
 
 	it("patch food condition", async () => {
+		server.use(
+			getMealHandler(
+				createMeal({
+					foods: [{ id: 10, foodCondition: "raw", ingredientId: 1 }],
+				}),
+			),
+		);
+		await actions.meals.get(1);
+
 		await actions.meals.patchFoodCondition(10, "cooked");
 
 		const { meal } = useHista.getState();
@@ -143,6 +168,15 @@ describe("meal service, single meal", () => {
 	});
 
 	it("patch food amount", async () => {
+		server.use(
+			getMealHandler(
+				createMeal({
+					foods: [{ id: 10, foodCondition: "raw", ingredientId: 1 }],
+				}),
+			),
+		);
+		await actions.meals.get(1);
+
 		await actions.meals.patchFoodAmount(10, 100);
 
 		const { meal } = useHista.getState();
@@ -151,6 +185,17 @@ describe("meal service, single meal", () => {
 	});
 
 	it("patch food amount to undefined", async () => {
+		server.use(
+			getMealHandler(
+				createMeal({
+					foods: [
+						{ id: 10, foodCondition: "raw", ingredientId: 1, amount: 100 },
+					],
+				}),
+			),
+		);
+		await actions.meals.get(1);
+
 		await actions.meals.patchFoodAmount(10, 0);
 
 		const { meal } = useHista.getState();
@@ -159,19 +204,48 @@ describe("meal service, single meal", () => {
 	});
 
 	it("post foods by template", async () => {
+		server.use(
+			getMealHandler(createMeal()),
+			getIngredientListHandler(
+				createIngredients([
+					{ id: 1, isArchived: false, name: "Ing1" },
+					{ id: 2, isArchived: false, name: "Ing2" },
+				]),
+			),
+			getTemplateListHandler(
+				createTemplates([
+					{
+						id: 1,
+						name: "Template",
+						items: [
+							{ ingredientId: 1, condition: "raw", item: 1 },
+							{ ingredientId: 2, condition: "cooked", item: 2 },
+						],
+					},
+				]),
+			),
+			postFoodByTemplateHandler({
+				foods: [
+					{ id: 10, foodCondition: "raw", ingredientId: 1 },
+					{ id: 20, foodCondition: "cooked", ingredientId: 2 },
+				],
+			}),
+		);
+
+		await actions.meals.get(1);
 		await actions.templates.list();
 
 		await actions.meals.postFoodsByTemplate(1, 1);
 
 		const { meal } = useHista.getState();
-		expect(meal.foods).toHaveLength(4);
+		expect(meal.foods).toHaveLength(2);
 		expect(meal.foods).toContainEqual({
-			id: 5,
+			id: 10,
 			ingredientId: 1,
 			condition: "raw",
 		});
 		expect(meal.foods).toContainEqual({
-			id: 6,
+			id: 20,
 			ingredientId: 2,
 			condition: "cooked",
 		});

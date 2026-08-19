@@ -16,6 +16,7 @@ export const createTemplate = (
 });
 
 export const createTemplates = (
-	replaces?: Array<hista.TemplateResponse>,
-): hista.TemplateListResponse =>
-	replaces ? { templates: replaces } : { templates: [createTemplate()] };
+	replaces: Array<hista.TemplateResponse> | hista.TemplateResponse = [],
+): hista.TemplateListResponse => ({
+	templates: Array.isArray(replaces) ? replaces : [replaces],
+});

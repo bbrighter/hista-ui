@@ -2,14 +2,13 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { AddStatus } from "./AddStatus";
+import { AddStatus } from "../List/AddStatus";
 
 describe("Add status component", () => {
 	const onAddStatus = vi.fn();
 
 	beforeEach(() => {
 		vi.resetAllMocks();
-		// vi.useFakeTimers();
 		vi.setSystemTime(new Date("2018-04-13 19:18"));
 	});
 

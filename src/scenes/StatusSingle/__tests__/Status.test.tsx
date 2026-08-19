@@ -1,11 +1,8 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { HttpResponse, http } from "msw";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import {
-	createTestStatus,
-	createTestStatusList,
-} from "@/__tests__/__mocks__/fixtures/status";
+import { createStatusList } from "@/__tests__/fixtures/status";
+import { getStatusListHandler } from "@/__tests__/mocks/statusHandler";
 import { server } from "@/__tests__/setupTest";
 import { client } from "@/api/api";
 import useHista from "@/store/store";
@@ -27,11 +24,7 @@ describe("Status integration test", () => {
 
 	it("Renders", async () => {
 		server.use(
-			http.get("/piid/:piid/status", () =>
-				HttpResponse.json(
-					createTestStatusList([createTestStatus({ id: 1, morningSleep: 2 })]),
-				),
-			),
+			getStatusListHandler(createStatusList({ id: 1, morningSleep: 2 })),
 		);
 		vi.useFakeTimers();
 		render(
@@ -54,11 +47,7 @@ describe("Status integration test", () => {
 		vi.useFakeTimers();
 
 		server.use(
-			http.get("/piid/:piid/status", () =>
-				HttpResponse.json(
-					createTestStatusList([createTestStatus({ id: 1, morningSleep: 1 })]),
-				),
-			),
+			getStatusListHandler(createStatusList({ id: 1, morningSleep: 1 })),
 		);
 
 		render(
@@ -106,11 +95,5 @@ describe("Status integration test", () => {
 				tense: null,
 			},
 		);
-
-		// expect(screen.queryAllByTestId("dirty-status-icon")).toHaveLength(1);
-		// await act(async () => vi.advanceTimersByTime(debounceTimeout));
-
-		// await vi.advanceTimersByTimeAsync(1000);
-		// expect(screen.queryAllByTestId("dirty-status-icon")).toHaveLength(0);
 	});
 });

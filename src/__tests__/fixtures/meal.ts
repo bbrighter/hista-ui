@@ -12,6 +12,13 @@ export const createMeal = (
 	...overrides,
 });
 
+export const createMealList = (
+	meals: Array<hista.MealMetaResponse> | Partial<hista.MealMetaResponse> = [
+		createMeal(),
+	],
+): hista.MealListResponse =>
+	Array.isArray(meals) ? { meals: meals } : { meals: [createMeal(meals)] };
+
 export const createIngredient = (
 	overrides: Partial<hista.IngredientResponse> = {},
 ): hista.IngredientResponse => ({
@@ -22,22 +29,14 @@ export const createIngredient = (
 	...overrides,
 });
 
-export const createDefaultIngredient2 = () =>
-	createIngredient({
-		id: 2,
-		name: "ingredient2",
-		isArchived: false,
-	});
-
 export const createIngredients = (
-	replaces?: Array<hista.IngredientResponse>,
-): hista.IngredientListResponse => {
-	if (replaces) {
-		return { ingredients: replaces };
-	} else {
-		return { ingredients: [createIngredient()] };
-	}
-};
+	ingredients:
+		| Array<hista.IngredientResponse>
+		| Partial<hista.IngredientResponse> = [createIngredient()],
+): hista.IngredientListResponse =>
+	Array.isArray(ingredients)
+		? { ingredients }
+		: { ingredients: [createIngredient(ingredients)] };
 
 export const createFood = (
 	overrides: Partial<hista.FoodResponse> = {},
@@ -53,5 +52,5 @@ export const createPostFoodResponse = (
 	overrideIngredient?: Partial<hista.IngredientResponse>,
 ): hista.PostFoodResponse => ({
 	food: createFood(overrideFood),
-	ingredients: { ingredients: [createIngredient(overrideIngredient)] },
+	ingredients: createIngredients([createIngredient(overrideIngredient)]),
 });

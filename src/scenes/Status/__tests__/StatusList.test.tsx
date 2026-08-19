@@ -1,16 +1,15 @@
 import { render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
 import { describe, expect, it, vi } from "vitest";
-import { StatusList } from "./StatusList";
+import { StatusList } from "../List/StatusList";
 
-vi.mock("@/hooks/useNavigate", () => {
-	return { useAppNavigate: vi.fn() };
-});
+const onNavigate = vi.fn();
 
 describe("StatusList component", () => {
 	it("Item checked if all entries are set", () => {
 		render(
 			<StatusList
+				onNavigate={onNavigate}
 				isLoading={false}
 				statuses={[
 					{
@@ -40,6 +39,7 @@ describe("StatusList component", () => {
 	it("Item checked if all entries are set", () => {
 		render(
 			<StatusList
+				onNavigate={onNavigate}
 				isLoading={false}
 				statuses={[
 					{

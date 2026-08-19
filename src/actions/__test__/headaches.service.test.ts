@@ -1,5 +1,12 @@
 import dayjs from "dayjs";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { createHeadache } from "@/__tests__/fixtures/headache";
+import {
+	getHeadacheHandler,
+	getHeadacheListHandler,
+	postHeadacheHandler,
+} from "@/__tests__/mocks/headacheHandlers";
+import { server } from "@/__tests__/setupTest";
 import { client } from "../../api/api";
 import useHista from "../../store/store";
 import { actions } from "..";
@@ -8,13 +15,45 @@ describe("headache service", () => {
 	beforeEach(async () => {
 		const store = useHista.getState();
 		store.resetHeadaches();
+	});
 
-		expect(useHista.getState().loaded.headaches).toBeFalsy();
+	afterEach(() => {
+		vi.useRealTimers();
+	});
+
+	it("Getting sets loaded", async () => {
+		const loaded = useHista.getState().loaded;
+		expect(loaded.headaches).toBeFalsy();
+		expect(loaded.headache).toBeFalsy();
+
 		await actions.headaches.list();
-		expect(useHista.getState().loaded.headaches).toBeTruthy();
+
+		const headachesLoaded = useHista.getState().loaded;
+		expect(headachesLoaded.headaches).toBeTruthy();
+		expect(headachesLoaded.headache).toBeFalsy();
+
+		await actions.headaches.get(1);
+
+		const headacheLoaded = useHista.getState().loaded;
+		expect(headacheLoaded.headaches).toBeTruthy();
+		expect(headacheLoaded.headache).toBeTruthy();
 	});
 
 	it("get headaches", async () => {
+		server.use(
+			getHeadacheListHandler(
+				createHeadache({
+					id: 1,
+					date: "2022-01-01T00:00:00Z",
+					description: "description",
+					positions: ["top", "bottom"],
+					symptoms: ["severe", "whatever"],
+					types: ["stabbing"],
+				}),
+			),
+		);
+		await actions.headaches.list();
+
 		const headaches = useHista.getState().headaches;
 		expect(Object.values(headaches)).toHaveLength(1);
 		const headache = headaches[1];
@@ -31,6 +70,12 @@ describe("headache service", () => {
 	});
 
 	it("get one headache", async () => {
+		server.use(
+			getHeadacheHandler(
+				createHeadache({ id: 1, severity: 3, description: "description" }),
+			),
+		);
+
 		await actions.headaches.get(1);
 
 		const headache = useHista.getState().headache;
@@ -40,14 +85,17 @@ describe("headache service", () => {
 	});
 
 	it("posts a new headache", async () => {
+		vi.useFakeTimers();
+		vi.setSystemTime("2025-03-08");
+		server.use(postHeadacheHandler(2));
 		const id = await actions.headaches.post();
 
 		expect(id).toBe(2);
-		expect(Object.keys(useHista.getState().headaches)).toHaveLength(2);
+		expect(Object.keys(useHista.getState().headaches)).toHaveLength(1);
 		const headache = useHista.getState().headaches[2];
 		expect(headache.id).toBe(2);
 		expect(headache.severity).toBe(5);
-		expect(headache.date.getTime() - Date.now()).toBeLessThan(1000);
+		expect(headache.date).toStrictEqual(new Date("2025-03-08"));
 	});
 
 	it("deletes a headache", async () => {
@@ -60,6 +108,12 @@ describe("headache service", () => {
 describe("Single headache actions", () => {
 	const spyPatchTypes = vi.spyOn(client, "PatchHeadache");
 	beforeEach(async () => {
+		const store = useHista.getState();
+		store.resetLoaded();
+		store.resetHeadaches();
+
+		const headache = createHeadache({ id: 1, positions: ["left", "right"] });
+		server.use(getHeadacheHandler(headache), getHeadacheListHandler(headache));
 		await actions.headaches.list();
 		await actions.headaches.get(1);
 	});

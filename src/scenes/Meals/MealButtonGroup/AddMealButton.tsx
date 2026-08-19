@@ -1,9 +1,8 @@
 import Button from "@mui/material/Button";
 import { useState } from "react";
-
-import { actions } from "../../../actions";
-import { useAppNavigate } from "../../../hooks/useNavigate";
-import { Icons } from "../../components/Icons";
+import { actions } from "@/actions";
+import { useAppNavigate } from "@/hooks/useNavigate";
+import { Icons } from "@/scenes/components/Icons";
 
 export const AddMealButton = () => {
 	const [loading, setLoading] = useState(false);

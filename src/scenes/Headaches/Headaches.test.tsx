@@ -1,9 +1,11 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { delay, HttpResponse, http } from "msw";
+import { act } from "react";
 import { MemoryRouter } from "react-router-dom";
-import { describe, expect, it, vi } from "vitest";
-
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { createHeadache } from "@/__tests__/fixtures/headache";
+import { getHeadacheListHandler } from "@/__tests__/mocks/headacheHandlers";
+import useHista from "@/store/store";
 import { server } from "../../__tests__/setupTest";
 import Headaches from "./Headaches";
 
@@ -26,7 +28,22 @@ vi.mock("react-router-dom", async () => {
 });
 
 describe("Headache management", () => {
+	beforeEach(() => {
+		const store = useHista.getState();
+		store.resetLoaded();
+		store.resetHeadaches();
+	});
+
+	afterEach(() => {
+		vi.useRealTimers();
+	});
+
 	it("Headaches and colors are rendered", async () => {
+		server.use(
+			getHeadacheListHandler(
+				createHeadache({ date: "2022-01-01T00:00:00Z", severity: 3 }),
+			),
+		);
 		render(
 			<MemoryRouter>
 				<Headaches />
@@ -43,6 +60,9 @@ describe("Headache management", () => {
 	});
 
 	it("Headache can be deleted", async () => {
+		server.use(
+			getHeadacheListHandler(createHeadache({ date: "2022-01-01T00:00:00Z" })),
+		);
 		render(
 			<MemoryRouter>
 				<Headaches />
@@ -80,6 +100,9 @@ describe("Headache management", () => {
 	});
 
 	it("Clicking a row opens the headache", async () => {
+		server.use(
+			getHeadacheListHandler(createHeadache({ date: "2022-01-01T00:00:00Z" })),
+		);
 		render(
 			<MemoryRouter>
 				<Headaches />
@@ -93,22 +116,18 @@ describe("Headache management", () => {
 	});
 
 	it("Show loading indicator", async () => {
-		server.use(
-			http.get("/piid/:piid/headaches", async () => {
-				await delay(100);
-				return HttpResponse.json({ headaches: [] });
-			}),
-		);
+		vi.useFakeTimers();
+		server.use(getHeadacheListHandler([], 100));
 		render(
 			<MemoryRouter>
 				<Headaches />
 			</MemoryRouter>,
 		);
 
-		expect(await screen.findByTestId("loading-spinner")).toBeVisible();
+		expect(screen.getByTestId("loading-spinner")).toBeVisible();
 
-		await waitFor(() =>
-			expect(screen.queryByTestId("loading-spinner")).not.toBeVisible(),
-		);
+		await act(async () => vi.advanceTimersByTimeAsync(100));
+
+		expect(screen.queryByTestId("loading-spinner")).not.toBeVisible();
 	});
 });

@@ -1,18 +1,22 @@
 import Container from "@mui/material/Container";
 import dayjs from "dayjs";
 import { useMemo } from "react";
-import { useAppNavigate } from "@/hooks/useNavigate";
 import { actions } from "../../../actions";
 import { type Status, useStatusExistsOnDays } from "../../../store";
-import { OverviewList } from "../../components";
+import { Loading, OverviewList } from "../../components";
 import { AddStatus } from "./AddStatus";
 
 type StatusListProps = {
 	statuses: Array<Status>;
 	isLoading: boolean;
+	onNavigate: (id: number) => void;
 };
 
-export const StatusList = ({ statuses, isLoading }: StatusListProps) => {
+export const StatusList = ({
+	statuses,
+	isLoading,
+	onNavigate,
+}: StatusListProps) => {
 	const items = useMemo(
 		() =>
 			statuses.map((s) => ({
@@ -23,18 +27,12 @@ export const StatusList = ({ statuses, isLoading }: StatusListProps) => {
 		[statuses],
 	);
 
-	const navigate = useAppNavigate();
-
-	const onClick = (statusId: number) => {
-		navigate.to.statusSingle(statusId);
-	};
-
 	const today = dayjs();
 	const yesterday = today.subtract(1, "day");
 	const dayBefore = today.subtract(2, "day");
 	const onAddStatus = async (date: dayjs.Dayjs) => {
 		const id = await actions.status.post(date);
-		navigate.to.statusSingle(id);
+		onNavigate(id);
 	};
 
 	const [existsToday, existsYesterday, existsDayBefore] = useStatusExistsOnDays(
@@ -43,19 +41,21 @@ export const StatusList = ({ statuses, isLoading }: StatusListProps) => {
 
 	return (
 		<Container sx={{ padding: "2rem" }}>
-			<AddStatus
-				disabled={isLoading}
-				onAddStatus={onAddStatus}
-				statusExistsDayBefore={existsDayBefore}
-				statusExistsToday={existsToday}
-				statusExistsYesterday={existsYesterday}
-			/>
-			<OverviewList
-				items={items}
-				getData={actions.status.list}
-				onClick={onClick}
-				onDelete={actions.status.delete}
-			/>
+			<Loading show={isLoading}>
+				<AddStatus
+					disabled={isLoading}
+					onAddStatus={onAddStatus}
+					statusExistsDayBefore={existsDayBefore}
+					statusExistsToday={existsToday}
+					statusExistsYesterday={existsYesterday}
+				/>
+				<OverviewList
+					items={items}
+					getData={actions.status.list}
+					onClick={onNavigate}
+					onDelete={actions.status.delete}
+				/>
+			</Loading>
 		</Container>
 	);
 };

@@ -1,9 +1,6 @@
-import { HttpResponse, http } from "msw";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import {
-	createIngredient,
-	createIngredients,
-} from "@/__tests__/__mocks__/fixtures/meal";
+import { createIngredient, createIngredients } from "@/__tests__/fixtures/meal";
+import { getIngredientListHandler } from "@/__tests__/mocks/mealHandlers";
 import { server } from "@/__tests__/setupTest";
 import { client } from "../../api/api";
 import useHista from "../../store/store";
@@ -15,17 +12,16 @@ describe("ingredient list service", () => {
 	beforeEach(() => {
 		const store = useHista.getState();
 		store.resetIngredients();
+		store.resetLoaded();
 	});
 
 	it("List ingredients", async () => {
 		server.use(
-			http.get("/piid/:piid/ingredients", () =>
-				HttpResponse.json(
-					createIngredients([
-						createIngredient({ id: 1 }),
-						createIngredient({ id: 2 }),
-					]),
-				),
+			getIngredientListHandler(
+				createIngredients([
+					createIngredient({ id: 1 }),
+					createIngredient({ id: 2 }),
+				]),
 			),
 		);
 		await actions.ingredients.list();
