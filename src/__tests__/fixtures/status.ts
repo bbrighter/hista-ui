@@ -4,7 +4,7 @@ export const createStatus = (
 	override: Partial<hista.StatusResponse> = {},
 ): hista.StatusResponse => ({
 	id: 1,
-	date: "01-01-2024",
+	date: "2024-01-01T00:00:00Z",
 	...override,
 });
 

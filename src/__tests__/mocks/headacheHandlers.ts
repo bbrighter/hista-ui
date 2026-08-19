@@ -1,25 +1,35 @@
-import { HttpResponse, http } from "msw";
+import { delay, HttpResponse, http } from "msw";
 
 import type { hista } from "../../api/generatedApi";
+import { createHeadache, createHeadacheList } from "../fixtures/headache";
 
-const headache = {
-	id: 1,
-	date: "2022-01-01T00:00:00Z",
-	severity: 3,
-	types: ["stabbing"],
-	positions: ["left", "right"],
-	symptoms: ["tired", "nausea"],
-	description: "description",
-} satisfies hista.HeadacheResponse;
+export const getHeadacheListHandler = (
+	override: Array<hista.HeadacheResponse> | hista.HeadacheResponse,
+	ms?: number,
+) =>
+	http.get("/piid/:piid/headaches", async () => {
+		if (ms) await delay(ms);
+		return HttpResponse.json(createHeadacheList(override));
+	});
+export const getHeadacheHandler = (
+	override: Partial<hista.HeadacheResponse> = {},
+	ms?: number,
+) =>
+	http.get("/piid/:piid/headaches/:id", async () => {
+		if (ms) await delay(ms);
+		return HttpResponse.json(createHeadache(override));
+	});
+export const postHeadacheHandler = (id: number) =>
+	http.post("/piid/:piid/headaches", () => HttpResponse.json({ id }));
+const deleteHeadacheHandler = () =>
+	http.delete("/piid/:piid/headaches/:id", () => HttpResponse.json({}));
+const patchHeadacheHandler = () =>
+	http.patch("/piid/:piid/headaches/:id", () => HttpResponse.json({}));
 
-const headacheHandlers = (baseUrl: string) => [
-	http.get(`${baseUrl}/headaches`, () =>
-		HttpResponse.json({ headaches: [headache] }),
-	),
-	http.post(`${baseUrl}/headaches`, () => HttpResponse.json({ id: 2 })),
-	http.get(`${baseUrl}/headaches/:id`, () => HttpResponse.json(headache)),
-	http.delete(`${baseUrl}/headaches/:id`, () => HttpResponse.json({})),
-	http.patch(`${baseUrl}/headaches/:id`, () => HttpResponse.json({})),
+export const headacheHandlers = [
+	getHeadacheListHandler([]),
+	getHeadacheHandler(),
+	postHeadacheHandler(2),
+	deleteHeadacheHandler(),
+	patchHeadacheHandler(),
 ];
-
-export { headacheHandlers };

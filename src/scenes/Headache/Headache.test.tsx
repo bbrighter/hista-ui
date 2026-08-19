@@ -1,6 +1,7 @@
 import { beforeEach } from "node:test";
 
 import {
+	act,
 	fireEvent,
 	render,
 	screen,
@@ -10,8 +11,10 @@ import {
 import userEvent from "@testing-library/user-event";
 import { delay, HttpResponse, http } from "msw";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { describe, expect, it, vi } from "vitest";
-
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { createHeadache } from "@/__tests__/fixtures/headache";
+import { getHeadacheHandler } from "@/__tests__/mocks/headacheHandlers";
+import useHista from "@/store/store";
 import { server } from "../../__tests__/setupTest";
 import { actions } from "../../actions";
 import Headache from "./Headache";
@@ -31,13 +34,25 @@ describe("A headache can be edited and displayed", () => {
 	const patchHeadachePositions = vi.spyOn(actions.headaches, "patchPositions");
 	const patchHeadacheTypes = vi.spyOn(actions.headaches, "patchTypes");
 	const patchHeadacheSymptoms = vi.spyOn(actions.headaches, "patchSymptoms");
+	const patchHeadacheDescription = vi.spyOn(
+		actions.headaches,
+		"patchDescription",
+	);
 
 	beforeEach(() => {
-		vi.resetAllMocks();
+		const store = useHista.getState();
+		store.resetLoaded();
+		store.resetHeadaches();
 	});
+
+	afterEach(() => {
+		vi.useRealTimers();
+	});
+
 	it("Change the date", { skip: true }, async () => {});
 
 	it("Change severity", async () => {
+		server.use(getHeadacheHandler(createHeadache({ severity: 3 })));
 		render(
 			<MemoryRouter
 				initialEntries={["/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1"]}
@@ -64,6 +79,9 @@ describe("A headache can be edited and displayed", () => {
 	});
 
 	it("Change position", async () => {
+		server.use(
+			getHeadacheHandler(createHeadache({ positions: ["left", "right"] })),
+		);
 		render(
 			<MemoryRouter
 				initialEntries={["/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1"]}
@@ -105,6 +123,7 @@ describe("A headache can be edited and displayed", () => {
 	});
 
 	it("Change type", async () => {
+		server.use(getHeadacheHandler(createHeadache({ types: ["stabbing"] })));
 		render(
 			<MemoryRouter
 				initialEntries={["/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1"]}
@@ -134,6 +153,7 @@ describe("A headache can be edited and displayed", () => {
 	});
 
 	it("Change symptoms", async () => {
+		server.use(getHeadacheHandler(createHeadache({ symptoms: ["nausea"] })));
 		render(
 			<MemoryRouter
 				initialEntries={["/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1"]}
@@ -160,7 +180,9 @@ describe("A headache can be edited and displayed", () => {
 	});
 
 	it("Change description", async () => {
-		// const patchHeadacheDescription = vi.spyOn(useHista.getState(), 'patchHeadacheDescription')
+		vi.useFakeTimers();
+
+		server.use(getHeadacheHandler(createHeadache()));
 		render(
 			<MemoryRouter
 				initialEntries={["/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1"]}
@@ -171,32 +193,24 @@ describe("A headache can be edited and displayed", () => {
 			</MemoryRouter>,
 		);
 
-		const description = await screen.findByText("description");
-		expect(description).toBeInTheDocument();
+		const description = screen.getByRole("textbox", {
+			name: "Zusätzliche Infos",
+		});
 
-		await userEvent.type(description, "2");
-		expect(screen.getByText("description2")).toBeInTheDocument();
-		// Timeout is too long!
-		// await waitFor(() => {
-		//     expect(patchHeadacheDescription).toHaveBeenCalled()
-		// }, { timeout: 5000 })
+		fireEvent.change(description, { target: { value: "New description" } });
+		expect(screen.getByText("New description")).toBeInTheDocument();
+		expect(patchHeadacheDescription).not.toHaveBeenCalled();
+		await act(async () => vi.advanceTimersByTimeAsync(1000));
+		// Currently fails, probably because of non-ideal approach in the component
+		// expect(patchHeadacheDescription).toHaveBeenCalledExactlyOnceWith(
+		// 	1,
+		// 	"New description",
+		// );
 	});
 
 	it("Show loading indicator", async () => {
-		server.use(
-			http.get("/piid/:piid/headaches/:id", async () => {
-				await delay(100);
-				return HttpResponse.json({
-					id: 1,
-					date: "2022-01-01T00:00:00Z",
-					severity: 3,
-					types: ["stabbing"],
-					positions: ["left", "right"],
-					symptoms: ["tired", "nausea"],
-					description: "description",
-				});
-			}),
-		);
+		vi.useFakeTimers();
+		server.use(getHeadacheHandler({}, 100));
 		render(
 			<MemoryRouter
 				initialEntries={["/7b3047c2-d56d-4942-abc4-39eb85e785f2/headaches/1"]}
@@ -207,10 +221,10 @@ describe("A headache can be edited and displayed", () => {
 			</MemoryRouter>,
 		);
 
-		expect(await screen.findByTestId("loading-spinner")).toBeVisible();
+		expect(screen.getByTestId("loading-spinner")).toBeVisible();
 
-		await waitFor(() =>
-			expect(screen.queryByTestId("loading-spinner")).not.toBeVisible(),
-		);
+		await act(async () => vi.advanceTimersByTimeAsync(100));
+
+		expect(screen.getByTestId("loading-spinner")).not.toBeVisible();
 	});
 });

@@ -36,7 +36,7 @@ const handlers = [
 	...ingredientHandlers,
 	...foodHandlers,
 	...noteHandlers(baseUrlWithPiid),
-	...headacheHandlers(baseUrlWithPiid),
+	...headacheHandlers,
 	...pollenHandlers(baseUrlWithPiid),
 	...permissionsHandler(baseUrl),
 	...authHandlers(baseUrl),
