@@ -22,7 +22,9 @@ export const StatusList = ({
 			statuses.map((s) => ({
 				id: s.id,
 				date: s.date.toDate(),
-				checked: Object.values(s).every(Boolean),
+				checked: Object.entries(s)
+					.filter(([key]) => key !== "crash")
+					.every(([_, value]) => Boolean(value)),
 			})),
 		[statuses],
 	);

@@ -421,6 +421,7 @@ export namespace hista {
         date?: string | null
         morningFitness?: number | null
         morningSleep?: number | null
+        dayFitness?: number | null
         eveningFitness?: number | null
         depressive?: number | null
         tense?: number | null
@@ -432,6 +433,7 @@ export namespace hista {
         appetiteChanges?: number | null
         sleepProblems?: number | null
         overwhelmed?: number | null
+        crash: boolean
     }
 
     export interface PatchSymptomCategoryParams {
@@ -500,6 +502,7 @@ export namespace hista {
         id: number
         date: string
         morningFitness?: number | null
+        dayFitness?: number | null
         eveningFitness?: number | null
         morningSleep?: number | null
         depressive?: number | null
@@ -512,6 +515,7 @@ export namespace hista {
         appetiteChanges?: number | null
         sleepProblems?: number | null
         overwhelmed?: number | null
+        crash: boolean
     }
 
     export interface SymptomCategoryListResponse {

@@ -5,6 +5,7 @@ import { setupServer } from "msw/node";
 import { afterAll, afterEach, beforeAll, beforeEach, expect, vi } from "vitest";
 
 import useHista from "../store/store";
+import { PIID } from "./fixtures/piid";
 import handlers from "./mocks/handlers";
 
 expect.extend(matchers);
@@ -32,7 +33,7 @@ beforeEach(() => {
 	vi.resetAllMocks();
 	const store = useHista.getState();
 	store.resetLoaded();
-	store.setPiid("7b3047c2-d56d-4942-abc4-39eb85e785f2");
+	store.setPiid(PIID);
 });
 afterEach(() => {
 	server.resetHandlers();

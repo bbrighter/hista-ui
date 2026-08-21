@@ -3,38 +3,22 @@ import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
-import { useDidUpdateEffect } from "@/hooks/useDidUpdateEffect";
-import type { PutStatusParams, Status } from "@/store";
-import { useDebouncedSave } from "./useDebouncedSave";
+import type { PutStatusParams } from "@/store";
+import type { SymptomKey } from "../symptomValues";
+
+type Symptoms = Omit<PutStatusParams, "statusId" | "date" | "crash">;
 
 type StatusSlidersProps = {
-	status: Status;
-	onChange: (id: number, params: PutStatusParams) => Promise<void>;
+	symptoms: Symptoms;
+	setSymptoms: (symptoms: Symptoms) => void;
+	isDirty: (key: SymptomKey) => boolean;
 };
 
-export const StatusSliders = ({ status, onChange }: StatusSlidersProps) => {
-	const [symptoms, setSymptoms] = useState<Record<SymptomKey, number | null>>(
-		Object.fromEntries(
-			SYMPTOM_FIELDS.map((key) => [key, status[key] ?? null]),
-		) as Record<SymptomKey, number | null>,
-	);
-
-	const isDirty = (key: SymptomKey) => status[key] !== symptoms[key];
-
-	const debouncedSave = useDebouncedSave(
-		(params: PutStatusParams) => onChange(status.id, params),
-		1000,
-	);
-
-	useDidUpdateEffect(() => {
-		debouncedSave({
-			...symptoms,
-			date: status.date,
-			statusId: status.id,
-		});
-	}, [symptoms]);
-
+export const StatusSliders = ({
+	symptoms,
+	setSymptoms,
+	isDirty,
+}: StatusSlidersProps) => {
 	const colorMapping = (v: number | null, direction: "up" | "down"): string => {
 		const colors = [
 			"rgb(255, 0, 0)",
@@ -70,7 +54,7 @@ export const StatusSliders = ({ status, onChange }: StatusSlidersProps) => {
 							min={1}
 							max={5}
 							onChange={(_, v) => {
-								setSymptoms((prev) => ({ ...prev, [key]: v }));
+								setSymptoms({ ...symptoms, [key]: v });
 							}}
 							sx={{
 								color: colorMapping(symptoms[key], positiveDirection),
@@ -101,27 +85,10 @@ type SymptomSlider = {
 	positiveDirection: "up" | "down";
 };
 
-const SYMPTOM_FIELDS = [
-	"morningSleep",
-	"morningFitness",
-	"eveningFitness",
-	"depressive",
-	"tense",
-	"moodSwings",
-	"irritable",
-	"lossOfInterest",
-	"concentrationProblems",
-	"lackOfDrive",
-	"appetiteChanges",
-	"sleepProblems",
-	"overwhelmed",
-] as const;
-
-type SymptomKey = (typeof SYMPTOM_FIELDS)[number];
-
 const symptomSliders: SymptomSlider[] = [
 	{ key: "morningSleep", label: "Schlaf", positiveDirection: "up" },
 	{ key: "morningFitness", label: "Morgens", positiveDirection: "up" },
+	{ key: "dayFitness", label: "Tagsüber", positiveDirection: "up" },
 	{
 		key: "eveningFitness",
 		label: "Abends",

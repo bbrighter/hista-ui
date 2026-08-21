@@ -1,19 +1,28 @@
 import dayjs from "dayjs";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { PIID } from "@/__tests__/fixtures/piid";
 import { createStatus, createStatusList } from "@/__tests__/fixtures/status";
 import {
 	getStatusListHandler,
 	postStatusHandler,
 } from "@/__tests__/mocks/statusHandler";
 import { server } from "@/__tests__/setupTest";
+import { client } from "@/api/api";
 import type { hista } from "../../api/generatedApi";
 import useHista from "../../store/store";
 import { actions } from "..";
 import { respToStatuses } from "../status.actions";
 
 describe("status service", () => {
+	const listStatus = vi.spyOn(client, "ListStatus");
+	const postStatus = vi.spyOn(client, "PostStatus");
+	const patchStatus = vi.spyOn(client, "PatchStatus");
+	const deleteStatus = vi.spyOn(client, "DeleteStatus");
+
 	beforeEach(() => {
-		useHista.getState().resetStatuses();
+		const store = useHista.getState();
+		store.resetStatuses();
+		store.resetLoaded();
 	});
 
 	it("get", async () => {
@@ -45,6 +54,7 @@ describe("status service", () => {
 			date: dayjs("2024-01-01T13:00:00Z"),
 			morningFitness: 3,
 			morningSleep: 2,
+			dayFitness: null,
 			eveningFitness: 1,
 			appetiteChanges: null,
 			concentrationProblems: null,
@@ -56,12 +66,14 @@ describe("status service", () => {
 			overwhelmed: null,
 			sleepProblems: null,
 			tense: null,
+			crash: false,
 		});
 		expect(statuses).toContainEqual({
 			id: 2,
 			date: dayjs("2023-01-01T14:00:00Z"),
 			morningFitness: 3,
 			morningSleep: 1,
+			dayFitness: null,
 			eveningFitness: null,
 			appetiteChanges: null,
 			concentrationProblems: null,
@@ -73,8 +85,9 @@ describe("status service", () => {
 			overwhelmed: null,
 			sleepProblems: null,
 			tense: null,
+			crash: false,
 		});
-		expect(loaded.statuses).toBeTruthy();
+		expect(loaded.statuses).toBe(true);
 	});
 
 	it("delete", async () => {
@@ -84,13 +97,32 @@ describe("status service", () => {
 		await actions.status.list();
 		await actions.status.delete(1);
 
+		expect(deleteStatus).toHaveBeenCalledExactlyOnceWith(PIID, 1);
+
 		const { statuses } = useHista.getState();
 		expect(statuses).toHaveLength(0);
 	});
 
+	it("Delete with wrong id", async () => {
+		server.use(
+			getStatusListHandler(createStatusList([createStatus({ id: 1 })])),
+		);
+
+		await actions.status.list();
+		await actions.status.delete(2);
+
+		const { statuses } = useHista.getState();
+		expect(statuses).toHaveLength(1);
+	});
+
 	it("create", async () => {
+		const date = new Date("2021-03-12T12:13:00Z");
 		server.use(postStatusHandler(createStatus({ id: 3 })));
-		await actions.status.post(dayjs());
+		await actions.status.post(dayjs(date));
+
+		expect(postStatus).toHaveBeenCalledExactlyOnceWith(PIID, {
+			date: date.toISOString(),
+		});
 
 		const { statuses } = useHista.getState();
 		expect(statuses).toHaveLength(1);
@@ -98,12 +130,14 @@ describe("status service", () => {
 	});
 
 	it("patch", async () => {
+		const date = new Date();
+
 		server.use(getStatusListHandler(createStatusList([createStatus()])));
 		await actions.status.list();
 		await actions.status.patch(1, {
-			date: dayjs(),
+			date: dayjs(date),
 			eveningFitness: 2,
-			statusId: 2,
+			dayFitness: null,
 			appetiteChanges: null,
 			concentrationProblems: null,
 			depressive: null,
@@ -116,6 +150,26 @@ describe("status service", () => {
 			overwhelmed: null,
 			sleepProblems: null,
 			tense: null,
+			crash: false,
+		});
+
+		expect(patchStatus).toHaveBeenCalledExactlyOnceWith(PIID, 1, {
+			date: date.toISOString(),
+			eveningFitness: 2,
+			dayFitness: null,
+			appetiteChanges: null,
+			concentrationProblems: null,
+			depressive: null,
+			irritable: null,
+			lackOfDrive: null,
+			lossOfInterest: null,
+			moodSwings: null,
+			morningFitness: null,
+			morningSleep: null,
+			overwhelmed: null,
+			sleepProblems: null,
+			tense: null,
+			crash: false,
 		});
 
 		const { statuses } = useHista.getState();
@@ -123,6 +177,15 @@ describe("status service", () => {
 		const status = statuses.find((s) => s.id === 1);
 		expect(status?.eveningFitness).toBe(2);
 		expect(status?.morningFitness).toBe(null);
+	});
+
+	it("Get only gets once", async () => {
+		server.use(getStatusListHandler({ statuses: [] }));
+
+		await actions.status.list();
+		await actions.status.list();
+
+		expect(listStatus).toHaveBeenCalledOnce();
 	});
 });
 
@@ -135,6 +198,19 @@ describe("response to status", () => {
 					morningSleep: 2,
 					morningFitness: null,
 					date: "2026-05-01T19:18:25.227+02:00",
+					crash: false,
+					appetiteChanges: null,
+					concentrationProblems: 3,
+					dayFitness: 1,
+					depressive: null,
+					eveningFitness: 5,
+					irritable: 1,
+					lackOfDrive: 2,
+					lossOfInterest: 3,
+					moodSwings: 1,
+					overwhelmed: 2,
+					sleepProblems: 4,
+					tense: 2,
 				},
 			],
 		} satisfies hista.StatusListResponse;
@@ -142,13 +218,25 @@ describe("response to status", () => {
 		const statuses = respToStatuses(resp);
 		expect(statuses).toHaveLength(1);
 		const status = statuses[0];
-		expect(status.id).toBe(1);
-		expect(status.date.year()).toBe(2026);
-		expect(status.date.month()).toBe(4);
-		expect(status.date.date()).toBe(1);
-		expect(status.eveningFitness).toBeNull();
-		expect(status.morningFitness).toBeNull();
-		expect(status.morningSleep).toBe(2);
+		expect(status).toStrictEqual({
+			id: 1,
+			morningSleep: 2,
+			morningFitness: null,
+			date: dayjs(new Date("2026-05-01T19:18:25.227+02:00")),
+			crash: false,
+			appetiteChanges: null,
+			concentrationProblems: 3,
+			dayFitness: 1,
+			depressive: null,
+			eveningFitness: 5,
+			irritable: 1,
+			lackOfDrive: 2,
+			lossOfInterest: 3,
+			moodSwings: 1,
+			overwhelmed: 2,
+			sleepProblems: 4,
+			tense: 2,
+		});
 	});
 
 	it("empty response handled", () => {

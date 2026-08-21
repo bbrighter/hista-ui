@@ -5,6 +5,7 @@ export const createStatus = (
 ): hista.StatusResponse => ({
 	id: 1,
 	date: "2024-01-01T00:00:00Z",
+	crash: false,
 	...override,
 });
 

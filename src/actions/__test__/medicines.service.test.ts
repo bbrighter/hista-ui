@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { PIID } from "@/__tests__/fixtures/piid";
 import { client } from "../../api/api";
 import useHista from "../../store/store";
 import { actions } from "..";
@@ -94,11 +95,7 @@ describe("medicines service, manage medicines", () => {
 
 	it("archive medicine", async () => {
 		await actions.medicines.archive(1);
-		expect(spyPatch).toHaveBeenCalledWith(
-			"7b3047c2-d56d-4942-abc4-39eb85e785f2",
-			1,
-			{ archive: true },
-		);
+		expect(spyPatch).toHaveBeenCalledWith(PIID, 1, { archive: true });
 
 		const { medicines } = useHista.getState();
 		expect(medicines.find((i) => i.id === 1)?.isArchived).toBeTruthy();
@@ -106,11 +103,7 @@ describe("medicines service, manage medicines", () => {
 
 	it("rename medicine", async () => {
 		await actions.medicines.rename(1, "new name");
-		expect(spyPatch).toHaveBeenCalledWith(
-			"7b3047c2-d56d-4942-abc4-39eb85e785f2",
-			1,
-			{ name: "new name" },
-		);
+		expect(spyPatch).toHaveBeenCalledWith(PIID, 1, { name: "new name" });
 
 		const { medicines } = useHista.getState();
 		expect(medicines.find((i) => i.id === 1)?.name).toBe("new name");

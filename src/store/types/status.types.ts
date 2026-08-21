@@ -5,6 +5,7 @@ export type Status = {
 	date: Dayjs;
 	morningFitness: number | null;
 	morningSleep: number | null;
+	dayFitness: number | null;
 	eveningFitness: number | null;
 	depressive: number | null;
 	tense: number | null;
@@ -16,13 +17,14 @@ export type Status = {
 	appetiteChanges: number | null;
 	sleepProblems: number | null;
 	overwhelmed: number | null;
+	crash: boolean;
 };
 
 export type PutStatusParams = {
-	statusId: number;
 	date: Dayjs;
 	morningFitness: number | null;
 	morningSleep: number | null;
+	dayFitness: number | null;
 	eveningFitness: number | null;
 	depressive: number | null;
 	tense: number | null;
@@ -34,4 +36,5 @@ export type PutStatusParams = {
 	appetiteChanges: number | null;
 	sleepProblems: number | null;
 	overwhelmed: number | null;
+	crash: boolean;
 };
