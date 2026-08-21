@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { PIID } from "@/__tests__/fixtures/piid";
 import { createStatusList } from "@/__tests__/fixtures/status";
 import { getStatusListHandler } from "@/__tests__/mocks/statusHandler";
 import { server } from "@/__tests__/setupTest";
@@ -24,9 +25,14 @@ describe("Status integration test", () => {
 
 	it("Renders", async () => {
 		server.use(
-			getStatusListHandler(createStatusList({ id: 1, morningSleep: 2 })),
+			getStatusListHandler(
+				createStatusList({
+					date: "2024-01-01T00:00:00Z",
+					id: 1,
+					morningSleep: 2,
+				}),
+			),
 		);
-		vi.useFakeTimers();
 		render(
 			<MemoryRouter initialEntries={["/status/1"]}>
 				<Routes>
@@ -35,15 +41,13 @@ describe("Status integration test", () => {
 			</MemoryRouter>,
 		);
 
-		await act(async () => vi.runAllTimers());
-
-		screen.getByText("Mo, 01.01.2024");
+		await screen.findByText("Mo, 01.01.2024");
 		expect(spyGet).toHaveBeenCalled();
 		const sliders = screen.getAllByRole("slider");
-		expect(sliders).toHaveLength(13);
+		expect(sliders).toHaveLength(14);
 	});
 
-	it("Changes can be applied", async () => {
+	it("Slider and checkbox changes can be applied", async () => {
 		vi.useFakeTimers();
 
 		server.use(
@@ -71,29 +75,34 @@ describe("Status integration test", () => {
 
 		expect(screen.queryAllByTestId("dirty-status-icon")).toHaveLength(1);
 
+		await act(async () => vi.advanceTimersByTime(debounceTimeout / 2));
+
+		expect(screen.queryAllByTestId("dirty-status-icon")).toHaveLength(1);
+
+		const checkbox = screen.getByRole("checkbox");
+		fireEvent.click(checkbox);
+
 		await act(async () => vi.advanceTimersByTime(debounceTimeout));
 
 		expect(screen.queryAllByTestId("dirty-status-icon")).toHaveLength(0);
 
-		expect(spyPatch).toHaveBeenCalledExactlyOnceWith(
-			"7b3047c2-d56d-4942-abc4-39eb85e785f2",
-			1,
-			{
-				appetiteChanges: null,
-				concentrationProblems: null,
-				date: "2024-01-01T00:00:00.000Z",
-				depressive: null,
-				eveningFitness: null,
-				irritable: null,
-				lackOfDrive: null,
-				lossOfInterest: null,
-				moodSwings: null,
-				morningFitness: null,
-				morningSleep: 2,
-				overwhelmed: null,
-				sleepProblems: null,
-				tense: null,
-			},
-		);
+		expect(spyPatch).toHaveBeenCalledExactlyOnceWith(PIID, 1, {
+			appetiteChanges: null,
+			concentrationProblems: null,
+			date: "2024-01-01T00:00:00.000Z",
+			depressive: null,
+			eveningFitness: null,
+			dayFitness: null,
+			irritable: null,
+			lackOfDrive: null,
+			lossOfInterest: null,
+			moodSwings: null,
+			morningFitness: null,
+			morningSleep: 2,
+			overwhelmed: null,
+			sleepProblems: null,
+			tense: null,
+			crash: true,
+		});
 	});
 });

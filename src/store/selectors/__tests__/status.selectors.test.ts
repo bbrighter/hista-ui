@@ -8,6 +8,7 @@ import { useStatus, useStatusExistsOnDay } from "../status.selectors";
 const nullSliderValuers = {
 	eveningFitness: null,
 	morningFitness: null,
+	dayFitness: null,
 	morningSleep: null,
 	appetiteChanges: null,
 	concentrationProblems: null,
@@ -27,16 +28,19 @@ test("useStatus", () => {
 		{
 			id: 10,
 			date: dayjs(),
+			crash: false,
 			...nullSliderValuers,
 		},
 		{
 			id: 2,
 			date: dayjs().add(1, "day"),
+			crash: false,
 			...nullSliderValuers,
 		},
 		{
 			id: 3,
 			date: dayjs().add(-1, "day"),
+			crash: false,
 			...nullSliderValuers,
 		},
 	]);
@@ -57,6 +61,7 @@ describe("useStatusExistsOnDay", () => {
 			{
 				id: 10,
 				date: existingDay,
+				crash: false,
 				...nullSliderValuers,
 			},
 		]);
@@ -64,6 +69,7 @@ describe("useStatusExistsOnDay", () => {
 			{
 				id: 10,
 				date: existingDay,
+				crash: false,
 				...nullSliderValuers,
 			},
 		]);

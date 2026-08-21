@@ -36,6 +36,7 @@ export const status = {
 			date: params.date.toISOString(),
 			eveningFitness: params.eveningFitness,
 			morningFitness: params.morningFitness,
+			dayFitness: params.dayFitness,
 			morningSleep: params.morningSleep,
 			depressive: params.depressive,
 			tense: params.tense,
@@ -47,6 +48,7 @@ export const status = {
 			appetiteChanges: params.appetiteChanges,
 			sleepProblems: params.sleepProblems,
 			overwhelmed: params.overwhelmed,
+			crash: params.crash,
 		});
 
 		const { updateStatus } = useHista.getState();
@@ -69,6 +71,7 @@ const respToStatus = (resp: hista.StatusResponse): Status => {
 		date: dayjs(resp.date),
 		morningFitness: resp?.morningFitness ?? null,
 		morningSleep: resp?.morningSleep ?? null,
+		dayFitness: resp?.dayFitness ?? null,
 		eveningFitness: resp?.eveningFitness ?? null,
 		depressive: resp?.depressive ?? null,
 		tense: resp?.tense ?? null,
@@ -80,5 +83,6 @@ const respToStatus = (resp: hista.StatusResponse): Status => {
 		appetiteChanges: resp?.appetiteChanges ?? null,
 		sleepProblems: resp?.sleepProblems ?? null,
 		overwhelmed: resp?.overwhelmed ?? null,
+		crash: resp.crash ?? false,
 	};
 };

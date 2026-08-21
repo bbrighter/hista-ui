@@ -28,6 +28,8 @@ describe("StatusList component", () => {
 						overwhelmed: 1,
 						sleepProblems: 3,
 						tense: 4,
+						crash: false,
+						dayFitness: 1,
 					},
 				]}
 			/>,
@@ -36,7 +38,7 @@ describe("StatusList component", () => {
 		screen.getByTestId("DoneAllIcon");
 	});
 
-	it("Item checked if all entries are set", () => {
+	it("Item not checked if not all entries are set", () => {
 		render(
 			<StatusList
 				onNavigate={onNavigate}
@@ -58,6 +60,8 @@ describe("StatusList component", () => {
 						overwhelmed: 1,
 						sleepProblems: 3,
 						tense: 4,
+						crash: false,
+						dayFitness: 1,
 					},
 				]}
 			/>,

@@ -5,7 +5,6 @@ import type { Status } from "@/store";
 import { StatusSliders } from "../StatusSliders/StatusSliders";
 
 describe("StatusSliders component", () => {
-	const debounceTimeout = 1000;
 	const testStatus: Status = {
 		date: dayjs(new Date("2022-11-12")),
 		eveningFitness: 3,
@@ -22,11 +21,15 @@ describe("StatusSliders component", () => {
 		overwhelmed: null,
 		sleepProblems: null,
 		tense: null,
+		crash: false,
+		dayFitness: null,
 	};
-	const onChange = vi.fn().mockResolvedValue(undefined);
+	const setSymptoms = vi.fn();
+	const isDirty = vi.fn();
 	const labels = [
 		"Schlaf",
 		"Morgens",
+		"Tagsüber",
 		"Abends",
 		"Depressive Verstimmung, selbstabwertende Gedanken",
 		"Anspannung, Ängstlichkeit oder Gefühl des Aufgedrehtseins",
@@ -46,57 +49,50 @@ describe("StatusSliders component", () => {
 	});
 
 	it("Renders", () => {
-		render(<StatusSliders status={testStatus} onChange={onChange} />);
+		render(
+			<StatusSliders
+				symptoms={testStatus}
+				setSymptoms={setSymptoms}
+				isDirty={isDirty}
+			/>,
+		);
 
 		labels.forEach((label) => {
 			screen.getByText(label);
 		});
 		const sliders = screen.getAllByRole("slider");
-		expect(sliders).toHaveLength(13);
+		expect(sliders).toHaveLength(14);
 	});
 
-	it("Changes are debounced correctly", async () => {
-		vi.useFakeTimers();
-		render(<StatusSliders status={testStatus} onChange={onChange} />);
+	it("Changes are applied", async () => {
+		render(
+			<StatusSliders
+				symptoms={testStatus}
+				setSymptoms={setSymptoms}
+				isDirty={isDirty}
+			/>,
+		);
 
 		const sliders = screen.getAllByRole("slider");
 		await act(async () => {
 			fireEvent.change(sliders[0], { target: { value: 2 } });
-			vi.advanceTimersByTime(100);
-			fireEvent.change(sliders[1], { target: { value: 1 } });
 		});
-		expect(onChange).not.toHaveBeenCalled();
-		expect(screen.queryAllByTestId("dirty-status-icon")).toHaveLength(2);
-		await act(async () => vi.advanceTimersByTime(debounceTimeout));
-		expect(onChange).toHaveBeenCalledExactlyOnceWith(1, {
-			date: dayjs(new Date("2022-11-12")),
-			eveningFitness: 3,
-			morningFitness: 1,
+		expect(setSymptoms).toHaveBeenCalledExactlyOnceWith({
+			...testStatus,
 			morningSleep: 2,
-			statusId: 1,
-			appetiteChanges: null,
-			concentrationProblems: null,
-			depressive: null,
-			irritable: null,
-			lackOfDrive: null,
-			lossOfInterest: null,
-			moodSwings: null,
-			overwhelmed: null,
-			sleepProblems: null,
-			tense: null,
 		});
 	});
 
-	it("Queued requests appear", async () => {
-		render(<StatusSliders status={testStatus} onChange={onChange} />);
+	it("If dirty, loading is shown", async () => {
+		const isDirtyMorningSleep = vi.fn((key) => key === "morningSleep");
+		render(
+			<StatusSliders
+				symptoms={testStatus}
+				setSymptoms={setSymptoms}
+				isDirty={isDirtyMorningSleep}
+			/>,
+		);
 
-		expect(screen.queryAllByTestId("dirty-status-icon")).toHaveLength(0);
-
-		const sliders = screen.getAllByRole("slider");
-		await act(async () => {
-			fireEvent.change(sliders[0], { target: { value: 2 } });
-		});
 		expect(screen.queryAllByTestId("dirty-status-icon")).toHaveLength(1);
-		// Test that they disappear in integration test, as onChange must apply the correct changes
 	});
 });
