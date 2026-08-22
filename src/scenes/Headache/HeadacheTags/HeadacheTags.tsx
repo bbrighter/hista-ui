@@ -2,13 +2,20 @@ import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 
-export default function HeadacheInputs(props: {
+export const HeadacheTags = (props: {
 	label: string;
 	values: Array<ValueLabelPair>;
 	options: Array<ValueLabelPair>;
-	onAdd: (value: ValueLabelPair) => void;
-	onRemove: (value: ValueLabelPair) => void;
-}) {
+	updateTags: (values: Array<ValueLabelPair>) => Promise<void>;
+}) => {
+	const onAdd = (value: ValueLabelPair) => {
+		props.updateTags([...props.values, value]);
+	};
+
+	const onRemove = (value: ValueLabelPair) => {
+		props.updateTags(props.values.filter((v) => v.label !== value.label));
+	};
+
 	return (
 		<>
 			<Divider sx={{ pt: 1 }} />
@@ -20,14 +27,14 @@ export default function HeadacheInputs(props: {
 						key={opt.value}
 						value={opt}
 						active={isFound}
-						onAdd={props.onAdd}
-						onRemove={props.onRemove}
+						onAdd={onAdd}
+						onRemove={onRemove}
 					/>
 				);
 			})}
 		</>
 	);
-}
+};
 
 export interface ValueLabelPair {
 	value: string;

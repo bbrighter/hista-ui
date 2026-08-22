@@ -38,7 +38,13 @@ export function OverviewList(props: {
 	const minNumberOfItems = 20;
 	const [limit, setLimit] = useState(minNumberOfItems);
 
-	const visibleItems = useMemo(() => items.slice(0, limit), [limit, items]);
+	const visibleItems = useMemo(
+		() =>
+			[...items]
+				.sort((a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf())
+				.slice(0, limit),
+		[limit, items],
+	);
 
 	usePiidEffect(() => {
 		getData();

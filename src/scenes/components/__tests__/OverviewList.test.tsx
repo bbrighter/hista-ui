@@ -9,24 +9,18 @@ import {
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-import { OverviewList } from "./OverviewList";
+import { OverviewList } from "../OverviewList/OverviewList";
 
 describe("OverviewList", () => {
 	const onClick = vi.fn();
 	const onDelete = vi.fn().mockResolvedValue(undefined);
 	const getData = vi.fn().mockResolvedValue([]);
 	const onSetNow = vi.fn().mockResolvedValue(undefined);
+	const fns = { onClick, onDelete, getData, onSetNow };
 	const items = [{ id: 1, date: new Date("2025/04/20 12:00"), severity: 3 }];
 
 	it("Renders and actions", async () => {
-		render(
-			<OverviewList
-				items={items}
-				onClick={onClick}
-				onDelete={onDelete}
-				getData={getData}
-			/>,
-		);
+		render(<OverviewList items={items} {...fns} />);
 		await waitFor(() => {
 			expect(getData).toHaveBeenCalled();
 		});
@@ -55,14 +49,7 @@ describe("OverviewList", () => {
 			await userEvent.click(deleteButton);
 		};
 
-		render(
-			<OverviewList
-				items={items}
-				onClick={onClick}
-				onDelete={onDelete}
-				getData={getData}
-			/>,
-		);
+		render(<OverviewList items={items} {...fns} />);
 
 		await swipeDelete();
 		const modal = screen.getByRole("dialog");
@@ -87,9 +74,7 @@ describe("OverviewList", () => {
 		render(
 			<OverviewList
 				items={items}
-				onClick={onClick}
-				onDelete={onDelete}
-				getData={getData}
+				{...fns}
 				showSeverity
 				severityColorMapping={() => "rgb(255,0,0)"}
 			/>,
@@ -106,15 +91,7 @@ describe("OverviewList", () => {
 		vi.useFakeTimers();
 		vi.setSystemTime(new Date(2020, 1, 1, 13, 0, 0, 0));
 
-		render(
-			<OverviewList
-				items={items}
-				onClick={onClick}
-				onDelete={onDelete}
-				getData={getData}
-				onSetNow={onSetNow}
-			/>,
-		);
+		render(<OverviewList items={items} {...fns} />);
 		vi.advanceTimersToNextTimer();
 
 		const setNowButton = screen.getByTestId("set-now-button");
@@ -135,15 +112,7 @@ describe("OverviewList", () => {
 			id: i,
 			date: new Date(Date.now() - i * 60 * 60 * 24),
 		}));
-		render(
-			<OverviewList
-				items={manyItems}
-				onClick={onClick}
-				onDelete={onDelete}
-				getData={getData}
-				onSetNow={onSetNow}
-			/>,
-		);
+		render(<OverviewList items={manyItems} {...fns} />);
 
 		const showMoreButton = await screen.findByRole("button", {
 			name: "Alle anzeigen",
@@ -159,5 +128,21 @@ describe("OverviewList", () => {
 		});
 		await userEvent.click(showLessButton);
 		expect(screen.queryAllByRole("listitem")).toHaveLength(20);
+	});
+
+	it("Items are sorted by date", () => {
+		const items = [
+			{ id: 1, date: new Date("2022-01-05T00:00:00Z") },
+			{ id: 2, date: new Date("2022-01-03T00:00:00Z") },
+			{ id: 3, date: new Date("2022-01-07T00:00:00Z") },
+		];
+
+		render(<OverviewList items={items} {...fns} />);
+
+		const listItems = screen.queryAllByRole("listitem");
+		expect(listItems).toHaveLength(3);
+		expect(listItems[0]).toHaveTextContent("07.01.2022");
+		expect(listItems[1]).toHaveTextContent("05.01.2022");
+		expect(listItems[2]).toHaveTextContent("03.01.2022");
 	});
 });

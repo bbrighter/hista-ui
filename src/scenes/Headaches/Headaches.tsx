@@ -8,7 +8,7 @@ import { selectIsLoadingAny, useHeadaches } from "../../store";
 import useHista from "../../store/store";
 import { Loading, OverviewList } from "../components";
 import { Icons } from "../components/Icons";
-import { getColor } from "../Headache/components/colorMapping";
+import { getColor } from "../Headache/SeveritySlider/colorMapping";
 
 export default function Headaches() {
 	const isLoading = useHista(selectIsLoadingAny(["headaches"]));

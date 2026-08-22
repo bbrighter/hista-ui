@@ -7,17 +7,18 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 
-import useDebounce from "../../hooks/useDebounce";
-import { useDidUpdateEffect } from "../../hooks/useDidUpdateEffect";
+import useDebounce from "../../../hooks/useDebounce";
+import { useDidUpdateEffect } from "../../../hooks/useDidUpdateEffect";
 
 export default function DateInput(props: {
 	title: string;
 	date: Date;
 	onChange: (value: dayjs.Dayjs | null) => void;
 	hideTime?: boolean;
+	ms?: number;
 }) {
 	const [inputValue, setInputValue] = useState(dayjs(props.date));
-	const debouncedInputValue = useDebounce(inputValue, 500);
+	const debouncedInputValue = useDebounce(inputValue, props.ms ?? 500);
 	const isUserInteractionRef = useRef(false);
 
 	useEffect(() => {
