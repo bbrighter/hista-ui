@@ -9,7 +9,7 @@ import { usePiidEffect } from "../../hooks/usePiidEffect";
 import { selectIsLoadingAny } from "../../store";
 import useHista from "../../store/store";
 import { Loading } from "../components";
-import DateInput from "../components/DateInput";
+import DateInput from "../components/DateInput/DateInput";
 import AddCondition from "./components/AddCondition";
 import ConditionList from "./components/ConditionList";
 

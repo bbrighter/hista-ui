@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import * as matchers from "@testing-library/jest-dom/matchers";
 import { cleanup } from "@testing-library/react";
 import { setupServer } from "msw/node";
@@ -19,7 +18,7 @@ beforeAll(() => {
 
 	server.listen({ onUnhandledRequest: "error" });
 
-	if (process.env.DEBUG) {
+	if (import.meta.env.MODE === "debug") {
 		server.events.on("request:start", ({ request }) => {
 			// eslint-disable-next-line no-console
 			console.log("➡️", request.method, request.url);

@@ -2,7 +2,7 @@ import type dayjs from "dayjs";
 
 import { actions } from "../../../actions";
 import { useNote } from "../../../store";
-import DateInput from "../../components/DateInput";
+import DateInput from "../../components/DateInput/DateInput";
 
 export const NoteDateInput = ({ noteId }: { noteId: number }) => {
 	const note = useNote(noteId);
