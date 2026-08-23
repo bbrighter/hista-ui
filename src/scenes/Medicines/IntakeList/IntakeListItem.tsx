@@ -3,36 +3,37 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 
-import { actions } from "../../../actions";
-
-type IntakeListProp = {
+type BaseIntakeProp = {
 	id: number;
 	name: string;
 	count: number;
-	isOld?: boolean;
 	isArchived?: boolean;
 };
 
-export const IntakeListItem = ({
-	id,
-	name,
-	count,
-	isOld,
-	isArchived,
-}: IntakeListProp) => {
-	const decreaseIsDisabled = count === 0;
+type OldIntakeProp = BaseIntakeProp & {
+	isOld: true;
+};
 
-	const onIncrease = () => actions.intakes.increment(id);
-	const onDecrease = () => actions.intakes.decrement(id);
+type CurrentIntakeProp = BaseIntakeProp & {
+	isOld?: false;
+	onIncrease: (id: number) => Promise<void>;
+	onDecrease: (id: number) => Promise<void>;
+};
+
+type IntakeListProp = OldIntakeProp | CurrentIntakeProp;
+
+export const IntakeListItem = (props: IntakeListProp) => {
+	const { id, name, isArchived, count, isOld } = props;
+	const decreaseIsDisabled = count === 0;
 
 	const secondaryAction = isOld ? null : (
 		<ButtonGroup>
-			<Button data-testid="increaseButton" onClick={onIncrease}>
+			<Button data-testid="increaseButton" onClick={() => props.onIncrease(id)}>
 				+
 			</Button>
 			<Button
 				disabled={decreaseIsDisabled}
-				onClick={onDecrease}
+				onClick={() => props.onDecrease(id)}
 				data-testid="decreaseButton"
 			>
 				-

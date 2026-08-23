@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react";
 import { expect, test } from "vitest";
 
 import useHista from "../../../store/store";
-import { useIsNameUnique } from "./useIsNameUnique";
+import { useIsNameUnique } from "../MedicineList/useIsNameUnique";
 
 test("useIsNameUnique", () => {
 	const { setMedicines } = useHista.getState();

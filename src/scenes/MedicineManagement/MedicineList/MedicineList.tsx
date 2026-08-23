@@ -1,12 +1,22 @@
 import List from "@mui/material/List";
 import { useState } from "react";
-
-import { actions } from "../../../actions";
-import useHista from "../../../store/store";
+import type { Medicine } from "@/store";
 import { NoData } from "../../components";
 import { MedicineListItem } from "./MedicineListItem";
 
-export const MedicineList = () => {
+export type MedicineListProps = {
+	medicines: Array<Medicine>;
+	onReorder: (id: number, prevId?: number, nextId?: number) => Promise<void>;
+	onRename: (id: number, name: string) => Promise<void>;
+	isNameUnique: (name: string) => boolean;
+};
+
+export const MedicineList = ({
+	medicines,
+	onReorder,
+	onRename,
+	isNameUnique,
+}: MedicineListProps) => {
 	const [dropIndicator, setDropIndicator] = useState<{
 		overId?: number;
 		nextId?: number;
@@ -14,7 +24,6 @@ export const MedicineList = () => {
 		edge: "bottom" | "top";
 	}>({ edge: "top" });
 	const [draggedId, setDraggedId] = useState<null | number>(null);
-	const medicines = useHista((state) => state.medicines);
 
 	const onDragOverItem = (overId: number, edge: "bottom" | "top") => {
 		const medIndex = medicines.findIndex((m) => m.id === overId);
@@ -34,11 +43,7 @@ export const MedicineList = () => {
 	const onDrop = async () => {
 		if (draggedId == null) return;
 
-		await actions.medicines.reorder(
-			draggedId,
-			dropIndicator?.prevId,
-			dropIndicator?.nextId,
-		);
+		await onReorder(draggedId, dropIndicator?.prevId, dropIndicator?.nextId);
 		setDraggedId(null);
 		setDropIndicator({ edge: "top" });
 	};
@@ -60,6 +65,8 @@ export const MedicineList = () => {
 						onDragItemLeave={() => setDropIndicator({ edge: "top" })}
 						onDragStart={onDragStart}
 						onDrop={onDrop}
+						onReorder={onRename}
+						isNameUnique={isNameUnique}
 					/>
 				))}
 			</List>

@@ -1,9 +1,8 @@
-import { utils, type WorkBook } from "xlsx";
-
 import { type Headache, useHeadaches } from "../../../../store";
 import { excelHeaderColumns, headacheExcelRows } from "./headacheColumns";
 
-export const buildHeadacheWorkbook = (headaches: Array<Headache>): WorkBook => {
+export const buildHeadacheWorkbook = async (headaches: Array<Headache>) => {
+	const { utils } = await import("xlsx");
 	const data = headacheExcelRows(headaches);
 	const rows = [...excelHeaderColumns, ...data];
 	const worksheet = utils.aoa_to_sheet(rows);
@@ -24,7 +23,7 @@ export const buildHeadacheWorkbook = (headaches: Array<Headache>): WorkBook => {
 	return workbook;
 };
 
-export const useBuildHeadacheWorkBook = (): (() => WorkBook) => {
+export const useBuildHeadacheWorkBook = () => {
 	const headaches = useHeadaches();
 	return () => buildHeadacheWorkbook(headaches);
 };

@@ -19,7 +19,7 @@ test("headache workbook", async () => {
 		},
 	];
 
-	const book = buildHeadacheWorkbook(headaches);
+	const book = await buildHeadacheWorkbook(headaches);
 	const sheet = book.Sheets.Kopfschmerz;
 	expect(sheet).toBeDefined();
 

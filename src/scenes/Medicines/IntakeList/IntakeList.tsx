@@ -3,12 +3,20 @@ import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListSubheader from "@mui/material/ListSubheader";
 import { IntakeListItem } from "./IntakeListItem";
-import { useOldIntakes, useTodaysIntakes } from "./intakeHooks";
+import type { useOldIntakes, useTodaysIntakes } from "./intakeHooks";
 
-export const IntakeList = () => {
-	const todaysIntakes = useTodaysIntakes();
-	const oldIntakes = useOldIntakes();
-
+export type IntakeListProps = {
+	todaysIntakes: ReturnType<typeof useTodaysIntakes>;
+	oldIntakes: ReturnType<typeof useOldIntakes>;
+	onIncrease: (id: number) => Promise<void>;
+	onDecrease: (id: number) => Promise<void>;
+};
+export const IntakeList = ({
+	todaysIntakes,
+	oldIntakes,
+	onDecrease,
+	onIncrease,
+}: IntakeListProps) => {
 	const formatDate = (d: Date): string => {
 		return d.toLocaleDateString("de-DE", {
 			weekday: "long",
@@ -21,15 +29,21 @@ export const IntakeList = () => {
 	return (
 		<Box sx={{ pt: 2 }}>
 			<List>
-				<ListSubheader>{formatDate(new Date())}</ListSubheader>
-				{todaysIntakes.map((i) => (
-					<IntakeListItem
-						key={i.medicineId}
-						id={i.medicineId}
-						name={i.name}
-						count={i.count}
-					/>
-				))}
+				<List>
+					{" "}
+					{/* Nested list to allow unified handling in tests*/}
+					<ListSubheader>{formatDate(new Date())}</ListSubheader>
+					{todaysIntakes.map((i) => (
+						<IntakeListItem
+							key={i.medicineId}
+							id={i.medicineId}
+							name={i.name}
+							count={i.count}
+							onDecrease={onDecrease}
+							onIncrease={onIncrease}
+						/>
+					))}
+				</List>
 				{oldIntakes.map((o) => (
 					<List key={o.date.toISOString()}>
 						<Divider />

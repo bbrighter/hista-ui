@@ -1,5 +1,4 @@
 import Button from "@mui/material/Button";
-import { writeFile } from "xlsx";
 
 import { Icons } from "../../../components/Icons";
 import { useBuildWorkBook } from "./useBuildWorkBook";
@@ -7,9 +6,10 @@ import { useBuildWorkBook } from "./useBuildWorkBook";
 export function DiaryDownloadButton() {
 	const buildDiaryWorkbook = useBuildWorkBook();
 
-	const onClick = () => {
+	const onClick = async () => {
+		const XLSX = await import("xlsx");
 		const workbook = buildDiaryWorkbook();
-		writeFile(workbook, "tagebuch.xlsx");
+		XLSX.writeFile(workbook, "tagebuch.xlsx");
 	};
 
 	return (
