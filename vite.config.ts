@@ -30,13 +30,8 @@ export default defineConfig({
 	},
 	build: {
 		chunkSizeWarningLimit: 700,
-		rollupOptions: {
+		rolldownOptions: {
 			treeshake: true,
-			output: {
-				manualChunks: (id) => {
-					if (id.includes("xlsx")) return "xlsx";
-				},
-			},
 		},
 	},
 	test: {

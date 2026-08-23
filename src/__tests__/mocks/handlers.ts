@@ -43,8 +43,8 @@ const handlers = [
 	getStatisticsHandler(baseUrlWithPiid),
 	getDiariesHandler(baseUrlWithPiid),
 	getNutritionStatisticsHandler(baseUrlWithPiid),
-	...medicineHandlers(baseUrlWithPiid),
-	...intakeHandlers(baseUrlWithPiid),
+	...medicineHandlers,
+	...intakeHandlers,
 	...templateHandlers,
 	errorHandler(baseUrl),
 

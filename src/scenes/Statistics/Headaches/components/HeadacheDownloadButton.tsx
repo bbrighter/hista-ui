@@ -1,6 +1,5 @@
 import Button from "@mui/material/Button";
 import { useState } from "react";
-import { writeFile } from "xlsx";
 
 import { Icons } from "../../../components/Icons";
 import { useBuildHeadacheWorkBook } from "./headacheExport";
@@ -12,7 +11,8 @@ export function HeadacheDownloadButton() {
 
 	const onClick = async () => {
 		setLoading(true);
-		const workbook = buildHeadacheWorkbook();
+		const workbook = await buildHeadacheWorkbook();
+		const { writeFile } = await import("xlsx");
 		writeFile(workbook, "Kopfschmerz.xlsx");
 		setLoading(false);
 	};

@@ -1,19 +1,38 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import {
+	createIntakeList,
+	createMedicineList,
+} from "@/__tests__/fixtures/medicines";
 import { PIID } from "@/__tests__/fixtures/piid";
+import {
+	getIntakeListHandler,
+	getMedicineListHandler,
+	postMedicineHandler,
+} from "@/__tests__/mocks/medicineHandlers";
+import { server } from "@/__tests__/setupTest";
 import { client } from "../../api/api";
 import useHista from "../../store/store";
 import { actions } from "..";
 
 describe("medicines service, manage medicines", () => {
 	const spyPatch = vi.spyOn(client, "PatchMedicine");
-	const spyListMeds = vi.spyOn(client, "ListMedicines");
+	const spyListMedicines = vi.spyOn(client, "ListMedicines");
 
 	beforeEach(async () => {
-		const { setMedicines } = useHista.getState();
+		const { setMedicines, resetLoaded } = useHista.getState();
+		resetLoaded();
 		setMedicines([{ id: 1, isArchived: false, name: "Medicine" }]);
 	});
 
 	it("list medicines", async () => {
+		server.use(
+			getMedicineListHandler(
+				createMedicineList([
+					{ id: 1, isArchived: false, name: "Medicine", sortOrder: 1 },
+					{ id: 2, isArchived: true, name: "Archived medicine", sortOrder: 2 },
+				]),
+			),
+		);
 		await actions.medicines.list();
 		const { medicines, loaded } = useHista.getState();
 		expect(medicines).toHaveLength(2);
@@ -34,10 +53,11 @@ describe("medicines service, manage medicines", () => {
 		await actions.medicines.list();
 		await actions.medicines.list();
 
-		expect(spyListMeds).toHaveBeenCalledOnce();
+		expect(spyListMedicines).toHaveBeenCalledOnce();
 	});
 
 	it("create medicine", async () => {
+		server.use(postMedicineHandler(3));
 		await actions.medicines.create("new medicine");
 
 		const { medicines } = useHista.getState();
@@ -114,10 +134,27 @@ describe("medicines service, edit intakes", () => {
 	const sypListIntakes = vi.spyOn(client, "ListIntakes");
 
 	it("List intakes", async () => {
+		server.use(
+			getIntakeListHandler(
+				createIntakeList([
+					{
+						medicineId: 1,
+						count: 3,
+						date: "2022-04-03T12:30:00Z",
+					},
+				]),
+			),
+		);
+
 		await actions.intakes.list();
 
 		const { intakes } = useHista.getState();
-		expect(intakes).toHaveLength(3);
+		expect(intakes).toHaveLength(1);
+		expect(intakes[0]).toMatchObject({
+			medicineId: 1,
+			count: 3,
+			date: new Date("2022-04-03T12:30:00Z"),
+		});
 	});
 
 	it("List intakes is called only once", async () => {

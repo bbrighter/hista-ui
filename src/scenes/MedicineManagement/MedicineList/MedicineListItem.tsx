@@ -14,7 +14,6 @@ import type { Medicine } from "../../../store";
 import { ArchiveButton } from "../../components/ArchiveButton";
 import { Icons } from "../../components/Icons";
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort";
-import { useIsNameUnique } from "./useIsNameUnique";
 
 type DropIndicator = {
 	overId?: number;
@@ -30,6 +29,8 @@ type Props = {
 	onDragItemLeave: () => void;
 	onDrop: () => void;
 	onDragStart: (id: number) => void;
+	onReorder: (id: number, name: string) => Promise<void>;
+	isNameUnique: (name: string) => boolean;
 };
 
 export const MedicineListItem = ({
@@ -39,6 +40,8 @@ export const MedicineListItem = ({
 	onDragItemLeave,
 	onDragStart,
 	onDrop,
+	onReorder,
+	isNameUnique,
 }: Props) => {
 	const ref = useRef<HTMLLIElement | null>(null);
 	const [dragging, setDragging] = useState(false);
@@ -128,6 +131,8 @@ export const MedicineListItem = ({
 					id={medicine.id}
 					name={medicine.name}
 					onCancel={() => setIsEditing(false)}
+					onRename={onReorder}
+					isNameUnique={isNameUnique}
 				/>
 			)}
 			{!isEditing && (
@@ -145,11 +150,17 @@ const EditMedicineName = ({
 	id,
 	name,
 	onCancel,
-}: Partial<Medicine> & { onCancel: () => void }) => {
-	const isSaveable = useIsNameUnique();
+	onRename,
+	isNameUnique,
+}: Partial<Medicine> & {
+	onCancel: () => void;
+	onRename: (id: number, v: string) => Promise<void>;
+	isNameUnique: (v: string) => boolean;
+}) => {
+	const isSaveable = (v: string) => isNameUnique(v) && v.trim() !== "";
 	if (!id || !name) return;
 	const onSave = async (v: string) => {
-		await actions.medicines.rename(id, v);
+		await onRename(id, v);
 		onCancel();
 	};
 

@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react";
 import { expect, test } from "vitest";
 
 import useHista from "../../../store/store";
-import { useOldIntakes } from "./intakeHooks";
+import { useOldIntakes } from "../IntakeList/intakeHooks";
 
 test("use old intakes", () => {
 	const { setMedicines, setIntakes } = useHista.getState();
@@ -35,7 +35,6 @@ test("use old intakes", () => {
 		count: 10,
 		medicineId: 1,
 		name: "Name",
-		visible: true,
 		archived: false,
 	});
 	const olderIntakes = intakes[1];
@@ -45,14 +44,12 @@ test("use old intakes", () => {
 		count: 0,
 		medicineId: 1,
 		name: "Name",
-		visible: true,
 		archived: false,
 	});
 	expect(olderIntakes.values).toContainEqual({
 		count: 5,
 		medicineId: 2,
 		name: "Archived",
-		visible: true,
 		archived: true,
 	});
 });
