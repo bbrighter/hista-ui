@@ -14,3 +14,7 @@ graph.svg
 graph.html
 .vercel
 .env*.local
+
+
+# Test files
+*.xlsx

@@ -41,7 +41,7 @@ const handlers = [
 	...permissionsHandler(baseUrl),
 	...authHandlers(baseUrl),
 	getStatisticsHandler(baseUrlWithPiid),
-	getDiariesHandler(baseUrlWithPiid),
+	getDiariesHandler([]),
 	getNutritionStatisticsHandler(baseUrlWithPiid),
 	...medicineHandlers,
 	...intakeHandlers,

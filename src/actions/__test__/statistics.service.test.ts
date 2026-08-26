@@ -1,5 +1,6 @@
 import { expect, test } from "vitest";
-
+import { getDiariesHandler } from "@/__tests__/mocks/statisticsHandler";
+import { server } from "@/__tests__/setupTest";
 import useHista from "../../store/store";
 import { actions } from "..";
 
@@ -33,33 +34,65 @@ test("get meal statistics", async () => {
 });
 
 test("get diaries", async () => {
+	server.use(
+		getDiariesHandler([
+			{
+				date: "2026-02-14T16:52:46Z",
+				type: "Pollen",
+				content: "",
+				severity: "Geringe",
+				category: "Hasel",
+			},
+			{
+				date: "2026-02-14T09:55:12Z",
+				type: "Symptom",
+				content: "Kopfweh",
+				severity: "0",
+				category: "Kopf",
+			},
+			{
+				date: "2026-02-14T09:54:55Z",
+				type: "Food",
+				content: "Zucchini",
+				severity: "cooked",
+				category: "",
+			},
+			{
+				date: "2025-12-20T09:36:03Z",
+				type: "Note",
+				content: "Notizi",
+				severity: "",
+				category: "",
+			},
+		]),
+	);
 	await actions.statistics.getDiaries();
 
 	const { diaryEntries } = useHista.getState();
 	expect(diaryEntries).toHaveLength(4);
 	expect(diaryEntries).toContainEqual({
-		Date: new Date("2026-02-14T16:52:46.908836+01:00"),
+		Date: new Date("2026-02-14T16:52:46Z"),
 		Type: "Pollen",
 		What: "",
 		Severity: "Geringe",
 		Category: "Hasel",
 	});
 	expect(diaryEntries).toContainEqual({
-		Date: new Date("2026-02-14T09:55:12.830294+01:00"),
+		Date: new Date("2026-02-14T09:55:12Z"),
 		Type: "Symptom",
 		What: "Kopfweh",
 		Severity: "0",
 		Category: "Kopf",
 	});
 	expect(diaryEntries).toContainEqual({
-		Date: new Date("2026-02-14T09:54:55.232+01:00"),
+		Date: new Date("2026-02-14T09:54:55Z"),
 		Type: "Essen",
 		What: "Zucchini",
 		Severity: "Gar",
 		Category: "",
 	});
 	expect(diaryEntries).toContainEqual({
-		Date: new Date("2025-12-20T09:36:03.139833+01:00"),
+		Date: new Date("2025-12-20T09:36:03Z"),
 		Type: "Notiz",
 		What: "Notizi",
 		Severity: "",

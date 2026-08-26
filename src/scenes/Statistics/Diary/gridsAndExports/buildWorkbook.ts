@@ -1,10 +1,8 @@
-import { utils, type WorkBook } from "xlsx";
+import type { RawDiary } from "@/store";
 
-import useHista from "../../../../store/store";
-
-export const useBuildWorkBook = (): (() => WorkBook) => {
-	const diary = useHista((state) => state.diaryEntries);
-	const diaryWithHeaderNames = diary.map((d) => ({
+export const buildWorkbook = async (entries: Array<RawDiary>) => {
+	const { utils } = await import("xlsx");
+	const diaryWithHeaderNames = entries.map((d) => ({
 		Typ: d.Type,
 		Datum: d.Date,
 		Schwere: d.Severity,
@@ -24,5 +22,5 @@ export const useBuildWorkBook = (): (() => WorkBook) => {
 	const workbook = utils.book_new();
 	utils.book_append_sheet(workbook, worksheet, "Tagebuch");
 
-	return () => workbook;
+	return workbook;
 };

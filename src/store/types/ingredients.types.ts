@@ -19,7 +19,7 @@ type Ingredients = Array<Ingredient>;
 export const respToIngredients = (
 	resp: hista.IngredientListResponse,
 ): Ingredients => {
-	if (!resp.ingredients) return [];
+	if (!resp?.ingredients) return [];
 	const ingredients = resp.ingredients.map((ing) => {
 		return {
 			id: ing.id,

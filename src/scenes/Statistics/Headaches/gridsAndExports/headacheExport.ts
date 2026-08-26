@@ -1,4 +1,4 @@
-import { type Headache, useHeadaches } from "../../../../store";
+import type { Headache } from "../../../../store";
 import { excelHeaderColumns, headacheExcelRows } from "./headacheColumns";
 
 export const buildHeadacheWorkbook = async (headaches: Array<Headache>) => {
@@ -21,9 +21,4 @@ export const buildHeadacheWorkbook = async (headaches: Array<Headache>) => {
 	const workbook = utils.book_new();
 	utils.book_append_sheet(workbook, worksheet, "Kopfschmerz");
 	return workbook;
-};
-
-export const useBuildHeadacheWorkBook = () => {
-	const headaches = useHeadaches();
-	return () => buildHeadacheWorkbook(headaches);
 };

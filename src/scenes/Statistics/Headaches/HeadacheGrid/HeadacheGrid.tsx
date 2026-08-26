@@ -1,15 +1,16 @@
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid/DataGrid";
-
+import type { GridRowsProp } from "@mui/x-data-grid/models";
 import {
 	headacheColumnGroupingModel,
 	headacheGridColumns,
-	useHeadacheGridRows,
-} from "./headacheColumns";
+} from "../gridsAndExports/headacheColumns";
 
-export function HeadacheGrid() {
-	const rows = useHeadacheGridRows();
+type HeadacheGridProps = {
+	rows: GridRowsProp;
+};
 
+export function HeadacheGrid({ rows }: HeadacheGridProps) {
 	return (
 		<Box style={{ display: "flex", flexDirection: "column", maxHeight: 1000 }}>
 			<DataGrid

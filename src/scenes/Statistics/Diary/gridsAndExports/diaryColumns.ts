@@ -1,6 +1,5 @@
 import type { GridColDef, GridRowsProp } from "@mui/x-data-grid/models";
-
-import useHista from "../../../../store/store";
+import type { RawDiary } from "@/store";
 
 export const diaryGridColumns: Array<GridColDef> = [
 	{ field: "type", headerName: "Typ", flex: 1 },
@@ -10,9 +9,8 @@ export const diaryGridColumns: Array<GridColDef> = [
 	{ field: "category", headerName: "Kategorie", flex: 1 },
 ];
 
-export const useDiaryRows = (): GridRowsProp => {
-	const diary = useHista((state) => state.diaryEntries);
-	return diary.map((d, i) => ({
+export const toDiaryRows = (diary: Array<RawDiary>): GridRowsProp =>
+	diary.map((d, i) => ({
 		id: i,
 		type: String(d.Type),
 		date: d.Date,
@@ -20,4 +18,3 @@ export const useDiaryRows = (): GridRowsProp => {
 		what: d.What,
 		category: d.Category,
 	}));
-};
