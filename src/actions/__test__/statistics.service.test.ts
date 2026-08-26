@@ -1,5 +1,4 @@
 import { expect, test } from "vitest";
-import { createDiaries } from "@/__tests__/fixtures/statistics";
 import { getDiariesHandler } from "@/__tests__/mocks/statisticsHandler";
 import { server } from "@/__tests__/setupTest";
 import useHista from "../../store/store";
