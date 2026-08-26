@@ -1,18 +1,29 @@
 import Box from "@mui/material/Box";
-import { useEffect } from "react";
-
+import { useEffect, useMemo } from "react";
+import { DownloadExcelButton } from "@/scenes/components/DownloadExcelButton/DownloadExcelButton";
+import useHista from "@/store/store";
 import { actions } from "../../../actions";
-import { DiaryDownloadButton, DiaryGrid } from "./components";
+import { DiaryGrid } from "./DiaryGrid/DiaryGrid";
+import { buildWorkbook } from "./gridsAndExports/buildWorkbook";
+import { toDiaryRows } from "./gridsAndExports/diaryColumns";
 
 export function Diary() {
+	const diary = useHista((state) => state.diaryEntries);
+	const rows = useMemo(() => toDiaryRows(diary), [diary]);
+
 	useEffect(() => {
 		actions.statistics.getDiaries();
 	}, []);
 
 	return (
 		<Box>
-			<DiaryDownloadButton />
-			<DiaryGrid />
+			<DownloadExcelButton
+				label="Ernährungstagebuch herunterladen"
+				fileTitle="tagebuch"
+				entries={diary}
+				createWorkbook={buildWorkbook}
+			/>
+			<DiaryGrid rows={rows} />
 		</Box>
 	);
 }

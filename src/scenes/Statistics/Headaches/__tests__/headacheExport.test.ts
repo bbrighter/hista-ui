@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 
 import type { Headache } from "../../../../store";
-import { buildHeadacheWorkbook } from "./headacheExport";
+import { buildHeadacheWorkbook } from "../gridsAndExports/headacheExport";
 
 test("headache workbook", async () => {
 	const headaches: Array<Headache> = [
