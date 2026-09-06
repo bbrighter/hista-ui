@@ -38,7 +38,7 @@ export const TemplateDialog = ({ open, onClose, templateId }: Props) => {
 					/>
 				</Toolbar>
 			</AppBar>
-			<Container sx={{ pt: "6rem" }}>
+			<Container sx={{ pt: "6rem", pb: "2rem" }}>
 				<NameInput {...draftState} />
 				<Stack spacing={1}>
 					{draftState.draft.map((_, index) => (
