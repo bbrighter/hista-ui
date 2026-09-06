@@ -3,6 +3,7 @@ import {
 	createIngredient,
 	createIngredients,
 	createMeal,
+	createPostFoodResponse,
 } from "@/__tests__/fixtures/meal";
 import { createTemplates } from "@/__tests__/fixtures/templates";
 import {
@@ -249,5 +250,26 @@ describe("meal service, single meal", () => {
 			ingredientId: 2,
 			condition: "cooked",
 		});
+	});
+
+	it("Post food, ingredient is not archived", async () => {
+		server.use(
+			getMealHandler(createMeal({ id: 1, foods: [] })),
+			getIngredientListHandler(createIngredients([])),
+			postFoodHandler(
+				createPostFoodResponse(
+					{ ingredientId: 1, id: 1 },
+					{ id: 1, isArchived: false },
+				),
+			),
+		);
+
+		await actions.ingredients.list();
+		await actions.meals.get(1);
+
+		await actions.meals.postFoodByName(1, "ingredient");
+		const { ingredients } = useHista.getState();
+		expect(ingredients).toHaveLength(1);
+		expect(ingredients[0].isArchived).toBe(false);
 	});
 });

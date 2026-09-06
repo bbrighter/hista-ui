@@ -21,7 +21,7 @@ export const Medicines = () => {
 
 	return (
 		<Loading show={isLoading}>
-			<Container sx={{ mt: "2rem" }}>
+			<Container sx={{ padding: "2rem" }}>
 				<Button variant="outlined" onClick={navigate.to.manageMedicine}>
 					Medikamente verwalten
 				</Button>

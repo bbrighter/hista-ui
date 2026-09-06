@@ -32,7 +32,7 @@ export default function ConditionEvents() {
 
 	return (
 		<Loading show={isLoading}>
-			<Container sx={{ paddingTop: "2rem" }}>
+			<Container sx={{ padding: "2rem" }}>
 				<Stack direction="row" spacing={2}>
 					<Button
 						variant="contained"

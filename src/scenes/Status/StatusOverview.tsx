@@ -20,7 +20,7 @@ export const StatusOverview = () => {
 	};
 
 	return (
-		<Container>
+		<Container sx={{ pb: "2rem" }}>
 			<Tabs value={tab} onChange={(_e, v) => setTab(v)}>
 				<Tab label="Status" value={0} />
 				<Tab label="Auswertung" value={1} />
