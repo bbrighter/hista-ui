@@ -18,7 +18,7 @@ export default function SymptomManagement() {
 
 	return (
 		<Loading show={isLoading}>
-			<Container>
+			<Container sx={{ padding: "2rem" }}>
 				<ul>
 					{symptoms.map((symptom) => (
 						<SymptomCategoryAccordion

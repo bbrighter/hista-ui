@@ -21,7 +21,7 @@ export default function PollenView() {
 
 	return (
 		<Loading show={isLoading}>
-			<Container sx={{ padding: 2 }}>
+			<Container sx={{ padding: "2rem" }}>
 				<PollenHeader />
 				<Divider />
 				<List>

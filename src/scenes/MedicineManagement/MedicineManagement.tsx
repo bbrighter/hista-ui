@@ -22,7 +22,7 @@ export const MedicineManagement = () => {
 
 	return (
 		<Loading show={isLoading}>
-			<Container sx={{ mt: "2rem" }}>
+			<Container sx={{ padding: "2rem" }}>
 				<AddMedicineButton
 					isNameUnique={isNameUnique}
 					onSave={actions.medicines.create}
