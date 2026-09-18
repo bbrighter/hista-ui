@@ -37,7 +37,7 @@ export default defineConfig({
 	test: {
 		globals: true,
 		environment: "happy-dom",
-		setupFiles: ["vitest-localstorage-mock", "src/__tests__/setupTest.ts"],
+		setupFiles: ["src/__tests__/setupTest.ts"],
 		env: {
 			TZ: "utc",
 		},

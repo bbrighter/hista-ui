@@ -4,8 +4,15 @@ import useHista from "../store/store";
 
 export const ingredients = {
 	list: async () => {
-		const { setIngredients, loaded, setLoaded } = useHista.getState();
-		if (loaded.ingredients) return;
+		const { setIngredients, ingredients, loaded, setLoaded } =
+			useHista.getState();
+		if (loaded.ingredients && ingredients.length > 0) {
+			return;
+		}
+		if (loaded.ingredients && ingredients.length === 0) {
+			console.warn("Warning: Ingredients are loaded but have length zero!");
+			throw "Warning: Ingredients are loaded but have length zero!";
+		}
 
 		const resp = await client.ListIngredients();
 
