@@ -1,3 +1,4 @@
+import "@testing-library/jest-dom/vitest";
 import * as matchers from "@testing-library/jest-dom/matchers";
 import { cleanup } from "@testing-library/react";
 import { setupServer } from "msw/node";
@@ -12,9 +13,9 @@ expect.extend(matchers);
 export const server = setupServer(...handlers);
 
 beforeAll(() => {
-	Storage.prototype.setItem = vi.fn();
-	Storage.prototype.getItem = vi.fn(() => "test-token");
-	Storage.prototype.clear = vi.fn();
+	vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => {});
+	vi.spyOn(Storage.prototype, "getItem").mockReturnValue("test-token");
+	vi.spyOn(Storage.prototype, "clear").mockImplementation(() => {});
 
 	server.listen({ onUnhandledRequest: "error" });
 
