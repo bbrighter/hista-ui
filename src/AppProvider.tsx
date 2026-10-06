@@ -4,6 +4,7 @@ import {
 	useAuth,
 	useHandleUnauthorized,
 } from "@bbrighter/auth-module/auth";
+import { SettingsProvider } from "@bbrighter/auth-module/settings";
 import { UserManagementProvider } from "@bbrighter/auth-module/users";
 import { useEffect } from "react";
 import {
@@ -13,7 +14,11 @@ import {
 	useNavigate,
 } from "react-router-dom";
 
-import { useAuthStateAdapter, useUserManagementAdapter } from "./adapter";
+import {
+	useAuthStateAdapter,
+	useSettingsAdapter,
+	useUserManagementAdapter,
+} from "./adapter";
 import useHista from "./store/store";
 
 export default function AppProvider() {
@@ -21,15 +26,18 @@ export default function AppProvider() {
 	const location = useLocation();
 	const authAdapter = useAuthStateAdapter(navigate, location);
 	const userAdapter = useUserManagementAdapter();
+	const settingsAdapter = useSettingsAdapter();
 
 	return (
-		<UserManagementProvider adapter={userAdapter}>
-			<AuthProvider adapter={authAdapter}>
-				<AppEffects navigate={navigate} />
-				<CustomAppBar />
-				<Outlet />
-			</AuthProvider>
-		</UserManagementProvider>
+		<SettingsProvider adapter={settingsAdapter}>
+			<UserManagementProvider adapter={userAdapter}>
+				<AuthProvider adapter={authAdapter}>
+					<AppEffects navigate={navigate} />
+					<CustomAppBar />
+					<Outlet />
+				</AuthProvider>
+			</UserManagementProvider>
+		</SettingsProvider>
 	);
 }
 

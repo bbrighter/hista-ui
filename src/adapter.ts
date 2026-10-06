@@ -2,10 +2,10 @@ import {
 	type AuthStateAdapter,
 	ProductKeys,
 } from "@bbrighter/auth-module/auth";
+import type { SettingsStateAdapter } from "@bbrighter/auth-module/settings";
 import type { UserStateAdapter } from "@bbrighter/auth-module/users";
 import type { Location, NavigateFunction } from "react-router-dom";
-
-import { authApi } from "./api/api";
+import { authApi, userApi } from "./api/api";
 import useHista from "./store/store";
 
 export const useAuthStateAdapter = (
@@ -59,5 +59,22 @@ export const useUserManagementAdapter = (): UserStateAdapter => {
 		useUsers,
 		useApi,
 		usePiid,
+	};
+};
+
+export const useSettingsAdapter = (): SettingsStateAdapter => {
+	const useSettingsApi = () => userApi;
+
+	const language = useHista((state) => state.language);
+	const loadingMode = useHista((state) => state.loadingMode);
+	const setSettings = useHista((state) => state.setUserSettings);
+	const useSettings = () => ({
+		settings: { language: language, loadingMode: loadingMode },
+		setSettings: setSettings,
+	});
+
+	return {
+		useSettings,
+		useSettingsApi,
 	};
 };
