@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import Autocomplete, {
 	type AutocompleteChangeReason,
 } from "@mui/material/Autocomplete";
@@ -6,7 +7,6 @@ import ListItemText from "@mui/material/ListItemText";
 import TextField from "@mui/material/TextField";
 import type { FilterOptionsState } from "@mui/material/useAutocomplete";
 import { useEffect, useState } from "react";
-
 import { actions } from "../../../actions";
 import useHista from "../../../store/store";
 import AddOrSelectCategory from "./AddOrSelectCategory";
@@ -107,7 +107,7 @@ export default function AddCondition() {
 					const key = isNewOption(option) ? 0 : option.symptomId;
 					const primary = isNewOption(option) ? option : option.symptomName;
 					const secondary = isNewOption(option)
-						? "hinzufügen"
+						? t`hinzufügen`
 						: option.categoryName;
 					const { key: _ignored, ...rest } = props;
 					return (
@@ -116,7 +116,7 @@ export default function AddCondition() {
 						</ListItem>
 					);
 				}}
-				renderInput={(params) => <TextField {...params} label="Symptom" />}
+				renderInput={(params) => <TextField {...params} label={t`Symptom`} />}
 			/>
 			<AddOrSelectCategory
 				open={open}

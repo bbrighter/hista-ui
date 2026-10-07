@@ -1,7 +1,6 @@
+import { Trans } from "@lingui/react/macro";
 import Button from "@mui/material/Button";
 import { useState } from "react";
-
-import { mealConstants } from "../../../constants";
 import type { FoodCondition } from "../../../store";
 
 export const FoodConditionToggle = ({
@@ -37,7 +36,7 @@ export const FoodConditionToggle = ({
 			variant="outlined"
 			onClick={handleClick}
 		>
-			{condition === "raw" ? mealConstants.RAW : mealConstants.COOKED}
+			{condition === "raw" ? <Trans>Roh</Trans> : <Trans>Gar</Trans>}
 		</Button>
 	);
 };

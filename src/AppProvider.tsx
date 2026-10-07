@@ -6,6 +6,9 @@ import {
 } from "@bbrighter/auth-module/auth";
 import { SettingsProvider } from "@bbrighter/auth-module/settings";
 import { UserManagementProvider } from "@bbrighter/auth-module/users";
+import { i18n } from "@lingui/core";
+import { I18nProvider } from "@lingui/react";
+import dayjs from "dayjs";
 import { useEffect } from "react";
 import {
 	type NavigateFunction,
@@ -13,7 +16,6 @@ import {
 	useLocation,
 	useNavigate,
 } from "react-router-dom";
-
 import {
 	useAuthStateAdapter,
 	useSettingsAdapter,
@@ -30,13 +32,15 @@ export default function AppProvider() {
 
 	return (
 		<SettingsProvider adapter={settingsAdapter}>
-			<UserManagementProvider adapter={userAdapter}>
-				<AuthProvider adapter={authAdapter}>
-					<AppEffects navigate={navigate} />
-					<CustomAppBar />
-					<Outlet />
-				</AuthProvider>
-			</UserManagementProvider>
+			<InternationalizationProvider>
+				<UserManagementProvider adapter={userAdapter}>
+					<AuthProvider adapter={authAdapter}>
+						<AppEffects navigate={navigate} />
+						<CustomAppBar />
+						<Outlet />
+					</AuthProvider>
+				</UserManagementProvider>
+			</InternationalizationProvider>
 		</SettingsProvider>
 	);
 }
@@ -71,4 +75,19 @@ const usePiidLocation = () => {
 			});
 		}
 	}, [piid]);
+};
+
+const InternationalizationProvider = ({
+	children,
+}: {
+	children: React.ReactNode;
+}) => {
+	const language = useHista((state) => state.language);
+	dayjs.locale("de");
+
+	useEffect(() => {
+		i18n.activate(language);
+	}, [language]);
+
+	return <I18nProvider i18n={i18n}>{children}</I18nProvider>;
 };

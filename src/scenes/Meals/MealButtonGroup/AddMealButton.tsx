@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/react/macro";
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import { actions } from "@/actions";
@@ -25,7 +26,7 @@ export const AddMealButton = () => {
 			onClick={onCreate}
 			loading={loading}
 		>
-			Neu
+			<Trans>Neu</Trans>
 		</Button>
 	);
 };

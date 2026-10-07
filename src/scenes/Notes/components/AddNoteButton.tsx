@@ -1,6 +1,6 @@
+import { Trans } from "@lingui/react/macro";
 import Button from "@mui/material/Button";
 import { useState } from "react";
-
 import { actions } from "../../../actions";
 import { useAppNavigate } from "../../../hooks/useNavigate";
 import { Icons } from "../../components/Icons";
@@ -25,7 +25,7 @@ export const AddNoteButton = () => {
 			loading={loading}
 			startIcon={<Icons.notes />}
 		>
-			Neue Notiz
+			<Trans>Neue Notiz</Trans>
 		</Button>
 	);
 };

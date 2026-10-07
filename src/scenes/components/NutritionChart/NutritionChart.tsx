@@ -1,10 +1,10 @@
+import { t } from "@lingui/core/macro";
 import Box from "@mui/material/Box";
 import { ChartsDataProvider } from "@mui/x-charts/ChartsDataProvider";
 import { ChartsLegend } from "@mui/x-charts/ChartsLegend";
 import { ChartsSurface } from "@mui/x-charts/ChartsSurface";
 import { PiePlot } from "@mui/x-charts/PieChart";
 import { useEffect, useRef, useState } from "react";
-
 import type { Nutrition } from "../../../store";
 import { NUTRITION_COLORS } from "./nutritionColors";
 
@@ -70,12 +70,12 @@ export const getNutritionChartData = (
 ) => {
 	const colors = NUTRITION_COLORS;
 	const data = [
-		{ id: 1, value: nutrition.fat, label: "Fett", color: colors[1] },
-		{ id: 2, value: nutrition.protein, label: "Eiweiß", color: colors[3] },
+		{ id: 1, value: nutrition.fat, label: t`Fett`, color: colors[1] },
+		{ id: 2, value: nutrition.protein, label: t`Eiweiß`, color: colors[3] },
 		{
 			id: 3,
 			value: nutrition.carbohydrate,
-			label: "Kohlenhydrate",
+			label: t`Kohlenhydrate`,
 			color: colors[0],
 		},
 	];
@@ -83,7 +83,7 @@ export const getNutritionChartData = (
 		data.push({
 			id: 4,
 			value: nutrition.fiber,
-			label: "Ballaststoffe",
+			label: t`Ballaststoffe`,
 			color: colors[2],
 		});
 	}

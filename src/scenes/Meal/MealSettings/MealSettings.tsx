@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import Grid from "@mui/material/Grid";
 import DateInput from "@/scenes/components/DateInput/DateInput";
 import { FreshnessSlider } from "./FreshnessSlider";
@@ -44,7 +45,7 @@ export function MealSettings({
 		>
 			<Grid size={{ xs: 12 }}>
 				<DateInput
-					title="Mahlzeit"
+					title={t`Mahlzeit`}
 					date={date}
 					onChange={(e) =>
 						setDate(e?.toISOString() || new Date().toISOString())

@@ -1,9 +1,9 @@
+import { Trans } from "@lingui/react/macro";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import { useState } from "react";
-
 import { actions } from "../../actions";
 import { useAppNavigate } from "../../hooks/useNavigate";
 import { selectIsLoadingAny } from "../../store";
@@ -40,7 +40,7 @@ export default function ConditionEvents() {
 						onClick={onClickAddSymptom}
 						loading={loading}
 					>
-						Neues Symptom
+						<Trans>Neues Symptom</Trans>
 					</Button>
 					<IconButton
 						data-testid="manage-symptoms-button"

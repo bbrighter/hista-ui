@@ -1,7 +1,7 @@
+import { Trans } from "@lingui/react/macro";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-
 import { selectIsLoadingAny } from "../../store";
 import useHista from "../../store/store";
 import { Loading } from "../components";
@@ -14,7 +14,9 @@ export const Templates = () => {
 		<Loading show={isLoading}>
 			<Container sx={{ padding: "2rem" }}>
 				<Stack direction="row" sx={{ justifyContent: "space-between" }}>
-					<Typography variant="h4">Vorlagen</Typography>
+					<Typography variant="h4">
+						<Trans>Vorlagen</Trans>
+					</Typography>
 					<AddTemplate />
 				</Stack>
 				<TemplateList />

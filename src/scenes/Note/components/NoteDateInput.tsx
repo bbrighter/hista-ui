@@ -1,5 +1,5 @@
+import { t } from "@lingui/core/macro";
 import type dayjs from "dayjs";
-
 import { actions } from "../../../actions";
 import { useNote } from "../../../store";
 import DateInput from "../../components/DateInput/DateInput";
@@ -13,5 +13,5 @@ export const NoteDateInput = ({ noteId }: { noteId: number }) => {
 		actions.notes.patchDate(noteId, e.toDate());
 	};
 
-	return <DateInput title="Zeit" date={date} onChange={onDateChange} />;
+	return <DateInput title={t`Zeit`} date={date} onChange={onDateChange} />;
 };

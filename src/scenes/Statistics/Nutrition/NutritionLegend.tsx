@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
@@ -5,13 +6,13 @@ import { NUTRITION_COLORS } from "@/scenes/components/NutritionChart/nutritionCo
 
 export const NutritionLegend = ({ hideFiber }: { hideFiber: boolean }) => {
 	const nutrition_legend = [
-		{ id: 0, label: "K", color: NUTRITION_COLORS[0] },
-		{ id: 1, label: "F", color: NUTRITION_COLORS[1] },
-		{ id: 3, label: "E", color: NUTRITION_COLORS[3] },
+		{ id: 0, label: t`K`, color: NUTRITION_COLORS[0] },
+		{ id: 1, label: t`F`, color: NUTRITION_COLORS[1] },
+		{ id: 3, label: t`E`, color: NUTRITION_COLORS[3] },
 	];
 
 	if (!hideFiber) {
-		nutrition_legend.push({ id: 2, label: "B", color: NUTRITION_COLORS[2] });
+		nutrition_legend.push({ id: 2, label: t`B`, color: NUTRITION_COLORS[2] });
 	}
 
 	return (

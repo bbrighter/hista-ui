@@ -1,6 +1,6 @@
+import { Trans } from "@lingui/react/macro";
 import Button from "@mui/material/Button";
 import { useState } from "react";
-
 import { Icons } from "../../components/Icons";
 import { TemplateDialog } from "./TemplateDraft";
 
@@ -16,7 +16,7 @@ export const AddTemplate = () => {
 				startIcon={<Icons.template />}
 				onClick={onOpen}
 			>
-				Neue Vorlage
+				<Trans>Neue Vorlage</Trans>
 			</Button>
 			<TemplateDialog open={open} onClose={onClose} />
 		</>

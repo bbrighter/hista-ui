@@ -1,5 +1,5 @@
+import { t } from "@lingui/core/macro";
 import TextField from "@mui/material/TextField";
-
 import type { DraftStateType } from "./useTemplateDraft";
 
 export const NameInput = ({ name, onChangeName }: DraftStateType) => {
@@ -7,7 +7,7 @@ export const NameInput = ({ name, onChangeName }: DraftStateType) => {
 		<TextField
 			data-testid="name-input"
 			sx={{ mb: "2rem" }}
-			label="Name"
+			label={t`Name`}
 			value={name}
 			onChange={(e) => onChangeName(e.currentTarget.value)}
 		/>

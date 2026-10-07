@@ -1,3 +1,5 @@
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -6,7 +8,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton, { type IconButtonProps } from "@mui/material/IconButton";
 import { useState } from "react";
-
 import type { Nutrition } from "../../../store";
 import { Icons } from "../../components/Icons";
 import { NumberDecimalInput } from "../../components/NumberDecimalInput";
@@ -56,16 +57,16 @@ export const EditNutritionButton = ({
 	};
 
 	const nutritions = [
-		{ value: fat, onChange: setFat, label: "Fett" },
-		{ value: carbohydrate, onChange: setCarbohydrate, label: "Kohlenhydrate" },
-		{ value: fiber, onChange: setFiber, label: "Ballaststoffe" },
-		{ value: protein, onChange: setProtein, label: "Eiweiß" },
+		{ value: fat, onChange: setFat, label: t`Fett` },
+		{ value: carbohydrate, onChange: setCarbohydrate, label: t`Kohlenhydrate` },
+		{ value: fiber, onChange: setFiber, label: t`Ballaststoffe` },
+		{ value: protein, onChange: setProtein, label: t`Eiweiß` },
 	];
 
 	return (
 		<>
 			<IconButton
-				title="Nährwerte"
+				title={t`Nährwerte`}
 				onClick={() => setOpen(true)}
 				data-testid="editNutritionButton"
 				color={isFilled ? "success" : "default"}
@@ -74,7 +75,9 @@ export const EditNutritionButton = ({
 				<Icons.nutrition />
 			</IconButton>
 			<Dialog open={open} onClose={onClose}>
-				<DialogTitle>Nährwerte pro 100 g</DialogTitle>
+				<DialogTitle>
+					<Trans>Nährwerte pro 100 g</Trans>
+				</DialogTitle>
 				<DialogContent>
 					<Box
 						component="form"
@@ -87,7 +90,7 @@ export const EditNutritionButton = ({
 								onValueChange={n.onChange}
 								variant="standard"
 								label={n.label}
-								unit="g"
+								unit={t`g`}
 								min={0}
 							/>
 						))}
@@ -100,9 +103,11 @@ export const EditNutritionButton = ({
 						onClick={onSave}
 						loading={loading}
 					>
-						Speichern
+						<Trans>Speichern</Trans>
 					</Button>
-					<Button onClick={onClose}>Abbrechen</Button>
+					<Button onClick={onClose}>
+						<Trans>Abbrechen</Trans>
+					</Button>
 				</DialogActions>
 			</Dialog>
 		</>

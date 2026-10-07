@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import { actions } from "@/actions";
 import useHista from "@/store/store";
 
@@ -8,7 +9,7 @@ export const useFoodList = () => {
 	const ingredients = useHista((state) => state.ingredients);
 	const returnFoods = foods.map((f) => {
 		const name =
-			ingredients.find((i) => i.id === f.ingredientId)?.name ?? "Unbenannt";
+			ingredients.find((i) => i.id === f.ingredientId)?.name ?? t`Unbenannt`;
 		const food = { ...f, ingredientName: name, foodId: f.id };
 		const { id, ...foodWithoutId } = food;
 		return foodWithoutId;

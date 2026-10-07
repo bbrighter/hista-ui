@@ -1,3 +1,5 @@
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Menu from "@mui/material/Menu";
@@ -56,12 +58,12 @@ export function AddStatus({
 					title="Heutigen Status hinzufügen"
 					data-testid="addStatusButton"
 				>
-					+ Status heute
+					<Trans>+ Status heute</Trans>
 				</Button>
 				<Button
 					onClick={handleClickCalendar}
 					disabled={disabled}
-					title="Status hinzufügen"
+					title={t`Status hinzufügen`}
 					data-testid="statusMenuButton"
 				>
 					<Icons.status />
@@ -72,13 +74,13 @@ export function AddStatus({
 					disabled={statusExistsYesterday}
 					onClick={handleClickYesterday}
 				>
-					Gestern
+					<Trans>Gestern</Trans>
 				</MenuItem>
 				<MenuItem
 					disabled={statusExistsDayBefore}
 					onClick={handleClickDayBeforeYesterday}
 				>
-					Vorgestern
+					<Trans>Vorgestern</Trans>
 				</MenuItem>
 			</Menu>
 		</>

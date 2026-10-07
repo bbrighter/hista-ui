@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import Box from "@mui/material/Box";
 import { useEffect, useMemo } from "react";
 import { DownloadExcelButton } from "@/scenes/components/DownloadExcelButton/DownloadExcelButton";
@@ -19,8 +20,8 @@ export function HeadacheDiary() {
 	return (
 		<Box>
 			<DownloadExcelButton
-				fileTitle="Kopfschmerz"
-				label="Kopfschmerzen herunterladen"
+				fileTitle={t`Kopfschmerz`}
+				label={t`Kopfschmerzen herunterladen`}
 				entries={headacheArray}
 				createWorkbook={buildHeadacheWorkbook}
 			/>

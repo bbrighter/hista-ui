@@ -1,8 +1,8 @@
+import { t } from "@lingui/core/macro";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-
 import { actions } from "../../../actions";
 import { Icons } from "../../components/Icons";
 import { useConditionsWithSymptoms } from "./hooks";
@@ -28,8 +28,8 @@ export default function ConditionList() {
 					}
 				>
 					<ListItemText
-						primary={con.symptomName ?? "Unbekannt"}
-						secondary={con.catName ?? "Unbekannt"}
+						primary={con.symptomName ?? t`Unbekannt`}
+						secondary={con.catName ?? t`Unbekannt`}
 					/>
 					<Severity conditionId={con.id} severity={con.severity} />
 				</ListItem>

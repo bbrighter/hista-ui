@@ -1,3 +1,5 @@
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Box from "@mui/material/Box";
 import ButtonGroup from "@mui/material/ButtonGroup";
@@ -10,7 +12,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Select, { type SelectChangeEvent } from "@mui/material/Select";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-
 import { actions } from "../../../actions";
 import type { Symptom, SymptomCategory } from "../../../store";
 import useHista from "../../../store/store";
@@ -85,10 +86,13 @@ function SymptomAccordionEntry(props: { symptom: Symptom }) {
 				>
 					<Typography variant="body1">{props.symptom.name}</Typography>
 					<ButtonGroup>
-						<IconButton title="Umbenennen" onClick={() => setMode("editing")}>
+						<IconButton
+							title={t`Umbenennen`}
+							onClick={() => setMode("editing")}
+						>
 							<Icons.actions.edit />
 						</IconButton>
-						<IconButton onClick={() => setMode("swapping")} title="Tauschen">
+						<IconButton onClick={() => setMode("swapping")} title={t`Tauschen`}>
 							<Icons.actions.reorder />
 						</IconButton>
 					</ButtonGroup>
@@ -96,7 +100,7 @@ function SymptomAccordionEntry(props: { symptom: Symptom }) {
 			)}
 			{mode === "editing" && (
 				<TextFieldSaveAndAbort
-					label="Symptomname"
+					label={t`Symptomname`}
 					value={props.symptom.name}
 					onSave={onSave}
 					isSaveable={(v) =>
@@ -118,9 +122,11 @@ function SymptomAccordionEntry(props: { symptom: Symptom }) {
 					<Typography variant="body1">{props.symptom.name}</Typography>
 					<Box sx={{ display: "flex" }}>
 						<FormControl>
-							<InputLabel>Zielkategorie</InputLabel>
+							<InputLabel>
+								<Trans>Zielkategorie</Trans>
+							</InputLabel>
 							<Select
-								label="Zielkategorie"
+								label={t`Zielkategorie`}
 								value={targetCategoryId}
 								onChange={onSwap}
 							>
@@ -136,7 +142,7 @@ function SymptomAccordionEntry(props: { symptom: Symptom }) {
 								loading={isLoading}
 								onClick={onSwapConfirm}
 								color="success"
-								title="Tauschen bestätigen"
+								title={t`Tauschen bestätigen`}
 								disabled={targetCategoryId === props.symptom.categoryId}
 							>
 								<Icons.actions.save />
@@ -144,7 +150,7 @@ function SymptomAccordionEntry(props: { symptom: Symptom }) {
 							<IconButton
 								onClick={onCancel}
 								color="error"
-								title="Tauschen abbrechen"
+								title={t`Tauschen abbrechen`}
 							>
 								<Icons.actions.close />
 							</IconButton>

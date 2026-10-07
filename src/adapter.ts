@@ -71,6 +71,10 @@ export const useSettingsAdapter = (): SettingsStateAdapter => {
 	const useSettings = () => ({
 		settings: { language: language, loadingMode: loadingMode },
 		setSettings: setSettings,
+		availableLanguages: [
+			{ value: "de-DE", label: "Deutsch" },
+			{ value: "de-SW", label: "Schwäbisch" },
+		],
 	});
 
 	return {

@@ -1,9 +1,9 @@
+import { t } from "@lingui/core/macro";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-
 import { useAppNavigate } from "../../../hooks/useNavigate";
 import { Icons } from "../../components/Icons";
 
@@ -56,50 +56,50 @@ export default function StartPageCard({ type, highlight }: StartPageCardProps) {
 
 const CARD_CONFIG = {
 	meals: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Mahlzeiten",
-		content: "Mahlzeiten hinzufügen, ansehen und bearbeiten",
+		title: t`Mahlzeiten`,
+		content: t`Mahlzeiten hinzufügen, ansehen und bearbeiten`,
 		icon: Icons.meal,
 		onClick: navigate.to.meals,
 	}),
 	conditionEvents: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Symptome",
-		content: "Symptome aufzeichnen",
+		title: t`Symptome`,
+		content: t`Symptome aufzeichnen`,
 		icon: Icons.symptom,
 		onClick: navigate.to.conditionEvents,
 	}),
 	statistics: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Auswertungen",
-		content: "Ernährungstagebuch und mehr",
+		title: t`Auswertungen`,
+		content: t`Ernährungstagebuch und mehr`,
 		icon: Icons.statistics,
 		onClick: navigate.to.statistics,
 	}),
 	notes: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Notizen",
-		content: "Notizen anfertigen und durchsuchen",
+		title: t`Notizen`,
+		content: t`Notizen anfertigen und durchsuchen`,
 		icon: Icons.notes,
 		onClick: navigate.to.notes,
 	}),
 	pollens: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Pollen",
-		content: "Pollenflug bewundern",
+		title: t`Pollen`,
+		content: t`Pollenflug bewundern`,
 		icon: Icons.pollens,
 		onClick: navigate.to.pollens,
 	}),
 	headaches: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Kopfweh",
-		content: "Kopfschmerztagebuch",
+		title: t`Kopfweh`,
+		content: t`Kopfschmerztagebuch`,
 		icon: Icons.headaches,
 		onClick: navigate.to.headaches,
 	}),
 	medicines: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Medikamente",
-		content: "Einnehmen und eintragen",
+		title: t`Medikamente`,
+		content: t`Einnehmen und eintragen`,
 		icon: Icons.medicines,
 		onClick: navigate.to.medicine,
 	}),
 	status: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Status",
-		content: "Wie geht's heute? Und wie ging's gestern?",
+		title: t`Status`,
+		content: t`Wie geht's heute? Und wie ging's gestern?`,
 		icon: Icons.status,
 		onClick: navigate.to.status,
 	}),

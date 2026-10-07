@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/react/macro";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
@@ -22,7 +23,11 @@ const StatusComponent = () => {
 	}, []);
 
 	if (!status)
-		return <Typography color="error">Kein Status gefunden</Typography>;
+		return (
+			<Typography color="error">
+				<Trans>Kein Status gefunden</Trans>
+			</Typography>
+		);
 
 	return <StatusForm status={status} />;
 };

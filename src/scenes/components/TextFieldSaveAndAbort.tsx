@@ -1,8 +1,8 @@
+import { t } from "@lingui/core/macro";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
-
 import { Icons } from "./Icons";
 
 export default function TextFieldSaveAndAbort(props: {
@@ -45,14 +45,14 @@ export default function TextFieldSaveAndAbort(props: {
 					color="success"
 					loading={isLoading}
 					onClick={onSave}
-					title="Umbenennen speichern"
+					title={t`Umbenennen speichern`}
 				>
 					<Icons.actions.save />
 				</IconButton>
 				<IconButton
 					onClick={onCancel}
 					color="error"
-					title="Umbenennen abbrechen"
+					title={t`Umbenennen abbrechen`}
 				>
 					<Icons.actions.close />
 				</IconButton>

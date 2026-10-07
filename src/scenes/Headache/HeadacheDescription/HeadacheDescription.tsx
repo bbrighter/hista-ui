@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
@@ -31,7 +32,7 @@ export const HeadacheDebouncedDescription = ({
 	return (
 		<TextField
 			sx={{ mt: 2 }}
-			label="Zusätzliche Infos"
+			label={t`Zusätzliche Infos`}
 			multiline
 			minRows={3}
 			value={currentDescription}

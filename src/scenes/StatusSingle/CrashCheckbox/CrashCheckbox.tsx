@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import type { ChangeEvent } from "react";
@@ -12,7 +13,7 @@ export const CrashCheckbox = ({ crash, setCrash }: CrashCheckboxProps) => {
 	return (
 		<FormControlLabel
 			control={<Checkbox checked={crash} onChange={onChange} />}
-			label="Crash"
+			label={t`Crash`}
 		/>
 	);
 };

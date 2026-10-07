@@ -18,3 +18,6 @@ graph.html
 
 # Test files
 *.xlsx
+
+# Localization
+src/locales/**/messages.ts

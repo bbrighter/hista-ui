@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/react/macro";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import { useAppNavigate } from "@/hooks/useNavigate";
@@ -23,7 +24,7 @@ export const Medicines = () => {
 		<Loading show={isLoading}>
 			<Container sx={{ padding: "2rem" }}>
 				<Button variant="outlined" onClick={navigate.to.manageMedicine}>
-					Medikamente verwalten
+					<Trans>Medikamente verwalten</Trans>
 				</Button>
 				<IntakeList {...intakeListProps} />
 			</Container>

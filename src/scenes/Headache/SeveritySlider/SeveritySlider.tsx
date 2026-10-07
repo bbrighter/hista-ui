@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import Typography from "@mui/material/Typography";
 import DebouncedSlider from "@/scenes/components/DebouncedSlider/DebouncedSlider";
 import { getColor } from "./colorMapping";
@@ -37,7 +38,7 @@ export const SeveritySlider = ({
 		<DebouncedSlider
 			initialValue={severity}
 			onChange={onSeverityChange}
-			label="Schwere"
+			label={t`Schwere`}
 			min={0}
 			max={10}
 			colorMapping={getColor}

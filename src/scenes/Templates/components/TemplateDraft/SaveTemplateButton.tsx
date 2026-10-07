@@ -1,6 +1,6 @@
+import { Trans } from "@lingui/react/macro";
 import Button from "@mui/material/Button";
 import { useState } from "react";
-
 import { actions } from "../../../../actions";
 import { Icons } from "../../../components/Icons";
 import type { DraftStateType } from "./useTemplateDraft";
@@ -45,7 +45,7 @@ export const SaveTemplateButton = ({
 			disabled={!canBeSaved()}
 			loading={loading}
 		>
-			Speichern
+			<Trans>Speichern</Trans>
 		</Button>
 	);
 };

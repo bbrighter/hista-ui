@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import PeopleIcon from "@mui/icons-material/People";
 import PersonIcon from "@mui/icons-material/Person";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -26,10 +27,14 @@ export const PeopleToggleButton = ({
 					value={isAlone}
 					onChange={(_e, v) => handleToggleOptionChange(v)}
 				>
-					<ToggleButton sx={{ width: "3rem" }} value={true} title="Alleine">
+					<ToggleButton sx={{ width: "3rem" }} value={true} title={t`Alleine`}>
 						{isLoading ? <CircularProgress size={20} /> : <PersonIcon />}
 					</ToggleButton>
-					<ToggleButton value={false} sx={{ width: "3rem" }} title="Zusammen">
+					<ToggleButton
+						value={false}
+						sx={{ width: "3rem" }}
+						title={t`Zusammen`}
+					>
 						{isLoading === false ? (
 							<CircularProgress size={20} />
 						) : (

@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
@@ -14,9 +15,9 @@ export const formatDateBasedOnInterval = (
 		case "day":
 			return date.toLocaleDateString("de-DE");
 		case "week":
-			return `Woche ${dayDate.isoWeek()}`;
+			return t`Woche ${dayDate.isoWeek()}`;
 		case "quarter":
-			return `Q${dayDate.quarter()} ${dayDate.year()}`;
+			return t`Q${dayDate.quarter()} ${dayDate.year()}`;
 		case "month":
 			return dayDate.format("MMMM YYYY"); // e.g., "März 2026"
 	}

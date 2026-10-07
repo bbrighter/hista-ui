@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import Autocomplete from "@mui/material/Autocomplete";
 import CircularProgress from "@mui/material/CircularProgress";
 import ListItem from "@mui/material/ListItem";
@@ -88,7 +89,7 @@ export function FoodInput({
 			renderInput={(params) => (
 				<TextField
 					{...params}
-					label="Zutaten"
+					label={t`Zutaten`}
 					slotProps={{
 						...params.slotProps,
 						input: {

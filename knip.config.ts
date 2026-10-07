@@ -1,7 +1,7 @@
 import type { KnipConfig } from "knip";
 
 const config: KnipConfig = {
-	ignore: ["src/api/generatedApi.ts", "scripts/*"],
+	ignore: ["src/api/generatedApi.ts", "scripts/*", "lingui.config.ts"],
 	ignoreBinaries: [
 		"dot", // Needed to visualize results from dependency-cruiser
 	],

@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import type { Headache } from "../../../../store";
 import { excelHeaderColumns, headacheExcelRows } from "./headacheColumns";
 
@@ -19,6 +20,6 @@ export const buildHeadacheWorkbook = async (headaches: Array<Headache>) => {
 		{ s: { r: 0, c: 16 }, e: { r: 0, c: 28 } },
 	];
 	const workbook = utils.book_new();
-	utils.book_append_sheet(workbook, worksheet, "Kopfschmerz");
+	utils.book_append_sheet(workbook, worksheet, t`Kopfschmerz`);
 	return workbook;
 };

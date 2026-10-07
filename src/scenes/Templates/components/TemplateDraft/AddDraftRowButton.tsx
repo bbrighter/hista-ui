@@ -1,5 +1,5 @@
+import { Trans } from "@lingui/react/macro";
 import Button from "@mui/material/Button";
-
 import type { DraftStateType } from "./useTemplateDraft";
 
 export const AddDraftRowButton = ({ onAdd }: DraftStateType) => {
@@ -10,7 +10,7 @@ export const AddDraftRowButton = ({ onAdd }: DraftStateType) => {
 			variant="outlined"
 			sx={{ maxWidth: "200px" }}
 		>
-			+ Zutat
+			<Trans>+ Zutat</Trans>
 		</Button>
 	);
 };

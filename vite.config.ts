@@ -1,6 +1,7 @@
 /// <reference types="vitest/config"/>
 
 import path from "node:path";
+import { lingui } from "@lingui/vite-plugin";
 import react from "@vitejs/plugin-react";
 import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig } from "vite";
@@ -22,6 +23,7 @@ export default defineConfig({
 			filename: "bundle-stats.html",
 			open: true,
 		}),
+		lingui({ macroTransform: true }),
 	],
 	resolve: {
 		alias: {
