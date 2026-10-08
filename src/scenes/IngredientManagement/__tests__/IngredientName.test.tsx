@@ -1,7 +1,8 @@
 import { createTheme } from "@mui/material/styles";
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
+import { render } from "@/__tests__/setupTest";
 import { IngredientName } from "../IngredientList/IngredientName";
 import {
 	getIngredientNameTextbox,

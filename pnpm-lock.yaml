@@ -482,7 +482,7 @@ packages:
         optional: true
 
   '@bbrighter/auth-module@file:../auth-module/bbrighter-auth-module-0.1.1.tgz':
-    resolution: {integrity: sha512-qxjpuG+TVMmxLrGuTgferxqoDFjWN85NTDC9eVcyR+XTrRNvb/+pWoQpLX6gU+6L1V80Uo9bm28R5LDluHWYzQ==, tarball: file:../auth-module/bbrighter-auth-module-0.1.1.tgz}
+    resolution: {integrity: sha512-90kd0bGpQBjnUoG0o08UV91SmUd1jVZ5WmFsEmSdqbOxuFlGS37chxU33QQ4LJ7FuwhgrEFk7Akmy9bqioxaZg==, tarball: file:../auth-module/bbrighter-auth-module-0.1.1.tgz}
     version: 0.1.1
     peerDependencies:
       '@emotion/react': 11.x

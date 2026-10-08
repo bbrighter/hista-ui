@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { act } from "react";
 import { MemoryRouter } from "react-router-dom";
@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createMedicineList } from "@/__tests__/fixtures/medicines";
 import { getMedicineListHandler } from "@/__tests__/mocks/medicineHandlers";
 import useHista from "@/store/store";
-import { server } from "../../../__tests__/setupTest";
+import { render, server } from "../../../__tests__/setupTest";
 import { MedicineManagement } from "../MedicineManagement";
 import {
 	getAddButton,

@@ -1,6 +1,7 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, screen } from "@testing-library/react";
 import dayjs from "dayjs";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { render } from "@/__tests__/setupTest";
 import type { Status } from "@/store";
 import { StatusSliders } from "../StatusSliders/StatusSliders";
 

@@ -1,4 +1,4 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it } from "vitest";
@@ -9,7 +9,7 @@ import {
 } from "@/__tests__/fixtures/templates";
 import { getIngredientListHandler } from "@/__tests__/mocks/mealHandlers";
 import { getTemplateListHandler } from "@/__tests__/mocks/templateHander";
-import { server } from "@/__tests__/setupTest";
+import { render, server } from "@/__tests__/setupTest";
 import useHista from "@/store/store";
 import { Templates } from "./Templates";
 

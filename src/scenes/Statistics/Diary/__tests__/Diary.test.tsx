@@ -1,8 +1,8 @@
-import { render, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it } from "vitest";
 import { getDiariesHandler } from "@/__tests__/mocks/statisticsHandler";
-import { server } from "@/__tests__/setupTest";
+import { render, server } from "@/__tests__/setupTest";
 import { Diary } from "../Diary";
 
 describe("Diary integration", () => {

@@ -1,5 +1,6 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import { expect, test } from "vitest";
+import { render } from "@/__tests__/setupTest";
 import { MealNutrition } from "../MealNutrition/MealNutrition";
 
 test("MealNutrition component", () => {

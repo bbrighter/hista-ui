@@ -1,14 +1,13 @@
 import {
 	act,
 	fireEvent,
-	render,
 	screen,
 	waitFor,
 	within,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
-
+import { render } from "@/__tests__/setupTest";
 import { OverviewList } from "../OverviewList/OverviewList";
 
 describe("OverviewList", () => {

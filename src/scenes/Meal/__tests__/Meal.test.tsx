@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { act, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -18,7 +18,7 @@ import {
 	postFoodHandler,
 } from "@/__tests__/mocks/mealHandlers";
 import { getTemplateListHandler } from "@/__tests__/mocks/templateHander";
-import { server } from "@/__tests__/setupTest";
+import { render, server } from "@/__tests__/setupTest";
 import Meal from "../Meal";
 import {
 	getDateInput,

@@ -1,10 +1,10 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { delay, HttpResponse, http } from "msw";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
 
-import { server } from "../../__tests__/setupTest";
+import { render, server } from "../../__tests__/setupTest";
 import ConditionEvents from "./ConditionEvents";
 
 const findRowByDate = async (date: string): Promise<HTMLElement> => {

@@ -1,5 +1,6 @@
-import { act, fireEvent, render } from "@testing-library/react";
+import { act, fireEvent } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { render } from "@/__tests__/setupTest";
 import { HeadacheDebouncedDescription } from "../HeadacheDescription/HeadacheDescription";
 import { getDescriptionTextBox } from "./selectors";
 

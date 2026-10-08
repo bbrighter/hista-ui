@@ -86,6 +86,14 @@ msgstr "B"
 msgid "Ballaststoffe"
 msgstr "Ballaststoffe"
 
+#: src/AppProvider.tsx:99
+msgid "Benutzer"
+msgstr "Benutzer"
+
+#: src/AppProvider.tsx:101
+msgid "Benutzereinstellungen"
+msgstr "Benutzereinstellungen"
+
 #: src/scenes/Statistics/Headaches/gridsAndExports/headacheColumns.ts:27
 msgid "Beschreibung"
 msgstr "Beschreibung"
@@ -116,9 +124,17 @@ msgstr "Depressive Verstimmung, selbstabwertende Gedanken"
 msgid "E"
 msgstr "E"
 
+#: src/AppProvider.tsx:102
+msgid "Einladen"
+msgstr "Einladen"
+
 #: src/scenes/Start/components/StartPageCard.tsx:96
 msgid "Einnehmen und eintragen"
 msgstr "Einnehmen und eintragen"
+
+#: src/AppProvider.tsx:103
+msgid "Einstellungen"
+msgstr "Einstellungen"
 
 #: src/scenes/components/NutritionChart/NutritionChart.tsx:74
 #: src/scenes/IngredientManagement/IngredientList/EditNutritionButton.tsx:63
@@ -234,6 +250,15 @@ msgstr "Kopfweh"
 msgid "Leichte Ermüdbarkeit, Energieverlust, Antriebsmangel"
 msgstr "Leichte Ermüdbarkeit, Energieverlust, Antriebsmangel"
 
+#: src/AppProvider.tsx:104
+msgid "Login"
+msgstr "Login"
+
+#: src/AppProvider.tsx:105
+msgid "Logout"
+msgstr "Logout"
+
+#: src/AppProvider.tsx:106
 #: src/scenes/components/OverviewList/ListActions.tsx:43
 #: src/scenes/SymptomManagement/components/AccordionCategory.tsx:74
 msgid "Löschen"
@@ -289,6 +314,7 @@ msgstr "Nährwerte"
 msgid "Nährwerte pro 100 g"
 msgstr "Nährwerte pro 100 g"
 
+#: src/AppProvider.tsx:107
 #: src/scenes/Templates/components/TemplateDraft/NameInput.tsx:10
 msgid "Name"
 msgstr "Name"
@@ -333,9 +359,25 @@ msgstr "Notizen"
 msgid "Notizen anfertigen und durchsuchen"
 msgstr "Notizen anfertigen und durchsuchen"
 
+#: src/AppProvider.tsx:98
+msgid "Nutzer einladen"
+msgstr "Nutzer einladen"
+
+#: src/AppProvider.tsx:100
+msgid "Nutzer existiert nicht"
+msgstr "Nutzer existiert nicht"
+
+#: src/AppProvider.tsx:108
+msgid "Nutzerverwaltung"
+msgstr "Nutzerverwaltung"
+
 #: src/scenes/Statistics/Charts/components/IngredientBarChart.tsx:40
 msgid "Ohne Symptome"
 msgstr "Ohne Symptome"
+
+#: src/AppProvider.tsx:109
+msgid "Passwort"
+msgstr "Passwort"
 
 #: src/scenes/Start/components/StartPageCard.tsx:83
 msgid "Pollen"
@@ -348,6 +390,10 @@ msgstr "Pollenflug bewundern"
 #: src/scenes/Statistics/Headaches/gridsAndExports/headacheColumns.ts:33
 msgid "Position"
 msgstr "Position"
+
+#: src/AppProvider.tsx:110
+msgid "Produkte"
+msgstr "Produkte"
 
 #. Calendar quarter
 #: src/scenes/Statistics/Nutrition/ToggleInterval.tsx:34

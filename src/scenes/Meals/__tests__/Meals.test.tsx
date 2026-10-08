@@ -1,10 +1,10 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { createMeal, createMealList } from "@/__tests__/fixtures/meal";
 import { getMealListHandler } from "@/__tests__/mocks/mealHandlers";
-import { server } from "@/__tests__/setupTest";
+import { render, server } from "@/__tests__/setupTest";
 import useHista from "@/store/store";
 import Meals from "../Meals";
 

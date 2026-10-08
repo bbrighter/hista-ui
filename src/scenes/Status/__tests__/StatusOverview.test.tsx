@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -7,7 +7,7 @@ import {
 	getStatusListDelayedHandler,
 	getStatusListHandler,
 } from "@/__tests__/mocks/statusHandler";
-import { server } from "@/__tests__/setupTest";
+import { render, server } from "@/__tests__/setupTest";
 import useHista from "@/store/store";
 import { StatusOverview } from "../StatusOverview";
 

@@ -1,8 +1,8 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { describe, expect, it } from "vitest";
-
+import { render } from "@/__tests__/setupTest";
 import { Note } from "./Note";
 
 describe("A single note is rendered and can be updated", () => {

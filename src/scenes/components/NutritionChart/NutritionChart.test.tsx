@@ -1,5 +1,6 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { render } from "@/__tests__/setupTest";
 import { getNutritionChartData, NutritionChart } from "./NutritionChart";
 
 describe("NutritionChart component", () => {

@@ -1,9 +1,9 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it } from "vitest";
 import { createHeadache } from "@/__tests__/fixtures/headache";
 import { getHeadacheListHandler } from "@/__tests__/mocks/headacheHandlers";
-import { server } from "@/__tests__/setupTest";
+import { render, server } from "@/__tests__/setupTest";
 import { HeadacheDiary } from "../HeadachesDiary";
 import { getDownloadButton } from "./selectors";
 

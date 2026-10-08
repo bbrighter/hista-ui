@@ -1,17 +1,11 @@
-import {
-	act,
-	fireEvent,
-	render,
-	screen,
-	waitFor,
-} from "@testing-library/react";
+import { act, fireEvent, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createHeadache } from "@/__tests__/fixtures/headache";
 import { getHeadacheHandler } from "@/__tests__/mocks/headacheHandlers";
 import useHista from "@/store/store";
-import { server } from "../../../__tests__/setupTest";
+import { render, server } from "../../../__tests__/setupTest";
 import { actions } from "../../../actions";
 import Headache from "../Headache";
 import {

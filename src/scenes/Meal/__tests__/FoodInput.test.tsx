@@ -1,6 +1,7 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { render } from "@/__tests__/setupTest";
 import { FoodInput } from "../AddFood/FoodInput";
 import { getFoodInput } from "./selectors";
 
