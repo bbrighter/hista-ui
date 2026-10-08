@@ -70,7 +70,7 @@ msgstr "Ausklappen"
 msgid "Auswertung"
 msgstr "Auswertung"
 
-#: src/scenes/Start/components/StartPageCard.tsx:71
+#: src/scenes/Start/components/StartPageCard.tsx:82
 msgid "Auswertungen"
 msgstr "Auswertungen"
 
@@ -128,7 +128,7 @@ msgstr "E"
 msgid "Einladen"
 msgstr "Einladen"
 
-#: src/scenes/Start/components/StartPageCard.tsx:96
+#: src/scenes/Start/components/StartPageCard.tsx:107
 msgid "Einnehmen und eintragen"
 msgstr "Einnehmen und eintragen"
 
@@ -145,7 +145,7 @@ msgstr "Eiweiß"
 msgid "Ernährungstagebuch herunterladen"
 msgstr "Ernährungstagebuch herunterladen"
 
-#: src/scenes/Start/components/StartPageCard.tsx:72
+#: src/scenes/Start/components/StartPageCard.tsx:83
 msgid "Ernährungstagebuch und mehr"
 msgstr "Ernährungstagebuch und mehr"
 
@@ -238,11 +238,11 @@ msgstr "Kopfschmerz"
 msgid "Kopfschmerzen herunterladen"
 msgstr "Kopfschmerzen herunterladen"
 
-#: src/scenes/Start/components/StartPageCard.tsx:90
+#: src/scenes/Start/components/StartPageCard.tsx:101
 msgid "Kopfschmerztagebuch"
 msgstr "Kopfschmerztagebuch"
 
-#: src/scenes/Start/components/StartPageCard.tsx:89
+#: src/scenes/Start/components/StartPageCard.tsx:100
 msgid "Kopfweh"
 msgstr "Kopfweh"
 
@@ -281,11 +281,11 @@ msgstr "M"
 msgid "Mahlzeit"
 msgstr "Mahlzeit"
 
-#: src/scenes/Start/components/StartPageCard.tsx:59
+#: src/scenes/Start/components/StartPageCard.tsx:70
 msgid "Mahlzeiten"
 msgstr "Mahlzeiten"
 
-#: src/scenes/Start/components/StartPageCard.tsx:60
+#: src/scenes/Start/components/StartPageCard.tsx:71
 msgid "Mahlzeiten hinzufügen, ansehen und bearbeiten"
 msgstr "Mahlzeiten hinzufügen, ansehen und bearbeiten"
 
@@ -293,7 +293,7 @@ msgstr "Mahlzeiten hinzufügen, ansehen und bearbeiten"
 msgid "Medikament"
 msgstr "Medikament"
 
-#: src/scenes/Start/components/StartPageCard.tsx:95
+#: src/scenes/Start/components/StartPageCard.tsx:106
 msgid "Medikamente"
 msgstr "Medikamente"
 
@@ -351,11 +351,11 @@ msgstr "Noch nicht gespeichert..."
 msgid "Notiz"
 msgstr "Notiz"
 
-#: src/scenes/Start/components/StartPageCard.tsx:77
+#: src/scenes/Start/components/StartPageCard.tsx:88
 msgid "Notizen"
 msgstr "Notizen"
 
-#: src/scenes/Start/components/StartPageCard.tsx:78
+#: src/scenes/Start/components/StartPageCard.tsx:89
 msgid "Notizen anfertigen und durchsuchen"
 msgstr "Notizen anfertigen und durchsuchen"
 
@@ -379,11 +379,11 @@ msgstr "Ohne Symptome"
 msgid "Passwort"
 msgstr "Passwort"
 
-#: src/scenes/Start/components/StartPageCard.tsx:83
+#: src/scenes/Start/components/StartPageCard.tsx:94
 msgid "Pollen"
 msgstr "Pollen"
 
-#: src/scenes/Start/components/StartPageCard.tsx:84
+#: src/scenes/Start/components/StartPageCard.tsx:95
 msgid "Pollenflug bewundern"
 msgstr "Pollenflug bewundern"
 
@@ -434,7 +434,7 @@ msgstr "Schwere"
 msgid "Speichern"
 msgstr "Speichern"
 
-#: src/scenes/Start/components/StartPageCard.tsx:101
+#: src/scenes/Start/components/StartPageCard.tsx:112
 #: src/scenes/Status/StatusOverview.tsx:26
 msgid "Status"
 msgstr "Status"
@@ -460,12 +460,12 @@ msgid "Symptom"
 msgstr "Symptom"
 
 #: src/scenes/ConditionEvent/ConditionEvent.tsx:39
-#: src/scenes/Start/components/StartPageCard.tsx:65
+#: src/scenes/Start/components/StartPageCard.tsx:76
 #: src/scenes/Statistics/Headaches/gridsAndExports/headacheColumns.ts:43
 msgid "Symptome"
 msgstr "Symptome"
 
-#: src/scenes/Start/components/StartPageCard.tsx:66
+#: src/scenes/Start/components/StartPageCard.tsx:77
 msgid "Symptome aufzeichnen"
 msgstr "Symptome aufzeichnen"
 
@@ -565,7 +565,7 @@ msgstr "Weitere Symptome"
 msgid "Weniger anzeigen"
 msgstr "Weniger anzeigen"
 
-#: src/scenes/Start/components/StartPageCard.tsx:102
+#: src/scenes/Start/components/StartPageCard.tsx:113
 msgid "Wie geht's heute? Und wie ging's gestern?"
 msgstr "Wie geht's heute? Und wie ging's gestern?"
 
