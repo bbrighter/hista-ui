@@ -90,8 +90,9 @@ const InternationalizationProvider = ({
 	const language = useHista((state) => state.language);
 	dayjs.locale("de");
 
-	i18n.activate(language);
-
+	useEffect(() => {
+		i18n.activate(language);
+	}, [language]);
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Should rerender when language changes
 	const translations: Record<TranslationKey, string> = useMemo(
 		() => ({
