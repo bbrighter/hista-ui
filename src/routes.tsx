@@ -17,9 +17,9 @@ import {
 	RouterProvider,
 } from "react-router-dom";
 
-import AppProvider from "./AppProvider";
 import { appRoutes } from "./constants";
 import { ErrorBridge, ErrorFallback } from "./errors";
+import AppProvider from "./Initialization/AppProvider";
 import { useIsAppReady } from "./store";
 
 type RawRoute = {
