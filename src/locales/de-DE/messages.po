@@ -8,598 +8,427 @@ msgstr ""
 "Language: de-DE\n"
 
 #. placeholder {0}: i.value.toLocaleString("de-DE", { maximumFractionDigits: 1, })
-#: src/scenes/Meal/MealNutrition/MealNutrition.tsx:42
 msgid "{0} g"
 msgstr "{0} g"
 
-#: src/scenes/Status/List/AddStatus.tsx:61
 msgid "+ Status heute"
 msgstr "+ Status heute"
 
-#: src/scenes/Templates/components/TemplateDraft/AddDraftRowButton.tsx:13
 msgid "+ Zutat"
 msgstr "+ Zutat"
 
-#: src/scenes/Statistics/Charts/components/IngredientBarChart.tsx:22
 msgid "1 h"
 msgstr "1 h"
 
-#: src/scenes/Statistics/Charts/components/IngredientBarChart.tsx:28
 msgid "24 h"
 msgstr "24 h"
 
-#: src/scenes/Statistics/Charts/components/IngredientBarChart.tsx:34
 msgid "72 h"
 msgstr "72 h"
 
-#: src/scenes/components/OverviewList/ListActions.tsx:46
-#: src/scenes/IngredientManagement/IngredientList/EditNutritionButton.tsx:109
 msgid "Abbrechen"
 msgstr "Abbrechen"
 
-#: src/scenes/Status/Evaluation/config.ts:5
-#: src/scenes/StatusSingle/StatusSliders/StatusSliders.tsx:95
 msgid "Abends"
 msgstr "Abends"
 
-#: src/scenes/components/OverviewList/OverviewList.tsx:77
 msgid "Alle anzeigen"
 msgstr "Alle anzeigen"
 
-#: src/scenes/Meal/MealSettings/PeopleToggleButton.tsx:30
 msgid "Alleine"
 msgstr "Alleine"
 
-#: src/scenes/StatusSingle/StatusSliders/StatusSliders.tsx:105
 msgid "Anspannung, Ängstlichkeit oder Gefühl des Aufgedrehtseins"
 msgstr "Anspannung, Ängstlichkeit oder Gefühl des Aufgedrehtseins"
 
-#: src/scenes/StatusSingle/StatusSliders/StatusSliders.tsx:135
 msgid "Appetitveränderungen, Verlangen nach speziellen Lebensmitteln"
 msgstr "Appetitveränderungen, Verlangen nach speziellen Lebensmitteln"
 
-#: src/scenes/IngredientManagement/IngredientList/ToggleVisibility.tsx:23
 msgid "Archivierte anzeigen"
 msgstr "Archivierte anzeigen"
 
-#: src/scenes/SymptomManagement/components/AccordionCategory.tsx:47
 msgid "Ausklappen"
 msgstr "Ausklappen"
 
-#: src/scenes/Status/StatusOverview.tsx:27
 msgid "Auswertung"
 msgstr "Auswertung"
 
-#: src/scenes/Start/components/StartPageCard.tsx:82
 msgid "Auswertungen"
 msgstr "Auswertungen"
 
-#: src/scenes/IngredientManagement/IngredientList/IngredientName.tsx:30
-#: src/scenes/Meal/MealNutrition/MealNutrition.tsx:18
-#: src/scenes/Statistics/Nutrition/NutritionLegend.tsx:15
 msgid "B"
 msgstr "B"
 
-#: src/scenes/components/NutritionChart/HideFiberButton.tsx:15
-#: src/scenes/components/NutritionChart/NutritionChart.tsx:86
-#: src/scenes/IngredientManagement/IngredientList/EditNutritionButton.tsx:62
 msgid "Ballaststoffe"
 msgstr "Ballaststoffe"
 
-#: src/AppProvider.tsx:99
 msgid "Benutzer"
 msgstr "Benutzer"
 
-#: src/AppProvider.tsx:101
 msgid "Benutzereinstellungen"
 msgstr "Benutzereinstellungen"
 
-#: src/scenes/Statistics/Headaches/gridsAndExports/headacheColumns.ts:27
 msgid "Beschreibung"
 msgstr "Beschreibung"
 
-#: src/scenes/Statistics/Charts/components/ChartDateInput.tsx:24
 msgid "Bis"
 msgstr "Bis"
 
-#: src/scenes/StatusSingle/CrashCheckbox/CrashCheckbox.tsx:16
 msgid "Crash"
 msgstr "Crash"
 
-#: src/scenes/ConditionEvent/components/AddOrSelectCategory.tsx:97
 msgid "Da ist was schief gegangen! Probier's nochmal."
 msgstr "Da ist was schief gegangen! Probier's nochmal."
 
-#: src/scenes/Statistics/Diary/gridsAndExports/diaryColumns.ts:7
 msgid "Datum"
 msgstr "Datum"
 
-#: src/scenes/StatusSingle/StatusSliders/StatusSliders.tsx:100
 msgid "Depressive Verstimmung, selbstabwertende Gedanken"
 msgstr "Depressive Verstimmung, selbstabwertende Gedanken"
 
-#: src/scenes/IngredientManagement/IngredientList/IngredientName.tsx:31
-#: src/scenes/Meal/MealNutrition/MealNutrition.tsx:19
-#: src/scenes/Statistics/Nutrition/NutritionLegend.tsx:11
 msgid "E"
 msgstr "E"
 
-#: src/AppProvider.tsx:102
 msgid "Einladen"
 msgstr "Einladen"
 
-#: src/scenes/Start/components/StartPageCard.tsx:107
 msgid "Einnehmen und eintragen"
 msgstr "Einnehmen und eintragen"
 
-#: src/AppProvider.tsx:103
 msgid "Einstellungen"
 msgstr "Einstellungen"
 
-#: src/scenes/components/NutritionChart/NutritionChart.tsx:74
-#: src/scenes/IngredientManagement/IngredientList/EditNutritionButton.tsx:63
 msgid "Eiweiß"
 msgstr "Eiweiß"
 
-#: src/scenes/Statistics/Diary/Diary.tsx:22
 msgid "Ernährungstagebuch herunterladen"
 msgstr "Ernährungstagebuch herunterladen"
 
-#: src/scenes/Start/components/StartPageCard.tsx:83
 msgid "Ernährungstagebuch und mehr"
 msgstr "Ernährungstagebuch und mehr"
 
-#: src/scenes/IngredientManagement/IngredientList/IngredientName.tsx:28
-#: src/scenes/Meal/MealNutrition/MealNutrition.tsx:16
-#: src/scenes/Statistics/Nutrition/NutritionLegend.tsx:10
 msgid "F"
 msgstr "F"
 
-#: src/scenes/components/NutritionChart/NutritionChart.tsx:73
-#: src/scenes/IngredientManagement/IngredientList/EditNutritionButton.tsx:60
 msgid "Fett"
 msgstr "Fett"
 
-#: src/scenes/Meal/MealSettings/FreshnessSlider.tsx:25
 msgid "Frische"
 msgstr "Frische"
 
-#: src/scenes/IngredientManagement/IngredientList/EditNutritionButton.tsx:93
 msgid "g"
 msgstr "g"
 
-#: src/scenes/components/FoodConditionToggle/FoodConditionToggle.tsx:39
 msgid "Gar"
 msgstr "Gar"
 
-#: src/scenes/StatusSingle/StatusSliders/StatusSliders.tsx:145
 msgid "Gefühl, die Kontrolle zu verlieren; Gefühl des Überwältigtseins"
 msgstr "Gefühl, die Kontrolle zu verlieren; Gefühl des Überwältigtseins"
 
-#: src/scenes/Status/List/AddStatus.tsx:77
 msgid "Gestern"
 msgstr "Gestern"
 
-#: src/scenes/ConditionEvent/components/AddCondition.tsx:110
 msgid "hinzufügen"
 msgstr "hinzufügen"
 
-#: src/scenes/Statistics/Diary/gridsAndExports/diaryColumns.ts:9
 msgid "Inhalt"
 msgstr "Inhalt"
 
-#: src/scenes/StatusSingle/StatusSliders/StatusSliders.tsx:120
 msgid "Interessenlosigkeit für übliche Aktivitäten"
 msgstr "Interessenlosigkeit für übliche Aktivitäten"
 
-#: src/scenes/components/OverviewList/ListActions.tsx:64
 msgid "Jetzt"
 msgstr "Jetzt"
 
-#: src/scenes/IngredientManagement/IngredientList/IngredientName.tsx:29
-#: src/scenes/Meal/MealNutrition/MealNutrition.tsx:17
-#: src/scenes/Statistics/Nutrition/NutritionLegend.tsx:9
 msgid "K"
 msgstr "K"
 
-#: src/scenes/ConditionEvent/components/AddOrSelectCategory.tsx:82
-#: src/scenes/Statistics/Diary/gridsAndExports/diaryColumns.ts:10
 msgid "Kategorie"
 msgstr "Kategorie"
 
-#: src/scenes/SymptomManagement/components/AccordionCategory.tsx:66
 msgid "Kategorie umbenennen"
 msgstr "Kategorie umbenennen"
 
-#: src/scenes/SymptomManagement/components/AccordionCategory.tsx:83
-#: src/scenes/SymptomManagement/components/AddSymptomCategory.tsx:40
 msgid "Kategoriename"
 msgstr "Kategoriename"
 
-#: src/scenes/StatusSingle/Status.tsx:28
 msgid "Kein Status gefunden"
 msgstr "Kein Status gefunden"
 
-#: src/scenes/components/NutritionChart/NutritionChart.tsx:78
-#: src/scenes/IngredientManagement/IngredientList/EditNutritionButton.tsx:61
 msgid "Kohlenhydrate"
 msgstr "Kohlenhydrate"
 
-#: src/scenes/StatusSingle/StatusSliders/StatusSliders.tsx:125
 msgid "Konzentrationsschwierigkeiten"
 msgstr "Konzentrationsschwierigkeiten"
 
-#: src/scenes/Statistics/Headaches/gridsAndExports/headacheExport.ts:23
-#: src/scenes/Statistics/Headaches/HeadachesDiary.tsx:23
 msgid "Kopfschmerz"
 msgstr "Kopfschmerz"
 
-#: src/scenes/Statistics/Headaches/HeadachesDiary.tsx:24
 msgid "Kopfschmerzen herunterladen"
 msgstr "Kopfschmerzen herunterladen"
 
-#: src/scenes/Start/components/StartPageCard.tsx:101
 msgid "Kopfschmerztagebuch"
 msgstr "Kopfschmerztagebuch"
 
-#: src/scenes/Start/components/StartPageCard.tsx:100
 msgid "Kopfweh"
 msgstr "Kopfweh"
 
-#: src/scenes/StatusSingle/StatusSliders/StatusSliders.tsx:130
 msgid "Leichte Ermüdbarkeit, Energieverlust, Antriebsmangel"
 msgstr "Leichte Ermüdbarkeit, Energieverlust, Antriebsmangel"
 
-#: src/AppProvider.tsx:104
 msgid "Login"
 msgstr "Login"
 
-#: src/AppProvider.tsx:105
 msgid "Logout"
 msgstr "Logout"
 
-#: src/AppProvider.tsx:106
-#: src/scenes/components/OverviewList/ListActions.tsx:43
-#: src/scenes/SymptomManagement/components/AccordionCategory.tsx:74
 msgid "Löschen"
 msgstr "Löschen"
 
-#: src/scenes/SymptomManagement/components/AccordionCategory.tsx:107
 msgid "Löschen abbrechen"
 msgstr "Löschen abbrechen"
 
-#: src/scenes/SymptomManagement/components/AccordionCategory.tsx:100
 msgid "Löschen bestätigen"
 msgstr "Löschen bestätigen"
 
 #. Calendar month
-#: src/scenes/Statistics/Nutrition/ToggleInterval.tsx:31
 msgid "M"
 msgstr "M"
 
-#: src/scenes/Meal/MealSettings/MealSettings.tsx:48
 msgid "Mahlzeit"
 msgstr "Mahlzeit"
 
-#: src/scenes/Start/components/StartPageCard.tsx:70
 msgid "Mahlzeiten"
 msgstr "Mahlzeiten"
 
-#: src/scenes/Start/components/StartPageCard.tsx:71
 msgid "Mahlzeiten hinzufügen, ansehen und bearbeiten"
 msgstr "Mahlzeiten hinzufügen, ansehen und bearbeiten"
 
-#: src/scenes/MedicineManagement/MedicineList/MedicineListItem.tsx:169
 msgid "Medikament"
 msgstr "Medikament"
 
-#: src/scenes/Start/components/StartPageCard.tsx:106
 msgid "Medikamente"
 msgstr "Medikamente"
 
-#: src/scenes/Medicines/Medicines.tsx:27
 msgid "Medikamente verwalten"
 msgstr "Medikamente verwalten"
 
-#: src/scenes/Status/Evaluation/config.ts:4
-#: src/scenes/StatusSingle/StatusSliders/StatusSliders.tsx:91
 msgid "Morgens"
 msgstr "Morgens"
 
-#: src/scenes/IngredientManagement/IngredientList/EditNutritionButton.tsx:69
 msgid "Nährwerte"
 msgstr "Nährwerte"
 
-#: src/scenes/IngredientManagement/IngredientList/EditNutritionButton.tsx:79
 msgid "Nährwerte pro 100 g"
 msgstr "Nährwerte pro 100 g"
 
-#: src/AppProvider.tsx:107
-#: src/scenes/Templates/components/TemplateDraft/NameInput.tsx:10
 msgid "Name"
 msgstr "Name"
 
-#: src/scenes/Meals/MealButtonGroup/AddMealButton.tsx:29
 msgid "Neu"
 msgstr "Neu"
 
-#: src/scenes/SymptomManagement/components/AddSymptomCategory.tsx:50
 msgid "Neue Kategorie"
 msgstr "Neue Kategorie"
 
-#: src/scenes/Notes/components/AddNoteButton.tsx:28
 msgid "Neue Notiz"
 msgstr "Neue Notiz"
 
-#: src/scenes/Templates/components/AddTemplate.tsx:19
 msgid "Neue Vorlage"
 msgstr "Neue Vorlage"
 
-#: src/scenes/Headaches/Headaches.tsx:41
 msgid "Neuer Kopfschmerz"
 msgstr "Neuer Kopfschmerz"
 
-#: src/scenes/ConditionEvents/ConditionEvents.tsx:43
 msgid "Neues Symptom"
 msgstr "Neues Symptom"
 
-#: src/scenes/Note/components/NoteTextField.tsx:29
 msgid "Noch nicht gespeichert..."
 msgstr "Noch nicht gespeichert..."
 
-#: src/scenes/Note/components/NoteTextField.tsx:34
 msgid "Notiz"
 msgstr "Notiz"
 
-#: src/scenes/Start/components/StartPageCard.tsx:88
 msgid "Notizen"
 msgstr "Notizen"
 
-#: src/scenes/Start/components/StartPageCard.tsx:89
 msgid "Notizen anfertigen und durchsuchen"
 msgstr "Notizen anfertigen und durchsuchen"
 
-#: src/AppProvider.tsx:98
 msgid "Nutzer einladen"
 msgstr "Nutzer einladen"
 
-#: src/AppProvider.tsx:100
 msgid "Nutzer existiert nicht"
 msgstr "Nutzer existiert nicht"
 
-#: src/AppProvider.tsx:108
 msgid "Nutzerverwaltung"
 msgstr "Nutzerverwaltung"
 
-#: src/scenes/Statistics/Charts/components/IngredientBarChart.tsx:40
 msgid "Ohne Symptome"
 msgstr "Ohne Symptome"
 
-#: src/AppProvider.tsx:109
 msgid "Passwort"
 msgstr "Passwort"
 
-#: src/scenes/Start/components/StartPageCard.tsx:94
 msgid "Pollen"
 msgstr "Pollen"
 
-#: src/scenes/Start/components/StartPageCard.tsx:95
 msgid "Pollenflug bewundern"
 msgstr "Pollenflug bewundern"
 
-#: src/scenes/Statistics/Headaches/gridsAndExports/headacheColumns.ts:33
 msgid "Position"
 msgstr "Position"
 
-#: src/AppProvider.tsx:110
 msgid "Produkte"
 msgstr "Produkte"
 
 #. Calendar quarter
-#: src/scenes/Statistics/Nutrition/ToggleInterval.tsx:34
 msgid "Q"
 msgstr "Q"
 
 #. placeholder {0}: dayDate.quarter()
 #. placeholder {1}: dayDate.year()
-#: src/scenes/Statistics/Nutrition/formatDate.ts:20
 msgid "Q{0} {1}"
 msgstr "Q{0} {1}"
 
-#: src/scenes/StatusSingle/StatusSliders/StatusSliders.tsx:115
 msgid "Reizbarkeit, Wut, Ärger, vermehrte Konflikte"
 msgstr "Reizbarkeit, Wut, Ärger, vermehrte Konflikte"
 
-#: src/scenes/components/FoodConditionToggle/FoodConditionToggle.tsx:39
 msgid "Roh"
 msgstr "Roh"
 
-#: src/scenes/Status/Evaluation/config.ts:6
-#: src/scenes/StatusSingle/StatusSliders/StatusSliders.tsx:90
 msgid "Schlaf"
 msgstr "Schlaf"
 
-#: src/scenes/StatusSingle/StatusSliders/StatusSliders.tsx:140
 msgid "Schlafstörung (zu viel, zu wenig, unruhig, etc.)"
 msgstr "Schlafstörung (zu viel, zu wenig, unruhig, etc.)"
 
-#: src/scenes/Headache/SeveritySlider/SeveritySlider.tsx:41
-#: src/scenes/Statistics/Diary/gridsAndExports/diaryColumns.ts:8
-#: src/scenes/Statistics/Headaches/gridsAndExports/headacheColumns.ts:17
 msgid "Schwere"
 msgstr "Schwere"
 
-#: src/scenes/IngredientManagement/IngredientList/EditNutritionButton.tsx:106
-#: src/scenes/Templates/components/TemplateDraft/SaveTemplateButton.tsx:48
 msgid "Speichern"
 msgstr "Speichern"
 
-#: src/scenes/Start/components/StartPageCard.tsx:112
-#: src/scenes/Status/StatusOverview.tsx:26
 msgid "Status"
 msgstr "Status"
 
-#: src/scenes/Status/List/AddStatus.tsx:66
 msgid "Status hinzufügen"
 msgstr "Status hinzufügen"
 
-#: src/scenes/StatusSingle/StatusSliders/StatusSliders.tsx:110
 msgid "Stimmungsschwankungen, gesteigerte Empfindlichkeit"
 msgstr "Stimmungsschwankungen, gesteigerte Empfindlichkeit"
 
-#: src/scenes/Meal/MealSettings/StressSlider.tsx:29
 msgid "Stress"
 msgstr "Stress"
 
-#: src/scenes/Notes/components/NoteSearch.tsx:27
 msgid "Suche"
 msgstr "Suche"
 
-#: src/scenes/ConditionEvent/components/AddCondition.tsx:119
 msgid "Symptom"
 msgstr "Symptom"
 
-#: src/scenes/ConditionEvent/ConditionEvent.tsx:39
-#: src/scenes/Start/components/StartPageCard.tsx:76
-#: src/scenes/Statistics/Headaches/gridsAndExports/headacheColumns.ts:43
 msgid "Symptome"
 msgstr "Symptome"
 
-#: src/scenes/Start/components/StartPageCard.tsx:77
 msgid "Symptome aufzeichnen"
 msgstr "Symptome aufzeichnen"
 
-#: src/scenes/SymptomManagement/components/AccordionSymptoms.tsx:103
 msgid "Symptomname"
 msgstr "Symptomname"
 
 #. Calendar day
-#: src/scenes/Statistics/Nutrition/ToggleInterval.tsx:25
 msgid "T"
 msgstr "T"
 
-#: src/scenes/Statistics/Diary/Diary.tsx:23
 msgid "tagebuch"
 msgstr "tagebuch"
 
-#: src/scenes/Statistics/Diary/gridsAndExports/buildWorkbook.ts:24
 msgid "Tagebuch"
 msgstr "Tagebuch"
 
-#: src/scenes/StatusSingle/StatusSliders/StatusSliders.tsx:92
 msgid "Tagsüber"
 msgstr "Tagsüber"
 
-#: src/scenes/SymptomManagement/components/AccordionSymptoms.tsx:95
 msgid "Tauschen"
 msgstr "Tauschen"
 
-#: src/scenes/SymptomManagement/components/AccordionSymptoms.tsx:153
 msgid "Tauschen abbrechen"
 msgstr "Tauschen abbrechen"
 
-#: src/scenes/SymptomManagement/components/AccordionSymptoms.tsx:145
 msgid "Tauschen bestätigen"
 msgstr "Tauschen bestätigen"
 
-#: src/scenes/Statistics/Diary/gridsAndExports/diaryColumns.ts:6
 msgid "Typ"
 msgstr "Typ"
 
-#: src/scenes/Statistics/Headaches/gridsAndExports/headacheColumns.ts:38
 msgid "Typen"
 msgstr "Typen"
 
-#: src/scenes/SymptomManagement/components/AccordionSymptoms.tsx:90
 msgid "Umbenennen"
 msgstr "Umbenennen"
 
-#: src/scenes/components/TextFieldSaveAndAbort.tsx:55
 msgid "Umbenennen abbrechen"
 msgstr "Umbenennen abbrechen"
 
-#: src/scenes/components/TextFieldSaveAndAbort.tsx:48
 msgid "Umbenennen speichern"
 msgstr "Umbenennen speichern"
 
-#: src/scenes/ConditionEvent/components/ConditionList.tsx:31
-#: src/scenes/ConditionEvent/components/ConditionList.tsx:32
 msgid "Unbekannt"
 msgstr "Unbekannt"
 
-#: src/scenes/Meal/FoodList/useFoodList.ts:12
 msgid "Unbenannt"
 msgstr "Unbenannt"
 
-#: src/scenes/Statistics/Charts/components/ChartDateInput.tsx:16
 msgid "Von"
 msgstr "Von"
 
-#: src/scenes/Status/List/AddStatus.tsx:83
 msgid "Vorgestern"
 msgstr "Vorgestern"
 
-#: src/scenes/Templates/components/TemplateDraft/TemplateDialog.tsx:32
 msgid "Vorlage erstellen"
 msgstr "Vorlage erstellen"
 
-#: src/scenes/Templates/Templates.tsx:18
 msgid "Vorlagen"
 msgstr "Vorlagen"
 
 #. Calender week
-#: src/scenes/Statistics/Nutrition/ToggleInterval.tsx:28
 msgid "W"
 msgstr "W"
 
 #. placeholder {0}: props.symptomName
-#: src/scenes/ConditionEvent/components/AddOrSelectCategory.tsx:72
 msgid "Wähle eine Kategorie für <0>{0}</0>"
 msgstr "Wähle eine Kategorie für <0>{0}</0>"
 
-#: src/scenes/Headache/Headache.tsx:63
 msgid "Weitere Symptome"
 msgstr "Weitere Symptome"
 
-#: src/scenes/components/OverviewList/OverviewList.tsx:81
 msgid "Weniger anzeigen"
 msgstr "Weniger anzeigen"
 
-#: src/scenes/Start/components/StartPageCard.tsx:113
 msgid "Wie geht's heute? Und wie ging's gestern?"
 msgstr "Wie geht's heute? Und wie ging's gestern?"
 
-#: src/scenes/components/OverviewList/ListActions.tsx:31
 msgid "Wirklich löschen?"
 msgstr "Wirklich löschen?"
 
 #. placeholder {0}: dayDate.isoWeek()
-#: src/scenes/Statistics/Nutrition/formatDate.ts:18
 msgid "Woche {0}"
 msgstr "Woche {0}"
 
-#: src/scenes/Note/components/NoteDateInput.tsx:16
-#: src/scenes/Statistics/Headaches/gridsAndExports/headacheColumns.ts:16
 msgid "Zeit"
 msgstr "Zeit"
 
-#: src/scenes/SymptomManagement/components/AccordionSymptoms.tsx:126
-#: src/scenes/SymptomManagement/components/AccordionSymptoms.tsx:129
 msgid "Zielkategorie"
 msgstr "Zielkategorie"
 
-#: src/scenes/Meal/MealSettings/PeopleToggleButton.tsx:36
 msgid "Zusammen"
 msgstr "Zusammen"
 
-#: src/scenes/Headache/HeadacheDescription/HeadacheDescription.tsx:35
 msgid "Zusätzliche Infos"
 msgstr "Zusätzliche Infos"
 
-#: src/scenes/IngredientManagement/IngredientList/IngredientName.tsx:43
 msgid "Zutat"
 msgstr "Zutat"
 
-#: src/scenes/Meal/AddFood/FoodInput.tsx:92
 msgid "Zutaten"
 msgstr "Zutaten"

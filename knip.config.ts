@@ -7,6 +7,7 @@ const config: KnipConfig = {
 	],
 	ignoreDependencies: [
 		"source-map", // Needed for the script evaluateMinifiedBuild.js
+		"@lingui/format-po", // Used in lingui.config.ts
 	],
 };
 
