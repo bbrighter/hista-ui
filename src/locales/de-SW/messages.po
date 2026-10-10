@@ -12,10 +12,10 @@ msgid "{0} g"
 msgstr "{0} g"
 
 msgid "+ Status heute"
-msgstr "+ Status heit"
+msgstr "+ Schdadus heud"
 
 msgid "+ Zutat"
-msgstr "+ Zutat"
+msgstr "+ Zudad"
 
 msgid "1 h"
 msgstr "1 h"
@@ -27,46 +27,46 @@ msgid "72 h"
 msgstr "72 h"
 
 msgid "Abbrechen"
-msgstr "Abbrich"
+msgstr "Abbrecha"
 
 msgid "Abends"
 msgstr "Abends"
 
 msgid "Alle anzeigen"
-msgstr "Alli zeige"
+msgstr "Alle anzeiga"
 
 msgid "Alleine"
-msgstr "Allein"
+msgstr "Alloi"
 
 msgid "Anspannung, Ängstlichkeit oder Gefühl des Aufgedrehtseins"
-msgstr "Anspanning, Angschtlichkeit oder Gfühl vum Aufgedrehtsein"
+msgstr "Anschbannung, Ängsdlichkeid odr Gefühl vom Ufgedrehdseins"
 
 msgid "Appetitveränderungen, Verlangen nach speziellen Lebensmitteln"
-msgstr "Appetitveränderung, Verlangn noch spezieller Leit"
+msgstr "Abbedidveränderunga, Verlanga no schbeziella Lebensmiddeln"
 
 msgid "Archivierte anzeigen"
-msgstr "Archivierte zeige"
+msgstr "rchivierte anzeigen"
 
 msgid "Ausklappen"
-msgstr "Usklappe"
+msgstr "Ausklabba"
 
 msgid "Auswertung"
-msgstr "Uswertung"
+msgstr "Auswerdung"
 
 msgid "Auswertungen"
-msgstr "Uswertungen"
+msgstr "Auswerdunga"
 
 msgid "B"
 msgstr "B"
 
 msgid "Ballaststoffe"
-msgstr "Ballaststoffe"
+msgstr "Ballaschdschdoffe"
 
 msgid "Benutzer"
-msgstr "Benutzer"
+msgstr "Bnudzr"
 
 msgid "Benutzereinstellungen"
-msgstr "Benutzereinstellige"
+msgstr "Bnudzereinschdellunga"
 
 msgid "Beschreibung"
 msgstr "Bschreibung"
@@ -78,64 +78,64 @@ msgid "Crash"
 msgstr "Crash"
 
 msgid "Da ist was schief gegangen! Probier's nochmal."
-msgstr "Do isch was schief gange! Probier's nomol."
+msgstr "Da isch was schäbbs ganga! Brobier's nomol."
 
 msgid "Datum"
-msgstr "Datum"
+msgstr "Dadum"
 
 msgid "Depressive Verstimmung, selbstabwertende Gedanken"
-msgstr "Depressiv Stimmig, selbstabwertendi Gedanke"
+msgstr "Debressive Verschdimmung, selbschdabwerdend Gedanka"
 
 msgid "E"
 msgstr "E"
 
 msgid "Einladen"
-msgstr "Iilade"
+msgstr "Einlada"
 
 msgid "Einnehmen und eintragen"
-msgstr "Einnahm und iitrage"
+msgstr "Einnehma ond eindraga"
 
 msgid "Einstellungen"
-msgstr "Einstellige"
+msgstr "Einschdellunga"
 
 msgid "Eiweiß"
 msgstr "Eiweiß"
 
 msgid "Ernährungstagebuch herunterladen"
-msgstr "Ernährungstagebuech abelade"
+msgstr "Ernährungschdagebuch henondrlada"
 
 msgid "Ernährungstagebuch und mehr"
-msgstr "Ernährungstagebuech und meh"
+msgstr "Ernährungschdagebuch ond mehr"
 
 msgid "F"
 msgstr "F"
 
 msgid "Fett"
-msgstr "Fett"
+msgstr "Fedd"
 
 msgid "Frische"
-msgstr "Frisch"
+msgstr "Frische"
 
 msgid "g"
 msgstr "g"
 
 msgid "Gar"
-msgstr "Gaar"
+msgstr "Gar"
 
 msgid "Gefühl, die Kontrolle zu verlieren; Gefühl des Überwältigtseins"
-msgstr "Gfühl, die Kontrolle z' verlore; Gfühl vum Öwerwältigtsein"
+msgstr "Gefühl, die Kondrolle zu verlieren; Gefühl vom Überwäldigdseins"
 
 msgid "Gestern"
-msgstr "Gestr"
+msgstr "Geschdern"
 
 msgid "hinzufügen"
 msgstr "dazue tue"
 
 msgid "Inhalt"
-msgstr "Inhalt"
+msgstr "Inhald"
 
 msgid "Interessenlosigkeit für übliche Aktivitäten"
-msgstr "Interesselosigkeit für übliche Aktivitäte"
+msgstr "Inderessenlosigkeid für übliche Akdividäda"
 
 msgid "Jetzt"
 msgstr "Grad"
@@ -144,146 +144,146 @@ msgid "K"
 msgstr "K"
 
 msgid "Kategorie"
-msgstr "Kategorii"
+msgstr "Kadegorie"
 
 msgid "Kategorie umbenennen"
-msgstr "Kategorii umbenenne"
+msgstr "Kadegorie umbenenna"
 
 msgid "Kategoriename"
-msgstr "Kategoriename"
+msgstr "Kadegorienam"
 
 msgid "Kein Status gefunden"
-msgstr "Kai Status gfunde"
+msgstr "Koi Schdadus gfonda"
 
 msgid "Kohlenhydrate"
-msgstr "Kohlenhydrate"
+msgstr "Kohlenhydrade"
 
 msgid "Konzentrationsschwierigkeiten"
-msgstr "Konzentrationsschwierigkeit"
+msgstr "Konzendrazionsschwierigkeida"
 
 msgid "Kopfschmerz"
-msgstr "Kopfschmerz"
+msgstr "Kobfschmerz"
 
 msgid "Kopfschmerzen herunterladen"
-msgstr "Kopfschmerze abelade"
+msgstr "Kobfschmerza henondrlada"
 
 msgid "Kopfschmerztagebuch"
-msgstr "Kopfschmerzstagebuech"
+msgstr " Kobfschmerzdagebuch"
 
 msgid "Kopfweh"
-msgstr "Kopfweh"
+msgstr "Kobfweh"
 
 msgid "Lädt..."
 msgstr "Wart a bissle"
 
 msgid "Leichte Ermüdbarkeit, Energieverlust, Antriebsmangel"
-msgstr "Leichti Ermüdbarkeit, Energieverluscht, Antriebsmangel"
+msgstr "Leichde Ermüdbarkeid, Energieverluschd, Andriebsmangl"
 
 msgid "Login"
-msgstr "Aamelde"
+msgstr "Anmelda"
 
 msgid "Logout"
-msgstr "Abmelde"
+msgstr "Abmelda"
 
 msgid "Löschen"
 msgstr "Lösche"
 
 msgid "Löschen abbrechen"
-msgstr "Lösche abbrich"
+msgstr "Lösche abbrecha"
 
 msgid "Löschen bestätigen"
-msgstr "Lösche bestätige"
+msgstr "Lösche bschdädiga"
 
 #. Calendar month
 msgid "M"
 msgstr "M"
 
 msgid "Mahlzeit"
-msgstr "Mahlziit"
+msgstr "Mahlzeid"
 
 msgid "Mahlzeiten"
-msgstr "Mahlziite"
+msgstr "Mahlzeida"
 
 msgid "Mahlzeiten hinzufügen, ansehen und bearbeiten"
-msgstr "Mahlziite zuefüge, aaluege und bearbeite"
+msgstr "Mahlzeida hinzufüga, anseha ond barbeida"
 
 msgid "Medikament"
-msgstr "Medikament"
+msgstr "Medikamend"
 
 msgid "Medikamente"
-msgstr "Medikament"
+msgstr "Medikamende"
 
 msgid "Medikamente verwalten"
-msgstr "Medikament verwalte"
+msgstr "Medikamende verwalda"
 
 msgid "Morgens"
 msgstr "Morgens"
 
 msgid "Nährwerte"
-msgstr "Nährwerte"
+msgstr "Nährwerde"
 
 msgid "Nährwerte pro 100 g"
-msgstr "Nährwerte pro 100 g"
+msgstr "Nährwerde pro 100 g"
 
 msgid "Name"
-msgstr "Name"
+msgstr "Nam"
 
 msgid "Neu"
-msgstr "Neu"
+msgstr "Nei"
 
 msgid "Neue Kategorie"
-msgstr "Nei Kategorii"
+msgstr "Neie Kadegorie"
 
 msgid "Neue Notiz"
-msgstr "Nei Notiz"
+msgstr "Neie Nodiz"
 
 msgid "Neue Vorlage"
-msgstr "Nei Vorlage"
+msgstr "Neie Vorlag"
 
 msgid "Neuer Kopfschmerz"
-msgstr "Neier Kopfschmerz"
+msgstr "Neir Kobfschmerz"
 
 msgid "Neues Symptom"
-msgstr "Neis Symptom"
+msgstr "Neies Symbdom"
 
 msgid "Noch nicht gespeichert..."
-msgstr "Noch nit gspeichert..."
+msgstr "Noch ned gschbeicherd..."
 
 msgid "Notiz"
-msgstr "Notiz"
+msgstr "Nodiz"
 
 msgid "Notizen"
-msgstr "Notize"
+msgstr "Nodiza"
 
 msgid "Notizen anfertigen und durchsuchen"
-msgstr "Notize afschriebe und durchsuche"
+msgstr "Nodiza anferdiga ond durchsucha"
 
 msgid "Nutzer einladen"
-msgstr "Nutzer iilade"
+msgstr "Nudzr einlada"
 
 msgid "Nutzer existiert nicht"
-msgstr "Den Nutzer gibt's net"
+msgstr "Nudzr gibd's ned"
 
 msgid "Nutzerverwaltung"
-msgstr "Nutzer verwalte"
+msgstr "Nudzerverwaldung"
 
 msgid "Ohne Symptome"
-msgstr "Ohne Symptome"
+msgstr "Ohne Symbdom"
 
 msgid "Passwort"
-msgstr "Passwort"
+msgstr "Basswort"
 
 msgid "Pollen"
-msgstr "Pollen"
+msgstr "Bolla"
 
 msgid "Pollenflug bewundern"
-msgstr "Pollenflug bewundere"
+msgstr "Bollenflug bwundern"
 
 msgid "Position"
-msgstr "Position"
+msgstr "Bosizion"
 
 msgid "Produkte"
-msgstr "Produkte"
+msgstr "Brodukde"
 
 #. Calendar quarter
 msgid "Q"
@@ -295,7 +295,7 @@ msgid "Q{0} {1}"
 msgstr "Q{0} {1}"
 
 msgid "Reizbarkeit, Wut, Ärger, vermehrte Konflikte"
-msgstr "Reizbarkeit, Wut, Ärger, meh Konflik"
+msgstr "Reizbarkeid, Wud, Ärgr, vermehrde Konflikde"
 
 msgid "Roh"
 msgstr "Roh"
@@ -304,95 +304,95 @@ msgid "Schlaf"
 msgstr "Schlaf"
 
 msgid "Schlafstörung (zu viel, zu wenig, unruhig, etc.)"
-msgstr "Schlafstörung (zuviel, z'wenig, unruhig, etc.)"
+msgstr "Schlafschdörung (zu vil, zu wenich, unruhich, edc.)"
 
 msgid "Schwere"
-msgstr "Schwäri"
+msgstr "Schwere"
 
 msgid "Speichern"
-msgstr "Spichere"
+msgstr "Schbeichern"
 
 msgid "Status"
-msgstr "Status"
+msgstr "Schdadus"
 
 msgid "Status hinzufügen"
-msgstr "Status zuefüge"
+msgstr "Schdadus hinzufüga"
 
 msgid "Stimmungsschwankungen, gesteigerte Empfindlichkeit"
-msgstr "Stimmungsschwankige, gsteigerte Empfindlichkeit"
+msgstr "Schdimmungsschwankunga, gschdeigerde Embfindlichkeid"
 
 msgid "Stress"
-msgstr "Stress"
+msgstr "Schdress"
 
 msgid "Suche"
 msgstr "Suche"
 
 msgid "Symptom"
-msgstr "Symptom"
+msgstr "Symbdom"
 
 msgid "Symptome"
-msgstr "Symptome"
+msgstr "Symbdome"
 
 msgid "Symptome aufzeichnen"
-msgstr "Symptome aufzeichne"
+msgstr "Symbdom ufzeichna"
 
 msgid "Symptomname"
-msgstr "Symptomname"
+msgstr "Symbdomnam"
 
 #. Calendar day
 msgid "T"
 msgstr "T"
 
 msgid "tagebuch"
-msgstr "Tagebuch"
+msgstr "dagebuch"
 
 msgid "Tagebuch"
 msgstr "Tagebuch"
 
 msgid "Tagsüber"
-msgstr "Tagsüber"
+msgstr "Dagsübr"
 
 msgid "Tauschen"
-msgstr "Tausche"
+msgstr "Dausche"
 
 msgid "Tauschen abbrechen"
-msgstr "Tausche abbrich"
+msgstr "Dausche abbrecha"
 
 msgid "Tauschen bestätigen"
-msgstr "Tausche bestätige"
+msgstr "Dausche bschdädiga"
 
 msgid "Typ"
-msgstr "Typ"
+msgstr "Dyb"
 
 msgid "Typen"
-msgstr "Type"
+msgstr "Dyba"
 
 msgid "Umbenennen"
-msgstr "Umbenenne"
+msgstr "Umbenenna"
 
 msgid "Umbenennen abbrechen"
-msgstr "Umbenenne abbrich"
+msgstr "Umbenenna abbrecha"
 
 msgid "Umbenennen speichern"
-msgstr "Umbenenne spichere"
+msgstr "Umbenenna schbeichern"
 
 msgid "Unbekannt"
-msgstr "Unbekannt"
+msgstr "Unbekannd"
 
 msgid "Unbenannt"
-msgstr "Unbenannt"
+msgstr "Unbenannd"
 
 msgid "Von"
 msgstr "Vo"
 
 msgid "Vorgestern"
-msgstr "Vorgestr"
+msgstr "Vorgeschdern"
 
 msgid "Vorlage erstellen"
-msgstr "Vorlage erstelle"
+msgstr "Vorlag erschdella"
 
 msgid "Vorlagen"
-msgstr "Vorlage"
+msgstr "Vorlaga"
 
 #. Calender week
 msgid "W"
@@ -400,16 +400,16 @@ msgstr "W"
 
 #. placeholder {0}: props.symptomName
 msgid "Wähle eine Kategorie für <0>{0}</0>"
-msgstr "Wähl a Kategorii für <0>{0}</0>"
+msgstr "Wähle oi Kadegorie für <0>{0}</0>"
 
 msgid "Weitere Symptome"
-msgstr "Weitri Symptome"
+msgstr "Weidere Symbdom"
 
 msgid "Weniger anzeigen"
-msgstr "Weniger zeige"
+msgstr "Wenigr anzeiga"
 
 msgid "Wie geht's heute? Und wie ging's gestern?"
-msgstr "Wia geht's heit? Und wia isch's gester?"
+msgstr "Wie gehd's heud? Und wie ging's gschdern?"
 
 msgid "Wirklich löschen?"
 msgstr "Wirklich lösche?"
@@ -419,19 +419,19 @@ msgid "Woche {0}"
 msgstr "Woche {0}"
 
 msgid "Zeit"
-msgstr "Ziit"
+msgstr "Zeid"
 
 msgid "Zielkategorie"
-msgstr "Zielkategorie"
+msgstr "Zielkadegorie"
 
 msgid "Zusammen"
-msgstr "Zsamme"
+msgstr "Zusamma"
 
 msgid "Zusätzliche Infos"
-msgstr "Zuesätzliche Infos"
+msgstr "Zusädzliche Infos"
 
 msgid "Zutat"
-msgstr "Zutat"
+msgstr "Zudad"
 
 msgid "Zutaten"
-msgstr "Zutaten"
+msgstr "Zudada"
