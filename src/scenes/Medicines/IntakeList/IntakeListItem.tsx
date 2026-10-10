@@ -1,7 +1,7 @@
-import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
+import { Button } from "@/scenes/components/Loading/Button";
 
 type BaseIntakeProp = {
 	id: number;

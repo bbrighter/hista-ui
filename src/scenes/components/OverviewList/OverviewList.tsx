@@ -1,9 +1,9 @@
 import "react-swipeable-list/dist/styles.css";
 
 import { Trans } from "@lingui/react/macro";
-import Button from "@mui/material/Button";
 import { useMemo, useState } from "react";
 import { SwipeableList } from "react-swipeable-list";
+import { Button } from "@/scenes/components/Loading/Button";
 import { usePiidEffect } from "../../../hooks/usePiidEffect";
 import { OverviewListItem } from "./OverviewListItem";
 

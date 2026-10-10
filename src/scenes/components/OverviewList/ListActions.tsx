@@ -1,5 +1,4 @@
 import { Trans } from "@lingui/react/macro";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -9,6 +8,7 @@ import {
 	SwipeAction,
 	TrailingActions,
 } from "react-swipeable-list";
+import { Button } from "@/scenes/components/Loading/Button";
 import { Icons } from "../Icons";
 
 export const swipeDeleteItem = (onDelete: () => Promise<void>) => {

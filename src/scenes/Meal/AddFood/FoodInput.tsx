@@ -1,12 +1,12 @@
 import { t } from "@lingui/core/macro";
 import Autocomplete from "@mui/material/Autocomplete";
-import CircularProgress from "@mui/material/CircularProgress";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import TextField from "@mui/material/TextField";
 import React, { useEffect, useState } from "react";
 import { Icons } from "@/scenes/components/Icons";
+import { ProgressIndicator } from "@/scenes/components/Loading/ProgressIndicator";
 import type { useFoodInput } from "./useFoodInput";
 
 type NewOption = string;
@@ -96,7 +96,7 @@ export function FoodInput({
 							...params.slotProps.input,
 							endAdornment: (
 								<React.Fragment>
-									{isLoading ? <CircularProgress size={30} /> : null}
+									{isLoading ? <ProgressIndicator size={30} /> : null}
 								</React.Fragment>
 							),
 						},

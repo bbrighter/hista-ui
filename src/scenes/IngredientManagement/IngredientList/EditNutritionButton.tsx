@@ -1,13 +1,13 @@
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton, { type IconButtonProps } from "@mui/material/IconButton";
 import { useState } from "react";
+import { Button } from "@/scenes/components/Loading/Button";
 import type { Nutrition } from "../../../store";
 import { Icons } from "../../components/Icons";
 import { NumberDecimalInput } from "../../components/NumberDecimalInput";

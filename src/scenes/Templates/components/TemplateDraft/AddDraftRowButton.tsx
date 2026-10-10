@@ -1,5 +1,6 @@
 import { Trans } from "@lingui/react/macro";
-import Button from "@mui/material/Button";
+import { Button } from "@/scenes/components/Loading/Button";
+
 import type { DraftStateType } from "./useTemplateDraft";
 
 export const AddDraftRowButton = ({ onAdd }: DraftStateType) => {

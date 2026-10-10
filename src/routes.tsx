@@ -1,6 +1,5 @@
 import { Login } from "@bbrighter/auth-module/login";
 import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
 import Modal from "@mui/material/Modal";
 import {
 	type JSX,
@@ -20,6 +19,7 @@ import {
 import { appRoutes } from "./constants";
 import { ErrorBridge, ErrorFallback } from "./errors";
 import AppProvider from "./Initialization/AppProvider";
+import { ProgressIndicator } from "./scenes/components/Loading/ProgressIndicator";
 import { useIsAppReady } from "./store";
 
 type RawRoute = {
@@ -174,7 +174,7 @@ const LoadingLayout = ({ children }: PropsWithChildren) => {
 							transform: "translate(-50%, -50%)",
 						}}
 					/>
-					<CircularProgress
+					<ProgressIndicator
 						size={64}
 						sx={{ top: "50%", left: "50%", position: "absolute" }}
 					/>

@@ -1,11 +1,11 @@
 import { t } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { Button } from "@/scenes/components/Loading/Button";
 import { Icons } from "../../components/Icons";
 
 type AddStatusButtonsType = {

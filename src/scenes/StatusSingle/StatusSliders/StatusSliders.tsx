@@ -1,9 +1,9 @@
 import { t } from "@lingui/core/macro";
-import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
+import { Icons } from "@/scenes/components/Icons";
 import type { PutStatusParams } from "@/store";
 import type { SymptomKey } from "../symptomValues";
 
@@ -70,7 +70,7 @@ export const StatusSliders = ({
 								sx={{ mt: "0.4rem" }}
 								data-testid="dirty-status-icon"
 							>
-								<HourglassBottomIcon />
+								<Icons.loading />
 							</Icon>
 						)}
 					</Grid>

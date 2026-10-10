@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/react/macro";
-import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import { useAppNavigate } from "@/hooks/useNavigate";
+import { Button } from "@/scenes/components/Loading/Button";
 import { actions } from "../../actions";
 import { usePiidEffect } from "../../hooks/usePiidEffect";
 import { selectIsLoadingAny } from "../../store";

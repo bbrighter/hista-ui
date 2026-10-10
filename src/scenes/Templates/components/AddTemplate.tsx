@@ -1,6 +1,6 @@
 import { Trans } from "@lingui/react/macro";
-import Button from "@mui/material/Button";
 import { useState } from "react";
+import { Button } from "@/scenes/components/Loading/Button";
 import { Icons } from "../../components/Icons";
 import { TemplateDialog } from "./TemplateDraft";
 

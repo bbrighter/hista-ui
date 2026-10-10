@@ -1,9 +1,9 @@
 import { Trans } from "@lingui/react/macro";
-import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import { useState } from "react";
+import { Button } from "@/scenes/components/Loading/Button";
 import { actions } from "../../actions";
 import { useAppNavigate } from "../../hooks/useNavigate";
 import { selectIsLoadingAny } from "../../store";
