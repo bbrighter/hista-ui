@@ -1,9 +1,10 @@
+import { t } from "@lingui/core/macro";
 import type { RawDiary } from "@/store";
 
 export const buildWorkbook = async (entries: Array<RawDiary>) => {
 	const { utils } = await import("xlsx");
 	const diaryWithHeaderNames = entries.map((d) => ({
-		Typ: d.Type,
+		Typ: d.Type, // TODO [BOAR-19]: Translate diary columns
 		Datum: d.Date,
 		Schwere: d.Severity,
 		Inhalt: d.What,
@@ -20,7 +21,7 @@ export const buildWorkbook = async (entries: Array<RawDiary>) => {
 		worksheet[cellRef].z = "dd.mm.yyyy hh:mm";
 	}
 	const workbook = utils.book_new();
-	utils.book_append_sheet(workbook, worksheet, "Tagebuch");
+	utils.book_append_sheet(workbook, worksheet, t`Tagebuch`);
 
 	return workbook;
 };

@@ -1,14 +1,29 @@
 import {
+	AuthProvider,
 	type AuthStateAdapter,
 	ProductKeys,
 } from "@bbrighter/auth-module/auth";
-import type { UserStateAdapter } from "@bbrighter/auth-module/users";
-import type { Location, NavigateFunction } from "react-router-dom";
+import {
+	type Location,
+	type NavigateFunction,
+	useLocation,
+} from "react-router-dom";
+import { authApi } from "@/api/api";
+import useHista from "@/store/store";
 
-import { authApi } from "./api/api";
-import useHista from "./store/store";
+export const Auth = ({
+	navigate,
+	children,
+}: {
+	navigate: NavigateFunction;
+	children: React.ReactNode;
+}) => {
+	const location = useLocation();
+	const adapter = useAuthStateAdapter(navigate, location);
+	return <AuthProvider adapter={adapter}>{children}</AuthProvider>;
+};
 
-export const useAuthStateAdapter = (
+const useAuthStateAdapter = (
 	navigate: NavigateFunction,
 	location: Location,
 ): AuthStateAdapter => {
@@ -43,21 +58,5 @@ export const useAuthStateAdapter = (
 		useProductKey,
 		useToken,
 		useUserName,
-	};
-};
-
-export const useUserManagementAdapter = (): UserStateAdapter => {
-	const users = useHista((state) => state.users);
-	const setUsers = useHista((state) => state.setUsers);
-	const piid = useHista((state) => state.piid);
-
-	const useUsers = () => ({ users, setUsers });
-	const useApi = () => authApi;
-	const usePiid = () => piid ?? "";
-
-	return {
-		useUsers,
-		useApi,
-		usePiid,
 	};
 };

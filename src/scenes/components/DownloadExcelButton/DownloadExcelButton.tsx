@@ -1,6 +1,6 @@
-import Button from "@mui/material/Button";
 import { useState } from "react";
 import type { WorkBook } from "xlsx";
+import { Button } from "@/scenes/components/Loading/Button";
 import { Icons } from "../Icons";
 
 export type DownloadExcelButtonProps<T> = {

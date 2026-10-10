@@ -1,13 +1,15 @@
+import type { I18n } from "@lingui/core";
+import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react/macro";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-
 import { useAppNavigate } from "../../../hooks/useNavigate";
 import { Icons } from "../../components/Icons";
 
-export type CardType = keyof typeof CARD_CONFIG;
+export type CardType = keyof ReturnType<typeof card_configuration>;
 
 type StartPageCardProps = {
 	type: CardType;
@@ -15,8 +17,14 @@ type StartPageCardProps = {
 };
 
 export default function StartPageCard({ type, highlight }: StartPageCardProps) {
+	const { i18n } = useLingui(); // Needed, otherwise the component does not re-render on language change
 	const navigate = useAppNavigate();
-	const { title, content, icon: Icon, onClick } = CARD_CONFIG[type](navigate);
+	const {
+		title,
+		content,
+		icon: Icon,
+		onClick,
+	} = card_configuration(navigate, i18n)[type];
 
 	const fontHighlightColor = highlight ? "#5F43C2" : "inherit";
 	const borderColor = highlight ? "#5F43C2" : "divider";
@@ -54,53 +62,56 @@ export default function StartPageCard({ type, highlight }: StartPageCardProps) {
 	);
 }
 
-const CARD_CONFIG = {
-	meals: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Mahlzeiten",
-		content: "Mahlzeiten hinzufügen, ansehen und bearbeiten",
+const card_configuration = (
+	navigate: ReturnType<typeof useAppNavigate>,
+	_i18n: I18n,
+) => ({
+	meals: {
+		title: t`Mahlzeiten`,
+		content: t`Mahlzeiten hinzufügen, ansehen und bearbeiten`,
 		icon: Icons.meal,
 		onClick: navigate.to.meals,
-	}),
-	conditionEvents: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Symptome",
-		content: "Symptome aufzeichnen",
+	},
+	conditionEvents: {
+		title: t`Symptome`,
+		content: t`Symptome aufzeichnen`,
 		icon: Icons.symptom,
 		onClick: navigate.to.conditionEvents,
-	}),
-	statistics: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Auswertungen",
-		content: "Ernährungstagebuch und mehr",
+	},
+	statistics: {
+		title: t`Auswertungen`,
+		content: t`Ernährungstagebuch und mehr`,
 		icon: Icons.statistics,
 		onClick: navigate.to.statistics,
-	}),
-	notes: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Notizen",
-		content: "Notizen anfertigen und durchsuchen",
+	},
+	notes: {
+		title: t`Notizen`,
+		content: t`Notizen anfertigen und durchsuchen`,
 		icon: Icons.notes,
 		onClick: navigate.to.notes,
-	}),
-	pollens: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Pollen",
-		content: "Pollenflug bewundern",
+	},
+	pollens: {
+		title: t`Pollen`,
+		content: t`Pollenflug bewundern`,
 		icon: Icons.pollens,
 		onClick: navigate.to.pollens,
-	}),
-	headaches: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Kopfweh",
-		content: "Kopfschmerztagebuch",
+	},
+	headaches: {
+		title: t`Kopfweh`,
+		content: t`Kopfschmerztagebuch`,
 		icon: Icons.headaches,
 		onClick: navigate.to.headaches,
-	}),
-	medicines: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Medikamente",
-		content: "Einnehmen und eintragen",
+	},
+	medicines: {
+		title: t`Medikamente`,
+		content: t`Einnehmen und eintragen`,
 		icon: Icons.medicines,
 		onClick: navigate.to.medicine,
-	}),
-	status: (navigate: ReturnType<typeof useAppNavigate>) => ({
-		title: "Status",
-		content: "Wie geht's heute? Und wie ging's gestern?",
+	},
+	status: {
+		title: t`Status`,
+		content: t`Wie geht's heute? Und wie ging's gestern?`,
 		icon: Icons.status,
 		onClick: navigate.to.status,
-	}),
-} as const;
+	},
+});

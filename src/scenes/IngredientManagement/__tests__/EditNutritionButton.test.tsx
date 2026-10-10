@@ -1,6 +1,7 @@
-import { render, within } from "@testing-library/react";
+import { within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
+import { render } from "@/__tests__/setupTest";
 import { EditNutritionButton } from "../IngredientList/EditNutritionButton";
 import {
 	getEditNutritionButton,

@@ -1,8 +1,9 @@
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-
 import type { Nutrition } from "@/store";
 
 export const MealNutrition = ({
@@ -12,10 +13,10 @@ export const MealNutrition = ({
 	fiber,
 }: Nutrition) => {
 	const indicators = [
-		{ label: "F", value: fat },
-		{ label: "K", value: carbohydrate },
-		{ label: "B", value: fiber },
-		{ label: "E", value: protein },
+		{ label: t`F`, value: fat },
+		{ label: t`K`, value: carbohydrate },
+		{ label: t`B`, value: fiber },
+		{ label: t`E`, value: protein },
 	];
 
 	return (
@@ -38,8 +39,12 @@ export const MealNutrition = ({
 						>
 							<Typography color="textDisabled">{i.label}</Typography>
 							<Typography sx={{ whiteSpace: "nowrap" }}>
-								{i.value.toLocaleString("de-DE", { maximumFractionDigits: 1 })}{" "}
-								g
+								<Trans>
+									{i.value.toLocaleString("de-DE", {
+										maximumFractionDigits: 1,
+									})}{" "}
+									g
+								</Trans>
 							</Typography>
 						</Stack>
 					</Grid>

@@ -1,8 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
-
+import { render } from "@/__tests__/setupTest";
 import Notes from "./Notes";
 
 describe("notes component", () => {

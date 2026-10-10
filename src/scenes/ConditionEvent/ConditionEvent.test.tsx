@@ -1,7 +1,6 @@
 import {
 	act,
 	fireEvent,
-	render,
 	screen,
 	waitFor,
 	within,
@@ -11,7 +10,7 @@ import { delay, HttpResponse, http } from "msw";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 
-import { server } from "../../__tests__/setupTest";
+import { render, server } from "../../__tests__/setupTest";
 import ConditionEvent from "./ConditionEvent";
 
 const renderConditionEvent = () => {
@@ -128,7 +127,9 @@ describe("condition event is rendered and can be edited", () => {
 		await userEvent.keyboard("{Enter}");
 
 		expect(screen.getByRole("presentation")).toBeVisible();
-		const categoryInput = await screen.findByLabelText("Kategorie");
+		const categoryInput = await screen.findByRole("combobox", {
+			name: "Kategorie",
+		});
 		expect(categoryInput).toBeInTheDocument();
 		await userEvent.type(categoryInput, "cat with no symptom");
 		await userEvent.keyboard("{ArrowDown}");

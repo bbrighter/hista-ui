@@ -1,8 +1,9 @@
-import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
+import { t } from "@lingui/core/macro";
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
+import { Icons } from "@/scenes/components/Icons";
 import type { PutStatusParams } from "@/store";
 import type { SymptomKey } from "../symptomValues";
 
@@ -69,7 +70,7 @@ export const StatusSliders = ({
 								sx={{ mt: "0.4rem" }}
 								data-testid="dirty-status-icon"
 							>
-								<HourglassBottomIcon />
+								<Icons.loading />
 							</Icon>
 						)}
 					</Grid>
@@ -86,62 +87,62 @@ type SymptomSlider = {
 };
 
 const symptomSliders: SymptomSlider[] = [
-	{ key: "morningSleep", label: "Schlaf", positiveDirection: "up" },
-	{ key: "morningFitness", label: "Morgens", positiveDirection: "up" },
-	{ key: "dayFitness", label: "Tagsüber", positiveDirection: "up" },
+	{ key: "morningSleep", label: t`Schlaf`, positiveDirection: "up" },
+	{ key: "morningFitness", label: t`Morgens`, positiveDirection: "up" },
+	{ key: "dayFitness", label: t`Tagsüber`, positiveDirection: "up" },
 	{
 		key: "eveningFitness",
-		label: "Abends",
+		label: t`Abends`,
 		positiveDirection: "up",
 	},
 	{
 		key: "depressive",
-		label: "Depressive Verstimmung, selbstabwertende Gedanken",
+		label: t`Depressive Verstimmung, selbstabwertende Gedanken`,
 		positiveDirection: "down",
 	},
 	{
 		key: "tense",
-		label: "Anspannung, Ängstlichkeit oder Gefühl des Aufgedrehtseins",
+		label: t`Anspannung, Ängstlichkeit oder Gefühl des Aufgedrehtseins`,
 		positiveDirection: "down",
 	},
 	{
 		key: "moodSwings",
-		label: "Stimmungsschwankungen, gesteigerte Empfindlichkeit",
+		label: t`Stimmungsschwankungen, gesteigerte Empfindlichkeit`,
 		positiveDirection: "down",
 	},
 	{
 		key: "irritable",
-		label: "Reizbarkeit, Wut, Ärger, vermehrte Konflikte",
+		label: t`Reizbarkeit, Wut, Ärger, vermehrte Konflikte`,
 		positiveDirection: "down",
 	},
 	{
 		key: "lossOfInterest",
-		label: "Interessenlosigkeit für übliche Aktivitäten",
+		label: t`Interessenlosigkeit für übliche Aktivitäten`,
 		positiveDirection: "down",
 	},
 	{
 		key: "concentrationProblems",
-		label: "Konzentrationsschwierigkeiten",
+		label: t`Konzentrationsschwierigkeiten`,
 		positiveDirection: "down",
 	},
 	{
 		key: "lackOfDrive",
-		label: "Leichte Ermüdbarkeit, Energieverlust, Antriebsmangel",
+		label: t`Leichte Ermüdbarkeit, Energieverlust, Antriebsmangel`,
 		positiveDirection: "down",
 	},
 	{
 		key: "appetiteChanges",
-		label: "Appetitveränderungen, Verlangen nach speziellen Lebensmitteln",
+		label: t`Appetitveränderungen, Verlangen nach speziellen Lebensmitteln`,
 		positiveDirection: "down",
 	},
 	{
 		key: "sleepProblems",
-		label: "Schlafstörung (zu viel, zu wenig, unruhig, etc.)",
+		label: t`Schlafstörung (zu viel, zu wenig, unruhig, etc.)`,
 		positiveDirection: "down",
 	},
 	{
 		key: "overwhelmed",
-		label: "Gefühl, die Kontrolle zu verlieren; Gefühl des Überwältigtseins",
+		label: t`Gefühl, die Kontrolle zu verlieren; Gefühl des Überwältigtseins`,
 		positiveDirection: "down",
 	},
 ] as const;

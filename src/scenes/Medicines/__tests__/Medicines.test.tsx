@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor, within } from "@testing-library/react";
+import { act, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -10,7 +10,7 @@ import {
 	getIntakeListHandler,
 	getMedicineListHandler,
 } from "@/__tests__/mocks/medicineHandlers";
-import { server } from "@/__tests__/setupTest";
+import { render, server } from "@/__tests__/setupTest";
 import { Medicines } from "../Medicines";
 import { getIntakeRows, getTodaysRow } from "./selectors";
 

@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
@@ -19,7 +20,7 @@ export const ToggleVisibility = ({
 					onChange={onChange}
 				/>
 			}
-			label="Archivierte anzeigen"
+			label={t`Archivierte anzeigen`}
 		/>
 	);
 };

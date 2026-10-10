@@ -1,7 +1,7 @@
-import { render, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-
+import { render } from "@/__tests__/setupTest";
 import { NutritionStats } from "./NutritionStats";
 
 const findToggleGroup = async () =>

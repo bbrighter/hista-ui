@@ -12,7 +12,8 @@
 			"!**/generatedApi.ts",
 			"*.json",
 			"!vercel.json",
-			"!**/*.svg"
+			"!**/*.svg",
+			"!src/locales"
 		]
 	},
 	"formatter": {

@@ -3,13 +3,12 @@ import "./main.css";
 
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import dayjs from "dayjs";
 import React from "react";
 import ReactDOM from "react-dom/client";
-
+import { ensureLocalization } from "./Initialization/Localization";
 import { Router } from "./routes";
 
-dayjs.locale("de");
+ensureLocalization();
 
 const darkTheme = createTheme({
 	palette: {

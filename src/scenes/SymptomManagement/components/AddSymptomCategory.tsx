@@ -1,8 +1,9 @@
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
-
 import { actions } from "../../../actions";
 import { Icons } from "../../components/Icons";
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort";
@@ -36,7 +37,7 @@ export default function AddSymptomCategory() {
 			<Modal open={open} onClose={closeModal}>
 				<Box sx={style}>
 					<TextFieldSaveAndAbort
-						label="Kategoriename"
+						label={t`Kategoriename`}
 						value=""
 						isSaveable={isCategoryNameAvailable}
 						onSave={onSave}
@@ -46,7 +47,7 @@ export default function AddSymptomCategory() {
 				</Box>
 			</Modal>
 			<Fab color="primary" variant="extended" onClick={() => setOpen(!open)}>
-				<Icons.actions.create /> Neue Kategorie
+				<Icons.actions.create /> <Trans>Neue Kategorie</Trans>
 			</Fab>
 		</>
 	);

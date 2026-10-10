@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import Container from "@mui/material/Container";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
@@ -22,8 +23,8 @@ export const StatusOverview = () => {
 	return (
 		<Container sx={{ pb: "2rem" }}>
 			<Tabs value={tab} onChange={(_e, v) => setTab(v)}>
-				<Tab label="Status" value={0} />
-				<Tab label="Auswertung" value={1} />
+				<Tab label={t`Status`} value={0} />
+				<Tab label={t`Auswertung`} value={1} />
 			</Tabs>
 			{tab === 0 && (
 				<StatusList

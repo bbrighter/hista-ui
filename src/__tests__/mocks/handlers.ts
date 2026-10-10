@@ -8,6 +8,10 @@ import { noteHandlers } from "./noteHandlers";
 import { permissionsHandler } from "./permissionsHandler";
 import { pollenHandlers } from "./pollenHandlers";
 import {
+	getUserSettingsHandler,
+	patchUserSettingsHandler,
+} from "./settingsHandler";
+import {
 	getDiariesHandler,
 	getNutritionStatisticsHandler,
 	getStatisticsHandler,
@@ -52,6 +56,9 @@ const handlers = [
 	getStatusListHandler(createStatusList()),
 	patchStatusHandler(),
 	deleteStatusHandler(),
+
+	getUserSettingsHandler(),
+	patchUserSettingsHandler(),
 ];
 
 export default handlers;

@@ -1,11 +1,11 @@
 import { NumberField as BaseNumberField } from "@base-ui/react/number-field";
-import CircularProgress from "@mui/material/CircularProgress";
 import FormControl from "@mui/material/FormControl";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import type { SxProps, Theme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import { ProgressIndicator } from "./Loading/ProgressIndicator";
 
 /**
  * This component is a placeholder for FormControl to correctly set the shrink label state on SSR.
@@ -91,7 +91,7 @@ export default function NumberField({
 						endAdornment={<Typography color="textSecondary">{unit}</Typography>}
 						startAdornment={
 							loading && (
-								<CircularProgress
+								<ProgressIndicator
 									size={20}
 									sx={{
 										position: "absolute",

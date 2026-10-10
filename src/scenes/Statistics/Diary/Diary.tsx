@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import Box from "@mui/material/Box";
 import { useEffect, useMemo } from "react";
 import { DownloadExcelButton } from "@/scenes/components/DownloadExcelButton/DownloadExcelButton";
@@ -18,8 +19,8 @@ export function Diary() {
 	return (
 		<Box>
 			<DownloadExcelButton
-				label="Ernährungstagebuch herunterladen"
-				fileTitle="tagebuch"
+				label={t`Ernährungstagebuch herunterladen`}
+				fileTitle={t`tagebuch`}
 				entries={diary}
 				createWorkbook={buildWorkbook}
 			/>

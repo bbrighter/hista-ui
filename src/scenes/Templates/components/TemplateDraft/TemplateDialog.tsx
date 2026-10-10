@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/react/macro";
 import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
 import Dialog, { type DialogProps } from "@mui/material/Dialog";
@@ -5,7 +6,6 @@ import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-
 import { Icons } from "../../../components/Icons";
 import { AddDraftRowButton } from "./AddDraftRowButton";
 import { DraftRow } from "./DraftRow";
@@ -29,7 +29,7 @@ export const TemplateDialog = ({ open, onClose, templateId }: Props) => {
 						<Icons.actions.close />
 					</IconButton>
 					<Typography sx={{ ml: 2, flex: 1 }} variant="h6">
-						Vorlage erstellen
+						<Trans>Vorlage erstellen</Trans>
 					</Typography>
 					<SaveTemplateButton
 						{...draftState}

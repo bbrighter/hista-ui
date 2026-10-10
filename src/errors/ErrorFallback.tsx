@@ -3,10 +3,11 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import Button from "@mui/material/Button";
+
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import { useEffect } from "react";
+import { Button } from "@/scenes/components/Loading/Button";
 import { errApi } from "../api/api";
 import { useAppNavigate } from "../hooks/useNavigate";
 import { Icons } from "../scenes/components/Icons";

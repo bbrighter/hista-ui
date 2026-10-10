@@ -1,8 +1,8 @@
-import Button from "@mui/material/Button";
+import { Trans } from "@lingui/react/macro";
 import Container from "@mui/material/Container";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { Button } from "@/scenes/components/Loading/Button";
 import { actions } from "../../actions";
 import { selectIsLoadingAny, useHeadaches } from "../../store";
 import useHista from "../../store/store";
@@ -38,7 +38,7 @@ export default function Headaches() {
 					onClick={onCreate}
 					loading={postLoading}
 				>
-					Neuer Kopfschmerz
+					<Trans>Neuer Kopfschmerz</Trans>
 				</Button>
 				<OverviewList
 					getData={actions.headaches.list}

@@ -1,7 +1,8 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import dayjs from "dayjs";
 import { expect, test, vi } from "vitest";
+import { render } from "@/__tests__/setupTest";
 import { NutritionChartButton } from "../NutritionChart/NutritionChartButton";
 
 test("NutritionChartButton component", async () => {

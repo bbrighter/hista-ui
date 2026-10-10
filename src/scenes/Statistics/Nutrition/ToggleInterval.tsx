@@ -1,3 +1,4 @@
+import { Trans } from "@lingui/react/macro";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
@@ -20,10 +21,18 @@ export const ToggleInterval = ({
 			onChange={onChange}
 			fullWidth
 		>
-			<ToggleButton value="day">T</ToggleButton>
-			<ToggleButton value="week">W</ToggleButton>
-			<ToggleButton value="month">M</ToggleButton>
-			<ToggleButton value="quarter">Q</ToggleButton>
+			<ToggleButton value="day">
+				<Trans comment="Calendar day">T</Trans>
+			</ToggleButton>
+			<ToggleButton value="week">
+				<Trans comment="Calender week">W</Trans>
+			</ToggleButton>
+			<ToggleButton value="month">
+				<Trans comment="Calendar month">M</Trans>
+			</ToggleButton>
+			<ToggleButton value="quarter">
+				<Trans comment="Calendar quarter">Q</Trans>
+			</ToggleButton>
 		</ToggleButtonGroup>
 	);
 };

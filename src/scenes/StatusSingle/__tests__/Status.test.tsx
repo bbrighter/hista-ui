@@ -1,10 +1,10 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { PIID } from "@/__tests__/fixtures/piid";
 import { createStatusList } from "@/__tests__/fixtures/status";
 import { getStatusListHandler } from "@/__tests__/mocks/statusHandler";
-import { server } from "@/__tests__/setupTest";
+import { render, server } from "@/__tests__/setupTest";
 import { client } from "@/api/api";
 import useHista from "@/store/store";
 import Status from "../Status";

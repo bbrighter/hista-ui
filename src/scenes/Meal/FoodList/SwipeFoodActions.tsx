@@ -1,7 +1,6 @@
-import Button from "@mui/material/Button";
 import { SwipeAction, TrailingActions } from "react-swipeable-list";
-
 import { Icons } from "@/scenes/components/Icons";
+import { Button } from "@/scenes/components/Loading/Button";
 
 export const swipeDeleteFood = (
 	id: number,

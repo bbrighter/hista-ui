@@ -1,4 +1,4 @@
-import Button from "@mui/material/Button";
+import { Trans } from "@lingui/react/macro";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -8,7 +8,7 @@ import {
 	SwipeAction,
 	TrailingActions,
 } from "react-swipeable-list";
-
+import { Button } from "@/scenes/components/Loading/Button";
 import { Icons } from "../Icons";
 
 export const swipeDeleteItem = (onDelete: () => Promise<void>) => {
@@ -27,7 +27,9 @@ export const swipeDeleteItem = (onDelete: () => Promise<void>) => {
 				</SwipeAction>
 			</TrailingActions>
 			<Dialog open={open}>
-				<DialogTitle>Wirklich löschen?</DialogTitle>
+				<DialogTitle>
+					<Trans>Wirklich löschen?</Trans>
+				</DialogTitle>
 				<DialogActions>
 					<Button
 						variant="contained"
@@ -38,9 +40,11 @@ export const swipeDeleteItem = (onDelete: () => Promise<void>) => {
 							setOpen(false);
 						}}
 					>
-						Löschen
+						<Trans>Löschen</Trans>
 					</Button>
-					<Button onClick={() => setOpen(false)}>Abbrechen</Button>
+					<Button onClick={() => setOpen(false)}>
+						<Trans>Abbrechen</Trans>
+					</Button>
 				</DialogActions>
 			</Dialog>
 		</>
@@ -57,7 +61,7 @@ export const swipeSetNow = (onSwipe: () => Promise<void>) => {
 					startIcon={<Icons.today />}
 					color="secondary"
 				>
-					Jetzt
+					<Trans>Jetzt</Trans>
 				</Button>
 			</SwipeAction>
 		</LeadingActions>

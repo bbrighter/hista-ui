@@ -1,9 +1,9 @@
+import { t } from "@lingui/core/macro";
 import type {
 	GridColDef,
 	GridColumnGroupingModel,
 	GridRowsProp,
 } from "@mui/x-data-grid/models";
-
 import {
 	type Headache,
 	useHeadaches,
@@ -13,8 +13,8 @@ import {
 } from "../../../../store";
 
 export const headacheGridColumns: Array<GridColDef> = [
-	{ field: "date", headerName: "Zeit", type: "dateTime" },
-	{ field: "severity", headerName: "Schwere" },
+	{ field: "date", headerName: t`Zeit`, type: "dateTime" },
+	{ field: "severity", headerName: t`Schwere` },
 	...validHeadachePositions.map((v) => ({
 		field: v.value,
 		headerName: v.label,
@@ -24,23 +24,23 @@ export const headacheGridColumns: Array<GridColDef> = [
 		field: s.value,
 		headerName: s.label,
 	})),
-	{ field: "description", headerName: "Beschreibung" },
+	{ field: "description", headerName: t`Beschreibung` },
 ];
 
 export const headacheColumnGroupingModel: GridColumnGroupingModel = [
 	{
 		groupId: "position",
-		headerName: "Position",
+		headerName: t`Position`,
 		children: validHeadachePositions.map((v) => ({ field: v.value })),
 	},
 	{
 		groupId: "type",
-		headerName: "Typen",
+		headerName: t`Typen`,
 		children: validHeadacheTypes.map((v) => ({ field: v.value })),
 	},
 	{
 		groupId: "symptom",
-		headerName: "Symptome",
+		headerName: t`Symptome`,
 		children: validHeadacheSymptoms.map((v) => ({ field: v.value })),
 	},
 ];

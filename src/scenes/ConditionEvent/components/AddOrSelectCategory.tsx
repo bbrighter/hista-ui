@@ -1,3 +1,5 @@
+import { t } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 import Alert from "@mui/material/Alert";
 import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
@@ -8,7 +10,6 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import type React from "react";
 import { useState } from "react";
-
 import { actions } from "../../../actions";
 import useHista from "../../../store/store";
 
@@ -68,14 +69,18 @@ export default function AddOrSelectCategory(props: {
 				}}
 			>
 				<Typography sx={{ paddingBottom: "1rem" }}>
-					Wähle eine Kategorie für <b>{props.symptomName}</b>
+					<Trans>
+						Wähle eine Kategorie für <b>{props.symptomName}</b>
+					</Trans>
 				</Typography>
 				<Autocomplete
 					freeSolo
 					options={categories}
 					onChange={onChange}
 					getOptionLabel={(o) => (isNewOption(o) ? o : o.name)}
-					renderInput={(params) => <TextField {...params} label="Kategorie" />}
+					renderInput={(params) => (
+						<TextField {...params} label={t`Kategorie`} />
+					)}
 					renderOption={(props, option) => {
 						const value = isNewOption(option) ? option : option.name;
 						const key = isNewOption(option) ? 0 : option.id;
@@ -89,7 +94,7 @@ export default function AddOrSelectCategory(props: {
 				/>
 				{isError && (
 					<Alert sx={{ marginTop: "5px" }} severity="error" variant="filled">
-						Da ist was schief gegangen! Probier's nochmal.
+						<Trans>Da ist was schief gegangen! Probier's nochmal.</Trans>
 					</Alert>
 				)}
 			</Box>

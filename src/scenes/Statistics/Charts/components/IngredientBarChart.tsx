@@ -1,5 +1,5 @@
+import { t } from "@lingui/core/macro";
 import { BarChart } from "@mui/x-charts/BarChart";
-
 import { useBarChartStatistics } from "./useGroupedStatistics";
 
 export const IngredientBarChart = ({
@@ -19,25 +19,25 @@ export const IngredientBarChart = ({
 			series={[
 				{
 					dataKey: "hours1",
-					label: "1 h",
+					label: t`1 h`,
 					stack: "total",
 					color: "rgb(180, 0, 0)",
 				},
 				{
 					dataKey: "hours24",
-					label: "24 h",
+					label: t`24 h`,
 					stack: "total",
 					color: "rgb(180, 102, 0)",
 				},
 				{
 					dataKey: "hours72",
-					label: "72 h",
+					label: t`72 h`,
 					stack: "total",
 					color: "rgb(168, 180, 0)",
 				},
 				{
 					dataKey: "total",
-					label: "Ohne Symptome",
+					label: t`Ohne Symptome`,
 					stack: "total",
 					color: "rgb(120,120,120)",
 				},

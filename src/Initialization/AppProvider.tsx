@@ -1,35 +1,28 @@
 import { CustomAppBar } from "@bbrighter/auth-module/app-bar";
-import {
-	AuthProvider,
-	useAuth,
-	useHandleUnauthorized,
-} from "@bbrighter/auth-module/auth";
-import { UserManagementProvider } from "@bbrighter/auth-module/users";
+import { useAuth, useHandleUnauthorized } from "@bbrighter/auth-module/auth";
 import { useEffect } from "react";
-import {
-	type NavigateFunction,
-	Outlet,
-	useLocation,
-	useNavigate,
-} from "react-router-dom";
-
-import { useAuthStateAdapter, useUserManagementAdapter } from "./adapter";
-import useHista from "./store/store";
+import { type NavigateFunction, Outlet, useNavigate } from "react-router-dom";
+import useHista from "@/store/store";
+import { Auth } from "./Auth";
+import { InternationalizationProvider } from "./Localization";
+import { Settings } from "./Settings";
+import { UserManagement } from "./UserManagament";
 
 export default function AppProvider() {
 	const navigate = useNavigate();
-	const location = useLocation();
-	const authAdapter = useAuthStateAdapter(navigate, location);
-	const userAdapter = useUserManagementAdapter();
 
 	return (
-		<UserManagementProvider adapter={userAdapter}>
-			<AuthProvider adapter={authAdapter}>
-				<AppEffects navigate={navigate} />
-				<CustomAppBar />
-				<Outlet />
-			</AuthProvider>
-		</UserManagementProvider>
+		<Settings>
+			<InternationalizationProvider>
+				<UserManagement>
+					<Auth navigate={navigate}>
+						<AppEffects navigate={navigate} />
+						<CustomAppBar />
+						<Outlet />
+					</Auth>
+				</UserManagement>
+			</InternationalizationProvider>
+		</Settings>
 	);
 }
 

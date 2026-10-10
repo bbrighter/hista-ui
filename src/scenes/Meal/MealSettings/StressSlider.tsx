@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import MoodIcon from "@mui/icons-material/Mood";
 import MoodBadIcon from "@mui/icons-material/MoodBad";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
@@ -25,7 +26,7 @@ export const StressSlider = ({
 			) : (
 				<DebouncedSlider
 					key={stressLevel}
-					label="Stress"
+					label={t`Stress`}
 					onChange={setStressLevel}
 					max={4}
 					min={0}

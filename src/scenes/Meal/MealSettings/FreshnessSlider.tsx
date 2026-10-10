@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import Skeleton from "@mui/material/Skeleton";
 import DebouncedSlider from "@/scenes/components/DebouncedSlider/DebouncedSlider";
@@ -21,7 +22,7 @@ export const FreshnessSlider = ({
 			) : (
 				<DebouncedSlider
 					key={freshness}
-					label="Frische"
+					label={t`Frische`}
 					onChange={setFreshness}
 					max={2}
 					min={0}

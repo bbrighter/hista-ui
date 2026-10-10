@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { act } from "react";
 import { MemoryRouter } from "react-router-dom";
@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createHeadache } from "@/__tests__/fixtures/headache";
 import { getHeadacheListHandler } from "@/__tests__/mocks/headacheHandlers";
 import useHista from "@/store/store";
-import { server } from "../../__tests__/setupTest";
+import { render, server } from "../../__tests__/setupTest";
 import Headaches from "./Headaches";
 
 const findRowByDate = async (date: string): Promise<HTMLElement> => {

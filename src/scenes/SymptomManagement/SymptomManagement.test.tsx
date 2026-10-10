@@ -1,8 +1,7 @@
-// import '../../__tests__/mocks/errorStoreMock'
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-
+import { render } from "@/__tests__/setupTest";
 import SymptomManagement from "./SymptomManagement";
 
 const findButtonWithinCategory = (

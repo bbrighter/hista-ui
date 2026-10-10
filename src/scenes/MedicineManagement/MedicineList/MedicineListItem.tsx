@@ -2,13 +2,13 @@ import {
 	draggable,
 	dropTargetForElements,
 } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import { t } from "@lingui/core/macro";
 import Box from "@mui/material/Box";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import IconButton from "@mui/material/IconButton";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { useEffect, useRef, useState } from "react";
-
 import { actions } from "../../../actions";
 import type { Medicine } from "../../../store";
 import { ArchiveButton } from "../../components/ArchiveButton";
@@ -166,7 +166,7 @@ const EditMedicineName = ({
 
 	return (
 		<TextFieldSaveAndAbort
-			label="Medikament"
+			label={t`Medikament`}
 			value={name}
 			isSaveable={isSaveable}
 			onSave={onSave}

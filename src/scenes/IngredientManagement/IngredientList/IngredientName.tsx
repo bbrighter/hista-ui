@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import ListItemText from "@mui/material/ListItemText";
 import TextFieldSaveAndAbort from "@/scenes/components/TextFieldSaveAndAbort";
 import type { Nutrition } from "@/store";
@@ -24,10 +25,10 @@ export const IngredientName = ({
 	const onCancel = () => setEditing(false);
 
 	const nutritionPairs = [
-		{ label: "F", value: nutrition?.fat },
-		{ label: "K", value: nutrition?.carbohydrate },
-		{ label: "B", value: nutrition?.fiber },
-		{ label: "E", value: nutrition?.protein },
+		{ label: t`F`, value: nutrition?.fat },
+		{ label: t`K`, value: nutrition?.carbohydrate },
+		{ label: t`B`, value: nutrition?.fiber },
+		{ label: t`E`, value: nutrition?.protein },
 	];
 
 	const save = async (v: string) => {
@@ -39,7 +40,7 @@ export const IngredientName = ({
 		<>
 			{isEditing && (
 				<TextFieldSaveAndAbort
-					label="Zutat"
+					label={t`Zutat`}
 					onCancel={onCancel}
 					isSaveable={isSaveable}
 					size="small"

@@ -1,6 +1,6 @@
+import { t } from "@lingui/core/macro";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
-
 import { actions } from "../../../actions";
 import useDebounce from "../../../hooks/useDebounce";
 import { useDidUpdateEffect } from "../../../hooks/useDidUpdateEffect";
@@ -26,12 +26,12 @@ export const NoteTextField = ({ noteId }: { noteId: number }) => {
 	return (
 		<TextField
 			data-testid="note-text-field"
-			helperText={isUpToDate ? "" : "Noch nicht gespeichert..."}
+			helperText={isUpToDate ? "" : t`Noch nicht gespeichert...`}
 			sx={{ marginTop: "1rem", height: "200px" }}
 			multiline
 			value={value}
 			onChange={onChange}
-			label="Notiz"
+			label={t`Notiz`}
 			minRows={15}
 			color={isUpToDate ? "primary" : "secondary"}
 		/>

@@ -1,9 +1,9 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { HttpResponse, http } from "msw";
 import { beforeEach, describe, expect, it } from "vitest";
 import { createIngredient, createIngredients } from "@/__tests__/fixtures/meal";
-import { server } from "@/__tests__/setupTest";
+import { render, server } from "@/__tests__/setupTest";
 import useHista from "@/store/store";
 import { Charts } from "../Charts";
 import { getFilter, getIngredientSelect } from "./test.utils";

@@ -11,6 +11,7 @@ import type {
 	UpdateAction,
 } from "./genericTypes";
 import type * as types from "./types";
+import type { UserSettings } from "./types/settings.types";
 
 export type StoreType = AuthStore &
 	MealStore &
@@ -25,7 +26,8 @@ export type StoreType = AuthStore &
 	HeadacheStore &
 	MedicineStore &
 	TemplateStore &
-	LoadingStore;
+	LoadingStore &
+	UserSettingsStore;
 
 export type NonFunctionProperties<T> = {
 	// biome-ignore lint/complexity/noBannedTypes: I'll ignore that one for now
@@ -79,6 +81,7 @@ export const loadingEntities = [
 	"meals",
 	"headaches",
 	"headache",
+	"userSettings",
 ] as const;
 export type LoadingEntity = (typeof loadingEntities)[number];
 
@@ -166,3 +169,8 @@ export type HeadacheStore = BaseRecordStore<
 	"headaches",
 	"headache"
 > & { headache: types.Headache } & SetSingleAction<types.Headache, "headache">;
+
+export type UserSettingsStore = UserSettings & {
+	setUserSettings: (s: Partial<UserSettings>) => void;
+	resetUserSettings: () => void;
+};

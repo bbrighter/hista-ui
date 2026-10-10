@@ -1,6 +1,6 @@
+import { t } from "@lingui/core/macro";
 import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
-
 import { Icons } from "../../components/Icons";
 
 export function NoteSearch(props: {
@@ -24,7 +24,7 @@ export function NoteSearch(props: {
 			type="search"
 			value={props.searchValue}
 			onChange={props.onChange}
-			title="Suche"
+			title={t`Suche`}
 		/>
 	);
 }

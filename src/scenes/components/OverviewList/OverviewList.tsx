@@ -1,8 +1,9 @@
 import "react-swipeable-list/dist/styles.css";
 
-import Button from "@mui/material/Button";
+import { Trans } from "@lingui/react/macro";
 import { useMemo, useState } from "react";
 import { SwipeableList } from "react-swipeable-list";
+import { Button } from "@/scenes/components/Loading/Button";
 import { usePiidEffect } from "../../../hooks/usePiidEffect";
 import { OverviewListItem } from "./OverviewListItem";
 
@@ -73,11 +74,11 @@ export function OverviewList(props: {
 					sx={{ mt: "1rem" }}
 					onClick={() => setLimit(totalNumberOfItems)}
 				>
-					Alle anzeigen
+					<Trans>Alle anzeigen</Trans>
 				</Button>
 			) : (
 				<Button sx={{ mt: "1rem" }} onClick={() => setLimit(minNumberOfItems)}>
-					Weniger anzeigen
+					<Trans>Weniger anzeigen</Trans>
 				</Button>
 			)}
 		</>

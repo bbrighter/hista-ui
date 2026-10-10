@@ -1,11 +1,11 @@
 import { createTheme } from "@mui/material/styles";
-import { act, render, screen, waitFor, within } from "@testing-library/react";
+import { act, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createIngredient, createIngredients } from "@/__tests__/fixtures/meal";
 import { getIngredientListHandler } from "@/__tests__/mocks/mealHandlers";
-import { server } from "@/__tests__/setupTest";
+import { render, server } from "@/__tests__/setupTest";
 import useHista from "@/store/store";
 import { IngredientManagement } from "../IngredientManagement";
 import {

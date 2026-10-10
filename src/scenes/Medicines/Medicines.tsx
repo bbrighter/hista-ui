@@ -1,6 +1,7 @@
-import Button from "@mui/material/Button";
+import { Trans } from "@lingui/react/macro";
 import Container from "@mui/material/Container";
 import { useAppNavigate } from "@/hooks/useNavigate";
+import { Button } from "@/scenes/components/Loading/Button";
 import { actions } from "../../actions";
 import { usePiidEffect } from "../../hooks/usePiidEffect";
 import { selectIsLoadingAny } from "../../store";
@@ -23,7 +24,7 @@ export const Medicines = () => {
 		<Loading show={isLoading}>
 			<Container sx={{ padding: "2rem" }}>
 				<Button variant="outlined" onClick={navigate.to.manageMedicine}>
-					Medikamente verwalten
+					<Trans>Medikamente verwalten</Trans>
 				</Button>
 				<IntakeList {...intakeListProps} />
 			</Container>

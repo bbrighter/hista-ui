@@ -1,3 +1,4 @@
+import { t } from "@lingui/core/macro";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
 import type { Dayjs } from "dayjs";
@@ -59,7 +60,7 @@ export default function Headache() {
 					updateTags={(typ) => actions.headaches.patchTypes(id, typ)}
 				/>
 				<HeadacheTags
-					label="Weitere Symptome"
+					label={t`Weitere Symptome`}
 					options={validHeadacheSymptoms}
 					values={headache.symptoms}
 					updateTags={(sym) => actions.headaches.patchSymptoms(id, sym)}

@@ -8,7 +8,7 @@
 	"scripts": {
 		"start": "vite --open",
 		"dev": "vite",
-		"build": "vite build",
+		"build": "pnpm l10n:compile && vite build",
 		"lint:local": "biome check --reporter=concise",
 		"lint:fix": "biome check --write",
 		"lint": "biome ci",
@@ -22,7 +22,9 @@
 		"dependencies:ci": "pnpm exec depcruise src  --include-only \"^src\"",
 		"dependencies:table": "pnpm exec depcruise src  --include-only \"^src\" --output-type html > graph.html",
 		"dependencies:graph": "pnpm exec depcruise --include-only \"^src\" --output-type dot src | dot -T svg > graph.svg",
-		"validate": "knip & tsc & pnpm dependencies:ci & pnpm lint"
+		"validate": "knip & tsc & pnpm dependencies:ci & pnpm lint",
+		"l10n:extract": "lingui extract --clean --overwrite",
+		"l10n:compile": "lingui compile --typescript"
 	},
 	"devEngines": {
 		"packageManager": {
@@ -39,9 +41,10 @@
 	"dependencies": {
 		"@atlaskit/pragmatic-drag-and-drop": "^2.0.2",
 		"@base-ui/react": "^1.8.0",
-		"@bbrighter/auth-module": "^2.3.0",
+		"@bbrighter/auth-module": "^3.1.1",
 		"@emotion/react": "^11.14.0",
 		"@emotion/styled": "^11.14.1",
+		"@lingui/react": "^6.9.0",
 		"@mui/icons-material": "^9.4.0",
 		"@mui/material": "^9.4.0",
 		"@mui/x-charts": "^9.13.0",
@@ -62,6 +65,10 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.5.14",
+		"@lingui/cli": "^6.9.0",
+		"@lingui/core": "^6.9.0",
+		"@lingui/format-po": "^6.9.0",
+		"@lingui/vite-plugin": "^6.9.0",
 		"@testing-library/jest-dom": "^7.0.1",
 		"@testing-library/react": "^16.3.3",
 		"@testing-library/user-event": "^14.6.7",

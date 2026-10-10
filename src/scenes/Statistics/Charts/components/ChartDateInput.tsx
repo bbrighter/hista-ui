@@ -1,6 +1,6 @@
+import { t } from "@lingui/core/macro";
 import Grid from "@mui/material/Grid";
 import type dayjs from "dayjs";
-
 import DateInput from "../../../components/DateInput/DateInput";
 
 export function StatisticsDateInput(props: {
@@ -13,7 +13,7 @@ export function StatisticsDateInput(props: {
 		<Grid container>
 			<Grid size={{ xs: 6 }}>
 				<DateInput
-					title="Von"
+					title={t`Von`}
 					onChange={props.handleFromDateChange}
 					date={props.fromDate}
 					hideTime
@@ -21,7 +21,7 @@ export function StatisticsDateInput(props: {
 			</Grid>
 			<Grid size={{ xs: 6 }}>
 				<DateInput
-					title="Bis"
+					title={t`Bis`}
 					onChange={props.handleToDateChange}
 					date={props.toDate}
 					hideTime

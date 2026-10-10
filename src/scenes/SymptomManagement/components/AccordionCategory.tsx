@@ -1,10 +1,10 @@
+import { t } from "@lingui/core/macro";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Box from "@mui/material/Box";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-
 import { actions } from "../../../actions";
 import type { SymptomCategory } from "../../../store";
 import { Icons } from "../../components/Icons";
@@ -44,7 +44,7 @@ export default function AccordionCategory(props: {
 
 	return (
 		<AccordionSummary
-			expandIcon={<Icons.actions.expand titleAccess="Ausklappen" />}
+			expandIcon={<Icons.actions.expand titleAccess={t`Ausklappen`} />}
 			component="div"
 		>
 			{mode === "default" && (
@@ -63,7 +63,7 @@ export default function AccordionCategory(props: {
 					<ButtonGroup>
 						<IconButton
 							onClick={() => setMode("editing")}
-							title="Kategorie umbenennen"
+							title={t`Kategorie umbenennen`}
 						>
 							<Icons.actions.edit />
 						</IconButton>
@@ -71,7 +71,7 @@ export default function AccordionCategory(props: {
 							onClick={() => setMode("deleting")}
 							disabled={!isDeletable}
 							color="error"
-							title="Löschen"
+							title={t`Löschen`}
 						>
 							<Icons.actions.delete />
 						</IconButton>
@@ -80,7 +80,7 @@ export default function AccordionCategory(props: {
 			)}
 			{mode === "editing" && (
 				<TextFieldSaveAndAbort
-					label="Kategoriename"
+					label={t`Kategoriename`}
 					isSaveable={isSaveable}
 					onCancel={onCancel}
 					onSave={onSave}
@@ -97,14 +97,14 @@ export default function AccordionCategory(props: {
 						<IconButton
 							loading={isLoading}
 							onClick={onDelete}
-							title="Löschen bestätigen"
+							title={t`Löschen bestätigen`}
 						>
 							<Icons.actions.delete />
 						</IconButton>
 						<IconButton
 							onClick={onCancel}
 							color="error"
-							title="Löschen abbrechen"
+							title={t`Löschen abbrechen`}
 						>
 							<Icons.actions.close />
 						</IconButton>

@@ -1,12 +1,13 @@
+import { t } from "@lingui/core/macro";
 import type { GridColDef, GridRowsProp } from "@mui/x-data-grid/models";
 import type { RawDiary } from "@/store";
 
 export const diaryGridColumns: Array<GridColDef> = [
-	{ field: "type", headerName: "Typ", flex: 1 },
-	{ field: "date", headerName: "Datum", flex: 1, type: "dateTime" },
-	{ field: "severity", headerName: "Schwere", flex: 1 },
-	{ field: "what", headerName: "Inhalt", flex: 2 },
-	{ field: "category", headerName: "Kategorie", flex: 1 },
+	{ field: "type", headerName: t`Typ`, flex: 1 },
+	{ field: "date", headerName: t`Datum`, flex: 1, type: "dateTime" },
+	{ field: "severity", headerName: t`Schwere`, flex: 1 },
+	{ field: "what", headerName: t`Inhalt`, flex: 2 },
+	{ field: "category", headerName: t`Kategorie`, flex: 1 },
 ];
 
 export const toDiaryRows = (diary: Array<RawDiary>): GridRowsProp =>

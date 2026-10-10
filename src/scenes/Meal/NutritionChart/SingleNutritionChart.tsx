@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
-import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
+import { ProgressIndicator } from "@/scenes/components/Loading/ProgressIndicator";
 import { HideFiberButton } from "@/scenes/components/NutritionChart/HideFiberButton";
 import { NutritionChart } from "@/scenes/components/NutritionChart/NutritionChart";
 import type { Nutrition } from "@/store";
@@ -18,7 +18,7 @@ export const SingleNutritionChart = ({ nutrition, isLoading }: ChartProps) => {
 	return (
 		<>
 			{isLoading ? (
-				<CircularProgress />
+				<ProgressIndicator />
 			) : (
 				<Box
 					sx={{

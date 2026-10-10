@@ -1,0 +1,437 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-07 15:59+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: de-SW\n"
+
+#. placeholder {0}: i.value.toLocaleString("de-DE", { maximumFractionDigits: 1, })
+msgid "{0} g"
+msgstr "{0} g"
+
+msgid "+ Status heute"
+msgstr "+ Status heit"
+
+msgid "+ Zutat"
+msgstr "+ Zutat"
+
+msgid "1 h"
+msgstr "1 h"
+
+msgid "24 h"
+msgstr "24 h"
+
+msgid "72 h"
+msgstr "72 h"
+
+msgid "Abbrechen"
+msgstr "Abbrich"
+
+msgid "Abends"
+msgstr "Abends"
+
+msgid "Alle anzeigen"
+msgstr "Alli zeige"
+
+msgid "Alleine"
+msgstr "Allein"
+
+msgid "Anspannung, Ängstlichkeit oder Gefühl des Aufgedrehtseins"
+msgstr "Anspanning, Angschtlichkeit oder Gfühl vum Aufgedrehtsein"
+
+msgid "Appetitveränderungen, Verlangen nach speziellen Lebensmitteln"
+msgstr "Appetitveränderung, Verlangn noch spezieller Leit"
+
+msgid "Archivierte anzeigen"
+msgstr "Archivierte zeige"
+
+msgid "Ausklappen"
+msgstr "Usklappe"
+
+msgid "Auswertung"
+msgstr "Uswertung"
+
+msgid "Auswertungen"
+msgstr "Uswertungen"
+
+msgid "B"
+msgstr "B"
+
+msgid "Ballaststoffe"
+msgstr "Ballaststoffe"
+
+msgid "Benutzer"
+msgstr "Benutzer"
+
+msgid "Benutzereinstellungen"
+msgstr "Benutzereinstellige"
+
+msgid "Beschreibung"
+msgstr "Bschreibung"
+
+msgid "Bis"
+msgstr "Bis"
+
+msgid "Crash"
+msgstr "Crash"
+
+msgid "Da ist was schief gegangen! Probier's nochmal."
+msgstr "Do isch was schief gange! Probier's nomol."
+
+msgid "Datum"
+msgstr "Datum"
+
+msgid "Depressive Verstimmung, selbstabwertende Gedanken"
+msgstr "Depressiv Stimmig, selbstabwertendi Gedanke"
+
+msgid "E"
+msgstr "E"
+
+msgid "Einladen"
+msgstr "Iilade"
+
+msgid "Einnehmen und eintragen"
+msgstr "Einnahm und iitrage"
+
+msgid "Einstellungen"
+msgstr "Einstellige"
+
+msgid "Eiweiß"
+msgstr "Eiweiß"
+
+msgid "Ernährungstagebuch herunterladen"
+msgstr "Ernährungstagebuech abelade"
+
+msgid "Ernährungstagebuch und mehr"
+msgstr "Ernährungstagebuech und meh"
+
+msgid "F"
+msgstr "F"
+
+msgid "Fett"
+msgstr "Fett"
+
+msgid "Frische"
+msgstr "Frisch"
+
+msgid "g"
+msgstr "g"
+
+msgid "Gar"
+msgstr "Gaar"
+
+msgid "Gefühl, die Kontrolle zu verlieren; Gefühl des Überwältigtseins"
+msgstr "Gfühl, die Kontrolle z' verlore; Gfühl vum Öwerwältigtsein"
+
+msgid "Gestern"
+msgstr "Gestr"
+
+msgid "hinzufügen"
+msgstr "dazue tue"
+
+msgid "Inhalt"
+msgstr "Inhalt"
+
+msgid "Interessenlosigkeit für übliche Aktivitäten"
+msgstr "Interesselosigkeit für übliche Aktivitäte"
+
+msgid "Jetzt"
+msgstr "Grad"
+
+msgid "K"
+msgstr "K"
+
+msgid "Kategorie"
+msgstr "Kategorii"
+
+msgid "Kategorie umbenennen"
+msgstr "Kategorii umbenenne"
+
+msgid "Kategoriename"
+msgstr "Kategoriename"
+
+msgid "Kein Status gefunden"
+msgstr "Kai Status gfunde"
+
+msgid "Kohlenhydrate"
+msgstr "Kohlenhydrate"
+
+msgid "Konzentrationsschwierigkeiten"
+msgstr "Konzentrationsschwierigkeit"
+
+msgid "Kopfschmerz"
+msgstr "Kopfschmerz"
+
+msgid "Kopfschmerzen herunterladen"
+msgstr "Kopfschmerze abelade"
+
+msgid "Kopfschmerztagebuch"
+msgstr "Kopfschmerzstagebuech"
+
+msgid "Kopfweh"
+msgstr "Kopfweh"
+
+msgid "Lädt..."
+msgstr "Wart a bissle"
+
+msgid "Leichte Ermüdbarkeit, Energieverlust, Antriebsmangel"
+msgstr "Leichti Ermüdbarkeit, Energieverluscht, Antriebsmangel"
+
+msgid "Login"
+msgstr "Aamelde"
+
+msgid "Logout"
+msgstr "Abmelde"
+
+msgid "Löschen"
+msgstr "Lösche"
+
+msgid "Löschen abbrechen"
+msgstr "Lösche abbrich"
+
+msgid "Löschen bestätigen"
+msgstr "Lösche bestätige"
+
+#. Calendar month
+msgid "M"
+msgstr "M"
+
+msgid "Mahlzeit"
+msgstr "Mahlziit"
+
+msgid "Mahlzeiten"
+msgstr "Mahlziite"
+
+msgid "Mahlzeiten hinzufügen, ansehen und bearbeiten"
+msgstr "Mahlziite zuefüge, aaluege und bearbeite"
+
+msgid "Medikament"
+msgstr "Medikament"
+
+msgid "Medikamente"
+msgstr "Medikament"
+
+msgid "Medikamente verwalten"
+msgstr "Medikament verwalte"
+
+msgid "Morgens"
+msgstr "Morgens"
+
+msgid "Nährwerte"
+msgstr "Nährwerte"
+
+msgid "Nährwerte pro 100 g"
+msgstr "Nährwerte pro 100 g"
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Neu"
+msgstr "Neu"
+
+msgid "Neue Kategorie"
+msgstr "Nei Kategorii"
+
+msgid "Neue Notiz"
+msgstr "Nei Notiz"
+
+msgid "Neue Vorlage"
+msgstr "Nei Vorlage"
+
+msgid "Neuer Kopfschmerz"
+msgstr "Neier Kopfschmerz"
+
+msgid "Neues Symptom"
+msgstr "Neis Symptom"
+
+msgid "Noch nicht gespeichert..."
+msgstr "Noch nit gspeichert..."
+
+msgid "Notiz"
+msgstr "Notiz"
+
+msgid "Notizen"
+msgstr "Notize"
+
+msgid "Notizen anfertigen und durchsuchen"
+msgstr "Notize afschriebe und durchsuche"
+
+msgid "Nutzer einladen"
+msgstr "Nutzer iilade"
+
+msgid "Nutzer existiert nicht"
+msgstr "Den Nutzer gibt's net"
+
+msgid "Nutzerverwaltung"
+msgstr "Nutzer verwalte"
+
+msgid "Ohne Symptome"
+msgstr "Ohne Symptome"
+
+msgid "Passwort"
+msgstr "Passwort"
+
+msgid "Pollen"
+msgstr "Pollen"
+
+msgid "Pollenflug bewundern"
+msgstr "Pollenflug bewundere"
+
+msgid "Position"
+msgstr "Position"
+
+msgid "Produkte"
+msgstr "Produkte"
+
+#. Calendar quarter
+msgid "Q"
+msgstr "Q"
+
+#. placeholder {0}: dayDate.quarter()
+#. placeholder {1}: dayDate.year()
+msgid "Q{0} {1}"
+msgstr "Q{0} {1}"
+
+msgid "Reizbarkeit, Wut, Ärger, vermehrte Konflikte"
+msgstr "Reizbarkeit, Wut, Ärger, meh Konflik"
+
+msgid "Roh"
+msgstr "Roh"
+
+msgid "Schlaf"
+msgstr "Schlaf"
+
+msgid "Schlafstörung (zu viel, zu wenig, unruhig, etc.)"
+msgstr "Schlafstörung (zuviel, z'wenig, unruhig, etc.)"
+
+msgid "Schwere"
+msgstr "Schwäri"
+
+msgid "Speichern"
+msgstr "Spichere"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Status hinzufügen"
+msgstr "Status zuefüge"
+
+msgid "Stimmungsschwankungen, gesteigerte Empfindlichkeit"
+msgstr "Stimmungsschwankige, gsteigerte Empfindlichkeit"
+
+msgid "Stress"
+msgstr "Stress"
+
+msgid "Suche"
+msgstr "Suche"
+
+msgid "Symptom"
+msgstr "Symptom"
+
+msgid "Symptome"
+msgstr "Symptome"
+
+msgid "Symptome aufzeichnen"
+msgstr "Symptome aufzeichne"
+
+msgid "Symptomname"
+msgstr "Symptomname"
+
+#. Calendar day
+msgid "T"
+msgstr "T"
+
+msgid "tagebuch"
+msgstr "Tagebuch"
+
+msgid "Tagebuch"
+msgstr "Tagebuch"
+
+msgid "Tagsüber"
+msgstr "Tagsüber"
+
+msgid "Tauschen"
+msgstr "Tausche"
+
+msgid "Tauschen abbrechen"
+msgstr "Tausche abbrich"
+
+msgid "Tauschen bestätigen"
+msgstr "Tausche bestätige"
+
+msgid "Typ"
+msgstr "Typ"
+
+msgid "Typen"
+msgstr "Type"
+
+msgid "Umbenennen"
+msgstr "Umbenenne"
+
+msgid "Umbenennen abbrechen"
+msgstr "Umbenenne abbrich"
+
+msgid "Umbenennen speichern"
+msgstr "Umbenenne spichere"
+
+msgid "Unbekannt"
+msgstr "Unbekannt"
+
+msgid "Unbenannt"
+msgstr "Unbenannt"
+
+msgid "Von"
+msgstr "Vo"
+
+msgid "Vorgestern"
+msgstr "Vorgestr"
+
+msgid "Vorlage erstellen"
+msgstr "Vorlage erstelle"
+
+msgid "Vorlagen"
+msgstr "Vorlage"
+
+#. Calender week
+msgid "W"
+msgstr "W"
+
+#. placeholder {0}: props.symptomName
+msgid "Wähle eine Kategorie für <0>{0}</0>"
+msgstr "Wähl a Kategorii für <0>{0}</0>"
+
+msgid "Weitere Symptome"
+msgstr "Weitri Symptome"
+
+msgid "Weniger anzeigen"
+msgstr "Weniger zeige"
+
+msgid "Wie geht's heute? Und wie ging's gestern?"
+msgstr "Wia geht's heit? Und wia isch's gester?"
+
+msgid "Wirklich löschen?"
+msgstr "Wirklich lösche?"
+
+#. placeholder {0}: dayDate.isoWeek()
+msgid "Woche {0}"
+msgstr "Woche {0}"
+
+msgid "Zeit"
+msgstr "Ziit"
+
+msgid "Zielkategorie"
+msgstr "Zielkategorie"
+
+msgid "Zusammen"
+msgstr "Zsamme"
+
+msgid "Zusätzliche Infos"
+msgstr "Zuesätzliche Infos"
+
+msgid "Zutat"
+msgstr "Zutat"
+
+msgid "Zutaten"
+msgstr "Zutaten"

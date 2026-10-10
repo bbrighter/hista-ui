@@ -1,1 +1,2 @@
+pnpm l10n:extract
 pnpm run test:ci

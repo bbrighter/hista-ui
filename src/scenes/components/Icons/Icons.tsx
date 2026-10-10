@@ -11,6 +11,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FaceRetouchingNaturalIcon from "@mui/icons-material/FaceRetouchingNatural";
 import ForestIcon from "@mui/icons-material/Forest";
+import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 import MedicationIcon from "@mui/icons-material/Medication";
 import NoteIcon from "@mui/icons-material/Note";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
@@ -54,4 +55,5 @@ export const Icons = {
 		clear: ClearIcon,
 		search: SearchIcon,
 	},
+	loading: HourglassBottomIcon,
 };

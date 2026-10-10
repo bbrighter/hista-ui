@@ -1,8 +1,9 @@
-import Button from "@mui/material/Button";
+import { Trans } from "@lingui/react/macro";
 import { useState } from "react";
 import { actions } from "@/actions";
 import { useAppNavigate } from "@/hooks/useNavigate";
 import { Icons } from "@/scenes/components/Icons";
+import { Button } from "@/scenes/components/Loading/Button";
 
 export const AddMealButton = () => {
 	const [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ export const AddMealButton = () => {
 			onClick={onCreate}
 			loading={loading}
 		>
-			Neu
+			<Trans>Neu</Trans>
 		</Button>
 	);
 };

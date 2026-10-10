@@ -14,6 +14,7 @@ const options: ClientOptions = {
 const baseClient = new Client(baseUrl, options);
 export const authApi = baseClient.authentication;
 export const errApi = baseClient.errors;
+export const userApi = baseClient.users;
 
 type DropFirstArg<F> = F extends (first: any, ...rest: infer R) => infer Ret
 	? (...args: R) => Ret

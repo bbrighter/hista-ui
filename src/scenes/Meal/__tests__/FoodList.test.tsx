@@ -1,6 +1,7 @@
-import { act, fireEvent, render } from "@testing-library/react";
+import { act, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { render } from "@/__tests__/setupTest";
 import { FoodList } from "../FoodList/FoodList";
 import type { FoodListProps } from "../FoodList/useFoodList";
 import {

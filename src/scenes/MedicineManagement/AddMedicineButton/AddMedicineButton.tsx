@@ -1,5 +1,5 @@
-import Button from "@mui/material/Button";
 import { useState } from "react";
+import { Button } from "@/scenes/components/Loading/Button";
 
 import TextFieldSaveAndAbort from "../../components/TextFieldSaveAndAbort";
 

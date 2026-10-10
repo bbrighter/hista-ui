@@ -1,9 +1,9 @@
+import { t } from "@lingui/core/macro";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
 import FormGroup from "@mui/material/FormGroup";
 import type dayjs from "dayjs";
 import { useParams } from "react-router-dom";
-
 import { actions } from "../../actions";
 import { usePiidEffect } from "../../hooks/usePiidEffect";
 import { selectIsLoadingAny } from "../../store";
@@ -36,7 +36,7 @@ export default function ConditionEvent() {
 				<FormGroup>
 					<DateInput
 						date={conditionEvent.date}
-						title="Symptome"
+						title={t`Symptome`}
 						onChange={onChange}
 					/>
 					<FormControl>
