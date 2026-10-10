@@ -173,6 +173,9 @@ msgstr "Kopfschmerztagebuch"
 msgid "Kopfweh"
 msgstr "Kopfweh"
 
+msgid "Lädt..."
+msgstr "Lädt..."
+
 msgid "Leichte Ermüdbarkeit, Energieverlust, Antriebsmangel"
 msgstr "Leichte Ermüdbarkeit, Energieverlust, Antriebsmangel"
 
