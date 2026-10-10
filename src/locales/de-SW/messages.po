@@ -337,8 +337,7 @@ msgid "Symptome aufzeichnen"
 msgstr "Symbdom ufzeichna"
 
 msgid "Symptomname"
-msgstr "
-Symbdomnam"
+msgstr "Symbdomnam"
 
 #. Calendar day
 msgid "T"
