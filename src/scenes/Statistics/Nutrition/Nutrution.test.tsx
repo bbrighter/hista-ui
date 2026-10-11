@@ -10,11 +10,7 @@ const findToggleButton = async (button: "T" | "W" | "M" | "Q") => {
 	const group = await findToggleGroup();
 	return within(group).getByText(button);
 };
-const findFiberCheckbox = async () => {
-	const checkbox = await screen.findByRole("checkbox");
-	expect(checkbox).toBeInTheDocument();
-	return checkbox;
-};
+
 const getListItem = (name: string) => {
 	const listItem = screen.getByText(name).closest("li");
 	expect(listItem).toBeInTheDocument();
@@ -29,16 +25,13 @@ describe("Nutrition stats are displayed", () => {
 		const toggle = await findToggleGroup();
 		expect(toggle).toBeInTheDocument();
 
-		const checkbox = await findFiberCheckbox();
-		expect(checkbox).not.toBeChecked();
-
 		// Verify list item with date and chart
 		const listItem = getListItem("14.2.2026");
 		expect(listItem?.querySelector("svg")).toBeInTheDocument();
 
 		// Verify legend
 		const legend = screen.getByTestId("nutrition-legend");
-		const nutritions = ["F", "K", "E"];
+		const nutritions = ["F", "K", "E", "B"];
 		nutritions.forEach((n) => {
 			expect(legend).toHaveTextContent(n);
 		});
@@ -64,12 +57,10 @@ describe("Nutrition stats are displayed", () => {
 	it("Toggle fiber", async () => {
 		render(<NutritionStats />);
 
-		const fiberToggle = await findFiberCheckbox();
-		await userEvent.click(fiberToggle);
+		const fiberLegendEntry = await screen.findByTestId("nutrition-legend-3");
+		expect(fiberLegendEntry).toHaveAttribute("aria-selected", "false");
+		await userEvent.click(fiberLegendEntry);
 
-		expect(fiberToggle).toBeChecked();
-		const legend = screen.getByTestId("nutrition-legend");
-		expect(legend).toBeInTheDocument();
-		expect(legend).toHaveTextContent("B");
+		expect(fiberLegendEntry).toHaveAttribute("aria-selected", "true");
 	});
 });
