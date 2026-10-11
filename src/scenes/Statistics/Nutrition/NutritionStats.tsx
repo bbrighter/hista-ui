@@ -38,11 +38,8 @@ export const NutritionStats = () => {
 		setHiddenItems((state) => {
 			const isHidden = state.some((h) => h.dataIndex === idx);
 			if (isHidden) {
-				console.log("isHidden", idx);
 				return state.filter((h) => h.dataIndex !== idx);
 			}
-
-			console.log("is not hidden", idx);
 			return [...state, { type: "pie", seriesId: "nutrition", dataIndex: idx }];
 		});
 	};

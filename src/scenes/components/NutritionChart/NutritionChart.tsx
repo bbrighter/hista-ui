@@ -12,7 +12,6 @@ import { NUTRITION_COLORS } from "./nutritionColors";
 
 export type NutritionChartProps = {
 	nutrition: Nutrition;
-	hideFiber?: boolean;
 	showLegend?: boolean;
 	hiddenItems?: Array<VisibilityIdentifierWithType<"pie">>;
 };
