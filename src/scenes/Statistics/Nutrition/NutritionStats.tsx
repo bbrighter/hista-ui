@@ -1,11 +1,11 @@
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import type { VisibilityIdentifierWithType } from "@mui/x-charts/plugins";
 import { useEffect, useState } from "react";
-import { HideFiberButton } from "@/scenes/components/NutritionChart/HideFiberButton";
 import { NutritionChart } from "@/scenes/components/NutritionChart/NutritionChart";
+
 import { actions } from "../../../actions";
 import useHista from "../../../store/store";
 import { computeCalories } from "../../../utils/nutrition";
@@ -18,7 +18,9 @@ export const NutritionStats = () => {
 	const [interval, setInterval] = useState<
 		"day" | "week" | "month" | "quarter"
 	>("day");
-	const [hideFiber, setHideFiber] = useState(true);
+	const [hiddenItems, setHiddenItems] = useState<
+		Array<VisibilityIdentifierWithType<"pie">>
+	>([{ type: "pie", seriesId: "nutrition", dataIndex: 3 }]);
 	const onToggle = (
 		_: React.MouseEvent<HTMLElement>,
 		newValue: "day" | "week" | "month" | "quarter",
@@ -32,16 +34,26 @@ export const NutritionStats = () => {
 
 	const width = 500;
 
+	const onLegendClick = (idx: number) => {
+		setHiddenItems((state) => {
+			const isHidden = state.some((h) => h.dataIndex === idx);
+			if (isHidden) {
+				console.log("isHidden", idx);
+				return state.filter((h) => h.dataIndex !== idx);
+			}
+
+			console.log("is not hidden", idx);
+			return [...state, { type: "pie", seriesId: "nutrition", dataIndex: idx }];
+		});
+	};
+
 	return (
 		<Box>
-			<ToggleInterval value={interval} onChange={onToggle} />
-			<Paper sx={{ display: "flex", justifyContent: "space-between" }}>
-				<NutritionLegend hideFiber={hideFiber} />
-				<HideFiberButton
-					onClick={() => setHideFiber(!hideFiber)}
-					value={hideFiber}
-				/>
-			</Paper>
+			<ToggleInterval onChange={onToggle} value={interval} />
+			<NutritionLegend
+				onEntryClick={onLegendClick}
+				hiddenItemIds={hiddenItems.map((i) => i.dataIndex ?? 0)}
+			/>
 			<List>
 				{nutrition.map((n) => (
 					<ListItem
@@ -55,7 +67,10 @@ export const NutritionStats = () => {
 							<Typography variant="caption">
 								{computeCalories(n.nutrition)}
 							</Typography>
-							<NutritionChart nutrition={n.nutrition} hideFiber={hideFiber} />
+							<NutritionChart
+								nutrition={n.nutrition}
+								hiddenItems={hiddenItems}
+							/>
 						</Box>
 					</ListItem>
 				))}
