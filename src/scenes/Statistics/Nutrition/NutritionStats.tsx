@@ -5,12 +5,11 @@ import Typography from "@mui/material/Typography";
 import type { VisibilityIdentifierWithType } from "@mui/x-charts/plugins";
 import { useEffect, useState } from "react";
 import { NutritionChart } from "@/scenes/components/NutritionChart/NutritionChart";
-
+import { NutritionLegend } from "@/scenes/components/NutritionChart/NutritionLegend";
 import { actions } from "../../../actions";
 import useHista from "../../../store/store";
 import { computeCalories } from "../../../utils/nutrition";
 import { formatDateBasedOnInterval } from "./formatDate";
-import { NutritionLegend } from "./NutritionLegend";
 import { ToggleInterval } from "./ToggleInterval";
 
 export const NutritionStats = () => {
