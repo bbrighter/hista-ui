@@ -1,9 +1,8 @@
-import { t } from "@lingui/core/macro";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { darken } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { NUTRITION_COLORS } from "@/scenes/components/NutritionChart/nutritionColors";
+import { NUTRITIONS } from "@/scenes/components/NutritionChart/nutritionColors";
 
 export const NutritionLegend = ({
 	onEntryClick,
@@ -14,12 +13,7 @@ export const NutritionLegend = ({
 }) => {
 	const isHidden = (id: number) => hiddenItemIds.some((h) => h === id);
 
-	const nutrition_legend = [
-		{ id: 2, label: t`K`, color: NUTRITION_COLORS[0] },
-		{ id: 0, label: t`F`, color: NUTRITION_COLORS[1] },
-		{ id: 1, label: t`E`, color: NUTRITION_COLORS[3] },
-		{ id: 3, label: t`B`, color: NUTRITION_COLORS[2] },
-	].map((e) => ({
+	const nutrition_legend = Object.values(NUTRITIONS).map((e) => ({
 		...e,
 		color: isHidden(e.id) ? darken(e.color, 0.5) : e.color,
 	}));
@@ -51,7 +45,7 @@ export const NutritionLegend = ({
 						sx={{ fontSize: "1rem" }}
 						color={isHidden(item.id) ? "textDisabled" : "textPrimary"}
 					>
-						{item.label}
+						{item.shortName}
 					</Typography>
 				</Box>
 			))}

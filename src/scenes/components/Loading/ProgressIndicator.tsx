@@ -21,7 +21,6 @@ export const ProgressIndicator = (props: ProgressIndicatorProps) => {
 				display: "inline-flex",
 				width: size,
 				height: size,
-				stroke: "#666666",
 				"& svg": {
 					width: "100%",
 					height: "100%",
