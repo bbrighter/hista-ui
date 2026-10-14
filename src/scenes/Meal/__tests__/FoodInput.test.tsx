@@ -6,14 +6,10 @@ import { FoodInput } from "../AddFood/FoodInput";
 import { getFoodInput } from "./selectors";
 
 describe("FoodInput component", () => {
-	const listIngredients = vi.fn();
-	const listTemplates = vi.fn();
 	const postFoodById = vi.fn();
 	const postFoodByName = vi.fn();
 	const postFoodsByTemplate = vi.fn();
 	const fns = {
-		listIngredients,
-		listTemplates,
 		postFoodById,
 		postFoodByName,
 		postFoodsByTemplate,

@@ -4,7 +4,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import TextField from "@mui/material/TextField";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Icons } from "@/scenes/components/Icons";
 import { ProgressIndicator } from "@/scenes/components/Loading/ProgressIndicator";
 import type { useFoodInput } from "./useFoodInput";
@@ -27,8 +27,6 @@ type FoodInputProps = ReturnType<typeof useFoodInput>;
 export function FoodInput({
 	mealId,
 	options,
-	listIngredients,
-	listTemplates,
 	postFoodById,
 	postFoodByName,
 	postFoodsByTemplate,
@@ -36,11 +34,6 @@ export function FoodInput({
 	const [inputValue, setInputValue] = useState<string | undefined>("");
 	const [value, setValue] = useState<Option | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
-
-	useEffect(() => {
-		listIngredients();
-		listTemplates();
-	}, [listIngredients, listTemplates]);
 
 	const onChange = async (_e: React.SyntheticEvent, value: Option | null) => {
 		if (value == null) return;
