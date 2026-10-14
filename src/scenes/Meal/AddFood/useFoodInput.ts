@@ -28,8 +28,6 @@ export const useFoodInput = () => {
 		})),
 	];
 
-	const listIngredients = actions.ingredients.list;
-	const listTemplates = actions.templates.list;
 	const postFoodByName = actions.meals.postFoodByName;
 	const postFoodById = actions.meals.postFoodById;
 	const postFoodsByTemplate = actions.meals.postFoodsByTemplate;
@@ -37,8 +35,6 @@ export const useFoodInput = () => {
 	return {
 		mealId,
 		options,
-		listIngredients,
-		listTemplates,
 		postFoodById,
 		postFoodByName,
 		postFoodsByTemplate,
