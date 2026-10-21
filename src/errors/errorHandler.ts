@@ -8,7 +8,17 @@ export const withErrorHandling = async <T>(
 	try {
 		return await fn();
 	} catch (error) {
-		if (error) onError(error);
+		if (isAPIError(error) && error.status === 503) {
+			try {
+				await new Promise((r) => setTimeout(r, 500));
+				return await fn();
+			} catch (retryError) {
+				return onError(retryError);
+			}
+		}
+		if (error) {
+			return onError(error);
+		}
 		return null;
 	}
 };
@@ -18,13 +28,14 @@ const onError = (err: unknown) => {
 		switch (err.status) {
 			case 401:
 			case 404:
-				break;
+				return null;
 			default:
 				errorBus.emit("error", err);
+				return null;
 		}
-		return;
 	}
 	errorBus.emit("error", err);
+	return null;
 };
 
 type AppError = {
