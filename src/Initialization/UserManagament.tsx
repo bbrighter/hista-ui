@@ -19,13 +19,9 @@ const useUserManagementAdapter = (): UserStateAdapter => {
 	const setUsers = useHista((state) => state.setUsers);
 	const piid = useHista((state) => state.piid);
 
-	const useUsers = () => ({ users, setUsers });
-	const useApi = () => authApi;
-	const usePiid = () => piid ?? "";
-
 	return {
-		useUsers,
-		useApi,
-		usePiid,
+		useUsers: () => ({ users, setUsers }),
+		useApi: () => authApi,
+		usePiid: () => piid ?? "",
 	};
 };

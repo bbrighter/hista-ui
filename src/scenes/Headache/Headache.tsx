@@ -19,7 +19,7 @@ import { HeadacheTags } from "./HeadacheTags/HeadacheTags";
 import { SeveritySlider } from "./SeveritySlider/SeveritySlider";
 
 export default function Headache() {
-	const isLOading = useHista(selectIsLoadingAny(["headache"]));
+	const isLoading = useHista(selectIsLoadingAny(["headache"]));
 	const { headacheId } = useParams<{ headacheId: string }>();
 	const id = Number(headacheId);
 	const headache = useHista((state) => state.headache);
@@ -40,7 +40,7 @@ export default function Headache() {
 	};
 
 	return (
-		<Loading show={isLOading}>
+		<Loading show={isLoading}>
 			<Container sx={{ padding: "2rem" }}>
 				<DateInput title="Datum" date={headache.date} onChange={onDateChange} />
 				<SeveritySlider
@@ -69,6 +69,7 @@ export default function Headache() {
 				<HeadacheDebouncedDescription
 					description={headache.description}
 					saveDescription={(v) => actions.headaches.patchDescription(id, v)}
+					isLoaded={!isLoading}
 				/>
 			</Container>
 		</Loading>
