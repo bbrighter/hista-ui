@@ -36,27 +36,20 @@ const useAuthStateAdapter = (
 	const isLoaded = useHista((state) => state.instancesAreLoaded);
 	const setIsLoaded = useHista((state) => state.setInstancesLoaded);
 
-	const useAuthApi = () => authApi;
-	const useLocation = () => ({
-		location: location.pathname + location.search,
-		navigate,
-	});
-	const useProductInstances = () => ({
-		instances,
-		setInstances,
-		isLoaded,
-		setIsLoaded,
-	});
-	const useProductKey = () => ProductKeys.HistaComplete;
-	const useToken = () => ({ token, setToken });
-	const useUserName = () => ({ userName, setUserName });
-
 	return {
-		useAuthApi,
-		useLocation,
-		useProductInstances,
-		useProductKey,
-		useToken,
-		useUserName,
+		useAuthApi: () => authApi,
+		useLocation: () => ({
+			location: location.pathname + location.search,
+			navigate,
+		}),
+		useProductInstances: () => ({
+			instances,
+			setInstances,
+			isLoaded,
+			setIsLoaded,
+		}),
+		useProductKey: () => ProductKeys.HistaComplete,
+		useToken: () => ({ token, setToken }),
+		useUserName: () => ({ userName, setUserName }),
 	};
 };
