@@ -114,7 +114,6 @@ describe("NutritionLegend", () => {
 
 		const legendEntry = screen.getByTestId("nutrition-legend-1");
 		expect(legendEntry).toHaveAttribute("aria-selected", "false");
-		screen.debug(legendEntry);
 
 		[0, 2, 3].forEach((n) => {
 			const entry = screen.getByTestId(`nutrition-legend-${n}`);
