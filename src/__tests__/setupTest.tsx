@@ -35,7 +35,7 @@ beforeAll(() => {
 	vi.spyOn(Storage.prototype, "getItem").mockReturnValue("test-token");
 	vi.spyOn(Storage.prototype, "clear").mockImplementation(() => {});
 
-	server.listen({ onUnhandledRequest: "error" });
+	server.listen({ onUnhandledFrame: "error" });
 
 	if (import.meta.env.MODE === "debug") {
 		server.events.on("request:start", ({ request }) => {
