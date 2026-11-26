@@ -5,6 +5,7 @@ import { headaches } from "./headhaches.actions";
 import { ingredients } from "./ingredients.actions";
 import { meals } from "./meals.actions";
 import { intakes, medicines } from "./medicines.actions";
+import { meta } from "./meta.actions";
 import { notes } from "./notes.actions";
 import { pollens } from "./pollens.actions";
 import { statistics } from "./statistics.actions";
@@ -39,4 +40,5 @@ export const actions = {
 	intakes: createActions(intakes),
 	status: createActions(status),
 	statistics: createActions(statistics),
+	meta: createActions(meta),
 };

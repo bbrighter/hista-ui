@@ -27,7 +27,8 @@ export type StoreType = AuthStore &
 	MedicineStore &
 	TemplateStore &
 	LoadingStore &
-	UserSettingsStore;
+	UserSettingsStore &
+	MetaStore;
 
 export type NonFunctionProperties<T> = {
 	// biome-ignore lint/complexity/noBannedTypes: I'll ignore that one for now
@@ -82,6 +83,7 @@ export const loadingEntities = [
 	"headaches",
 	"headache",
 	"userSettings",
+	"meta",
 ] as const;
 export type LoadingEntity = (typeof loadingEntities)[number];
 
@@ -174,3 +176,8 @@ export type UserSettingsStore = UserSettings & {
 	setUserSettings: (s: Partial<UserSettings>) => void;
 	resetUserSettings: () => void;
 };
+
+export type MetaStore = types.Meta &
+	ResetAction<"meta"> & {
+		setMeta: (entitiesFilled: Record<string, boolean>) => void;
+	};

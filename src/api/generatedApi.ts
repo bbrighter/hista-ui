@@ -230,6 +230,11 @@ export namespace hista {
         diaries: DiaryResp[]
     }
 
+    export interface EntitiesFilledResponse {
+        entity: string
+        filled: boolean
+    }
+
     export interface FoodParams {
         ingredientName?: string
         ingredientId?: number
@@ -318,6 +323,10 @@ export namespace hista {
         name: string
         isArchived: boolean
         sortOrder: number
+    }
+
+    export interface MetaResponse {
+        entitiesFilled: EntitiesFilledResponse[]
     }
 
     export interface MoveMedicineParams {
@@ -591,6 +600,7 @@ export namespace hista {
             this.GetFoods = this.GetFoods.bind(this)
             this.GetHeadache = this.GetHeadache.bind(this)
             this.GetMeal = this.GetMeal.bind(this)
+            this.GetMetaInformation = this.GetMetaInformation.bind(this)
             this.GetNutritionByInterval = this.GetNutritionByInterval.bind(this)
             this.GetStatisticsByIngredientId = this.GetStatisticsByIngredientId.bind(this)
             this.IncrementIntake = this.IncrementIntake.bind(this)
@@ -730,6 +740,12 @@ export namespace hista {
             // Now make the actual call to the API
             const resp = await this.baseClient.callTypedAPI("GET", `/piid/${encodeURIComponent(piid)}/meals/${encodeURIComponent(id)}`)
             return await resp.json() as MealResponse
+        }
+
+        public async GetMetaInformation(piid: string): Promise<MetaResponse> {
+            // Now make the actual call to the API
+            const resp = await this.baseClient.callTypedAPI("GET", `/piid/${encodeURIComponent(piid)}/meta`)
+            return await resp.json() as MetaResponse
         }
 
         public async GetNutritionByInterval(piid: string, params: NutritionStatisticsParams): Promise<NutritionStatisticsResponse> {
