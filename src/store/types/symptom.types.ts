@@ -18,6 +18,7 @@ export function respToSymptoms(
 	resp: hista.SymptomCategoryListResponse,
 ): SymptomCategories {
 	return (
+		// TODO: Find out WHY resp could be undefined. That should not happen
 		resp?.Categories.map((c) => ({
 			categoryId: c.id,
 			categoryName: c.name,

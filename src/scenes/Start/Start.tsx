@@ -1,28 +1,32 @@
 import Grid from "@mui/material/Grid";
-import dayjs from "dayjs";
+import useHista from "@/store/store";
 import { actions } from "../../actions";
 import { usePiidEffect } from "../../hooks/usePiidEffect";
-import { useStatusExistsOnDay } from "../../store";
 import StartPageCard, { type CardType } from "./components/StartPageCard";
 
 export default function Start() {
 	const types: Array<CardType> = [
 		"status",
+		"headaches",
 		"meals",
 		"medicines",
 		"conditionEvents",
-		"headaches",
 		"notes",
 		"pollens",
 		"statistics",
 	];
 
 	usePiidEffect(() => {
-		actions.status.list();
+		actions.meta.get();
 	}, []);
 
-	const statusForTodayExists = useStatusExistsOnDay(dayjs());
-	const highlight = (t: CardType) => t === "status" && !statusForTodayExists;
+	const entitiesFilled = useHista((state) => state.entitiesFilled);
+
+	const highlight = (t: CardType) => {
+		if (t === "status") return !entitiesFilled.statuses;
+		if (t === "headaches") return !entitiesFilled.headaches;
+		return false;
+	};
 
 	return (
 		<Grid

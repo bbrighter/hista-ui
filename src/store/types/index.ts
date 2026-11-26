@@ -8,6 +8,7 @@ export * from "./ingredients.types";
 export * from "./meal.types";
 export * from "./meals.types";
 export type { Intake, Medicine } from "./medicines.types";
+export * from "./meta.types";
 export * from "./notes.types";
 export * from "./pollen.types";
 export * from "./statistics.types";
