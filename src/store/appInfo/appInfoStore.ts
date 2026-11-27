@@ -1,30 +1,30 @@
 import type { StateCreator } from "zustand";
 
 import type {
-	MetaStore,
+	AppInfoStore,
 	NonFunctionProperties,
 	StoreType,
 } from "../store.type";
 import type { Entity } from "../types";
 
-type State = NonFunctionProperties<MetaStore>;
+type State = NonFunctionProperties<AppInfoStore>;
 
 const initialState = (): State => ({
 	entitiesFilled: { headaches: false, statuses: false },
 });
 
-export const createMetaSlice: StateCreator<
+export const createAppInfoSlice: StateCreator<
 	StoreType,
 	[["zustand/immer", never]],
 	[],
-	MetaStore
+	AppInfoStore
 > = (set) => ({
 	...initialState(),
 
-	resetMeta: () => {
+	resetAppInfo: () => {
 		set(initialState());
 	},
-	setMeta: (record: Record<Entity, boolean>) => {
+	setAppInfo: (record: Record<Entity, boolean>) => {
 		set((state) => {
 			state.entitiesFilled = record;
 		});

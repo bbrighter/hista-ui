@@ -2,7 +2,7 @@ import useHista from "../store";
 
 export const useIsAppReady = () => {
 	const areInstancesLoaded = useHista((state) => state.instancesAreLoaded);
-	const isMetaLoaded = useHista((state) => state.loaded.meta);
+	const isAppInfoLoaded = useHista((state) => state.loaded.appInfo);
 
-	return areInstancesLoaded && isMetaLoaded;
+	return areInstancesLoaded && isAppInfoLoaded;
 };

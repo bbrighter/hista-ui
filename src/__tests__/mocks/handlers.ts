@@ -1,10 +1,10 @@
 import { createStatusList } from "../fixtures/status";
+import { getAppInfoHandler } from "./appInfoHandlers";
 import { authHandlers } from "./authHandler";
 import { errorHandler } from "./errorHandlers";
 import { headacheHandlers } from "./headacheHandlers";
 import { foodHandlers, ingredientHandlers, mealHandlers } from "./mealHandlers";
 import { intakeHandlers, medicineHandlers } from "./medicineHandlers";
-import { getMetaInformationHandler } from "./metaHandler";
 import { noteHandlers } from "./noteHandlers";
 import { permissionsHandler } from "./permissionsHandler";
 import { pollenHandlers } from "./pollenHandlers";
@@ -61,7 +61,7 @@ const handlers = [
 	getUserSettingsHandler(),
 	patchUserSettingsHandler(),
 
-	getMetaInformationHandler({
+	getAppInfoHandler({
 		entitiesFilled: [
 			{ entity: "headaches", filled: false },
 			{ entity: "statuses", filled: false },

@@ -17,7 +17,7 @@ export default function Start() {
 	];
 
 	usePiidEffect(() => {
-		actions.meta.get();
+		actions.appInfo.get();
 	}, []);
 
 	const entitiesFilled = useHista((state) => state.entitiesFilled);
