@@ -1,3 +1,4 @@
 pnpm run knip
 pnpm run lint
 pnpm run dependencies:ci
+pnpm run typecheck
