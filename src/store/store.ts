@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { injectPiidGetter } from "../api/api";
+import { createAppInfoSlice } from "./appInfo/appInfoStore";
 import { createAuthSlice } from "./auth/authStore";
 import { createConditionSlice } from "./conditionEvents/conditionEventStore";
 import { createConditionsSlice } from "./conditionEvents/conditionEventsStore";
@@ -10,7 +11,6 @@ import { createLoadingSlice } from "./loading/loadingStore";
 import { createIngredientSlice } from "./meal/ingredientStore";
 import { createMealSlice } from "./meal/mealStore";
 import { createMedicineSlice } from "./medicines/medicines.store";
-import { createMetaSlice } from "./meta/metaStore";
 import { createNotesSlice } from "./notes/notesStore";
 import { createPollensSlice } from "./pollen/pollenStore";
 import { createUserSettingsSlice } from "./settings/settingsStore";
@@ -39,7 +39,7 @@ const useHista = create<StoreType>()(
 				...createTemplateSlice(...a),
 				...createLoadingSlice(...a),
 				...createUserSettingsSlice(...a),
-				...createMetaSlice(...a),
+				...createAppInfoSlice(...a),
 			};
 			return store;
 		}),
